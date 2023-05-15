@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
-import { useImmer } from 'use-immer'
+import { useImmer } from 'use-immer' // useImmer is an alternative to useState; it is useful for dealing with nested JSON
 
 function App() {
 
@@ -142,6 +142,13 @@ function App() {
 
   }
 
+  function handleNameChange(e){
+    setShowcaseJSON(
+    setChanges => {
+      setChanges.personas[0].name = e.target.value;
+    })
+  }
+
   return (
     <>
       <div className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">
@@ -152,9 +159,13 @@ function App() {
           React and Tailwind CSS in action
         </p>
 
-        <button onClick={handleClick}>
-          Update persona name to john:
-        </button>
+        <label>
+        Persona 1 Name:
+        <input
+          value={showcaseJSON.personas[0].name}
+          onChange={handleNameChange}
+        />
+      </label>
 
       </div>
       <p>

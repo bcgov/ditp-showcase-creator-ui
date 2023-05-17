@@ -134,12 +134,8 @@ function App() {
     }
   );
 
-  function handleClick() {
-
-    setShowcaseJSON(setChanges => {
-      setChanges.personas[0].name = "John"
-    });
-
+  function saveJSON() {
+    
   }
 
   function handleNameChange(e){
@@ -148,6 +144,8 @@ function App() {
       setChanges.personas[0].name = e.target.value;
     })
   }
+
+
 
   return (
     <>
@@ -166,6 +164,11 @@ function App() {
           onChange={handleNameChange}
         />
       </label>
+      <div>
+      <button onClick={saveJSON} className="p-2 m-2 border shadow bg-white">
+        Save JSON
+      </button>
+      </div>
 
       </div>
       <p>

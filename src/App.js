@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
 import { useImmer } from 'use-immer' // useImmer is an alternative to useState; it is useful for dealing with nested JSON
+import { saveAs } from 'file-saver'; // for saving JSON
 
 function App() {
 
@@ -135,7 +136,8 @@ function App() {
   );
 
   function saveJSON() {
-    
+    var blob = new Blob([JSON.stringify(showcaseJSON.personas)], {type: "text/plain;charset=utf-8"});
+    saveAs(blob, 'scenario.json')
   }
 
   function handleNameChange(e){
@@ -144,6 +146,8 @@ function App() {
       setChanges.personas[0].name = e.target.value;
     })
   }
+
+
 
 
 

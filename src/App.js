@@ -3,6 +3,8 @@ import './App.css';
 import { useState } from 'react';
 import { useImmer } from 'use-immer' // useImmer is an alternative to useState; it is useful for dealing with nested JSON
 import { saveAs } from 'file-saver'; // for saving JSON
+import { FileUploadFull, FileUploadBar } from './react-modules/FileUpload.js'
+import { DarkModeToggle } from './react-modules/DarkMode';
 
 function App() {
 
@@ -135,16 +137,22 @@ function App() {
     }
   );
 
+  const [darkMode, setDarkMode] = React.useState(true)
+
+  function toggleDarkMode() {
+    setDarkMode(prevDarkMode => !prevDarkMode)
+  }
+
   function saveJSON() {
-    var blob = new Blob([JSON.stringify(showcaseJSON.personas)], {type: "text/plain;charset=utf-8"});
+    var blob = new Blob([JSON.stringify(showcaseJSON.personas)], { type: "text/plain;charset=utf-8" });
     saveAs(blob, 'scenario.json')
   }
 
-  function handleNameChange(e){
+  function handleNameChange(e) {
     setShowcaseJSON(
-    setChanges => {
-      setChanges.personas[0].name = e.target.value;
-    })
+      setChanges => {
+        setChanges.personas[0].name = e.target.value;
+      })
   }
 
 
@@ -153,31 +161,40 @@ function App() {
 
   return (
     <>
-      <div className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">
-        <p className="text-3xl text-gray-700 font-bold mb-5">
-          Welcome!
-        </p>
-        <p className="text-gray-500 text-lg">
-          React and Tailwind CSS in action
-        </p>
+      <div className='dark:bg-gray-500'>
+        <h1 className='text-5xl text-center p-10 dark:text-white'>Showcase Creator UI</h1>
+        <DarkModeToggle/>
+        <div className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-5">
+          <p className="text-3xl text-gray-700 font-bold mb-5">
+            Welcome!
+          </p>
+          <p className="text-gray-500 text-lg">
+            React and Tailwind CSS in action
+          </p>
 
-        <label>
-        Persona 1 Name:
-        <input
-          value={showcaseJSON.personas[0].name}
-          onChange={handleNameChange}
-        />
-      </label>
-      <div>
-      <button onClick={saveJSON} className="p-2 m-2 border shadow bg-white">
-        Save JSON
-      </button>
-      </div>
+          <label>
+            Persona 1 Name:
+            <input
+              value={showcaseJSON.personas[0].name}
+              onChange={handleNameChange}
+            />
+          </label>
 
+          <FileUploadBar />
+          <FileUploadFull />
+
+          <div>
+            <button onClick={saveJSON} className="p-2 m-2 border shadow bg-white">
+              Save JSON
+            </button>
+          </div>
+
+        </div>
+
+        <p>
+          {JSON.stringify(showcaseJSON, null, "\t")}
+        </p>
       </div>
-      <p>
-        {JSON.stringify(showcaseJSON, null, "\t")}
-      </p>
     </>
   );
 }

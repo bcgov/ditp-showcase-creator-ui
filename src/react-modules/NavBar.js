@@ -1,7 +1,11 @@
 import { DarkModeToggle } from "./DarkModeToggle";
-import {SaveButton} from "./SaveButton"
+import { SaveButton } from "./SaveButton";
+import { SaveModal } from "./SaveModal";
+import { useState } from "react";
 
-function NavBar({ darkMode, setDarkMode, showcaseJSON}) {
+function NavBar({ darkMode, setDarkMode, showcaseJSON }) {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <div className="grid grid-cols-3">
       <div />
@@ -9,9 +13,11 @@ function NavBar({ darkMode, setDarkMode, showcaseJSON}) {
         Showcase Creator UI
       </h1>
       <div className="flex justify-center items-center">
-        {" "}
         <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
-        <SaveButton showcaseJSON={showcaseJSON} />
+        {showModal ? (
+          <SaveModal setShowModal={setShowModal} showcaseJSON={showcaseJSON} />
+        ) : null}
+        <SaveButton setShowModal={setShowModal} />
       </div>
     </div>
   );

@@ -138,9 +138,7 @@ function App() {
   );
 
   const [darkMode, setDarkMode] = useState(true)
-
-
-
+  
   function handleNameChange(e) {
     setShowcaseJSON(
       setChanges => {

@@ -137,7 +137,7 @@ function App() {
     }
   );
 
-  const [darkMode, setDarkMode] = React.useState(true)
+  const [darkMode, setDarkMode] = useState(true)
 
   function toggleDarkMode() {
     setDarkMode(prevDarkMode => !prevDarkMode)
@@ -157,15 +157,20 @@ function App() {
 
   return (
     <>
-      <div className={`dark:bg-gray-500 ${darkMode ? "dark" : ""}`}>
+      <div className={`dark:bg-gray-500 bg-white ${darkMode ? "dark" : ""}`}>
 
-        <h1 className='text-5xl text-center p-10 dark:text-white'>Showcase Creator UI</h1>
-        <DarkModeToggle darkMode={darkMode} toggleDarkMode=/>
-        <div className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-5">
-          <p className="text-3xl text-gray-700 font-bold mb-5">
+        <div className="grid grid-cols-3">
+          <div/>
+          <h1 className='text-4xl text-center p-10 dark:text-white'>Showcase Creator UI</h1>
+          <div className="flex justify-center items-center"> <DarkModeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} /></div>
+        </div>
+        
+        
+        <div className="container mx-auto bg-neutral-200 rounded-xl shadow border p-8 m-5">
+          <p className="text-3xl text-neutral-700 font-bold mb-5">
             Welcome!
           </p>
-          <p className="text-gray-500 text-lg">
+          <p className="text-neutral-500 text-lg">
             React and Tailwind CSS in action
           </p>
 
@@ -177,8 +182,8 @@ function App() {
             />
           </label>
 
-          <FileUploadBar />
-          <FileUploadFull />
+          <FileUploadBar text={"Upload My Custom Image:"}/>
+          <FileUploadFull text={"SVG, PNG, JPG or GIF (MAX. 800x400px)"}/>
 
           <div>
             <button onClick={saveJSON} className="p-2 m-2 border shadow bg-white">

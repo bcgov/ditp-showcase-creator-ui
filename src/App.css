@@ -8,7 +8,7 @@
 }
 
 .dark {
-  @apply bg-gray-800 text-zinc-50;
+  @apply bg-zinc-800;
 }
 
 @media (prefers-reduced-motion: no-preference) {

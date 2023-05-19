@@ -1,18 +1,15 @@
 import { useState } from "react";
 
-function DarkModeToggle() {
-
-    const [darkToggle, setDarkToggle] = useState(false)
+function DarkModeToggle({darkMode, toggleDarkMode}) {
 
     return (
         <>
-      <div class={`h-screen w-full flex items-center justify-center bg-gray-300 flex-col ${darkToggle && 'dark'}`}>
-
-      <label class="toggleDarkBtn">
-        <input type="checkbox" onClick={() => setDarkToggle(!darkToggle)} />
-        <span class="slideBtnTg round"></span>
-      </label>
-      </div>
+        <div className="">
+        <img onClick={toggleDarkMode} className="w-12" 
+            src={darkMode ? "./images/_dark-mode-toggle-icon.svg" : "./images/_light-mode-toggle-icon.svg"} 
+            alt={darkMode ? "Turn off dark mode" : " Turn on dark mode"}/>
+        </div>
+            
       </>
       )
 }

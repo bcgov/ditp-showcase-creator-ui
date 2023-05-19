@@ -155,15 +155,12 @@ function App() {
       })
   }
 
-
-
-
-
   return (
     <>
-      <div className='dark:bg-gray-500'>
+      <div className={`dark:bg-gray-500 ${darkMode ? "dark" : ""}`}>
+
         <h1 className='text-5xl text-center p-10 dark:text-white'>Showcase Creator UI</h1>
-        <DarkModeToggle/>
+        <DarkModeToggle darkMode={darkMode} toggleDarkMode=/>
         <div className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-5">
           <p className="text-3xl text-gray-700 font-bold mb-5">
             Welcome!

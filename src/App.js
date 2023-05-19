@@ -166,11 +166,11 @@ function App() {
         </div>
         
         
-        <div className="container mx-auto bg-neutral-200 rounded-xl shadow border p-8 m-5">
-          <p className="text-3xl text-neutral-700 font-bold mb-5">
+        <div className="container mx-auto bg-neutral-200 dark:bg-zinc-500 rounded-xl shadow-xl border p-8 m-10 mt-5">
+          <p className="text-3xl text-neutral-700 dark:text-white font-bold mb-5">
             Welcome!
           </p>
-          <p className="text-neutral-500 text-lg">
+          <p className="text-neutral-500 dark:text-neutral-200 text-lg">
             React and Tailwind CSS in action
           </p>
 

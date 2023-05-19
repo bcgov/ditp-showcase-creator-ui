@@ -1,6 +1,8 @@
-import { useState } from "react";
+function DarkModeToggle({darkMode, setDarkMode}) {
 
-function DarkModeToggle({darkMode, toggleDarkMode}) {
+  function toggleDarkMode() {
+    setDarkMode(prevDarkMode => !prevDarkMode)
+  }
 
     return (
         <>

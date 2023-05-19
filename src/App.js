@@ -1,11 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
-import { useImmer } from 'use-immer' // useImmer is an alternative to useState; it is useful for dealing with nested JSON
-import { saveAs } from 'file-saver'; // for saving JSON
-import { FileUploadFull, FileUploadBar } from './react-modules/FileUpload.js'
-import { DarkModeToggle } from './react-modules/DarkMode';
+import { useImmer } from 'use-immer'; // useImmer is an alternative to useState; it is useful for dealing with nested JSON
+import { FileUploadFull, FileUploadBar } from './react-modules/FileUpload.js';
 
+import {SaveButton} from './react-modules/SaveButton';
+import {NavBar} from './react-modules/NavBar';
 function App() {
 
   const [showcaseJSON, setShowcaseJSON] = useImmer(
@@ -139,14 +139,7 @@ function App() {
 
   const [darkMode, setDarkMode] = useState(true)
 
-  function toggleDarkMode() {
-    setDarkMode(prevDarkMode => !prevDarkMode)
-  }
 
-  function saveJSON() {
-    var blob = new Blob([JSON.stringify(showcaseJSON.personas)], { type: "text/plain;charset=utf-8" });
-    saveAs(blob, 'scenario.json')
-  }
 
   function handleNameChange(e) {
     setShowcaseJSON(
@@ -159,11 +152,7 @@ function App() {
     <>
       <div className={`dark:bg-gray-500 bg-white ${darkMode ? "dark" : ""}`}>
 
-        <div className="grid grid-cols-3">
-          <div/>
-          <h1 className='text-4xl text-center p-10 dark:text-white'>Showcase Creator UI</h1>
-          <div className="flex justify-center items-center"> <DarkModeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} /></div>
-        </div>
+        <NavBar darkMode={darkMode} setDarkMode={setDarkMode} showcaseJSON={showcaseJSON}/>
         
         
         <div className="container mx-auto bg-neutral-200 dark:bg-zinc-500 rounded-xl shadow-xl border p-8 m-10 mt-5">
@@ -185,15 +174,9 @@ function App() {
           <FileUploadBar text={"Upload My Custom Image:"}/>
           <FileUploadFull text={"SVG, PNG, JPG or GIF (MAX. 800x400px)"}/>
 
-          <div>
-            <button onClick={saveJSON} className="p-2 m-2 border shadow bg-white">
-              Save JSON
-            </button>
-          </div>
-
         </div>
 
-        <p>
+        <p className="p-10 m-5 border rounded dark:text-neutral-200">
           {JSON.stringify(showcaseJSON, null, "\t")}
         </p>
       </div>

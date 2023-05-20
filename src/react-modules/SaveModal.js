@@ -21,6 +21,8 @@ export function SaveModal({ setShowModal, showcaseJSON }) {
       blob,
       `${filename}_(${cDate.getMonth()}-${cDate.getDate()}-${cDate.getYear()}).json`
     );
+
+    setShowModal(false)
   }
 
   return (

@@ -2,8 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
 import { useImmer } from 'use-immer'; // useImmer is an alternative to useState; it is useful for dealing with nested JSON
-import { FileUploadFull, FileUploadBar } from './react-modules/FileUpload.js';
-
+import { FileUploadFull, FileUploadBar } from './react-modules/FileUpload';
+import {TextInput} from './react-modules/TextInput'
 import {SaveButton} from './react-modules/SaveButton';
 import {NavBar} from './react-modules/NavBar';
 function App() {
@@ -139,11 +139,20 @@ function App() {
 
   const [darkMode, setDarkMode] = useState(true)
   
+  {/** MOVE TO TEXTINPUT MODULE */}
   function handleNameChange(e) {
     setShowcaseJSON(
       setChanges => {
         setChanges.personas[0].name = e.target.value;
       })
+  }
+
+  function handleJSONUpdate(element, newValue) {
+    setShowcaseJSON((json) => {
+      json[element] = newValue;
+      console.log(json[element])
+    });
+    console.log(showcaseJSON.personas[0].name)
   }
 
   return (
@@ -161,6 +170,7 @@ function App() {
             React and Tailwind CSS in action
           </p>
 
+          {/**   REPLACE WITH MODULE */}
           <label>
             Persona 1 Name:
             <input
@@ -168,6 +178,15 @@ function App() {
               onChange={handleNameChange}
             />
           </label>
+
+          <TextInput 
+            label={"My text input"}
+            element={showcaseJSON.personas[0].name}
+            handleJSONUpdate={handleJSONUpdate}
+            path="personas[0].name"
+          />
+
+
 
           <FileUploadBar text={"Upload My Custom Image:"}/>
           <FileUploadFull text={"SVG, PNG, JPG or GIF (MAX. 800x400px)"}/>

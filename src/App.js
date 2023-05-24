@@ -138,21 +138,11 @@ function App() {
   );
 
   const [darkMode, setDarkMode] = useState(true)
-  
-  {/** MOVE TO TEXTINPUT MODULE */}
-  function handleNameChange(e) {
-    setShowcaseJSON(
-      setChanges => {
-        setChanges.personas[0].name = e.target.value;
-      })
-  }
 
-  function handleJSONUpdate(element, newValue) {
+  function handleJSONUpdate(index, element, newValue) {
     setShowcaseJSON((json) => {
-      json[element] = newValue;
-      console.log(json[element])
+      json["personas"][index][element] = newValue;
     });
-    console.log(showcaseJSON.personas[0].name)
   }
 
   return (
@@ -170,18 +160,10 @@ function App() {
             React and Tailwind CSS in action
           </p>
 
-          {/**   REPLACE WITH MODULE */}
-          <label>
-            Persona 1 Name:
-            <input
-              value={showcaseJSON.personas[0].name}
-              onChange={handleNameChange}
-            />
-          </label>
-
           <TextInput 
             label={"My text input"}
-            element={showcaseJSON.personas[0].name}
+            personaIndex={0}
+            element={"name"}
             handleJSONUpdate={handleJSONUpdate}
             path="personas[0].name"
           />

@@ -1,17 +1,18 @@
 import {useState} from 'react';
 
-function TextInput({ label, element, handleJSONUpdate, path }) {
+function TextInput({ label, personaIndex, element, handleJSONUpdate}) {
 
     const handleChange = (event) => {
-        handleJSONUpdate(path, event.target.value);
+        handleJSONUpdate(personaIndex, element, event.target.value);
       };
 
 
   return (
-    <label>
-      {label}
-      <input type="text"  onChange={handleChange} />
-    </label>
+    <div className="p-2">
+    <label className="" for={`${personaIndex}_${element}`}>{label}: </label>
+    <input id={`${personaIndex}_${element}`} type="text"  onChange={handleChange} />
+    </div>
+    
   );
 }
 

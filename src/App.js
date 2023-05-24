@@ -165,7 +165,6 @@ function App() {
             personaIndex={0}
             element={"name"}
             handleJSONUpdate={handleJSONUpdate}
-            path="personas[0].name"
           />
 
 

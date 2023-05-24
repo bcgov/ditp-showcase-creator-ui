@@ -19,7 +19,7 @@ function FileUploadBar({text}) {
 
     return(
         <>
-            <label class="block mb-1 text-sm font-medium text-zinc-900" for="default_size">{text}</label>
+            <label class="block mb-1 text-sm font-medium text-neutral-500 dark:text-neutral-200" for="default_size">{text}</label>
             <input class="block w-full mb-5 text-sm text-zinc-900 border border-zinc-300 rounded cursor-pointer bg-zinc-50 dark:text-zinc-400 focus:outline-none dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400" id="default_size" type="file"/>
         </>
     )

@@ -6,7 +6,6 @@ import { FileUploadFull, FileUploadBar } from './react-modules/FileUpload';
 import {TextInput} from './react-modules/TextInput'
 import {SaveButton} from './react-modules/SaveButton';
 import {NavBar} from './react-modules/NavBar';
-import {JSONUploadButton} from './react-modules/JSONUpload'
 function App() {
 
   const [showcaseJSON, setShowcaseJSON] = useImmer(
@@ -160,8 +159,6 @@ function App() {
           <p className="text-neutral-500 dark:text-neutral-200 text-lg">
             React and Tailwind CSS in action
           </p>
-
-        <JSONUploadButton setShowcaseJSON={setShowcaseJSON} />
 
           <TextInput 
             label={"My text input"}

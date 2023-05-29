@@ -6,6 +6,8 @@ import { FileUploadFull, FileUploadBar } from './react-modules/FileUpload';
 import {TextInput} from './react-modules/TextInput'
 import {SaveButton} from './react-modules/SaveButton';
 import {NavBar} from './react-modules/NavBar';
+import {CharacterScreen} from './react-modules/character-screen/CharacterScreen';
+
 function App() {
 
   const [showcaseJSON, setShowcaseJSON] = useImmer(
@@ -138,6 +140,8 @@ function App() {
   );
 
   const [darkMode, setDarkMode] = useState(true)
+  const [selectedCharacter, setSelectedCharacter] = useState(0)
+
 
   function handleJSONUpdate(index, element, newValue) {
     setShowcaseJSON((json) => {
@@ -160,11 +164,14 @@ function App() {
             React and Tailwind CSS in action
           </p>
 
+          <CharacterScreen showcaseJSON={showcaseJSON} setShowcaseJSON={setShowcaseJSON} selectedCharacter={selectedCharacter} setSelectedCharacter={setSelectedCharacter} handleJSONUpdate={handleJSONUpdate}/>
+
           <TextInput 
             label={"My text input"}
             personaIndex={0}
             element={"name"}
             handleJSONUpdate={handleJSONUpdate}
+            showcaseJSON={showcaseJSON}
           />
 
 

@@ -50,10 +50,13 @@ function JSONUploadButton({ setShowcaseJSON }) {
       className="p-1 hover:bg-gray-200 dark:bg-zinc-200 dark:hover:bg-zinc-400 dark:hover:text-gray-100 m-2 border rounded shadow bg-white"
       onClick={handleClick}>Load</button>
     </div>
-    {showModal ? <ErrorModal 
+
+    {
+    showModal ? <ErrorModal 
     errorText={"Uploaded file was invalid. \n Please try again, or open the file in a text editor to check for well-formed JSON."} 
     setShowModal={setShowModal}/> : null
     }
+    
     </>
   );
 }

@@ -56,8 +56,8 @@ function App() {
 
 
 
-          <FileUploadBar text={"Upload My Custom Image:"}/>
-          <FileUploadFull text={"SVG, PNG, JPG or GIF (MAX. 800x400px)"}/>
+          {/* <FileUploadBar text={"Upload My Custom Image:"}/>
+          <FileUploadFull text={"SVG, PNG, JPG or GIF (MAX. 800x400px)"}/> */}
 
         </div>
 

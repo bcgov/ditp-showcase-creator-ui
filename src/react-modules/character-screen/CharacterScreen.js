@@ -115,9 +115,19 @@ function CharacterScreen({
           showcaseJSON={showcaseJSON}
         />
         <div className="grid grid-cols-3 w-full">
-          <FileUploadFull text={"Body Image"} />
+
+          <FileUploadFull 
+            text={"Body Image"} 
+            personaIndex={selectedCharacter}
+            element={'image'}
+            handleJSONUpdate={handleJSONUpdate}
+            showcaseJSON={showcaseJSON}
+          />
+{/* 
           <FileUploadFull text={"Avatar Image"} />
-          <FileUploadFull text={"Celebration Image"} />
+          <FileUploadFull text={"Celebration Image"} /> */}
+
+
         </div>
       </div>
     </div>

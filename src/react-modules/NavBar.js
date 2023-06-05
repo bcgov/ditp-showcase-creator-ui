@@ -28,34 +28,24 @@ function NavBar({ darkMode, setDarkMode, showcaseJSON, setShowcaseJSON }) {
       </div>
 
 
-      <div className="flex justify-between bg-gray-300 px-8">
+      <div className="flex justify-between bg-gray-300 px-8 ">
 
-        <div className="flex flex-row justify-center gap-3 p-0 h-93 bg-green-800 shadow-md rounded-b-lg">
-          
+        <div className="flex flex-row justify-center gap-6 px-8 shadow-md rounded-b-lg">
             <NavBarButton
-            
             title={"Character"}
+            //src={require('../assets/character.png')}
              />
-          
-          
             <NavBarButton 
             title={"Credential"}
             />
-          
-          
-
             <NavBarButton
             title={"Set Up"} />
-          
-          
             <NavBarButton
             title={"Scenario"} />
-          
-
         </div>
 
 
-        <div className="flex flex-col gap-4 w-145  justify-content-center bg-indigo-400 py-2">
+        <div className="flex flex-col gap-4 w-145  justify-content-cente py-4">
         <button
             type="button"
             className="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-black shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
@@ -69,7 +59,7 @@ function NavBar({ darkMode, setDarkMode, showcaseJSON, setShowcaseJSON }) {
             className="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-black shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
           >
             <BookmarkSquareIcon className="-ml-0.5 h-5 w-5" aria-hidden="true" />
-            SAVE
+            SAVE PROCESS
           </button>
           
 

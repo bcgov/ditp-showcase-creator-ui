@@ -47,7 +47,7 @@ function JSONUploadButton({ setShowcaseJSON }) {
         onChange={handleFileUpload}
       />
       <button 
-      className="p-1 hover:bg-gray-200 dark:bg-zinc-200 dark:hover:bg-zinc-400 dark:hover:text-gray-100 m-2 border rounded shadow bg-white"
+      className="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-black shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
       onClick={handleClick}>Load</button>
     </div>
 

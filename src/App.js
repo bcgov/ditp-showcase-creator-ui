@@ -164,7 +164,9 @@ function App() {
             label={"My text input"}
             personaIndex={0}
             element={"name"}
+            placeholder={"Enter Character Name"}
             handleJSONUpdate={handleJSONUpdate}
+
           />
 
 

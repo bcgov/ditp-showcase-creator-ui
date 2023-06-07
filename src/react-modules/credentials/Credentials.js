@@ -70,7 +70,7 @@ function Credentials({ showcaseJSON }) {
 
   return (
     <>
-      <div className="two-column-container mx-20 my-16">
+      <div className=" two-column-container mx-20 my-16">
         <div className="two-column-col md:w-3/5 pr-4 ">
           <div className="flex justify-between">
             <div>

@@ -12,7 +12,7 @@ function Edit({
   return (
     <>
       <FormHeader
-        formTitle={"Create your Credential"}
+        formTitle={"Edit your Credential"}
         formCategory={"Credential"}
       ></FormHeader>
       <div className="mt-4">

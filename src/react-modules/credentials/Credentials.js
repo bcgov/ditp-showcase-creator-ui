@@ -7,7 +7,7 @@ import { TextInput } from "../TextInput";
 import { NoSelection, Form, SelectionOverview } from "../components/index.js";
 import { CredentialsList, Edit } from "./index.js";
 
-function Credentials({ showcaseJSON }) {
+function Credentials({ showcaseJSON, handleJSONUpdate, setShowcaseJSON }) {
   const [credentialSelected, setCredentialSelected] = useState(false);
   const [editButtonClicked, setEditButtonClicked] = useState(false);
 
@@ -57,10 +57,19 @@ function Credentials({ showcaseJSON }) {
             issuerName={parsedCredentials[selectedIndex].issuer_name}
             credentialAttributes={parsedCredentials[selectedIndex].attributes}
             selectedIndex={selectedIndex}
+            handleJSONUpdate={handleJSONUpdate}
+            showcaseJSON={showcaseJSON}
           />
         );
       case "create":
-        return <Form selectedIndex={selectedIndex} />;
+        return (
+          <Form
+            selectedIndex={selectedIndex}
+            handleJSONUpdate={handleJSONUpdate}
+            showcaseJSON={showcaseJSON}
+            setShowcaseJSON={setShowcaseJSON}
+          />
+        );
       case "import":
         return "";
       default:

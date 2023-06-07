@@ -1,8 +1,16 @@
 import React from "react";
 import { TextInput } from "../TextInput";
 import { FormHeader } from "./FormHeader";
+import { NewCredentialButton } from "../credentials/NewCredentialButton";
 
-function Form({ selectedIndex, credentialName, issuerName }) {
+function Form({
+  selectedIndex,
+  credentialName,
+  issuerName,
+  showcaseJSON,
+  handleJSONUpdate,
+  setShowcaseJSON,
+}) {
   return (
     <>
       <FormHeader
@@ -11,31 +19,39 @@ function Form({ selectedIndex, credentialName, issuerName }) {
       ></FormHeader>
       <div className="mt-4">
         <TextInput
-          label="Credential Name"
+          label={"Credential Name"}
           personaIndex={selectedIndex}
-          element="for"
+          element={"for"}
           value={credentialName}
+          showcaseJSON={showcaseJSON}
+          handleJSONUpdate={handleJSONUpdate}
         />
       </div>
       <TextInput
-        label="Issuer Name"
+        label={"Issuer Name"}
         personaIndex={selectedIndex}
-        element="for"
+        element={"for"}
         value={issuerName}
+        showcaseJSON={showcaseJSON}
+        handleJSONUpdate={handleJSONUpdate}
       />
       <div className="grid grid-cols-5 items-center content-center">
         <div className="col-span-2">
           <TextInput
             label="Attribute Name"
             personaIndex={selectedIndex}
-            element="for"
+            element={"for"}
+            showcaseJSON={showcaseJSON}
+            handleJSONUpdate={handleJSONUpdate}
           />
         </div>
         <div className="col-span-2">
           <TextInput
             label="Attribute Value"
             personaIndex={selectedIndex}
-            element="for"
+            element={"for"}
+            showcaseJSON={showcaseJSON}
+            handleJSONUpdate={handleJSONUpdate}
           />
         </div>
         <div>
@@ -52,7 +68,9 @@ function Form({ selectedIndex, credentialName, issuerName }) {
               <TextInput
                 label="Attribute Name"
                 personaIndex={selectedIndex}
-                element="for"
+                element={"for"}
+                showcaseJSON={showcaseJSON}
+                handleJSONUpdate={handleJSONUpdate}
               />
             </div>
           </div>
@@ -61,7 +79,9 @@ function Form({ selectedIndex, credentialName, issuerName }) {
               <TextInput
                 label="Attribute Value"
                 personaIndex={selectedIndex}
-                element="for"
+                element={"for"}
+                showcaseJSON={showcaseJSON}
+                handleJSONUpdate={handleJSONUpdate}
               />
             </div>
           </div>
@@ -73,6 +93,7 @@ function Form({ selectedIndex, credentialName, issuerName }) {
           </div>
         </div>
       </div>
+      <NewCredentialButton setShowcaseJSON={setShowcaseJSON} />
     </>
   );
 }

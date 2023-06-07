@@ -8,6 +8,8 @@ function Edit({
   issuerName,
   credentialAttributes,
   selectedIndex,
+  handleJSONUpdate,
+  showcaseJSON,
 }) {
   return (
     <>
@@ -17,31 +19,39 @@ function Edit({
       ></FormHeader>
       <div className="mt-4">
         <TextInput
-          label="Credential Name"
+          label={"Credential Name"}
           personaIndex={selectedIndex}
-          element="for"
+          element={"for"}
           value={credentialName}
+          handleJSONUpdate={handleJSONUpdate}
+          showcaseJSON={showcaseJSON}
         />
       </div>
       <TextInput
-        label="Issuer Name"
+        label={"Issuer Name"}
         personaIndex={selectedIndex}
-        element="for"
+        element={"for"}
         value={issuerName}
+        handleJSONUpdate={handleJSONUpdate}
+        showcaseJSON={showcaseJSON}
       />
       <div className="grid grid-cols-5 items-center content-center">
         <div className="col-span-2">
           <TextInput
-            label="Attribute Name"
+            label={"Attribute Name"}
             personaIndex={selectedIndex}
-            element="for"
+            element={"for"}
+            handleJSONUpdate={handleJSONUpdate}
+            showcaseJSON={showcaseJSON}
           />
         </div>
         <div className="col-span-2">
           <TextInput
-            label="Attribute Value"
+            label={"Attribute Value"}
             personaIndex={selectedIndex}
-            element="for"
+            element={"for"}
+            handleJSONUpdate={handleJSONUpdate}
+            showcaseJSON={showcaseJSON}
           />
         </div>
         <div>
@@ -56,18 +66,22 @@ function Edit({
           <div className="col-span-2">
             <div className="credentials-form-attribute-text">
               <TextInput
-                label="Attribute Name"
+                label={"Attribute Name"}
                 personaIndex={selectedIndex}
-                element="for"
+                element={"for"}
+                handleJSONUpdate={handleJSONUpdate}
+                showcaseJSON={showcaseJSON}
               />
             </div>
           </div>
           <div className="col-span-2">
             <div className="credentials-form-attribute-text">
               <TextInput
-                label="Attribute Value"
+                label={"Attribute Value"}
                 personaIndex={selectedIndex}
-                element="for"
+                element={"for"}
+                handleJSONUpdate={handleJSONUpdate}
+                showcaseJSON={showcaseJSON}
               />
             </div>
           </div>

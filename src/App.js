@@ -24,18 +24,36 @@ function App() {
     });
   }
 
-  console.log(showcaseJSON);
+  // console.log(showcaseJSON.personas[0].onboarding[4].credentials);
 
   return (
     <>
       <div className={`dark:bg-gray-500 bg-white ${darkMode ? "dark" : ""}`}>
-        <Credentials showcaseJSON={showcaseJSON} />
+        <p className="p-10 m-5 border rounded dark:text-gray-500">
+          {JSON.stringify(
+            showcaseJSON.personas[0].onboarding[4].credentials,
+            null,
+            2
+          )
+            .split("\n")
+            .map((line, index) => (
+              <div key={index}>
+                {line}
+                <br />
+              </div>
+            ))}
+        </p>
+        ;
+        <Credentials
+          showcaseJSON={showcaseJSON}
+          handleJSONUpdate={handleJSONUpdate}
+          setShowcaseJSON={setShowcaseJSON}
+        />
         <NavBar
           darkMode={darkMode}
           setDarkMode={setDarkMode}
           showcaseJSON={showcaseJSON}
         />
-
         <div className="container mx-auto bg-neutral-200 dark:bg-zinc-500 rounded-xl shadow-xl border p-8 m-10 mt-5">
           <p className="text-3xl text-neutral-700 dark:text-white font-bold mb-5">
             Welcome!
@@ -63,7 +81,6 @@ function App() {
           <FileUploadBar text={"Upload My Custom Image:"} />
           <FileUploadFull text={"SVG, PNG, JPG or GIF (MAX. 800x400px)"} />
         </div>
-
         <p className="p-10 m-5 border rounded dark:text-neutral-200">
           {JSON.stringify(showcaseJSON, null, "\t")}
         </p>

@@ -4,14 +4,15 @@ import { SaveModal } from "./SaveModal";
 import { JSONUploadButton } from './JSONUpload'
 import { useState } from "react";
 import { NavBarButton } from "./NavBarButton";
-import { ArrowDownTrayIcon, BookmarkSquareIcon } from '@heroicons/react/20/solid'
 
 
-function NavBar({ darkMode, setDarkMode, showcaseJSON, setShowcaseJSON }) {
+function NavBar({ darkMode, setDarkMode, showcaseJSON, setShowcaseJSON, changePage }) {
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
+      {/* 
+      //OLD MENU. WAITING APPROVE TO REMOVE
       <div className="grid grid-cols-3">
         <div className="flex justify-center items-center"><DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} /></div>
         <h1 className="text-4xl text-center p-10 dark:text-white">
@@ -25,43 +26,51 @@ function NavBar({ darkMode, setDarkMode, showcaseJSON, setShowcaseJSON }) {
           <JSONUploadButton setShowcaseJSON={setShowcaseJSON} />
           <SaveButton setShowModal={setShowModal} />
         </div>
-      </div>
+      </div> */}
 
 
-      <div className="flex justify-between bg-gray-300 px-8 ">
+      <div className="flex justify-between px-8 ">
+
+      <div className="flex justify-center items-center"><DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} /></div>
 
         <div className="flex flex-row justify-center gap-6 px-8 shadow-md rounded-b-lg">
-            <NavBarButton
+         
+          <NavBarButton
             title={"Character"}
-            //src={require('../assets/character.png')}
-             />
-            <NavBarButton 
+            src={require("../assets/NavBar/character.svg").default}
+            page="character"
+            changePage={changePage}
+
+          />
+          <NavBarButton
             title={"Credential"}
-            />
-            <NavBarButton
-            title={"Set Up"} />
-            <NavBarButton
-            title={"Scenario"} />
+            src={require("../assets/NavBar/credentials.svg").default}
+            page="credential"
+            changePage={changePage}
+          />
+          <NavBarButton
+            title={"Set Up"}
+            src={require("../assets/NavBar/setup.svg").default}
+            page="setup"
+            changePage={changePage}
+          />
+          <NavBarButton
+            title={"Scenario"}
+            src={require("../assets/NavBar/scenario.svg").default}
+            page="scenario"
+            changePage={changePage}
+          />
         </div>
 
 
         <div className="flex flex-col gap-4 w-145  justify-content-cente py-4">
-        <button
-            type="button"
-            className="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-black shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
-          >
-            <ArrowDownTrayIcon className="-ml-0.5 h-5 w-5" aria-hidden="true" />
-            DOWNLOAD
-          </button>
-      
-          <button
-            type="button"
-            className="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-black shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
-          >
-            <BookmarkSquareIcon className="-ml-0.5 h-5 w-5" aria-hidden="true" />
-            SAVE PROCESS
-          </button>
-          
+
+
+{showModal ? (
+            <SaveModal setShowModal={setShowModal} showcaseJSON={showcaseJSON} />
+          ) : null}
+          <JSONUploadButton setShowcaseJSON={setShowcaseJSON} />
+          <SaveButton setShowModal={setShowModal} />
 
         </div>
 

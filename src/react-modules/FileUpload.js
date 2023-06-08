@@ -2,6 +2,7 @@ import { PhotoIcon } from "@heroicons/react/20/solid";
 
 function FileUploadFull({ text }) {
 
+
     return (
         <>
             <div class="flex items-center justify-center w-full">
@@ -29,6 +30,7 @@ function FileUploadFull({ text }) {
                         <p className="pl-1">or drag and drop</p>
                     </div>
                     <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+
                 </div>
             </div> */}
         </>

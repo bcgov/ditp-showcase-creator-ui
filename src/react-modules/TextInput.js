@@ -1,23 +1,61 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
-function TextInput({ label, personaIndex, element, handleJSONUpdate, placeholder}) {
 
-    const handleChange = (event) => {
-        handleJSONUpdate(personaIndex, element, event.target.value);
+function TextInput({ label, personaIndex, element, handleJSONUpdate, placeholder, showcaseJSON}) {
+
+
+  const [value, setValue] = useState("");
+
+  useEffect(() => {
+    setValue(showcaseJSON.personas[personaIndex][element])
+  }, [personaIndex]);
+
+
+    const handleChange = (newValue) => {
+        setValue(newValue) 
+        handleJSONUpdate(personaIndex, element, newValue);
       };
 
 
   return (
-    <div className="">
-    <label className="text-neutral-500 dark:text-neutral-200" for={`${personaIndex}_${element}`}>{label}: </label>
-    <input className="ml- block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-400 sm:text-sm sm:leading-6" 
-      id={`${personaIndex}_${element}`} 
-      type="text"  
-      placeholder= {`  ${ placeholder}`}
-      onChange={handleChange} />
+    <div className="p-1">
+      <label className="text-neutral-500 dark:text-neutral-200" for={`${personaIndex}_${element}`}>{label} </label>
+      <br/>
+      <input className="p-1 w-full" id={`${personaIndex}_${element}`} type="text" 
+      value={value}
+      onChange={(e) => handleChange(e.target.value)} />
     </div>
     
   );
 }
 
-export { TextInput };
+
+function TextAreaInput({ label, personaIndex, element, handleJSONUpdate, showcaseJSON}) {
+
+  const [value, setValue] = useState("");
+
+  useEffect(() => {
+    setValue(showcaseJSON.personas[personaIndex][element])
+  }, [personaIndex]);
+
+
+    const handleChange = (newValue) => {
+        setValue(newValue) 
+        handleJSONUpdate(personaIndex, element, newValue);
+      };
+
+
+  return (
+
+    <div className="">
+    <label className="text-neutral-500 dark:text-neutral-200" for={`${personaIndex}_${element}`}>{label}: </label>
+      <textarea className="p-1 w-full resize-none" id={`${personaIndex}_${element}`} type="text" 
+      value={value}
+      onChange={(e) => handleChange(e.target.value)} />
+
+    </div>
+    
+  );
+}
+
+export { TextInput, TextAreaInput };

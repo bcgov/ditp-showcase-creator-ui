@@ -9,9 +9,9 @@ function TextInput({
 }) {
   const [value, setValue] = useState("");
 
-  // useEffect(() => {
-  //   setValue(showcaseJSON.personas[personaIndex][element]);
-  // }, [personaIndex]);
+  useEffect(() => {
+    setValue(showcaseJSON.personas[personaIndex][element]);
+  }, [personaIndex]);
 
   const handleChange = (newValue) => {
     setValue(newValue);

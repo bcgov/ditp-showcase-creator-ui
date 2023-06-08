@@ -2,6 +2,7 @@ import React from "react";
 import { TextInput } from "../TextInput";
 import { FormHeader } from "./FormHeader";
 import { NewCredentialButton } from "../credentials/NewCredentialButton";
+import { AttributesList } from "../credentials/AttributesList";
 
 function Form({
   selectedIndex,
@@ -60,7 +61,8 @@ function Form({
           </button>
         </div>
       </div>
-      <div className="credentials-form-attributes-container credentials-form-attributes-container  mt-4 rounded p-4">
+      <AttributesList />
+      {/* <div className="credentials-form-attributes-container credentials-form-attributes-container  mt-4 rounded p-4">
         <p className="  font-bold text-slate-50">Current Attributes</p>
         <div className="grid grid-cols-6">
           <div className="col-span-2">
@@ -92,7 +94,7 @@ function Form({
             <button className="border px-1 mt-4 text-slate-50">Remove</button>
           </div>
         </div>
-      </div>
+      </div> */}
       <NewCredentialButton setShowcaseJSON={setShowcaseJSON} />
     </>
   );

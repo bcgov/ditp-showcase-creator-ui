@@ -3,7 +3,7 @@ import { DEFAULT_JSON } from "./../../DEFAULT_JSON";
 
 function NewCredentialButton({ setShowcaseJSON }) {
   const data = {
-    name: "test_card",
+    name: "Person Card",
     version: "1.9",
     icon: "/public/student/icon-student.svg",
     attributes: [

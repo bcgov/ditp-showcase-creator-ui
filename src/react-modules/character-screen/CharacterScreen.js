@@ -123,6 +123,14 @@ function CharacterScreen({
             handleJSONUpdate={handleJSONUpdate}
             showcaseJSON={showcaseJSON}
           />
+          
+          <FileUploadFull 
+            text={"Avatar Image"} 
+            personaIndex={selectedCharacter}
+            element={'onboarding'}
+            handleJSONUpdate={handleJSONUpdate}
+            showcaseJSON={showcaseJSON}
+          />
 {/* 
           <FileUploadFull text={"Avatar Image"} />
           <FileUploadFull text={"Celebration Image"} /> */}

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import './../FileUpload.css'
 
 function FileUploadFull({
   text,
@@ -31,38 +32,28 @@ function FileUploadFull({
   }, [personaIndex]);
 
   const handleChange = async (newValue) => {
+    const objectUrl = URL.createObjectURL(newValue)
+    setPreview(objectUrl);
     const base64 = await convertBase64(newValue)
     setValue(base64);
     handleJSONUpdate(personaIndex, element, base64);
+    
   };
 
   return (
     <div class="flex p-1 items-center flex-col justify-center w-full">
-      <p className="text-neutral-500 dark:text-neutral-200">{text}</p>
+      <p className="text-neutral-500 p-1 w-full text-start dark:text-neutral-200">{text}</p>
       <label
         for="dropzone-file"
-        class="p-3 flex flex-col items-center justify-center w-full h-48 border-2 border-zinc-300 border-dashed rounded-lg cursor-pointer dark:hover:bg-zinc-800 dark:bg-zinc-700 hover:bg-zinc-100 dark:border-zinc-600 dark:hover:border-zinc-500 dark:hover:bg-zinc-600"
+        class="p-3 flex border-2 flex-col items-center justify-center w-full rounded cursor-pointer dark:hover:bg-zinc-800 upload_outside hover:bg-zinc-100 dark:hover:bg-zinc-600"
       >
-        <div class="flex flex-col items-center justify-center pt-5 pb-6">
-          <svg
-            aria-hidden="true"
-            class="w-10 h-10 mb-3 text-zinc-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-            ></path>
-          </svg>
-          <p class="mb-2 text-sm text-zinc-500 dark:text-zinc-400">
-            <span class="font-semibold">Click to upload</span> or drag and drop
+        
+        <div class="flex flex-col items-center justify-center border rounded-lg border-zinc-300 upload_center border-dashed p-2">
+        { preview == null ? null : <img className="p-3" src={`${preview}`} /> }
+          <p class=" text-center mb-2 text-xs text-zinc-500 dark:text-zinc-400 lowercase">
+            <span class="font-bold text-zinc-300 dark:text-zinc-200">Click to upload</span> or drag and drop
           </p>
-          <p class="text-xs text-zinc-500 dark:text-zinc-400">
+          <p class="text-xs text-zinc-500 dark:text-zinc-400 dark:text-zinc-400">
             (SVG, PNG, JPEG, JPG)
           </p>
         </div>

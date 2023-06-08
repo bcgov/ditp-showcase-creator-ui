@@ -73,7 +73,7 @@ function Credentials({ showcaseJSON, handleJSONUpdate, setShowcaseJSON }) {
       case "import":
         return "";
       default:
-        return <NoSelection />;
+        return <NoSelection Text={"You have no credential selected."} />;
     }
   };
 

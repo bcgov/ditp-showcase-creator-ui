@@ -132,21 +132,9 @@ function CharacterScreen({
             showcaseJSON={showcaseJSON}
           />
 
-          
-{/* 
-          <FileUploadFull text={"Avatar Image"} />
-          <FileUploadFull text={"Celebration Image"} /> */}
-
 
         </div>
       </div>
-      <FileUploadBar 
-            text={"Avatar Image"} 
-            personaIndex={selectedCharacter}
-            element={["revocationInfo", 0]}
-            handleJSONUpdate={handleJSONUpdate}
-            showcaseJSON={showcaseJSON}
-          />
     </div>
     
   );

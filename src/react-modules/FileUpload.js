@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import './../FileUpload.css'
+import "./../FileUpload.css";
 
 function FileUploadFull({
   text,
@@ -8,50 +8,61 @@ function FileUploadFull({
   handleJSONUpdate,
   showcaseJSON,
 }) {
-
-  const [value, setValue] = useState("");
+  // const [value, setValue] = useState("");
   const [preview, setPreview] = useState();
 
-    // https://stackoverflow.com/questions/36580196/reactjs-base64-file-upload
-    
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
-      fileReader.readAsDataURL(file)
+      fileReader.readAsDataURL(file);
       fileReader.onload = () => {
         resolve(fileReader.result);
-      }
+      };
       fileReader.onerror = (error) => {
         reject(error);
-      }
-    })
-  }
+      };
+    });
+  };
 
-  useEffect(() => {
-    setValue(showcaseJSON.personas[personaIndex][element]);
-  }, [personaIndex]);
+  // useEffect(() => {
+  //   setValue(showcaseJSON.personas[personaIndex][element]);
+  // }, [personaIndex]);
 
   const handleChange = async (newValue) => {
-    const objectUrl = URL.createObjectURL(newValue)
+    let objectUrl = URL.createObjectURL(newValue);
     setPreview(objectUrl);
-    const base64 = await convertBase64(newValue)
-    setValue(base64);
+    const base64 = await convertBase64(newValue);
+    // setValue(base64);
     handleJSONUpdate(personaIndex, element, base64);
-    
   };
 
   return (
     <div class="flex p-1 items-center flex-col justify-center w-full">
-      <p className="text-neutral-500 p-1 w-full text-start dark:text-neutral-200">{text}</p>
+      <p className="font-bold pb-1 w-full text-start text-white">{text}</p>
       <label
-        for="dropzone-file"
-        class="p-3 flex border-2 flex-col items-center justify-center w-full rounded cursor-pointer dark:hover:bg-zinc-800 upload_outside hover:bg-zinc-100 dark:hover:bg-zinc-600"
+        for={`${element}`}
+        className="p-3 flex border-2 flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer dark:hover:bg-zinc-800 upload_outside hover:bg-zinc-100 dark:hover:bg-zinc-600"
       >
-        
-        <div class="flex flex-col items-center justify-center border rounded-lg border-zinc-300 upload_center border-dashed p-2">
-        { preview == null ? null : <img className="p-3" src={`${preview}`} /> }
+        <div class="flex flex-col items-center h-full justify-center border rounded-lg border-zinc-300 upload_center border-dashed p-2">
+          {preview == null ? null : (
+            <>
+              <div className="relative w-full">
+                <button className="bg-red-400 rounded-full p-1 absolute text-red-500 right-0 top-0">
+                  x
+                </button>
+              </div>
+              <img
+                className="right-auto top-auto p-3 w-3/4"
+                src={`${preview}`}
+              />
+            </>
+          )}
+
           <p class=" text-center mb-2 text-xs text-zinc-500 dark:text-zinc-400 lowercase">
-            <span class="font-bold text-zinc-300 dark:text-zinc-200">Click to upload</span> or drag and drop
+            <span class="font-bold text-zinc-300 dark:text-zinc-200">
+              Click to upload
+            </span>{" "}
+            or drag and drop
           </p>
           <p class="text-xs text-zinc-500 dark:text-zinc-400 dark:text-zinc-400">
             (SVG, PNG, JPEG, JPG)
@@ -59,14 +70,12 @@ function FileUploadFull({
         </div>
 
         {/* HANDLE FILE UPLOAD */}
-        <input 
-        id="dropzone-file" 
-        type="file" 
-        class="hidden"
-        onChange={(e) => handleChange(e.target.files[0])}
+        <input
+          id={`${element}`}
+          type="file"
+          class="hidden"
+          onChange={(e) => handleChange(e.target.files[0])}
         />
-
-
       </label>
     </div>
   );

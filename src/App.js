@@ -24,9 +24,36 @@ function App() {
 
 
   function handleJSONUpdate(index, element, newValue) {
-    setShowcaseJSON((json) => {
-      json["personas"][index][element] = newValue;
-    });
+    switch(element.length){
+      case 5:
+        setShowcaseJSON((json) => {
+          json["personas"] [index] [element[0]] [element[1]] [element[2]] [element[3]] [element[4]] = newValue;
+        });
+        break;
+      case 4:
+        setShowcaseJSON((json) => {
+          json["personas"] [index] [element[0]] [element[1]] [element[2]] [element[3]] = newValue;
+        });
+        break;
+      case 3:
+        setShowcaseJSON((json) => {
+          json["personas"] [index] [element[0]] [element[1]] [element[2]] = newValue;
+        });
+        break;
+      case 2:
+        setShowcaseJSON((json) => {
+          json["personas"] [index] [element[0]] [element[1]] = newValue;
+        });
+        break;
+      case 1:
+        setShowcaseJSON((json) => {
+          json["personas"] [index] [element[0]] = newValue;
+        });
+        break;
+    }
+      
+        
+    
   }
 
   return (
@@ -45,19 +72,6 @@ function App() {
           </p>
 
           <CharacterScreen showcaseJSON={showcaseJSON} setShowcaseJSON={setShowcaseJSON} selectedCharacter={selectedCharacter} setSelectedCharacter={setSelectedCharacter} handleJSONUpdate={handleJSONUpdate}/>
-
-          <TextInput 
-            label={"My text input"}
-            personaIndex={0}
-            element={"name"}
-            handleJSONUpdate={handleJSONUpdate}
-            showcaseJSON={showcaseJSON}
-          />
-
-
-
-          {/* <FileUploadBar text={"Upload My Custom Image:"}/>
-          <FileUploadFull text={"SVG, PNG, JPG or GIF (MAX. 800x400px)"}/> */}
 
         </div>
 

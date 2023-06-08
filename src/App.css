@@ -7,6 +7,10 @@
   pointer-events: none;
 }
 
+p, h1, h2, h3, h4, h5 {
+  font-family: 'Montserrat', sans-serif!important;
+}
+
 .dark {
   @apply bg-zinc-900;
 }

@@ -1,13 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
 import { useImmer } from 'use-immer'; // useImmer is an alternative to useState; it is useful for dealing with nested JSON
 import { FileUploadFull, FileUploadBar } from './react-modules/FileUpload';
 import {TextInput} from './react-modules/TextInput'
-import {SaveButton} from './react-modules/SaveButton';
 import {NavBar} from './react-modules/NavBar';
+
+import { CharacterPage } from './react-modules/pages/CharacterPage';
+import { CredentialPage } from './react-modules/pages/CredentialPage';
+import { SetupPage } from './react-modules/pages/SetupPage';
+import { ScenarioPage } from './react-modules/pages/ScenarioPage';
+
 import {CharacterScreen} from './react-modules/character-screen/CharacterScreen';
 import {DEFAULT_JSON} from './DEFAULT_JSON'
+
 
 function App() {
 
@@ -23,6 +28,13 @@ function App() {
   const [selectedCharacter, setSelectedCharacter] = useState(0)
 
 
+
+  const [currentPage, setCurrentPage] = useState('character')
+  const changePage = (page) => {
+    setCurrentPage(page)
+  }
+
+
   function handleJSONUpdate(index, element, newValue) {
     setShowcaseJSON((json) => {
       json["personas"][index][element] = newValue;
@@ -33,7 +45,17 @@ function App() {
     <>
       <div className={`dark:bg-gray-500 bg-white ${darkMode ? "dark" : ""}`}>
 
-        <NavBar darkMode={darkMode} setDarkMode={setDarkMode} showcaseJSON={showcaseJSON}/>
+        <NavBar 
+        darkMode={darkMode} 
+        setDarkMode={setDarkMode} 
+        showcaseJSON={showcaseJSON}
+        changePage={changePage}
+        />
+        {currentPage === 'character' && <CharacterPage />}
+        {currentPage === 'credential' && <CredentialPage />}
+        {currentPage === 'setup' && <SetupPage />}
+        {currentPage === 'scenario' && <ScenarioPage />}
+        
         
         
         <div className="container mx-auto bg-neutral-200 dark:bg-zinc-500 rounded-xl shadow-xl border p-8 m-10 mt-5">
@@ -50,8 +72,10 @@ function App() {
             label={"My text input"}
             personaIndex={0}
             element={"name"}
+            placeholder={"Enter Character Name"}
             handleJSONUpdate={handleJSONUpdate}
             showcaseJSON={showcaseJSON}
+
           />
 
 

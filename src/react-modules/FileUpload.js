@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./../FileUpload.css";
 
 function FileUploadFull({
@@ -8,7 +10,6 @@ function FileUploadFull({
   handleJSONUpdate,
   showcaseJSON,
 }) {
-  // const [value, setValue] = useState("");
   const [preview, setPreview] = useState();
 
   const convertBase64 = (file) => {
@@ -24,33 +25,41 @@ function FileUploadFull({
     });
   };
 
-  // useEffect(() => {
-  //   setValue(showcaseJSON.personas[personaIndex][element]);
-  // }, [personaIndex]);
-
   const handleChange = async (newValue) => {
-    let objectUrl = URL.createObjectURL(newValue);
-    setPreview(objectUrl);
-    const base64 = await convertBase64(newValue);
-    // setValue(base64);
-    handleJSONUpdate(personaIndex, element, base64);
+    let objectUrl = null;
+    if (newValue) {
+      objectUrl = URL.createObjectURL(newValue);
+      setPreview(objectUrl);
+      const base64 = await convertBase64(newValue);
+      handleJSONUpdate(personaIndex, element, base64);
+    } else {
+      setPreview(null);
+      handleJSONUpdate(personaIndex, element, null);
+    }
   };
 
   return (
     <div class="flex p-1 items-center flex-col justify-center w-full">
       <p className="font-bold pb-1 w-full text-start text-white">{text}</p>
+
+      {preview == null ? null : (
+        <div className="relative w-full">
+          <button
+            className="bg-red-500 rounded p-1 m-2 absolute text-black right-0 top-0 text-sm hover:bg-red-400"
+            onClick={(e) => handleChange(null)}
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </button>
+        </div>
+      )}
+
       <label
         for={`${element}`}
         className="p-3 flex border-2 flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer dark:hover:bg-zinc-800 upload_outside hover:bg-zinc-100 dark:hover:bg-zinc-600"
       >
-        <div class="flex flex-col items-center h-full justify-center border rounded-lg border-zinc-300 upload_center border-dashed p-2">
+        <div class="flex flex-col items-center h-full justify-center border rounded-lg upload_center border-dashed p-2">
           {preview == null ? null : (
             <>
-              <div className="relative w-full">
-                <button className="bg-red-400 rounded-full p-1 absolute text-red-500 right-0 top-0">
-                  x
-                </button>
-              </div>
               <img
                 className="right-auto top-auto p-3 w-3/4"
                 src={`${preview}`}
@@ -81,21 +90,69 @@ function FileUploadFull({
   );
 }
 
-function FileUploadBar({ text }) {
+function FileUploadBar({
+  text,
+  personaIndex,
+  element,
+  handleJSONUpdate,
+  showcaseJSON,
+}) {
+  const [value, setValue] = useState();
+  const [showDelete, setShowDelete] = useState(false);
+
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
+  const handleChange = async (newValue) => {
+    let objectUrl = null;
+    if (newValue) {
+      setShowDelete(true);
+      const base64 = await convertBase64(newValue);
+      handleJSONUpdate(personaIndex, element, base64);
+    } else {
+      setShowDelete(false);
+      document.getElementById(`form_${element}`).reset();
+      handleJSONUpdate(personaIndex, element, null);
+    }
+  };
+
   return (
-    <>
+    <div className="flex flex-col">
+      <form id={`form_${element}`}>
       <label
-        class="block mb-1 text-sm font-medium text-neutral-500 dark:text-neutral-200"
-        for="default_size"
+        class="font-bold w-full text-start text-white border-dashed"
+        for={`${element}`}
       >
         {text}
       </label>
-      <input
-        class="block w-full mb-5 text-sm text-zinc-900 border border-zinc-300 rounded cursor-pointer bg-zinc-50 dark:text-zinc-400 focus:outline-none dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400"
-        id="default_size"
-        type="file"
-      />
-    </>
+      <div>
+        <input
+          className="border border-dashed dark:hover:bg-zinc-800 rounded-lg upload_center p-1 text-sm cursor-pointer dark:text-zinc-400"
+          id={`${element}`}
+          type="file"
+          onChange={(e) => handleChange(e.target.files[0])}
+        />
+        {!showDelete ? null : (
+          <button
+            className="bg-red-500 rounded p-1 m-2 text-black text-sm hover:bg-red-400"
+            onClick={(e) => handleChange(null)}
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </button>
+        )}
+      </div>
+      </form>
+    </div>
   );
 }
 

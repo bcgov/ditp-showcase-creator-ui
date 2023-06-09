@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 
 
-function TextInput({ label, personaIndex, element, handleJSONUpdate, showcaseJSON}) {
-
-
 function TextInput({
   label,
   personaIndex,

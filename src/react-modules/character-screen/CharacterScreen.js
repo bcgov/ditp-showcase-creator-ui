@@ -1,6 +1,6 @@
 import { NewCharacterButton } from "./NewCharacterButton";
 import { TextInput, TextAreaInput } from "./../TextInput";
-import { FileUploadFull } from "./../FileUpload";
+import { FileUploadFull, FileUploadBar } from "./../FileUpload";
 
 function CharacterScreen({
   showcaseJSON,
@@ -95,14 +95,14 @@ function CharacterScreen({
           <TextInput
             label={"Name:"}
             personaIndex={selectedCharacter}
-            element={"name"}
+            element={["name"]}
             handleJSONUpdate={handleJSONUpdate}
             showcaseJSON={showcaseJSON}
           />
           <TextInput
             label={"Role:"}
             personaIndex={selectedCharacter}
-            element={"type"}
+            element={["type"]}
             handleJSONUpdate={handleJSONUpdate}
             showcaseJSON={showcaseJSON}
           />
@@ -110,17 +110,33 @@ function CharacterScreen({
         <TextAreaInput
           label={"Page Description:"}
           personaIndex={selectedCharacter}
-          element={"description"}
+          element={["description"]}
           handleJSONUpdate={handleJSONUpdate}
           showcaseJSON={showcaseJSON}
         />
         <div className="grid grid-cols-3 w-full">
-          <FileUploadFull text={"Body Image"} />
-          <FileUploadFull text={"Avatar Image"} />
-          <FileUploadFull text={"Celebration Image"} />
+
+          <FileUploadFull 
+            text={"Body Image"}
+            personaIndex={selectedCharacter}
+            element={['image']}
+            handleJSONUpdate={handleJSONUpdate}
+            showcaseJSON={showcaseJSON}
+          />
+          
+          <FileUploadFull 
+            text={"Avatar Image"} 
+            personaIndex={selectedCharacter}
+            element={["revocationInfo", 0]}
+            handleJSONUpdate={handleJSONUpdate}
+            showcaseJSON={showcaseJSON}
+          />
+
+
         </div>
       </div>
     </div>
+    
   );
 }
 

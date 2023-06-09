@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { JSONUploadButton } from "../JSONUpload";
 import { TextInput } from "../TextInput";
 
-import { NoSelection, Form, SelectionOverview } from "../components/index.js";
+import { NoSelection, Form, SelectionOverview } from "./components/index.js";
 import { CredentialsList, Edit } from "./index.js";
 
 function Credentials({ showcaseJSON, handleJSONUpdate, setShowcaseJSON }) {
@@ -14,8 +14,8 @@ function Credentials({ showcaseJSON, handleJSONUpdate, setShowcaseJSON }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [componentToMount, setComponentToMount] = useState("no selection");
 
-  const createButtonClicked = useRef(false);
-  const importButtonClicked = useRef(false);
+  // const createButtonClicked = useRef(false);
+  // const importButtonClicked = useRef(false);
 
   const onboarding = showcaseJSON.personas[0].onboarding.find(
     (cred) => cred.credentials
@@ -26,12 +26,12 @@ function Credentials({ showcaseJSON, handleJSONUpdate, setShowcaseJSON }) {
   // Functions
 
   const handleCreateButtonClick = (e) => {
-    createButtonClicked.current = true;
+    // createButtonClicked.current = true;
     setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
   };
 
   const handleImportButtonClick = (e) => {
-    importButtonClicked.current = true;
+    // importButtonClicked.current = true;
     setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
   };
 

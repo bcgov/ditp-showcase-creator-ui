@@ -1,7 +1,7 @@
 import React from "react";
 import { TextInput } from "../TextInput";
-import { Form } from "../components/Form";
-import { FormHeader } from "../components/index.js";
+import { Form } from "./components/Form";
+import { FormHeader } from "./components/index.js";
 
 function Edit({
   credentialName,
@@ -21,7 +21,7 @@ function Edit({
         <TextInput
           label={"Credential Name"}
           personaIndex={selectedIndex}
-          element={"for"}
+          // element={"for"}
           value={credentialName}
           handleJSONUpdate={handleJSONUpdate}
           showcaseJSON={showcaseJSON}
@@ -30,7 +30,7 @@ function Edit({
       <TextInput
         label={"Issuer Name"}
         personaIndex={selectedIndex}
-        element={"for"}
+        // element={"for"}
         value={issuerName}
         handleJSONUpdate={handleJSONUpdate}
         showcaseJSON={showcaseJSON}
@@ -40,7 +40,7 @@ function Edit({
           <TextInput
             label={"Attribute Name"}
             personaIndex={selectedIndex}
-            element={"for"}
+            // element={"for"}
             handleJSONUpdate={handleJSONUpdate}
             showcaseJSON={showcaseJSON}
           />
@@ -49,7 +49,7 @@ function Edit({
           <TextInput
             label={"Attribute Value"}
             personaIndex={selectedIndex}
-            element={"for"}
+            // element={"for"}
             handleJSONUpdate={handleJSONUpdate}
             showcaseJSON={showcaseJSON}
           />
@@ -68,7 +68,7 @@ function Edit({
               <TextInput
                 label={"Attribute Name"}
                 personaIndex={selectedIndex}
-                element={"for"}
+                // element={"for"}
                 handleJSONUpdate={handleJSONUpdate}
                 showcaseJSON={showcaseJSON}
               />
@@ -79,7 +79,7 @@ function Edit({
               <TextInput
                 label={"Attribute Value"}
                 personaIndex={selectedIndex}
-                element={"for"}
+                // element={"for"}
                 handleJSONUpdate={handleJSONUpdate}
                 showcaseJSON={showcaseJSON}
               />

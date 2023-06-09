@@ -1,8 +1,8 @@
 import React from "react";
-import { TextInput } from "../TextInput";
+import { TextInput } from "../../TextInput";
 import { FormHeader } from "./FormHeader";
-import { NewCredentialButton } from "../credentials/NewCredentialButton";
-import { AttributesList } from "../credentials/AttributesList";
+import { NewCredentialButton } from "../NewCredentialButton";
+import { AttributesList } from "../AttributesList";
 
 function Form({
   selectedIndex,
@@ -62,39 +62,6 @@ function Form({
         </div>
       </div>
       <AttributesList />
-      {/* <div className="credentials-form-attributes-container credentials-form-attributes-container  mt-4 rounded p-4">
-        <p className="  font-bold text-slate-50">Current Attributes</p>
-        <div className="grid grid-cols-6">
-          <div className="col-span-2">
-            <div className="credentials-form-attribute-text">
-              <TextInput
-                label="Attribute Name"
-                personaIndex={selectedIndex}
-                element={"for"}
-                showcaseJSON={showcaseJSON}
-                handleJSONUpdate={handleJSONUpdate}
-              />
-            </div>
-          </div>
-          <div className="col-span-2">
-            <div className="credentials-form-attribute-text">
-              <TextInput
-                label="Attribute Value"
-                personaIndex={selectedIndex}
-                element={"for"}
-                showcaseJSON={showcaseJSON}
-                handleJSONUpdate={handleJSONUpdate}
-              />
-            </div>
-          </div>
-          <div className="col-span-1 flex items-center justify-center h-full">
-            <button className="border px-1 mt-4 text-slate-50 ">Edit</button>
-          </div>
-          <div className="col-span-1 flex items-center justify-center h-full">
-            <button className="border px-1 mt-4 text-slate-50">Remove</button>
-          </div>
-        </div>
-      </div> */}
       <NewCredentialButton setShowcaseJSON={setShowcaseJSON} />
     </>
   );

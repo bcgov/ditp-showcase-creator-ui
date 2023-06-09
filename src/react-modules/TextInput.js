@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-import {useState, useEffect} from 'react';
-
-
-function TextInput({ label, personaIndex, element, handleJSONUpdate, placeholder, showcaseJSON}) {
-
-
-=======
 import { useState, useEffect } from "react";
 
 function TextInput({
@@ -14,8 +6,8 @@ function TextInput({
   element,
   handleJSONUpdate,
   showcaseJSON,
+  // value,
 }) {
->>>>>>> ryan-credentials-page
   const [value, setValue] = useState("");
 
   useEffect(() => {
@@ -66,23 +58,13 @@ function TextAreaInput({
   };
 
   return (
-<<<<<<< HEAD
-
     <div className="">
-    <label className="text-neutral-500 dark:text-neutral-200" for={`${personaIndex}_${element}`}>{label}: </label>
-      <textarea className="p-1 w-full resize-none" id={`${personaIndex}_${element}`} type="text" 
-      value={value}
-      onChange={(e) => handleChange(e.target.value)} />
-
-=======
-    <div className="p-1 w-full">
       <label
         className="text-neutral-500 dark:text-neutral-200"
         for={`${personaIndex}_${element}`}
       >
-        {label}{" "}
+        {label}:{" "}
       </label>
-      <br />
       <textarea
         className="p-1 w-full resize-none"
         id={`${personaIndex}_${element}`}
@@ -90,7 +72,6 @@ function TextAreaInput({
         value={value}
         onChange={(e) => handleChange(e.target.value)}
       />
->>>>>>> ryan-credentials-page
     </div>
   );
 }

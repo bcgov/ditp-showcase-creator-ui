@@ -1,50 +1,159 @@
-import { PhotoIcon } from "@heroicons/react/20/solid";
+import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import "./../FileUpload.css";
 
-function FileUploadFull({ text }) {
+function FileUploadFull({
+  text,
+  personaIndex,
+  element,
+  handleJSONUpdate,
+  showcaseJSON,
+}) {
+  const [preview, setPreview] = useState();
 
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
 
-    return (
-        <>
-            <div class="flex items-center justify-center w-full">
-                <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-zinc-300 border-dashed rounded-lg cursor-pointer dark:hover:bg-zinc-800 dark:bg-zinc-700 hover:bg-zinc-100 dark:border-zinc-600 dark:hover:border-zinc-500">
-                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                        <svg aria-hidden="true" class="w-10 h-10 mb-3 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                        <p class="mb-2 text-sm text-zinc-500 dark:text-zinc-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-                        <p class="text-xs text-zinc-500 dark:text-zinc-400">{text}</p>
-                    </div>
-                    <input id="dropzone-file" type="file" class="hidden" />
-                </label>
-            </div>
+  const handleChange = async (newValue) => {
+    let objectUrl = null;
+    if (newValue) {
+      objectUrl = URL.createObjectURL(newValue);
+      setPreview(objectUrl);
+      const base64 = await convertBase64(newValue);
+      handleJSONUpdate(personaIndex, element, base64);
+    } else {
+      setPreview(null);
+      handleJSONUpdate(personaIndex, element, null);
+    }
+  };
 
-            {/* <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                <div className="text-center">
-                    <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-                    <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                        <label
-                            htmlFor="file-upload"
-                            className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                        >
-                            <spa className="rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Upload a file</spa>
-                            <input id="file-upload" name="file-upload" type="file" className="sr-only" />
-                        </label>
-                        <p className="pl-1">or drag and drop</p>
-                    </div>
-                    <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+  return (
+    <div class="flex p-1 items-center flex-col justify-center w-full">
+      <p className="font-bold pb-1 w-full text-start text-white">{text}</p>
 
-                </div>
-            </div> */}
-        </>
-    )
+      {preview == null ? null : (
+        <div className="relative w-full">
+          <button
+            className="bg-red-500 rounded p-1 m-2 absolute text-black right-0 top-0 text-sm hover:bg-red-400"
+            onClick={(e) => handleChange(null)}
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </button>
+        </div>
+      )}
+
+      <label
+        for={`${element}`}
+        className="p-3 flex border-2 flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer dark:hover:bg-zinc-800 upload_outside hover:bg-zinc-100 dark:hover:bg-zinc-600"
+      >
+        <div class="flex flex-col items-center h-full justify-center border rounded-lg upload_center border-dashed p-2">
+          {preview == null ? null : (
+            <>
+              <img
+                className="right-auto top-auto p-3 w-3/4"
+                src={`${preview}`}
+              />
+            </>
+          )}
+
+          <p class=" text-center mb-2 text-xs text-zinc-500 dark:text-zinc-400 lowercase">
+            <span class="font-bold text-zinc-300 dark:text-zinc-200">
+              Click to upload
+            </span>{" "}
+            or drag and drop
+          </p>
+          <p class="text-xs text-zinc-500 dark:text-zinc-400 dark:text-zinc-400">
+            (SVG, PNG, JPEG, JPG)
+          </p>
+        </div>
+
+        {/* HANDLE FILE UPLOAD */}
+        <input
+          id={`${element}`}
+          type="file"
+          class="hidden"
+          onChange={(e) => handleChange(e.target.files[0])}
+        />
+      </label>
+    </div>
+  );
 }
 
-function FileUploadBar({ text }) {
+function FileUploadBar({
+  text,
+  personaIndex,
+  element,
+  handleJSONUpdate,
+  showcaseJSON,
+}) {
+  const [value, setValue] = useState();
+  const [showDelete, setShowDelete] = useState(false);
 
-    return (
-        <>
-            <label class="block mb-1 text-sm font-medium text-neutral-500 dark:text-neutral-200" for="default_size">{text}</label>
-            <input class="block w-full mb-5 text-sm text-zinc-900 border border-zinc-300 rounded cursor-pointer bg-zinc-50 dark:text-zinc-400 focus:outline-none dark:bg-zinc-700 dark:border-zinc-600 dark:placeholder-zinc-400" id="default_size" type="file" />
-        </>
-    )
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
+  const handleChange = async (newValue) => {
+    let objectUrl = null;
+    if (newValue) {
+      setShowDelete(true);
+      const base64 = await convertBase64(newValue);
+      handleJSONUpdate(personaIndex, element, base64);
+    } else {
+      setShowDelete(false);
+      document.getElementById(`form_${element}`).reset();
+      handleJSONUpdate(personaIndex, element, null);
+    }
+  };
+
+  return (
+    <div className="flex flex-col">
+      <form id={`form_${element}`}>
+      <label
+        class="font-bold w-full text-start text-white border-dashed"
+        for={`${element}`}
+      >
+        {text}
+      </label>
+      <div>
+        <input
+          className="border border-dashed dark:hover:bg-zinc-800 rounded-lg upload_center p-1 text-sm cursor-pointer dark:text-zinc-400"
+          id={`${element}`}
+          type="file"
+          onChange={(e) => handleChange(e.target.files[0])}
+        />
+        {!showDelete ? null : (
+          <button
+            className="bg-red-500 rounded p-1 m-2 text-black text-sm hover:bg-red-400"
+            onClick={(e) => handleChange(null)}
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </button>
+        )}
+      </div>
+      </form>
+    </div>
+  );
 }
 
-export { FileUploadFull, FileUploadBar };
+export {  FileUploadFull, FileUploadBar  };

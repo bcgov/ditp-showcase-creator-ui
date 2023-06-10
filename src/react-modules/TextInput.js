@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-import {useState, useEffect} from 'react';
-
-
-function TextInput({ label, personaIndex, element, handleJSONUpdate, placeholder, showcaseJSON}) {
-
-
-=======
 import { useState, useEffect } from "react";
 
 function TextInput({
@@ -15,11 +7,38 @@ function TextInput({
   handleJSONUpdate,
   showcaseJSON,
 }) {
->>>>>>> ryan-credentials-page
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    setValue(showcaseJSON.personas[personaIndex][element]);
+    switch (element.length) {
+      case 5:
+        setValue(
+          showcaseJSON.personas[personaIndex][element[0]][element[1]][
+            element[2]
+          ][element[3]][element[4]]
+        );
+        break;
+      case 4:
+        setValue(
+          showcaseJSON.personas[personaIndex][element[0]][element[1]][
+            element[2]
+          ][element[3]]
+        );
+        break;
+      case 3:
+        setValue(
+          showcaseJSON.personas[personaIndex][element[0]][element[1]][
+            element[2]
+          ]
+        );
+        break;
+      case 2:
+        setValue(showcaseJSON.personas[personaIndex][element[0]][element[1]]);
+        break;
+      case 1:
+        setValue(showcaseJSON.personas[personaIndex][element[0]]);
+        break;
+    }
   }, [personaIndex]);
 
   const handleChange = (newValue) => {
@@ -57,7 +76,35 @@ function TextAreaInput({
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    setValue(showcaseJSON.personas[personaIndex][element]);
+    switch (element.length) {
+      case 5:
+        setValue(
+          showcaseJSON.personas[personaIndex][element[0]][element[1]][
+            element[2]
+          ][element[3]][element[4]]
+        );
+        break;
+      case 4:
+        setValue(
+          showcaseJSON.personas[personaIndex][element[0]][element[1]][
+            element[2]
+          ][element[3]]
+        );
+        break;
+      case 3:
+        setValue(
+          showcaseJSON.personas[personaIndex][element[0]][element[1]][
+            element[2]
+          ]
+        );
+        break;
+      case 2:
+        setValue(showcaseJSON.personas[personaIndex][element[0]][element[1]]);
+        break;
+      case 1:
+        setValue(showcaseJSON.personas[personaIndex][element[0]]);
+        break;
+    }
   }, [personaIndex]);
 
   const handleChange = (newValue) => {
@@ -66,23 +113,13 @@ function TextAreaInput({
   };
 
   return (
-<<<<<<< HEAD
-
     <div className="">
-    <label className="text-neutral-500 dark:text-neutral-200" for={`${personaIndex}_${element}`}>{label}: </label>
-      <textarea className="p-1 w-full resize-none" id={`${personaIndex}_${element}`} type="text" 
-      value={value}
-      onChange={(e) => handleChange(e.target.value)} />
-
-=======
-    <div className="p-1 w-full">
       <label
         className="text-neutral-500 dark:text-neutral-200"
         for={`${personaIndex}_${element}`}
       >
-        {label}{" "}
+        {label}:{" "}
       </label>
-      <br />
       <textarea
         className="p-1 w-full resize-none"
         id={`${personaIndex}_${element}`}
@@ -90,7 +127,6 @@ function TextAreaInput({
         value={value}
         onChange={(e) => handleChange(e.target.value)}
       />
->>>>>>> ryan-credentials-page
     </div>
   );
 }

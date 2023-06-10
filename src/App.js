@@ -25,6 +25,7 @@ function App() {
   );
 
   const [darkMode, setDarkMode] = useState(true)
+  
   const [selectedCharacter, setSelectedCharacter] = useState(0)
 
 

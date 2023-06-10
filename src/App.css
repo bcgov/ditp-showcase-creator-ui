@@ -13,8 +13,9 @@ p, h1, h2, h3, h4, h5 {
 }
 
 .dark {
-  background-color: #222;
+  background: #222222;
 
+  color:white;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -26,7 +27,7 @@ p, h1, h2, h3, h4, h5 {
 
 
 .App-header {
-  background-color: #222;
+  background: #222222;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

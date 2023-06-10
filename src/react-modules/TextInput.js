@@ -38,6 +38,8 @@ function TextInput({
       case 1:
         setValue(showcaseJSON.personas[personaIndex][element[0]]);
         break;
+      default:
+        return;
     }
   }, [personaIndex]);
 
@@ -104,6 +106,8 @@ function TextAreaInput({
       case 1:
         setValue(showcaseJSON.personas[personaIndex][element[0]]);
         break;
+      default:
+        return;
     }
   }, [personaIndex]);
 

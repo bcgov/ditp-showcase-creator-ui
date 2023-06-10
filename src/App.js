@@ -59,6 +59,8 @@ function App() {
           json["personas"][index][element[0]] = newValue;
         });
         break;
+      default:
+        return;
     }
   }
 

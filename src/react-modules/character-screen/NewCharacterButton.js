@@ -1,4 +1,3 @@
-import { produce } from "immer";
 import {DEFAULT_JSON} from './../../DEFAULT_JSON';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
@@ -10,7 +9,9 @@ function NewCharacterButton({ showcaseJSON, setShowcaseJSON, setSelectedCharacte
     setShowcaseJSON((json) => {
         json["personas"].push(DEFAULT_JSON)
       });
-      setSelectedCharacter(showcaseJSON.personas.length)
+      // Enabling this line has side-effects!
+      // If a character is being edited, it will auto-switch to the new character without saving changes!
+      // setSelectedCharacter(showcaseJSON.personas.length)
   };
 
   return (

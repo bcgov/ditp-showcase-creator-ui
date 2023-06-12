@@ -1,6 +1,22 @@
 
 
-function CharacterInfo({showcaseJSON, selectedCharacter, handleRemove, setEditMode}){
+function CharacterInfo({setShowcaseJSON, showcaseJSON, setSelectedCharacter, selectedCharacter, setEditMode}){
+
+    const handleRemoveCharacter = (e, i) => {
+        if (showcaseJSON.personas.length == 1) return;
+        // Prevent out of bounds selected character
+        if (
+          (selectedCharacter == i ||
+            showcaseJSON.personas.length - 1 == selectedCharacter) &&
+          selectedCharacter != 0
+        ) {
+          setSelectedCharacter(selectedCharacter - 1);
+        }
+        setShowcaseJSON((json) => {
+          json["personas"].splice(i, 1);
+        });
+      };
+
     return(
 
         // Regular mode / non-editable
@@ -22,9 +38,9 @@ function CharacterInfo({showcaseJSON, selectedCharacter, handleRemove, setEditMo
               // Conditionally render the remove button. There must always be one character.
               showcaseJSON.personas.length > 1 ? (
                 <button
-                  className="p-1 w-20 m-1 button-dark"
+                  className="p-1 w-20 m-1 button-dark hover:bg-neutral-600"
                   onClick={(event) =>
-                    handleRemove(event, selectedCharacter)
+                    handleRemoveCharacter(event, selectedCharacter)
                   }
                 >
                   Delete

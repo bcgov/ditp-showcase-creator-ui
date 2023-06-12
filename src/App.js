@@ -60,6 +60,7 @@ function App() {
         break;
       case 1:
         setShowcaseJSON((json) => {
+          
           json["personas"] [index] [element[0]] = newValue;
         });
         break;

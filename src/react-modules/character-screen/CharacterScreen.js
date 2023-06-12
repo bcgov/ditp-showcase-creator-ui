@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { CharacterInfo } from "./CharacterInfo";
 import { CharacterEdit } from "./CharacterEdit";
 import { CharacterList } from "./CharacterList";
+import { useImmer } from 'use-immer';
 
 function CharacterScreen({
   showcaseJSON,
@@ -16,7 +17,7 @@ function CharacterScreen({
   const [editMode, setEditMode] = useState(false);
 
   // Seperately update a mini version of the json, containing only the fields for this page
-  const [localJSON, setLocalJSON] = useState(); 
+  const [localJSON, setLocalJSON] = useImmer();
 
   // Change this mini version of the json, when the character changes
   useEffect(() => {
@@ -28,10 +29,23 @@ function CharacterScreen({
   }, [selectedCharacter]);
 
   // To-do: Create a function similar to handleJSONUpdate in App.js
+  function handleLocalUpdate(element, newValue){
+    setLocalJSON((json) => {
+      json[element] = newValue;
+    });
+  }
+
   // Then, instead of passing the actual JSON to the text fields in <CharacterEdit>, pass the mini json and the mini handler
 
   // To-do: Impliment a save handler. When clicking save, send the mini JSON to the real, full JSON file
+  function saveJSON(){
+    handleJSONUpdate(selectedCharacter, ["name"], localJSON.name)
+    handleJSONUpdate(selectedCharacter, ["type"], localJSON.type)
+    handleJSONUpdate(selectedCharacter, ["description"], localJSON.description)
 
+    setEditMode(false);
+  }
+  
   return (
     <>
       <div className="justify-center items-center flex content-center">
@@ -58,6 +72,7 @@ function CharacterScreen({
           <CharacterList
             setEditMode={setEditMode}
             showcaseJSON={showcaseJSON}
+            localJSON={localJSON}
             selectedCharacter={selectedCharacter}
             setSelectedCharacter={setSelectedCharacter}
           />
@@ -68,9 +83,10 @@ function CharacterScreen({
             // Toggling edit mode
             <CharacterEdit
               selectedCharacter={selectedCharacter}
-              handleJSONUpdate={handleJSONUpdate}
-              showcaseJSON={showcaseJSON}
-            />
+              handleJSONUpdate={handleLocalUpdate}  // Updated this line
+              showcaseJSON={showcaseJSON}           // Updated this line
+              localJSON={localJSON}                 // Added this line
+            />  
           ) : (
             <CharacterInfo
               setShowcaseJSON={setShowcaseJSON}
@@ -92,7 +108,7 @@ function CharacterScreen({
 
             <button
               className="p-1 w-20 button-dark hover:bg-neutral-600"
-              onClick={() => setEditMode(false)}
+              onClick={saveJSON}
             >
               SAVE
             </button>

@@ -1,7 +1,8 @@
 import { TextInput, TextAreaInput } from "./../TextInput";
+import { LocalTextInput, LocalTextAreaInput } from "./../LocalTextInput";
 import { FileUploadFull, FileUploadBar } from "./../FileUpload";
 
-function CharacterEdit({selectedCharacter, handleJSONUpdate, showcaseJSON}){
+function CharacterEdit({selectedCharacter, handleJSONUpdate, showcaseJSON, localJSON}){
     return(
 
         <>
@@ -9,26 +10,29 @@ function CharacterEdit({selectedCharacter, handleJSONUpdate, showcaseJSON}){
               EDIT CHARACTER
             </h2>
             <div className="grid grid-cols-2 w-full">
-              <TextInput
+              <LocalTextInput
                 label={"Name:"}
                 personaIndex={selectedCharacter}
                 element={["name"]}
                 handleJSONUpdate={handleJSONUpdate}
                 showcaseJSON={showcaseJSON}
+                localJSON={localJSON}
               />
-              <TextInput
+              <LocalTextInput
                 label={"Role:"}
                 personaIndex={selectedCharacter}
                 element={["type"]}
                 handleJSONUpdate={handleJSONUpdate}
                 showcaseJSON={showcaseJSON}
+                localJSON={localJSON}
               />
             </div>
-            <TextAreaInput
+            <LocalTextAreaInput
               label={"Page Description:"}
               personaIndex={selectedCharacter}
               element={["description"]}
               handleJSONUpdate={handleJSONUpdate}
+              localJSON={localJSON}
               showcaseJSON={showcaseJSON}
             />
             <div className="grid grid-cols-3 w-full">

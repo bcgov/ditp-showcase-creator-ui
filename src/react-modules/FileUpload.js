@@ -8,7 +8,6 @@ function FileUploadFull({
   personaIndex,
   element,
   handleJSONUpdate,
-  showcaseJSON,
 }) {
   const [preview, setPreview] = useState();
 
@@ -30,6 +29,7 @@ function FileUploadFull({
     if (newValue) {
       objectUrl = URL.createObjectURL(newValue);
       setPreview(objectUrl);
+
       const base64 = await convertBase64(newValue);
       handleJSONUpdate(personaIndex, element, base64);
     } else {
@@ -92,7 +92,7 @@ function FileUploadBar({
   personaIndex,
   element,
   handleJSONUpdate,
-  showcaseJSON,
+  setCharacterImages,
 }) {
   const [value, setValue] = useState();
   const [showDelete, setShowDelete] = useState(false);

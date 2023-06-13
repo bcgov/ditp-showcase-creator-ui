@@ -69,8 +69,10 @@ function CharacterInfo({setShowcaseJSON, showcaseJSON, setSelectedCharacter, sel
             <p>Body Image</p>
             <div className="highlight-text p-6 m-1 flex justify-center items-center">
               {
-                characterImages[0] == null ? <FontAwesomeIcon icon={faUser}/> : 
-                <img width="100px" src={characterImages[0]}/>
+                showcaseJSON.personas[selectedCharacter].image == null ? 
+                <FontAwesomeIcon icon={faUser}/> : 
+                <img width="100px" 
+                src={`${showcaseJSON.personas[selectedCharacter].image}`}/>
               }
             </div>
           </div>
@@ -79,8 +81,9 @@ function CharacterInfo({setShowcaseJSON, showcaseJSON, setSelectedCharacter, sel
             <p>Avatar Image</p>
             <div className="highlight-text p-6 m-1 flex justify-center items-center">
             {
-                characterImages[0] == null ? <FontAwesomeIcon icon={faUser}/> : 
-                <img width="100px" src={characterImages[0]}/>
+                characterImages[1] == null ? <FontAwesomeIcon icon={faUser}/> :
+                <img width="100px" 
+                src={`${showcaseJSON.personas[selectedCharacter].image}`}/>
               }
             </div>
           </div>
@@ -89,8 +92,9 @@ function CharacterInfo({setShowcaseJSON, showcaseJSON, setSelectedCharacter, sel
             <p>Celebration Image</p>
             <div className="highlight-text p-6 m-1 flex justify-center items-center">
             {
-                characterImages[0] == null ? <FontAwesomeIcon icon={faUser}/> : 
-                <img width="100px" src={characterImages[0]}/>
+                characterImages[2] == null ? <FontAwesomeIcon icon={faUser}/> : 
+                <img width="100px" 
+                src={`${showcaseJSON.personas[selectedCharacter].image}`}/>
               }
             </div>
           </div>

@@ -86,9 +86,11 @@ function CharacterScreen({
             // Toggling edit mode
             <CharacterEdit
               selectedCharacter={selectedCharacter}
-              handleJSONUpdate={handleLocalUpdate}  // Updated this line
+              handleLocalUpdate={handleLocalUpdate}
+              handleJSONUpdate={handleJSONUpdate}  // Updated this line
               showcaseJSON={showcaseJSON}           // Updated this line
               localJSON={localJSON}                 // Added this line
+              setCharacterImages={setCharacterImages}
             />  
           ) : (
             <CharacterInfo

@@ -2,7 +2,7 @@ import { TextInput, TextAreaInput } from "./../TextInput";
 import { LocalTextInput, LocalTextAreaInput } from "./../LocalTextInput";
 import { FileUploadFull, FileUploadBar } from "./../FileUpload";
 
-function CharacterEdit({selectedCharacter, handleJSONUpdate, showcaseJSON, localJSON}){
+function CharacterEdit({selectedCharacter, handleJSONUpdate, handleLocalUpdate, showcaseJSON, localJSON}){
     return(
 
         <div className="m-3">
@@ -15,7 +15,7 @@ function CharacterEdit({selectedCharacter, handleJSONUpdate, showcaseJSON, local
                 label={"Name"}
                 personaIndex={selectedCharacter}
                 element={["name"]}
-                handleJSONUpdate={handleJSONUpdate}
+                handleJSONUpdate={handleLocalUpdate}
                 showcaseJSON={showcaseJSON}
                 localJSON={localJSON}
               />
@@ -23,7 +23,7 @@ function CharacterEdit({selectedCharacter, handleJSONUpdate, showcaseJSON, local
                 label={"Role"}
                 personaIndex={selectedCharacter}
                 element={["type"]}
-                handleJSONUpdate={handleJSONUpdate}
+                handleJSONUpdate={handleLocalUpdate}
                 showcaseJSON={showcaseJSON}
                 localJSON={localJSON}
               />
@@ -32,7 +32,7 @@ function CharacterEdit({selectedCharacter, handleJSONUpdate, showcaseJSON, local
               label={"Page Description"}
               personaIndex={selectedCharacter}
               element={["description"]}
-              handleJSONUpdate={handleJSONUpdate}
+              handleJSONUpdate={handleLocalUpdate}
               localJSON={localJSON}
               showcaseJSON={showcaseJSON}
             />

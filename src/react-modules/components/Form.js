@@ -12,6 +12,7 @@ function Form({
   handleJSONUpdate,
   setShowcaseJSON,
 }) {
+  console.log("fsaf" + showcaseJSON);
   return (
     <>
       <FormHeader
@@ -22,8 +23,7 @@ function Form({
         <TextInput
           label={"Credential Name"}
           personaIndex={selectedIndex}
-          element={"for"}
-          value={credentialName}
+          element={["onboarding"]}
           showcaseJSON={showcaseJSON}
           handleJSONUpdate={handleJSONUpdate}
         />
@@ -31,17 +31,16 @@ function Form({
       <TextInput
         label={"Issuer Name"}
         personaIndex={selectedIndex}
-        element={"for"}
-        value={issuerName}
+        element={["onboarding"]}
         showcaseJSON={showcaseJSON}
         handleJSONUpdate={handleJSONUpdate}
       />
-      <div className="grid grid-cols-5 items-center content-center">
+      {/* <div className="grid grid-cols-5 items-center content-center">
         <div className="col-span-2">
           <TextInput
             label="Attribute Name"
             personaIndex={selectedIndex}
-            element={"for"}
+            element={["onboarding"]}
             showcaseJSON={showcaseJSON}
             handleJSONUpdate={handleJSONUpdate}
           />
@@ -50,7 +49,7 @@ function Form({
           <TextInput
             label="Attribute Value"
             personaIndex={selectedIndex}
-            element={"for"}
+            element={["onboarding"]}
             showcaseJSON={showcaseJSON}
             handleJSONUpdate={handleJSONUpdate}
           />
@@ -60,41 +59,8 @@ function Form({
             Add
           </button>
         </div>
-      </div>
-      <AttributesList />
-      {/* <div className="credentials-form-attributes-container credentials-form-attributes-container  mt-4 rounded p-4">
-        <p className="  font-bold text-slate-50">Current Attributes</p>
-        <div className="grid grid-cols-6">
-          <div className="col-span-2">
-            <div className="credentials-form-attribute-text">
-              <TextInput
-                label="Attribute Name"
-                personaIndex={selectedIndex}
-                element={"for"}
-                showcaseJSON={showcaseJSON}
-                handleJSONUpdate={handleJSONUpdate}
-              />
-            </div>
-          </div>
-          <div className="col-span-2">
-            <div className="credentials-form-attribute-text">
-              <TextInput
-                label="Attribute Value"
-                personaIndex={selectedIndex}
-                element={"for"}
-                showcaseJSON={showcaseJSON}
-                handleJSONUpdate={handleJSONUpdate}
-              />
-            </div>
-          </div>
-          <div className="col-span-1 flex items-center justify-center h-full">
-            <button className="border px-1 mt-4 text-slate-50 ">Edit</button>
-          </div>
-          <div className="col-span-1 flex items-center justify-center h-full">
-            <button className="border px-1 mt-4 text-slate-50">Remove</button>
-          </div>
-        </div>
       </div> */}
+      <AttributesList />
       <NewCredentialButton setShowcaseJSON={setShowcaseJSON} />
     </>
   );

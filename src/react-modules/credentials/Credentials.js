@@ -17,11 +17,14 @@ function Credentials({ showcaseJSON, handleJSONUpdate, setShowcaseJSON }) {
   const createButtonClicked = useRef(false);
   const importButtonClicked = useRef(false);
 
-  const onboarding = showcaseJSON.personas[0].onboarding.find(
-    (cred) => cred.credentials
-  );
+  // const onboarding = showcaseJSON.personas[0].onboarding.find(
+  //   (cred) => cred.credentials
+  // );
 
-  const parsedCredentials = onboarding ? onboarding.credentials : [];
+  // const parsedCredentials = onboarding ? onboarding.credentials : [];
+
+  const parsedCredentials = showcaseJSON.onboarding[3].credentials;
+  console.log(parsedCredentials);
 
   // Functions
 

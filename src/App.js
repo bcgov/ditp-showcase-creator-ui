@@ -28,6 +28,8 @@ function App() {
     setCurrentPage(page);
   };
 
+  console.log(showcaseJSON);
+
   function handleJSONUpdate(index, element, newValue) {
     switch (element.length) {
       case 5:

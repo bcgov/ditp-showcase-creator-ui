@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
+import './../TextInput.css'
 
-
-function TextInput({
+function LocalTextInput({
   label,
   personaIndex,
   element,
   handleJSONUpdate,
   showcaseJSON,
+  localJSON
 }) {
   
   const [value, setValue] = useState("");
@@ -36,20 +37,20 @@ function TextInput({
 
   const handleChange = (newValue) => {
     setValue(newValue);
-    handleJSONUpdate(personaIndex, element, newValue);
+    handleJSONUpdate(element, newValue);
   };
 
   return (
     <div className="p-1">
       <label
-        className="text-neutral-500 dark:text-neutral-200"
+        className="text-white font-bold"
         htmlFor={`${personaIndex}_${element}`}
       >
         {label}{" "}
       </label>
       <br />
       <input
-        className="p-1 w-full field-background"
+        className="p-1 field-background rounded w-full"
         id={`${personaIndex}_${element}`}
         type="text"
         value={value}
@@ -59,12 +60,13 @@ function TextInput({
   );
 }
 
-function TextAreaInput({
+function LocalTextAreaInput({
   label,
   personaIndex,
   element,
   handleJSONUpdate,
   showcaseJSON,
+  localJSON
 }) {
   const [value, setValue] = useState("");
 
@@ -93,14 +95,14 @@ function TextAreaInput({
 
   const handleChange = (newValue) => {
     setValue(newValue);
-    handleJSONUpdate(personaIndex, element, newValue);
+    handleJSONUpdate(element, newValue);
   };
 
   return (
 
-    <div className="">
-    <label className="text-neutral-500 dark:text-neutral-200" htmlFor={`${personaIndex}_${element}`}>{label}: </label>
-      <textarea className="p-1 w-full resize-none field-background" id={`${personaIndex}_${element}`} type="text" 
+    <div className="p-1">
+    <label className="text-white font-bold" htmlFor={`${personaIndex}_${element}`}>{label}: </label>
+      <textarea className="rounded p-1 w-full resize-none field-background" id={`${personaIndex}_${element}`} type="text" 
       value={value}
       onChange={(e) => handleChange(e.target.value)} />
 
@@ -108,4 +110,4 @@ function TextAreaInput({
   );
 }
 
-export { TextInput, TextAreaInput };
+export { LocalTextInput, LocalTextAreaInput };

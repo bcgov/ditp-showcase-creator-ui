@@ -25,6 +25,7 @@ function App() {
   );
 
   const [darkMode, setDarkMode] = useState(true)
+  
   const [selectedCharacter, setSelectedCharacter] = useState(0)
 
 
@@ -59,6 +60,7 @@ function App() {
         break;
       case 1:
         setShowcaseJSON((json) => {
+          
           json["personas"] [index] [element[0]] = newValue;
         });
         break;
@@ -78,7 +80,7 @@ function App() {
         showcaseJSON={showcaseJSON}
         changePage={changePage}
         />
-        {currentPage === 'character' && <CharacterPage />}
+        {currentPage === 'character' && <CharacterPage showcaseJSON={showcaseJSON} setShowcaseJSON={setShowcaseJSON} selectedCharacter={selectedCharacter} setSelectedCharacter={setSelectedCharacter} handleJSONUpdate={handleJSONUpdate}/>}
         {currentPage === 'credential' && <CredentialPage />}
         {currentPage === 'setup' && <SetupPage />}
         {currentPage === 'scenario' && <ScenarioPage />}
@@ -92,8 +94,6 @@ function App() {
           <p className="text-neutral-500 dark:text-neutral-200 text-lg">
             React and Tailwind CSS in action
           </p>
-
-          <CharacterScreen showcaseJSON={showcaseJSON} setShowcaseJSON={setShowcaseJSON} selectedCharacter={selectedCharacter} setSelectedCharacter={setSelectedCharacter} handleJSONUpdate={handleJSONUpdate}/>
 
         </div>
 

@@ -1,6 +1,7 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-
-function CharacterInfo({setShowcaseJSON, showcaseJSON, setSelectedCharacter, selectedCharacter, setEditMode}){
+function CharacterInfo({setShowcaseJSON, showcaseJSON, setSelectedCharacter, selectedCharacter, setEditMode, characterImages}){
 
     const handleRemoveCharacter = (e, i) => {
         if (showcaseJSON.personas.length == 1) return;
@@ -22,7 +23,7 @@ function CharacterInfo({setShowcaseJSON, showcaseJSON, setSelectedCharacter, sel
         // Regular mode / non-editable
         <>
         <div className="flex">
-          <div>
+          <div className="m-3">
             <p>Character</p>
             <p className="text-2xl font-bold">Your Selected Character</p>
           </div>
@@ -66,22 +67,31 @@ function CharacterInfo({setShowcaseJSON, showcaseJSON, setSelectedCharacter, sel
         <div className="grid grid-cols-3">
           <div className="p-2 m-2">
             <p>Body Image</p>
-            <div className="highlight-text p-6 m-1">
-              IMAGE HERE
+            <div className="highlight-text p-6 m-1 flex justify-center items-center">
+              {
+                characterImages[0] == null ? <FontAwesomeIcon icon={faUser}/> : 
+                <img width="100px" src={characterImages[0]}/>
+              }
             </div>
           </div>
           
           <div className="p-2 m-2">
             <p>Avatar Image</p>
-            <div className="highlight-text p-6 m-1">
-              IMAGE HERE
+            <div className="highlight-text p-6 m-1 flex justify-center items-center">
+            {
+                characterImages[0] == null ? <FontAwesomeIcon icon={faUser}/> : 
+                <img width="100px" src={characterImages[0]}/>
+              }
             </div>
           </div>
           
           <div className="p-2 m-2">
             <p>Celebration Image</p>
-            <div className="highlight-text p-6 m-1">
-              IMAGE HERE
+            <div className="highlight-text p-6 m-1 flex justify-center items-center">
+            {
+                characterImages[0] == null ? <FontAwesomeIcon icon={faUser}/> : 
+                <img width="100px" src={characterImages[0]}/>
+              }
             </div>
           </div>
         </div>

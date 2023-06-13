@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import './../TextInput.css'
 
 function LocalTextInput({
   label,
@@ -43,14 +43,14 @@ function LocalTextInput({
   return (
     <div className="p-1">
       <label
-        className="text-neutral-500 dark:text-neutral-200"
+        className="text-white font-bold"
         htmlFor={`${personaIndex}_${element}`}
       >
         {label}{" "}
       </label>
       <br />
       <input
-        className="p-1 w-full text-black"
+        className="p-1 field-background rounded w-full"
         id={`${personaIndex}_${element}`}
         type="text"
         value={value}
@@ -100,9 +100,9 @@ function LocalTextAreaInput({
 
   return (
 
-    <div className="">
-    <label className="text-neutral-500 dark:text-neutral-200" htmlFor={`${personaIndex}_${element}`}>{label}: </label>
-      <textarea className="p-1 w-full resize-none text-black" id={`${personaIndex}_${element}`} type="text" 
+    <div className="p-1">
+    <label className="text-white font-bold" htmlFor={`${personaIndex}_${element}`}>{label}: </label>
+      <textarea className="rounded p-1 w-full resize-none field-background" id={`${personaIndex}_${element}`} type="text" 
       value={value}
       onChange={(e) => handleChange(e.target.value)} />
 

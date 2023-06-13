@@ -5,13 +5,14 @@ import { FileUploadFull, FileUploadBar } from "./../FileUpload";
 function CharacterEdit({selectedCharacter, handleJSONUpdate, showcaseJSON, localJSON}){
     return(
 
-        <>
-            <h2 className="text-1xl text-neutral-700 dark:text-white font-bold mb-5">
-              EDIT CHARACTER
-            </h2>
+        <div className="m-3">
+            <div>
+            <p>Character</p>
+            <p className="text-2xl font-bold">Your Selected Character</p>
+          </div>
             <div className="grid grid-cols-2 w-full">
               <LocalTextInput
-                label={"Name:"}
+                label={"Name"}
                 personaIndex={selectedCharacter}
                 element={["name"]}
                 handleJSONUpdate={handleJSONUpdate}
@@ -19,7 +20,7 @@ function CharacterEdit({selectedCharacter, handleJSONUpdate, showcaseJSON, local
                 localJSON={localJSON}
               />
               <LocalTextInput
-                label={"Role:"}
+                label={"Role"}
                 personaIndex={selectedCharacter}
                 element={["type"]}
                 handleJSONUpdate={handleJSONUpdate}
@@ -28,7 +29,7 @@ function CharacterEdit({selectedCharacter, handleJSONUpdate, showcaseJSON, local
               />
             </div>
             <LocalTextAreaInput
-              label={"Page Description:"}
+              label={"Page Description"}
               personaIndex={selectedCharacter}
               element={["description"]}
               handleJSONUpdate={handleJSONUpdate}
@@ -60,7 +61,7 @@ function CharacterEdit({selectedCharacter, handleJSONUpdate, showcaseJSON, local
                 showcaseJSON={showcaseJSON}
               />
             </div>
-          </>
+          </div>
     )
 }
 

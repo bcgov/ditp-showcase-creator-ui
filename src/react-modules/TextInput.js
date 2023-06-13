@@ -49,7 +49,7 @@ function TextInput({
       </label>
       <br />
       <input
-        className="p-1 w-full text-black"
+        className="p-1 w-full field-background"
         id={`${personaIndex}_${element}`}
         type="text"
         value={value}
@@ -100,7 +100,7 @@ function TextAreaInput({
 
     <div className="">
     <label className="text-neutral-500 dark:text-neutral-200" htmlFor={`${personaIndex}_${element}`}>{label}: </label>
-      <textarea className="p-1 w-full resize-none text-black" id={`${personaIndex}_${element}`} type="text" 
+      <textarea className="p-1 w-full resize-none field-background" id={`${personaIndex}_${element}`} type="text" 
       value={value}
       onChange={(e) => handleChange(e.target.value)} />
 

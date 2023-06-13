@@ -15,6 +15,9 @@ function CharacterScreen({
 }) {
 
   const [editMode, setEditMode] = useState(false);
+  
+  // To-do: Set the character images, so they can be previewed... ideally this would be the auto-gen URLs for them
+  const [characterImages, setCharacterImages] = useState([]);
 
   // Seperately update a mini version of the json, containing only the fields for this page
   const [localJSON, setLocalJSON] = useImmer();
@@ -94,6 +97,7 @@ function CharacterScreen({
               setSelectedCharacter={setSelectedCharacter}
               selectedCharacter={selectedCharacter}
               setEditMode={setEditMode}
+              characterImages={characterImages}
             />
           )}
           {/* Save or cancel button */

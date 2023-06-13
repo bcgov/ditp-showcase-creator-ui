@@ -67,6 +67,7 @@ const DEFAULT_JSON = {
       title: "Connect with Test College",
       text: "Imagine, as Alice, you are logged into the BestBC College website (see below). They want to offer you a Digital Student Card. Use your BC Wallet to scan the QR code from the website.",
       image: "/public/student/onboarding-connect-light.svg",
+      issuer_name: "Test College",
     },
     {
       screenId: "ACCEPT_CREDENTIAL",
@@ -75,7 +76,6 @@ const DEFAULT_JSON = {
       image: "/public/common/onboarding-credential-light.svg",
       credentials: [
         {
-          issuer_name: "Test College",
           name: "test_card",
           version: "1.9",
           icon: "/public/student/icon-student.svg",

@@ -16,12 +16,19 @@ import { DEFAULT_JSON } from "./DEFAULT_JSON";
 import { Credentials } from "./react-modules/credentials/Credentials";
 
 function App() {
-  const [showcaseJSON, setShowcaseJSON] = useImmer({
-    personas: [DEFAULT_JSON],
-  });
+  const [showcaseJSON, setShowcaseJSON] = useImmer(
+    {
+      personas: [
+        DEFAULT_JSON
+      ]
+    }
+  );
 
-  const [darkMode, setDarkMode] = useState(true);
-  const [selectedCharacter, setSelectedCharacter] = useState(0);
+  const [darkMode, setDarkMode] = useState(true)
+  
+  const [selectedCharacter, setSelectedCharacter] = useState(0)
+
+
 
   const [currentPage, setCurrentPage] = useState("character");
   const changePage = (page) => {
@@ -59,7 +66,8 @@ function App() {
         break;
       case 1:
         setShowcaseJSON((json) => {
-          json["personas"][index][element[0]] = newValue;
+          
+          json["personas"] [index] [element[0]] = newValue;
         });
         break;
       default:
@@ -76,17 +84,20 @@ function App() {
           showcaseJSON={showcaseJSON}
           changePage={changePage}
         />
-        {currentPage === "character" && <CharacterPage />}
-        {currentPage === "credential" && (
+        {currentPage === 'character' && <CharacterPage showcaseJSON={showcaseJSON} setShowcaseJSON={setShowcaseJSON} selectedCharacter={selectedCharacter} setSelectedCharacter={setSelectedCharacter} handleJSONUpdate={handleJSONUpdate}/>}
+        {/* {currentPage === 'credential' && <CredentialPage />}
+                {currentPage === "credential" && (
           <Credentials
             showcaseJSON={showcaseJSON}
             handleJSONUpdate={handleJSONUpdate}
             setShowcaseJSON={setShowcaseJSON}
           />
-        )}
-        {currentPage === "setup" && <SetupPage />}
-        {currentPage === "scenario" && <ScenarioPage />}
-
+        )} */}
+        {currentPage === 'setup' && <SetupPage />}
+        {currentPage === 'scenario' && <ScenarioPage />}
+        
+        
+        
         <div className="container mx-auto bg-neutral-200 dark:bg-zinc-500 rounded-xl shadow-xl border p-8 m-10 mt-5">
           <p className="text-3xl text-neutral-700 dark:text-white font-bold mb-5">
             Welcome!
@@ -95,13 +106,6 @@ function App() {
             React and Tailwind CSS in action
           </p>
 
-          <CharacterScreen
-            showcaseJSON={showcaseJSON}
-            setShowcaseJSON={setShowcaseJSON}
-            selectedCharacter={selectedCharacter}
-            setSelectedCharacter={setSelectedCharacter}
-            handleJSONUpdate={handleJSONUpdate}
-          />
         </div>
 
         <p className="p-10 m-5 border rounded dark:text-neutral-200">

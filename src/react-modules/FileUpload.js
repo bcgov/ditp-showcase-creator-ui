@@ -8,7 +8,6 @@ function FileUploadFull({
   personaIndex,
   element,
   handleJSONUpdate,
-  showcaseJSON,
 }) {
   const [preview, setPreview] = useState();
 
@@ -30,6 +29,7 @@ function FileUploadFull({
     if (newValue) {
       objectUrl = URL.createObjectURL(newValue);
       setPreview(objectUrl);
+
       const base64 = await convertBase64(newValue);
       handleJSONUpdate(personaIndex, element, base64);
     } else {
@@ -39,7 +39,7 @@ function FileUploadFull({
   };
 
   return (
-    <div class="flex p-1 items-center flex-col justify-center w-full">
+    <div className="flex p-1 items-center flex-col justify-center w-full">
       <p className="font-bold pb-1 w-full text-start text-white">{text}</p>
 
       {preview == null ? null : (
@@ -54,10 +54,10 @@ function FileUploadFull({
       )}
 
       <label
-        for={`${element}`}
+        htmlFor={`${element}`}
         className="p-3 flex border-2 flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer dark:hover:bg-zinc-800 upload_outside hover:bg-zinc-100 dark:hover:bg-zinc-600"
       >
-        <div class="flex flex-col items-center h-full justify-center border rounded-lg upload_center border-dashed p-2">
+        <div className="flex flex-col items-center h-full justify-center border rounded-lg upload_center border-dashed p-2">
           {preview == null ? null : (
             <>
               <img
@@ -67,14 +67,11 @@ function FileUploadFull({
             </>
           )}
 
-          <p class=" text-center mb-2 text-xs text-zinc-500 dark:text-zinc-400 lowercase">
-            <span class="font-bold text-zinc-300 dark:text-zinc-200">
+          <p className=" text-center text-xs text-zinc-500 dark:text-zinc-400 lowercase">
+            <span className="font-bold text-zinc-300 dark:text-zinc-200">
               Click to upload
             </span>{" "}
             or drag and drop
-          </p>
-          <p class="text-xs text-zinc-500 dark:text-zinc-400 dark:text-zinc-400">
-            (SVG, PNG, JPEG, JPG)
           </p>
         </div>
 
@@ -82,7 +79,7 @@ function FileUploadFull({
         <input
           id={`${element}`}
           type="file"
-          class="hidden"
+          className="hidden"
           onChange={(e) => handleChange(e.target.files[0])}
         />
       </label>
@@ -95,7 +92,7 @@ function FileUploadBar({
   personaIndex,
   element,
   handleJSONUpdate,
-  showcaseJSON,
+  setCharacterImages,
 }) {
   const [value, setValue] = useState();
   const [showDelete, setShowDelete] = useState(false);
@@ -130,8 +127,8 @@ function FileUploadBar({
     <div className="flex flex-col">
       <form id={`form_${element}`}>
       <label
-        class="font-bold w-full text-start text-white border-dashed"
-        for={`${element}`}
+        className="font-bold w-full text-start text-white border-dashed"
+        htmlFor={`${element}`}
       >
         {text}
       </label>

@@ -1,5 +1,5 @@
 import React from "react";
-import { FormHeader } from "../components/index.js";
+import { FormHeader } from "./index.js";
 
 function SelectionOverview({
   credentialName,
@@ -8,6 +8,9 @@ function SelectionOverview({
   setEditButtonClicked,
   setComponentToMount,
   credentialSelected,
+  setShowcaseJSON,
+  setSelectedIndex,
+  showcaseJSON,
 }) {
   return (
     <>
@@ -19,6 +22,9 @@ function SelectionOverview({
             setEditButtonClicked={setEditButtonClicked}
             setComponentToMount={setComponentToMount}
             credentialSelected={credentialSelected}
+            setShowcaseJSON={setShowcaseJSON}
+            setSelectedIndex={setSelectedIndex}
+            showcaseJSON={showcaseJSON}
           />
           <div className="selection-overview-container w-full h-full mt-7 relative">
             <div className="selection-overview-credential-name">

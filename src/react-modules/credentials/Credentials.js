@@ -2,66 +2,73 @@ import React from "react";
 import "./styles/credentials.css";
 import { useState, useRef, useEffect } from "react";
 import { JSONUploadButton } from "../JSONUpload";
-import { TextInput } from "../TextInput";
-
-import { NoSelection, Form, SelectionOverview } from "../components/index.js";
+import { NoSelection, Form, SelectionOverview } from "./components/index.js";
 import { CredentialsList, Edit } from "./index.js";
+import { useImmer } from "use-immer";
 
-function Credentials({ showcaseJSON, handleJSONUpdate, setShowcaseJSON }) {
-  const [credentialSelected, setCredentialSelected] = useState(false);
+function Credentials({
+  showcaseJSON,
+  handleJSONUpdate,
+  setShowcaseJSON,
+  selectedCharacter,
+  setSelectedIndex,
+  selectedIndex,
+}) {
   const [editButtonClicked, setEditButtonClicked] = useState(false);
+  const [credentialSelected, setCredentialSelected] = useState(false);
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const [componentToMount, setComponentToMount] = useState("no selection");
 
-  const createButtonClicked = useRef(false);
-  const importButtonClicked = useRef(false);
+  const [localJSON, setLocalJSON] = useImmer();
 
-  // const onboarding = showcaseJSON.personas[0].onboarding.find(
-  //   (cred) => cred.credentials
-  // );
+  const parsedCredentials = showcaseJSON.personas[0].onboarding[4].credentials;
 
-  // const parsedCredentials = onboarding ? onboarding.credentials : [];
+  // useEffect(() => {
+  //   setLocalJSON({
+  //     name: showcaseJSON.personas[selectedCharacter].onboarding[4].credentials[
+  //       selectedIndex
+  //     ].name,
+  //   });
+  // }, [selectedCharacter]);
 
-  const parsedCredentials = showcaseJSON.onboarding[3].credentials;
-  console.log(parsedCredentials);
+  function handleLocalUpdate(element, newValue) {
+    setLocalJSON((json) => {
+      json[element] = newValue;
+    });
+  }
 
-  // Functions
-
-  const handleCreateButtonClick = (e) => {
-    createButtonClicked.current = true;
-    setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
-  };
-
-  const handleImportButtonClick = (e) => {
-    importButtonClicked.current = true;
-    setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
-  };
+  function saveJSON() {
+    console.log("saved");
+    // handleJSONUpdate(selectedCharacter, ["name"], localJSON.name);
+    // handleJSONUpdate(selectedCharacter, ["type"], localJSON.type);
+    // handleJSONUpdate(selectedCharacter, ["description"], localJSON.description);
+  }
 
   const renderComponent = (component) => {
     switch (component) {
       case "credential":
         return (
           <SelectionOverview
-            // index={selectedIndex}
-            // parsedCredentials={parsedCredentials}
             credentialName={parsedCredentials[selectedIndex].name}
             issuerName={parsedCredentials[selectedIndex].issuer_name}
             credentialAttributes={parsedCredentials[selectedIndex].attributes}
             setEditButtonClicked={setEditButtonClicked}
             setComponentToMount={setComponentToMount}
-            credentialSelected={credentialSelected}
+            credentialSelected={selectedIndex}
+            setShowcaseJSON={setShowcaseJSON}
+            setSelectedIndex={setSelectedIndex}
           />
         );
       case "edit":
         return (
           <Edit
-            credentialName={parsedCredentials[selectedIndex].name}
-            issuerName={parsedCredentials[selectedIndex].issuer_name}
-            credentialAttributes={parsedCredentials[selectedIndex].attributes}
             selectedIndex={selectedIndex}
             handleJSONUpdate={handleJSONUpdate}
+            setShowcaseJSON={setShowcaseJSON}
             showcaseJSON={showcaseJSON}
+            localJSON={localJSON}
+            handleLocalUpdate={handleLocalUpdate}
+            selectedCharacter={selectedCharacter}
           />
         );
       case "create":
@@ -71,6 +78,9 @@ function Credentials({ showcaseJSON, handleJSONUpdate, setShowcaseJSON }) {
             handleJSONUpdate={handleJSONUpdate}
             showcaseJSON={showcaseJSON}
             setShowcaseJSON={setShowcaseJSON}
+            localJSON={localJSON}
+            handleLocalUpdate={handleLocalUpdate}
+            saveJSON={saveJSON}
           />
         );
       case "import":
@@ -78,6 +88,14 @@ function Credentials({ showcaseJSON, handleJSONUpdate, setShowcaseJSON }) {
       default:
         return <NoSelection Text={"You have no credential selected."} />;
     }
+  };
+
+  const handleCreateButtonClick = (e) => {
+    setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
+  };
+
+  const handleImportButtonClick = (e) => {
+    setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
   };
 
   return (
@@ -112,7 +130,6 @@ function Credentials({ showcaseJSON, handleJSONUpdate, setShowcaseJSON }) {
           </div>
           <CredentialsList
             setSelectedIndex={setSelectedIndex}
-            setSelected={setSelectedIndex}
             setCredentialSelected={setCredentialSelected}
             parsedCredentials={parsedCredentials}
             setComponentToMount={setComponentToMount}
@@ -122,7 +139,6 @@ function Credentials({ showcaseJSON, handleJSONUpdate, setShowcaseJSON }) {
         {/* end of column 1 */}
         <div className="two-column-col md:w-2/5 bg-gray-300 p-4 rounded-md right-col">
           {renderComponent(componentToMount)}
-          {/* <NoSelection /> */}
         </div>
 
         {/* end of column 2 */}

@@ -1,37 +1,36 @@
 import React from "react";
-
-function Attribute() {
+import { LocalTextInput } from "../LocalTextInput";
+function Attribute({ handleChange, attributeName, attributeValue }) {
   return (
-    <div className="grid grid-cols-6">
-      asfa
-      {/* <div className="col-span-2">
+    <div className="grid grid-cols-6 gap-2">
+      <div className="col-span-2 overflow-hidden ">
         <div className="credentials-form-attribute-text">
-          <TextInput
-            label="Attribute Name"
-            personaIndex={selectedIndex}
-            element={"for"}
-            showcaseJSON={showcaseJSON}
-            handleJSONUpdate={handleJSONUpdate}
+          <label htmlFor="">Attribute name</label>
+          <input
+            type="text"
+            className="p-1"
+            onChange={(e) => handleChange(e.currentTarget.value)}
+            value={attributeName}
           />
         </div>
       </div>
-      <div className="col-span-2">
+      <div className="col-span-2 overflow-hidden">
         <div className="credentials-form-attribute-text">
-          <TextInput
-            label="Attribute Value"
-            personaIndex={selectedIndex}
-            element={"for"}
-            showcaseJSON={showcaseJSON}
-            handleJSONUpdate={handleJSONUpdate}
+          <label htmlFor="">Attribute value</label>
+          <input
+            type="text"
+            className="p-1"
+            onChange={(e) => handleChange(e.currentTarget.value)}
+            value={attributeValue}
           />
         </div>
       </div>
       <div className="col-span-1 flex items-center justify-center h-full">
-        <button className="border px-1 mt-4 text-slate-50 ">Edit</button>
+        <button className="border text-slate-50 text-xs ">Edit</button>
       </div>
       <div className="col-span-1 flex items-center justify-center h-full">
-        <button className="border px-1 mt-4 text-slate-50">Remove</button>
-      </div> */}
+        <button className="border text-slate-50 text-xs">Remove</button>
+      </div>
     </div>
   );
 }

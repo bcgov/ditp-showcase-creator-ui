@@ -1,0 +1,29 @@
+.highlight-container {
+  background: #282828;
+  color: white;
+}
+
+.highlight-text {
+  background: #1a1a1a;
+  color: white;
+}
+
+.character-circle {
+  background: #525252;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+}
+
+.selected-item {
+  border: 3px solid #fcba19;
+}
+
+.button-dark {
+  background: #454545;
+}
+
+.button-light {
+  background: #898a8a;
+  border-radius: 5px;
+}

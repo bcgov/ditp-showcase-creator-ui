@@ -1,17 +1,32 @@
 import { useState, useEffect } from "react";
+import "./../TextInput.css";
 
-function TextInput({
+function LocalTextInput({
   label,
   personaIndex,
   element,
   handleJSONUpdate,
   showcaseJSON,
-  // value,
+  localJSON,
 }) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
     switch (element.length) {
+      case 7:
+        setValue(
+          showcaseJSON.personas[personaIndex][element[0]][element[1]][
+            element[2]
+          ][element[3]][element[4]][element[5]][element[6]]
+        );
+        break;
+      case 6:
+        setValue(
+          showcaseJSON.personas[personaIndex][element[0]][element[1]][
+            element[2]
+          ][element[3]][element[4]][element[5]]
+        );
+        break;
       case 5:
         setValue(
           showcaseJSON.personas[personaIndex][element[0]][element[1]][
@@ -39,27 +54,25 @@ function TextInput({
       case 1:
         setValue(showcaseJSON.personas[personaIndex][element[0]]);
         break;
-      default:
-        return;
     }
   }, [personaIndex]);
 
   const handleChange = (newValue) => {
     setValue(newValue);
-    handleJSONUpdate(personaIndex, element, newValue);
+    handleJSONUpdate(element, newValue);
   };
 
   return (
     <div className="p-1">
       <label
-        className="text-neutral-500 dark:text-neutral-200"
+        className="text-white font-bold"
         htmlFor={`${personaIndex}_${element}`}
       >
         {label}{" "}
       </label>
       <br />
       <input
-        className="p-1 w-full field-background"
+        className="p-1 field-background rounded w-full"
         id={`${personaIndex}_${element}`}
         type="text"
         value={value}
@@ -69,12 +82,13 @@ function TextInput({
   );
 }
 
-function TextAreaInput({
+function LocalTextAreaInput({
   label,
   personaIndex,
   element,
   handleJSONUpdate,
   showcaseJSON,
+  localJSON,
 }) {
   const [value, setValue] = useState("");
 
@@ -107,25 +121,31 @@ function TextAreaInput({
       case 1:
         setValue(showcaseJSON.personas[personaIndex][element[0]]);
         break;
-      default:
-        return;
     }
   }, [personaIndex]);
 
   const handleChange = (newValue) => {
     setValue(newValue);
-    handleJSONUpdate(personaIndex, element, newValue);
+    handleJSONUpdate(element, newValue);
   };
 
   return (
-    <div className="">
-    <label className="text-neutral-500 dark:text-neutral-200" htmlFor={`${personaIndex}_${element}`}>{label}: </label>
-      <textarea className="p-1 w-full resize-none field-background" id={`${personaIndex}_${element}`} type="text" 
-      value={value}
-      onChange={(e) => handleChange(e.target.value)} />
-
+    <div className="p-1">
+      <label
+        className="text-white font-bold"
+        htmlFor={`${personaIndex}_${element}`}
+      >
+        {label}:{" "}
+      </label>
+      <textarea
+        className="rounded p-1 w-full resize-none field-background"
+        id={`${personaIndex}_${element}`}
+        type="text"
+        value={value}
+        onChange={(e) => handleChange(e.target.value)}
+      />
     </div>
   );
 }
 
-export { TextInput, TextAreaInput };
+export { LocalTextInput, LocalTextAreaInput };

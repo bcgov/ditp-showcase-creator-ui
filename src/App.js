@@ -29,11 +29,9 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(
-      showcaseJSON
-      // showcaseJSON.personas[0].onboarding[4].credentials[0].attributes[0].name
-    );
-  }, [showcaseJSON]);
+    console.log(selectedIndex);
+    console.log(showcaseJSON);
+  }, [selectedIndex, showcaseJSON]);
 
   function handleJSONUpdate(index, element, newValue) {
     switch (element.length) {
@@ -108,12 +106,6 @@ function App() {
           />
         )}
         {currentPage === "setup" && <SetupPage />}
-
-        {/* personaIndex,
-  handleLocalUpdate,
-  handleJSONUpdate,
-  showcaseJSON,
-  localJSON */}
         {currentPage === "scenario" && <ScenarioPage />}
 
         {/* <div className="container mx-auto bg-neutral-200 dark:bg-zinc-500 rounded-xl shadow-xl border p-8 m-10 mt-5">

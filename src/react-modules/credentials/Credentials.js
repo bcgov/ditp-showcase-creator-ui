@@ -23,6 +23,11 @@ function Credentials({
 
   const parsedCredentials = showcaseJSON.personas[0].onboarding[4].credentials;
 
+  // ** Run this EVERYTIME selectedIndex changes ***
+  // localJSON will hold the current values in showcaseJSON (top-level)
+  // This has to be set every time you choose a new credential (selectedIndex)
+  // Identify your key and values by parsing through the showcaseJSON with your selectedIndex.
+
   // useEffect(() => {
   //   setLocalJSON({
   //     name: showcaseJSON.personas[selectedCharacter].onboarding[4].credentials[
@@ -31,32 +36,54 @@ function Credentials({
   //   });
   // }, [selectedCharacter]);
 
+  // useEffect(() => {
+  //   console.log(localJSON);
+  // }, [localJSON]);
+
   function handleLocalUpdate(element, newValue) {
     setLocalJSON((json) => {
       json[element] = newValue;
     });
   }
 
-  function saveJSON() {
-    console.log("saved");
-    // handleJSONUpdate(selectedCharacter, ["name"], localJSON.name);
-    // handleJSONUpdate(selectedCharacter, ["type"], localJSON.type);
-    // handleJSONUpdate(selectedCharacter, ["description"], localJSON.description);
-  }
+  // function saveJSON() {
+  //   console.log("saved");
+  //   Call handleJSONUpdate and update the global json file.
+  //   Ensure you are drilling down to the correct place with the [element]
+  // }
+
+  const handleCreateButtonClick = (e) => {
+    setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
+    setLocalJSON({
+      name: "",
+      icon: "",
+      attributes: [],
+    });
+
+    // handleJSONUpdate(
+    //   selectedIndex,
+    //   ["onboarding", 4, "credentials", selectedIndex, "name"],
+    //   localJSON.name
+    // );
+  };
+
+  const handleImportButtonClick = (e) => {
+    setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
+  };
 
   const renderComponent = (component) => {
     switch (component) {
       case "credential":
         return (
           <SelectionOverview
-            credentialName={parsedCredentials[selectedIndex].name}
-            issuerName={parsedCredentials[selectedIndex].issuer_name}
-            credentialAttributes={parsedCredentials[selectedIndex].attributes}
             setEditButtonClicked={setEditButtonClicked}
             setComponentToMount={setComponentToMount}
+            handleJSONUpdate={handleJSONUpdate}
             credentialSelected={selectedIndex}
+            showcaseJSON={showcaseJSON}
+            selectedIndex={selectedIndex}
+            selectedCharacter={selectedCharacter}
             setShowcaseJSON={setShowcaseJSON}
-            setSelectedIndex={setSelectedIndex}
           />
         );
       case "edit":
@@ -67,7 +94,6 @@ function Credentials({
             setShowcaseJSON={setShowcaseJSON}
             showcaseJSON={showcaseJSON}
             localJSON={localJSON}
-            handleLocalUpdate={handleLocalUpdate}
             selectedCharacter={selectedCharacter}
           />
         );
@@ -75,12 +101,13 @@ function Credentials({
         return (
           <Form
             selectedIndex={selectedIndex}
-            handleJSONUpdate={handleJSONUpdate}
+            handleJSONUpdate={handleLocalUpdate}
             showcaseJSON={showcaseJSON}
             setShowcaseJSON={setShowcaseJSON}
             localJSON={localJSON}
-            handleLocalUpdate={handleLocalUpdate}
-            saveJSON={saveJSON}
+            setLocalJSON={setLocalJSON}
+            setSelectedIndex={setSelectedIndex}
+            credentialSelected={credentialSelected}
           />
         );
       case "import":
@@ -88,14 +115,6 @@ function Credentials({
       default:
         return <NoSelection Text={"You have no credential selected."} />;
     }
-  };
-
-  const handleCreateButtonClick = (e) => {
-    setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
-  };
-
-  const handleImportButtonClick = (e) => {
-    setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
   };
 
   return (

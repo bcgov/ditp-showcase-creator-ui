@@ -18,12 +18,11 @@ function FormHeader({
   };
 
   const handleCredentialRemoval = (i) => {
-    // if (showcaseJSON.personas.length == 1) return;
-    // // Prevent out of bounds selected character
+    // if (showcaseJSON.personas[0].onboarding[4].credentials.length == 1) return;
+
     // if (
     //   (selectedIndex == i ||
-    //     showcaseJSON.personas[0].onboarding[4].credentials - 1 ==
-    //       selectedIndex) &&
+    //     showcaseJSON.personas.length - 1 == selectedIndex) &&
     //   selectedIndex != 0
     // ) {
     //   setSelectedIndex(selectedIndex - 1);
@@ -31,8 +30,11 @@ function FormHeader({
 
     setShowcaseJSON((json) => {
       json.personas[0].onboarding[4].credentials.splice(i, 1);
+      // json[("personas", 0, "onboarding", 4, "credentials")].splice(i, 1);
     });
   };
+
+  // console.log(showcaseJSON.personas[0].onboarding[4].credentials);
 
   return (
     <>
@@ -50,7 +52,7 @@ function FormHeader({
               Edit
             </button>
             <button
-              onClick={(event) => handleCredentialRemoval(event, selectedIndex)}
+              onClick={() => handleCredentialRemoval(selectedIndex)}
               className=" text-sm py-1 px-3 mx-1 rounded bg-neutral-700 hover:bg-neutral-600 text-slate-100"
             >
               Delete

@@ -1,7 +1,7 @@
 import React from "react";
 import { DEFAULT_JSON } from "./../../DEFAULT_JSON";
 
-function NewCredentialButton({ setShowcaseJSON }) {
+function NewCredentialButton({ setShowcaseJSON, data }) {
   // const data = {
   //   name: "Person Card",
   //   version: "1.9",
@@ -22,12 +22,12 @@ function NewCredentialButton({ setShowcaseJSON }) {
   //   ],
   // };
 
-  const data = {
-    name: "",
-    version: "",
-    icon: "",
-    attributes: [],
-  };
+  // const data = {
+  //   name: "",
+  //   version: "",
+  //   icon: "",
+  //   attributes: [],
+  // };
 
   const handleClick = () => {
     setShowcaseJSON((json) => {

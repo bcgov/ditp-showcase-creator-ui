@@ -10,18 +10,46 @@ function SelectionOverview({
   selectedCharacter,
   setShowcaseJSON,
 }) {
+  const handleEditButtonClick = () => {
+    setEditButtonClicked((prevEditButtonSelected) => !prevEditButtonSelected);
+    setComponentToMount("edit");
+  };
+
+  const handleCredentialRemoval = (i) => {
+    // if (showcaseJSON.personas[0].onboarding[4].credentials.length == 1) return;
+    setShowcaseJSON((json) => {
+      json.personas[0].onboarding[4].credentials.splice(selectedIndex, 1);
+    });
+    console.log(selectedIndex);
+  };
+
   return (
     <>
       {
         <div className="text-neutral-100">
-          <FormHeader
-            formTitle={"Selected credential"}
-            formCategory={"Credential"}
-            setEditButtonClicked={setEditButtonClicked}
-            setShowcaseJSON={setShowcaseJSON}
-            setComponentToMount={setComponentToMount}
-            credentialSelected={credentialSelected}
-          />
+          <div className="flex justify-between mt-3">
+            <div>
+              <p className="text-slate-100 text-sm">Credentials</p>
+              <h3 className="text-4xl font-bold text-slate-50">Title Here</h3>
+            </div>
+            {
+              <div>
+                <button
+                  onClick={() => handleEditButtonClick()}
+                  className=" py-1 px-3 text-sm rounded bg-neutral-700 hover:bg-neutral-600 text-slate-100"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleCredentialRemoval(selectedIndex)}
+                  className=" text-sm py-1 px-3 mx-1 rounded bg-neutral-700 hover:bg-neutral-600 text-slate-100"
+                >
+                  Delete
+                </button>
+              </div>
+            }
+          </div>
+          <hr></hr>
           <div className="selection-overview-container w-full h-full mt-7 relative">
             <div className="selection-overview-credential-name">
               <h3 className="text-lg font-bold">Credential Name</h3>

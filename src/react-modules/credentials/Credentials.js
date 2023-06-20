@@ -16,11 +16,8 @@ function Credentials({
 }) {
   const [editButtonClicked, setEditButtonClicked] = useState(false);
   const [credentialSelected, setCredentialSelected] = useState(false);
-
   const [componentToMount, setComponentToMount] = useState("no selection");
-
   const [localJSON, setLocalJSON] = useImmer();
-
   const parsedCredentials = showcaseJSON.personas[0].onboarding[4].credentials;
 
   // ** Run this EVERYTIME selectedIndex changes ***
@@ -28,43 +25,57 @@ function Credentials({
   // This has to be set every time you choose a new credential (selectedIndex)
   // Identify your key and values by parsing through the showcaseJSON with your selectedIndex.
 
-  // useEffect(() => {
-  //   setLocalJSON({
-  //     name: showcaseJSON.personas[selectedCharacter].onboarding[4].credentials[
-  //       selectedIndex
-  //     ].name,
-  //   });
-  // }, [selectedCharacter]);
+  useEffect(() => {
+    setLocalJSON({
+      cred_name: "",
+      // cred_name:
+      //   showcaseJSON.personas[selectedCharacter].onboarding[4].credentials[
+      //     selectedIndex
+      //   ].name,
+    });
+  }, []);
 
-  // useEffect(() => {
-  //   console.log(localJSON);
-  // }, [localJSON]);
+  useEffect(() => {
+    console.log(localJSON);
+  }, [localJSON]);
 
+  // Set the values from input boxes to the localJSON object.
   function handleLocalUpdate(element, newValue) {
     setLocalJSON((json) => {
       json[element] = newValue;
     });
   }
 
-  // function saveJSON() {
-  //   console.log("saved");
-  //   Call handleJSONUpdate and update the global json file.
-  //   Ensure you are drilling down to the correct place with the [element]
-  // }
-
-  const handleCreateButtonClick = (e) => {
-    setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
-    setLocalJSON({
-      name: "",
-      icon: "",
-      attributes: [],
+  // Save the localJSON into the showcaseJSON (global).
+  function saveJSON() {
+    // if (localJSON.cred_name === "") return;
+    setShowcaseJSON((json) => {
+      json.personas[0].onboarding[4].credentials.push({
+        name: "",
+        version: "",
+        icon: "",
+        attributes: [],
+      });
     });
 
-    // handleJSONUpdate(
-    //   selectedIndex,
-    //   ["onboarding", 4, "credentials", selectedIndex, "name"],
-    //   localJSON.name
-    // );
+    handleJSONUpdate(
+      selectedCharacter,
+      ["onboarding", 4, "credentials", selectedIndex + 1, "name"],
+      localJSON.cred_name
+    );
+
+    setSelectedIndex(selectedIndex + 1);
+  }
+
+  const handleCreateButtonClick = (e) => {
+    // setLocalJSON({
+    //   // cred_name: "",
+    //   // cred_name:
+    //   //   showcaseJSON.personas[selectedCharacter].onboarding[4].credentials[
+    //   //     selectedIndex
+    //   //   ].name,
+    // });
+    setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
   };
 
   const handleImportButtonClick = (e) => {
@@ -95,19 +106,25 @@ function Credentials({
             showcaseJSON={showcaseJSON}
             localJSON={localJSON}
             selectedCharacter={selectedCharacter}
+            handleLocalUpdate={handleLocalUpdate}
           />
         );
       case "create":
         return (
           <Form
-            selectedIndex={selectedIndex}
-            handleJSONUpdate={handleLocalUpdate}
             showcaseJSON={showcaseJSON}
             setShowcaseJSON={setShowcaseJSON}
             localJSON={localJSON}
             setLocalJSON={setLocalJSON}
+            selectedIndex={selectedIndex}
             setSelectedIndex={setSelectedIndex}
             credentialSelected={credentialSelected}
+            handleLocalUpdate={handleLocalUpdate}
+            selectedCharacter={selectedCharacter}
+            saveJSON={saveJSON}
+            handleJSONUpdate={handleLocalUpdate}
+            setEditButtonClicked={setEditButtonClicked}
+            setComponentToMount={setComponentToMount}
           />
         );
       case "import":

@@ -16,12 +16,13 @@ function Edit({
 }) {
   return (
     <>
-      <FormHeader
-        formTitle={"Edit your Credential"}
-        formCategory={"Credential"}
-        setShowcaseJSON={setShowcaseJSON}
-        selectedIndex={selectedIndex}
-      ></FormHeader>
+      <div className="flex justify-between mt-3">
+        <div>
+          <p className="text-slate-100 text-sm">Credentials</p>
+          <h3 className="text-4xl font-bold text-slate-50">Title Here</h3>
+        </div>
+      </div>
+      <hr></hr>
       <LocalTextInput
         label="Credential Name"
         personaIndex={selectedCharacter}

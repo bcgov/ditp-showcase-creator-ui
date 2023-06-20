@@ -4,39 +4,54 @@ import { LocalTextInput } from "../../LocalTextInput";
 import { FormHeader } from "./FormHeader";
 import { NewCredentialButton } from "../NewCredentialButton";
 import { AttributesList } from "../AttributesList";
+import { FileUploadFull } from "../../FileUpload";
 
 function Form({
-  selectedIndex,
+  // selectedIndex,
   showcaseJSON,
   handleJSONUpdate,
-  setShowcaseJSON,
+  // setShowcaseJSON,
   localJSON,
   handleLocalUpdate,
   saveJSON,
-  setSelectedIndex,
+  selectedCharacter,
 }) {
-  console.log(localJSON);
   return (
     <>
-      <FormHeader
-        formTitle={"Create your Credential"}
-        formCategory={"Credential"}
-        setShowcaseJSON={setShowcaseJSON}
-        showcaseJSON={showcaseJSON}
-        setSelectedIndex={setSelectedIndex}
-        selectedIndex={selectedIndex}
-      ></FormHeader>
+      <div className="flex justify-between mt-3">
+        <div>
+          <p className="text-slate-100 text-sm">Credentials</p>
+          <h3 className="text-4xl font-bold text-slate-50">Title Here</h3>
+        </div>
+      </div>
+      <hr></hr>
       <LocalTextInput
-        label="Credential Name"
-        personaIndex={selectedIndex}
-        element={["onboarding", 4, "credentials", 0, "name"]}
+        label={"Credential Name"}
+        personaIndex={selectedCharacter}
+        element={["cred_name"]}
         handleJSONUpdate={handleLocalUpdate}
         showcaseJSON={showcaseJSON}
         localJSON={localJSON}
       />
-      <NewCredentialButton
+      {/* <LocalTextInput
+        label={"Issuer Name"}
+        personaIndex={selectedIndex}
+        element={["issuer_name"]}
+        handleJSONUpdate={handleLocalUpdate}
+        showcaseJSON={showcaseJSON}
+        localJSON={localJSON}
+      /> */}
+      <FileUploadFull
+        text={"Icon"}
+        personaIndex={selectedCharacter}
+        element={["icon"]}
+        handleJSONUpdate={handleJSONUpdate}
+        showcaseJSON={showcaseJSON}
+      />
+      <button onClick={saveJSON}>SAVE ( + )</button>
+      {/* <NewCredentialButton
         setShowcaseJSON={setShowcaseJSON}
-      ></NewCredentialButton>
+      ></NewCredentialButton> */}
     </>
   );
 }

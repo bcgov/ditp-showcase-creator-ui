@@ -27,7 +27,7 @@ function Form({
       <hr></hr>
       <LocalTextInput
         label={"Credential Name"}
-        personaIndex={selectedIndex}
+        personaIndex={selectedCharacter}
         element={["cred_name"]}
         handleJSONUpdate={handleLocalUpdate}
         showcaseJSON={showcaseJSON}

@@ -17,12 +17,13 @@ function SelectionOverview({
   };
 
   const handleCredentialRemoval = (i) => {
-    if (showcaseJSON.personas[0].onboarding[4].credentials.length == 1) return;
+    if (showcaseJSON.personas[0].onboarding[4].credentials.length === 1) return;
     setShowcaseJSON((json) => {
       json.personas[0].onboarding[4].credentials.splice(selectedIndex, 1);
     });
 
-    setSelectedIndex(selectedIndex - 1);
+    // setSelectedIndex(selectedIndex - 1);
+    setSelectedIndex((prevIndex) => prevIndex - 1);
   };
 
   return (

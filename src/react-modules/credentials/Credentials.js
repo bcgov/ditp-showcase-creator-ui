@@ -36,7 +36,11 @@ function Credentials({
   }, []);
 
   useEffect(() => {
-    console.log(localJSON);
+    console.log(
+      `This is what your localJSON in Credentials looks like: ${JSON.stringify(
+        localJSON
+      )}`
+    );
   }, [localJSON]);
 
   // Set the values from input boxes to the localJSON object.
@@ -58,13 +62,16 @@ function Credentials({
       });
     });
 
+    // David:
+    // Bug starts here, im assuming it's because of how I'm calling this function.
     handleJSONUpdate(
       selectedCharacter,
       ["onboarding", 4, "credentials", selectedIndex + 1, "name"],
       localJSON.cred_name
     );
 
-    setSelectedIndex(selectedIndex + 1);
+    // setSelectedIndex(selectedIndex + 1);
+    setSelectedIndex((prevIndex) => prevIndex + 1);
   }
 
   const handleCreateButtonClick = (e) => {
@@ -107,7 +114,6 @@ function Credentials({
         return (
           <Form
             showcaseJSON={showcaseJSON}
-            setShowcaseJSON={setShowcaseJSON}
             localJSON={localJSON}
             setLocalJSON={setLocalJSON}
             selectedIndex={selectedIndex}

@@ -29,9 +29,8 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(selectedIndex);
-    console.log(showcaseJSON);
-  }, [selectedIndex, showcaseJSON]);
+    console.log(`Current selected credential index: ${selectedIndex}`);
+  }, [selectedIndex]);
 
   function handleJSONUpdate(index, element, newValue) {
     switch (element.length) {

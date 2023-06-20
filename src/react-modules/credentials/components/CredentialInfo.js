@@ -9,6 +9,7 @@ function SelectionOverview({
   selectedIndex,
   selectedCharacter,
   setShowcaseJSON,
+  setSelectedIndex,
 }) {
   const handleEditButtonClick = () => {
     setEditButtonClicked((prevEditButtonSelected) => !prevEditButtonSelected);
@@ -16,11 +17,12 @@ function SelectionOverview({
   };
 
   const handleCredentialRemoval = (i) => {
-    // if (showcaseJSON.personas[0].onboarding[4].credentials.length == 1) return;
+    if (showcaseJSON.personas[0].onboarding[4].credentials.length == 1) return;
     setShowcaseJSON((json) => {
       json.personas[0].onboarding[4].credentials.splice(selectedIndex, 1);
     });
-    console.log(selectedIndex);
+
+    setSelectedIndex(selectedIndex - 1);
   };
 
   return (

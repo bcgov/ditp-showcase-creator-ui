@@ -68,13 +68,6 @@ function Credentials({
   }
 
   const handleCreateButtonClick = (e) => {
-    // setLocalJSON({
-    //   // cred_name: "",
-    //   // cred_name:
-    //   //   showcaseJSON.personas[selectedCharacter].onboarding[4].credentials[
-    //   //     selectedIndex
-    //   //   ].name,
-    // });
     setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
   };
 
@@ -95,6 +88,7 @@ function Credentials({
             selectedIndex={selectedIndex}
             selectedCharacter={selectedCharacter}
             setShowcaseJSON={setShowcaseJSON}
+            setSelectedIndex={setSelectedIndex}
           />
         );
       case "edit":

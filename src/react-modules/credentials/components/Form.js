@@ -7,7 +7,7 @@ import { AttributesList } from "../AttributesList";
 import { FileUploadFull } from "../../FileUpload";
 
 function Form({
-  // selectedIndex,
+  selectedIndex,
   showcaseJSON,
   handleJSONUpdate,
   // setShowcaseJSON,
@@ -27,7 +27,7 @@ function Form({
       <hr></hr>
       <LocalTextInput
         label={"Credential Name"}
-        personaIndex={selectedCharacter}
+        personaIndex={selectedIndex}
         element={["cred_name"]}
         handleJSONUpdate={handleLocalUpdate}
         showcaseJSON={showcaseJSON}

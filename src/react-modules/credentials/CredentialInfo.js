@@ -1,5 +1,5 @@
 import React from "react";
-import { FormHeader } from "./index.js";
+import { FormHeader } from "./components/index.js";
 
 function SelectionOverview({
   setEditButtonClicked,
@@ -12,18 +12,17 @@ function SelectionOverview({
   setSelectedIndex,
 }) {
   const handleEditButtonClick = () => {
-    setEditButtonClicked((prevEditButtonSelected) => !prevEditButtonSelected);
+    // setEditButtonClicked((prevEditButtonSelected) => !prevEditButtonSelected);
     setComponentToMount("edit");
   };
 
   const handleCredentialRemoval = (i) => {
     if (showcaseJSON.personas[0].onboarding[4].credentials.length === 1) return;
+    if (selectedIndex != 0) setSelectedIndex(selectedIndex - 1);
+
     setShowcaseJSON((json) => {
       json.personas[0].onboarding[4].credentials.splice(selectedIndex, 1);
     });
-
-    // setSelectedIndex(selectedIndex - 1);
-    setSelectedIndex((prevIndex) => prevIndex - 1);
   };
 
   return (
@@ -72,6 +71,13 @@ function SelectionOverview({
                   <span>{attr.value}</span>
                 </div>
               ))} */}
+              {showcaseJSON["personas"][
+                selectedCharacter
+              ].onboarding[4].credentials[selectedIndex].attributes.map(
+                (attr) => (
+                  <p>{attr.name}</p>
+                )
+              )}
             </div>
           </div>
         </div>

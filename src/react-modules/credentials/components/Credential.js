@@ -13,7 +13,7 @@ function Credential({
         <div className="credential-card p-4">
           <div className="credential-card-heading">
             <div className="credential-card-issuer-name">
-              <p className="text-slate-100 text-md truncate">{issuerName}</p>
+              <p className="text-slate-100 text-xs truncate">{issuerName}</p>
             </div>
             <p className="text-slate-200 text-xl font-bold truncate">
               {credentialName}

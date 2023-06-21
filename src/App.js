@@ -107,14 +107,14 @@ function App() {
         {currentPage === "setup" && <SetupPage />}
         {currentPage === "scenario" && <ScenarioPage />}
 
-        {/* <div className="container mx-auto bg-neutral-200 dark:bg-zinc-500 rounded-xl shadow-xl border p-8 m-10 mt-5">
+        <div className="container mx-auto bg-neutral-200 dark:bg-zinc-500 rounded-xl shadow-xl border p-8 m-10 mt-5">
           <p className="text-3xl text-neutral-700 dark:text-white font-bold mb-5">
             Welcome!
           </p>
           <p className="text-neutral-500 dark:text-neutral-200 text-lg">
             React and Tailwind CSS in action
           </p>
-        </div> */}
+        </div>
 
         <p className="p-10 m-5 border rounded dark:text-neutral-200">
           {JSON.stringify(showcaseJSON, null, "\t")}

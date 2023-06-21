@@ -6,6 +6,11 @@ import { NoSelection, Form, SelectionOverview } from "./components/index.js";
 import { CredentialsList, Edit } from "./index.js";
 import { useImmer } from "use-immer";
 
+// To Do:
+// - When typing in values for inputs, if you change pages, the localJSON doesn't clear.
+// - No form handling.
+// - Attributes adding,removing,deleting not done.
+
 function Credentials({
   showcaseJSON,
   handleJSONUpdate,
@@ -20,21 +25,22 @@ function Credentials({
   const [localJSON, setLocalJSON] = useImmer();
   const parsedCredentials = showcaseJSON.personas[0].onboarding[4].credentials;
 
-  // ** Run this EVERYTIME selectedIndex changes ***
   // localJSON will hold the current values in showcaseJSON (top-level)
   // This has to be set every time you choose a new credential (selectedIndex)
-  // Identify your key and values by parsing through the showcaseJSON with your selectedIndex.
-
+  // This will set a credential object with blank values to the localJSON.
   useEffect(() => {
     setLocalJSON({
       cred_name: "",
-      // cred_name:
-      //   showcaseJSON.personas[selectedCharacter].onboarding[4].credentials[
-      //     selectedIndex
-      //   ].name,
+      issuer_name: "",
+      attributes: [
+        { name: "first_name", value: "ryan" },
+        { name: "PPID", value: "00123" },
+      ],
     });
   }, []);
 
+  // ** For debugging **
+  // Log the values in the localJSON everytime it gets changed.
   useEffect(() => {
     console.log(
       `This is what your localJSON in Credentials looks like: ${JSON.stringify(
@@ -51,37 +57,47 @@ function Credentials({
   }
 
   // Save the localJSON into the showcaseJSON (global).
+  // To do: Error handling
   function saveJSON() {
     // if (localJSON.cred_name === "") return;
     setShowcaseJSON((json) => {
       json.personas[0].onboarding[4].credentials.push({
-        name: "",
+        name: localJSON.cred_name,
+        issuer_name: localJSON.issuer_name,
         version: "",
         icon: "",
-        attributes: [],
+        attributes: localJSON.attributes,
       });
     });
-
-    // David:
-    // Bug starts here, im assuming it's because of how I'm calling this function.
-    handleJSONUpdate(
-      selectedCharacter,
-      ["onboarding", 4, "credentials", selectedIndex + 1, "name"],
-      localJSON.cred_name
-    );
-
-    // setSelectedIndex(selectedIndex + 1);
-    setSelectedIndex((prevIndex) => prevIndex + 1);
   }
 
+  // Update the showcaseJSON values when the save button is clicked on the edit component.
+  // To do: Error handling
+  function saveEditedJSON() {
+    // if (localJSON.cred_name === "") return;
+    handleJSONUpdate(
+      selectedCharacter,
+      ["onboarding", 4, "credentials", selectedIndex, "name"],
+      localJSON.cred_name
+    );
+    handleJSONUpdate(
+      selectedCharacter,
+      ["onboarding", 4, "credentials", selectedIndex, "issuer_name"],
+      localJSON.issuer_name
+    );
+  }
+
+  // Handle page state by setting the componentToMount state variable to the buttons id (create)
   const handleCreateButtonClick = (e) => {
     setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
   };
 
+  // Handle page state by setting the componentToMount state variable to the buttons id (import)
   const handleImportButtonClick = (e) => {
     setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
   };
 
+  // Render component based on componentToMount state variable.
   const renderComponent = (component) => {
     switch (component) {
       case "credential":
@@ -102,12 +118,15 @@ function Credentials({
         return (
           <Edit
             selectedIndex={selectedIndex}
+            setLocalJSON={setLocalJSON}
             handleJSONUpdate={handleJSONUpdate}
             setShowcaseJSON={setShowcaseJSON}
             showcaseJSON={showcaseJSON}
             localJSON={localJSON}
             selectedCharacter={selectedCharacter}
             handleLocalUpdate={handleLocalUpdate}
+            saveJSON={saveJSON}
+            saveEditedJSON={saveEditedJSON}
           />
         );
       case "create":
@@ -116,15 +135,13 @@ function Credentials({
             showcaseJSON={showcaseJSON}
             localJSON={localJSON}
             setLocalJSON={setLocalJSON}
-            selectedIndex={selectedIndex}
-            setSelectedIndex={setSelectedIndex}
-            credentialSelected={credentialSelected}
+            // selectedIndex={selectedIndex}
+            // setSelectedIndex={setSelectedIndex}
+            // credentialSelected={credentialSelected}
             handleLocalUpdate={handleLocalUpdate}
             selectedCharacter={selectedCharacter}
             saveJSON={saveJSON}
             handleJSONUpdate={handleLocalUpdate}
-            setEditButtonClicked={setEditButtonClicked}
-            setComponentToMount={setComponentToMount}
           />
         );
       case "import":
@@ -173,10 +190,10 @@ function Credentials({
           <p className="text-slate-50">{componentToMount}</p>
         </div>
         {/* end of column 1 */}
+
         <div className="two-column-col md:w-2/5 bg-gray-300 p-4 rounded-md right-col">
           {renderComponent(componentToMount)}
         </div>
-
         {/* end of column 2 */}
       </div>
     </>

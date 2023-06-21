@@ -1,5 +1,5 @@
 import React from "react";
-import { LocalTextInput } from "../LocalTextInput";
+import { LocalTextInput } from "../../LocalTextInput";
 function Attribute({ handleChange, attributeName, attributeValue }) {
   return (
     <div className="grid grid-cols-6 gap-2">
@@ -16,6 +16,7 @@ function Attribute({ handleChange, attributeName, attributeValue }) {
       </div>
       <div className="col-span-2 overflow-hidden">
         <div className="credentials-form-attribute-text">
+          {/* <LocalTextInput></LocalTextInput> */}
           <label htmlFor="">Attribute value</label>
           <input
             type="text"

@@ -1,16 +1,13 @@
 import React from "react";
-import { TextInput } from "../../TextInput";
-import { LocalTextInput } from "../../LocalTextInput";
-import { FormHeader } from "./FormHeader";
-import { NewCredentialButton } from "../NewCredentialButton";
-import { AttributesList } from "../AttributesList";
-import { FileUploadFull } from "../../FileUpload";
+import { TextInput } from "../TextInput";
+import { LocalTextInput } from "../LocalTextInput";
+import { AttributesList } from "./components/AttributesList";
+import { FileUploadFull } from "../FileUpload";
 
 function Form({
   selectedIndex,
   showcaseJSON,
   handleJSONUpdate,
-  // setShowcaseJSON,
   localJSON,
   handleLocalUpdate,
   saveJSON,
@@ -33,14 +30,14 @@ function Form({
         showcaseJSON={showcaseJSON}
         localJSON={localJSON}
       />
-      {/* <LocalTextInput
+      <LocalTextInput
         label={"Issuer Name"}
-        personaIndex={selectedIndex}
+        personaIndex={selectedCharacter}
         element={["issuer_name"]}
         handleJSONUpdate={handleLocalUpdate}
         showcaseJSON={showcaseJSON}
         localJSON={localJSON}
-      /> */}
+      />
       <FileUploadFull
         text={"Icon"}
         personaIndex={selectedCharacter}
@@ -49,9 +46,7 @@ function Form({
         showcaseJSON={showcaseJSON}
       />
       <button onClick={saveJSON}>SAVE ( + )</button>
-      {/* <NewCredentialButton
-        setShowcaseJSON={setShowcaseJSON}
-      ></NewCredentialButton> */}
+      <button onClick={saveJSON}>ADD ATTRIBUTE ( + )</button>
     </>
   );
 }

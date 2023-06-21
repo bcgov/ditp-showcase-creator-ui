@@ -1,9 +1,8 @@
 import React from "react";
 import { TextInput } from "../TextInput";
-import { Form } from "./components/Form";
-import { FormHeader } from "./components/FormHeader";
+import { Form } from "./Form";
 import { LocalTextInput } from "../LocalTextInput";
-import { AttributesList } from "./AttributesList";
+import { AttributesList } from "./components/AttributesList";
 
 function Edit({
   selectedIndex,
@@ -13,6 +12,9 @@ function Edit({
   handleLocalUpdate,
   selectedCharacter,
   setShowcaseJSON,
+  saveJSON,
+  saveEditedJSON,
+  setLocalJSON,
 }) {
   return (
     <>
@@ -24,19 +26,32 @@ function Edit({
       </div>
       <hr></hr>
       <LocalTextInput
-        label="Credential Name"
+        label={"Credential Name"}
         personaIndex={selectedCharacter}
-        element={["onboarding", 4, "credentials", selectedIndex, "name"]}
+        element={["cred_name"]}
+        handleJSONUpdate={handleLocalUpdate}
+        showcaseJSON={showcaseJSON}
+        localJSON={localJSON}
+      />
+      <LocalTextInput
+        label={"Issuer Name"}
+        personaIndex={selectedCharacter}
+        element={["issuer_name"]}
         handleJSONUpdate={handleLocalUpdate}
         showcaseJSON={showcaseJSON}
         localJSON={localJSON}
       />
       <div className="grid grid-cols-2"></div>
       <AttributesList
+        handleJSONUpdate={handleJSONUpdate}
+        handleLocalUpdate={handleLocalUpdate}
         showcaseJSON={showcaseJSON}
         selectedCharacter={selectedCharacter}
         selectedIndex={selectedIndex}
+        setLocalJSON={setLocalJSON}
+        localJSON={localJSON}
       />
+      <button onClick={saveEditedJSON}>SAVE ( + )</button>
     </>
   );
 }

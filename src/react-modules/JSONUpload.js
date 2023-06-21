@@ -1,12 +1,10 @@
 import { useState, useRef } from "react";
-import { ErrorModal } from './ErrorModal'
-import { BookmarkSquareIcon } from "@heroicons/react/20/solid";
+import { ErrorModal } from "./ErrorModal";
+// import { BookmarkSquareIcon } from "@heroicons/react/20/solid";
 
 function JSONUploadButton({ setShowcaseJSON }) {
-
   // Error handling
   const [showModal, setShowModal] = useState(false);
-
 
   const fileInputRef = useRef(null);
 
@@ -21,10 +19,9 @@ function JSONUploadButton({ setShowcaseJSON }) {
         try {
           setShowcaseJSON(JSON.parse(`{"personas": ${fileContent}}`));
         } catch (e) {
-          console.log("JSON is not formatted properly!")
+          console.log("JSON is not formatted properly!");
           setShowModal(true);
         }
-
       };
 
       fileInputRef.current.value = "";
@@ -49,20 +46,21 @@ function JSONUploadButton({ setShowcaseJSON }) {
         />
         <button
           className="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-black shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
-          onClick={handleClick}>
-          <BookmarkSquareIcon className="-ml-0.5 h-5 w-5" aria-hidden="true" />
-
+          onClick={handleClick}
+        >
+          {/* <BookmarkSquareIcon className="-ml-0.5 h-5 w-5" aria-hidden="true" /> */}
           DOWNLOAD BUTTON
-
         </button>
       </div>
 
-      {
-        showModal ? <ErrorModal
-          errorText={"Uploaded file was invalid. \n Please try again, or open the file in a text editor to check for well-formed JSON."}
-          setShowModal={setShowModal} /> : null
-      }
-
+      {showModal ? (
+        <ErrorModal
+          errorText={
+            "Uploaded file was invalid. \n Please try again, or open the file in a text editor to check for well-formed JSON."
+          }
+          setShowModal={setShowModal}
+        />
+      ) : null}
     </>
   );
 }

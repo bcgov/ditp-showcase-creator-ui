@@ -51,8 +51,8 @@ function CharacterScreen({
   
   return (
     <>
-      <div className="justify-center items-center flex content-center">
-        <div className="flex p-3 w-2/5 justify-center items-center flex-col">
+      <div className="two-column-container mx-20 my-16">
+        <div className="two-column-col md:w-3/5 pr-4">
           <div className="flex w-full">
             <div>
               <h2 className="text-4xl font-bold text-slate-50 text-start w-full">

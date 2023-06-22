@@ -135,7 +135,7 @@ function LocalTextAreaInput({
         className="text-white font-bold"
         htmlFor={`${personaIndex}_${element}`}
       >
-        {label}:{" "}
+        {label}{" "}
       </label>
       <textarea
         className="rounded p-1 w-full resize-none field-background"

@@ -6,7 +6,7 @@ import { TextInput } from "./react-modules/TextInput";
 import { NavBar } from "./react-modules/NavBar";
 import { CharacterPage } from "./react-modules/pages/CharacterPage";
 import { CredentialPage } from "./react-modules/pages/CredentialPage";
-import { SetupPage } from "./react-modules/pages/SetupPage";
+import { OnboardingPage } from "./react-modules/pages/OnboardingPage";
 import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
 import { CharacterScreen } from "./react-modules/character-screen/CharacterScreen";
 import { DEFAULT_JSON } from "./DEFAULT_JSON";
@@ -104,7 +104,7 @@ function App() {
             setSelectedIndex={setSelectedIndex}
           />
         )}
-        {currentPage === "setup" && <SetupPage />}
+        {currentPage === "setup" && <OnboardingPage />}
         {currentPage === "scenario" && <ScenarioPage />}
 
         <p className="p-10 m-5 border rounded dark:text-neutral-200">

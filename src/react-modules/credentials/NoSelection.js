@@ -8,7 +8,6 @@ function NoSelection({ Text }) {
           <p className="text-slate-100 text-center">{Text}</p>
         </div>
       </div>
-      ;
     </>
   );
 }

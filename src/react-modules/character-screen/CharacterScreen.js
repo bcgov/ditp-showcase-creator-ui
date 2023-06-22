@@ -55,7 +55,7 @@ function CharacterScreen({
         <div className="flex p-3 w-2/5 justify-center items-center flex-col">
           <div className="flex w-full">
             <div>
-              <h2 className="text-2xl text-white text-start w-full font-bold">
+              <h2 className="text-4xl font-bold text-slate-50 text-start w-full">
                 Select Your Character
               </h2>
               <p className="w-full">

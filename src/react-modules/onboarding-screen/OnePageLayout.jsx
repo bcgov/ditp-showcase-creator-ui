@@ -7,7 +7,7 @@ export const OnePageLayout = ({ myScreen, stepIndex, totalSteps }) => {
   //Attribute we need to apply to the element we want to make sortable
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({
-      id: myScreen.id,
+      id: myScreen.screenId
     });
 
   const style = {
@@ -27,7 +27,7 @@ export const OnePageLayout = ({ myScreen, stepIndex, totalSteps }) => {
       <FontAwesomeIcon icon={faGripVertical} />
       <div className="px-3 flex-flex-col w-full justify-items-center">
         <p className="font-bold">
-          {myScreen.title} - ({stepIndex + 1} / {totalSteps})
+          {myScreen.title} - ({stepIndex} / {totalSteps})
         </p>
 
         <div className="highlight-container w-full flex flex-row justify-items-center items-center rounded p-3">
@@ -37,11 +37,11 @@ export const OnePageLayout = ({ myScreen, stepIndex, totalSteps }) => {
           }
         
             {
-            myScreen.content.length > 90 ?
-            <><p>{(myScreen.content.slice(0,90))}... <span className="font-bold"> see more</span></p></>
+            myScreen.text.length > 90 ?
+            <p>{(myScreen.text.slice(0,90))}... <span className="font-bold"> see more</span></p>
                
             : 
-              myScreen.content
+              myScreen.text
               }
         </div>
       </div>

@@ -1,14 +1,10 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import { useImmer } from "use-immer"; // useImmer is an alternative to useState; it is useful for dealing with nested JSON
-import { FileUploadFull, FileUploadBar } from "./react-modules/FileUpload";
-import { TextInput } from "./react-modules/TextInput";
 import { NavBar } from "./react-modules/NavBar";
 import { CharacterPage } from "./react-modules/pages/CharacterPage";
-import { CredentialPage } from "./react-modules/pages/CredentialPage";
 import { OnboardingPage } from "./react-modules/pages/OnboardingPage";
 import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
-import { CharacterScreen } from "./react-modules/character-screen/CharacterScreen";
 import { DEFAULT_JSON } from "./DEFAULT_JSON";
 
 import { Credentials } from "./react-modules/credentials/Credentials";

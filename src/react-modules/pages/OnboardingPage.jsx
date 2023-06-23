@@ -10,81 +10,30 @@ import {
 import { OnePageLayout } from "../onboarding-screen/OnePageLayout";
 
 export const OnboardingPage = ({showcaseJSON, selectedCharacter, setShowcaseJSON}) => {
-  console.log(showcaseJSON.personas[selectedCharacter].onboarding)
-  // const [myScreens, setMyScreens] = useState//( showcaseJSON[selectedCharacter]["onboarding"])
-  
-  // ([
-  //   {
-  //     title: "title 1 here",
-  //     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  //     image: "image 1 here",
-  //     id: 1,
-  //   },
-  //   {
-  //     title: "title 2 here",
-  //     content: "content 2here",
-  //     image: "image 2 here",
-  //     id: 2,
-  //   },
-  //   {
-  //     title: "title 3 here",
-  //     content: "content 3here",
-  //     image: "image 3 here",
-  //     id: 3,
-  //   },
-  //   {
-  //     title: "title 4 here",
-  //     content: "content 4here",
-  //     image: "image 4 here",
-  //     id: 4,
-  //   },
-  //   {
-  //     title: "title 5 here",
-  //     content: "content 5here",
-  //     image: "image 5 here",
-  //     id: 5,
-  //   },
-  // ]);
+
+  const [myScreens, setMyScreens] = useState(showcaseJSON.personas[selectedCharacter].onboarding);
 
 
-  // sergio's version
-  const handleDragEndSergio = (event) => {
-    const { active, over } = event;
-
-    setMyScreens((myScreens) => {
-      const oldIndex = myScreens.findIndex(
-        (myScreen) => myScreen.id === active.id
-      );
-      const newIndex = myScreens.findIndex(
-        (myScreen) => myScreen.id === over.id
-      );
-      // console.log("oldIndex", oldIndex);
-      // console.log("newIndex", newIndex);
-      console.log(showcaseJSON.personas[selectedCharacter].onboarding)
-      return arrayMove(myScreens, oldIndex, newIndex);
-      //console.log(finalOrder)
-      
-    });
-  };
-  
-
-  // new version, very broken
   const handleDragEnd = (event) => {
     const { active, over } = event;
-
-
+    // console.log(active);
+    // console.log(over);
+    setMyScreens((myScreens) => {
       const oldIndex = myScreens.findIndex(
-        (myScreen) => myScreen.id === active.id
+        (myScreen) => myScreen.screenId === active.id
       );
       const newIndex = myScreens.findIndex(
-        (myScreen) => myScreen.id === over.id
+        (myScreen) => myScreen.screenId === over.id
       );
 
+      console.log(arrayMove(myScreens, oldIndex, newIndex));
+
       setShowcaseJSON((json) => {
-        json["personas"][selectedCharacter]["onboarding"] = arrayMove(myScreens, oldIndex, newIndex);;
+        json.personas[selectedCharacter].onboarding = arrayMove(myScreens, oldIndex, newIndex);
       });
 
-      return 
+      return arrayMove(myScreens, oldIndex, newIndex);
+    });
   };
 
   return (
@@ -113,7 +62,7 @@ export const OnboardingPage = ({showcaseJSON, selectedCharacter, setShowcaseJSON
                 strategy={verticalListSortingStrategy}
               >
                 {myScreens.map((myScreen, index) => (
-                  <OnePageLayout myScreen={myScreen} key={myScreen.id} stepIndex={index} totalSteps={myScreens.length} />
+                  <OnePageLayout myScreen={myScreen} key={myScreen.screenId} stepIndex={index + 1} totalSteps={myScreens.length} />
                 ))}
               </SortableContext>
             </div>

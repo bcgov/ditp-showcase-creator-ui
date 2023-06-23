@@ -11,45 +11,49 @@ function AttributesList({
   handleLocalUpdate,
   setLocalJSON,
   localJSON,
+  attributeCount,
+  setAttributeCount,
 }) {
-  const [credentialAttributes, setCredentialAttributes] = useState([]);
-
   const addAttribute = () => {
-    console.log("attr added");
-    // localJSON.attributes.push({ name: "", value: "" });
-    // console.log(localJSON);
-    // localJSON.attributes.push({ name: "", value: "" });
-    // handleLocalUpdate(["attributes",], {
-    //   name: "",
-    //   value: "",
-    // });
-
-    console.log(localJSON.attributes.length);
+    console.log(localJSON.attributes[0]);
+    // setLocalJSON((prevLocalJSON) => ({
+    //   ...prevLocalJSON,
+    //   attributes: [...prevLocalJSON.attributes, { name: "", value: "" }],
+    // }));
+    // setAttributeCount(attributeCount + 1);
   };
-
-  const handleChange = (e) => {
-    console.log(e.target.value);
-  };
-
-  const parsedCredentials =
-    showcaseJSON.personas[0].onboarding[4].credentials[selectedIndex]
-      .attributes;
-
   return (
     <div className="credentials-form-attributes-container credentials-form-attributes-container text-gray-500  mt-4 rounded p-4">
-      <button onClick={() => addAttribute()} type="button" className="border">
-        Add
-      </button>
-      <p className="  font-bold text-slate-50">Current Attributes</p>
-
-      <div className="">
-        {parsedCredentials.map((attr) => (
-          <Attribute
-            handleChange={handleChange}
-            attributeName={attr.name}
-            attributeValue={attr.value}
-          />
+      <div>
+        {Array.from({ length: attributeCount }, (_, index) => (
+          <div className="grid grid-cols-2">
+            <div>
+              <LocalTextInput
+                key={index}
+                label={"Attribute Name"}
+                personaIndex={selectedCharacter}
+                // element={["attributes", attributeCount - 1, "name", 0]}
+                element={["attributes", 0]}
+                handleJSONUpdate={handleLocalUpdate}
+                showcaseJSON={showcaseJSON}
+                localJSON={localJSON}
+              />
+            </div>
+            <div>
+              <LocalTextInput
+                key={index}
+                label={"Attribute Value"}
+                personaIndex={selectedCharacter}
+                // element={["attributes", attributeCount - 1, "value", 0]}setAttributeCount(attributeCount + 1);
+                element={["attributes"]}
+                handleJSONUpdate={handleLocalUpdate}
+                showcaseJSON={showcaseJSON}
+                localJSON={localJSON}
+              />
+            </div>
+          </div>
         ))}
+        <button onClick={() => addAttribute()}>ADD ATTRIBUTE ( + )</button>
       </div>
     </div>
   );

@@ -12,6 +12,9 @@ function Form({
   handleLocalUpdate,
   saveJSON,
   selectedCharacter,
+  attributeCount,
+  setAttributeCount,
+  setLocalJSON,
 }) {
   return (
     <>
@@ -45,8 +48,19 @@ function Form({
         handleJSONUpdate={handleJSONUpdate}
         showcaseJSON={showcaseJSON}
       />
+      <AttributesList
+        showcaseJSON={showcaseJSON}
+        selectedIndex={selectedIndex}
+        localJSON={localJSON}
+        attributeCount={attributeCount}
+        handleJSONUpdate={handleJSONUpdate}
+        selectedCharacter={selectedCharacter}
+        handleLocalUpdate={handleLocalUpdate}
+        setAttributeCount={setAttributeCount}
+        setLocalJSON={setLocalJSON}
+      />
       <button onClick={saveJSON}>SAVE ( + )</button>
-      <button onClick={saveJSON}>ADD ATTRIBUTE ( + )</button>
+      {/* <button onClick={saveJSON}>ADD ATTRIBUTE ( + )</button> */}
     </>
   );
 }

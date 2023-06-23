@@ -5,6 +5,7 @@ import { JSONUploadButton } from "../JSONUpload";
 import { NoSelection, Form, SelectionOverview } from "./components/index.js";
 import { CredentialsList, Edit } from "./index.js";
 import { useImmer } from "use-immer";
+import { LocalTextInput } from "../LocalTextInput";
 
 // To Do:
 // - When typing in values for inputs, if you change pages, the localJSON doesn't clear.
@@ -25,6 +26,8 @@ function Credentials({
   const [localJSON, setLocalJSON] = useImmer();
   const parsedCredentials = showcaseJSON.personas[0].onboarding[4].credentials;
 
+  const [attributeCount, setAttributeCount] = useState(1);
+
   // localJSON will hold the current values in showcaseJSON (top-level)
   // This has to be set every time you choose a new credential (selectedIndex)
   // This will set a credential object with blank values to the localJSON.
@@ -33,20 +36,20 @@ function Credentials({
       cred_name: "",
       issuer_name: "",
       attributes: [
-        { name: "first_name", value: "ryan" },
-        { name: "PPID", value: "00123" },
+        { name: "first_name", value: "Ryan" },
+        { name: "last_name", value: "Boado" },
       ],
     });
   }, []);
 
+  useEffect(() => {
+    console.log(attributeCount);
+  }, [attributeCount]);
+
   // ** For debugging **
   // Log the values in the localJSON everytime it gets changed.
   useEffect(() => {
-    console.log(
-      `This is what your localJSON in Credentials looks like: ${JSON.stringify(
-        localJSON
-      )}`
-    );
+    console.log(localJSON);
   }, [localJSON]);
 
   // Set the values from input boxes to the localJSON object.
@@ -59,7 +62,6 @@ function Credentials({
   // Save the localJSON into the showcaseJSON (global).
   // To do: Error handling
   function saveJSON() {
-    // if (localJSON.cred_name === "") return;
     setShowcaseJSON((json) => {
       json.personas[0].onboarding[4].credentials.push({
         name: localJSON.cred_name,
@@ -74,7 +76,6 @@ function Credentials({
   // Update the showcaseJSON values when the save button is clicked on the edit component.
   // To do: Error handling
   function saveEditedJSON() {
-    // if (localJSON.cred_name === "") return;
     handleJSONUpdate(
       selectedCharacter,
       ["onboarding", 4, "credentials", selectedIndex, "name"],
@@ -135,13 +136,12 @@ function Credentials({
             showcaseJSON={showcaseJSON}
             localJSON={localJSON}
             setLocalJSON={setLocalJSON}
-            // selectedIndex={selectedIndex}
-            // setSelectedIndex={setSelectedIndex}
-            // credentialSelected={credentialSelected}
             handleLocalUpdate={handleLocalUpdate}
             selectedCharacter={selectedCharacter}
             saveJSON={saveJSON}
             handleJSONUpdate={handleLocalUpdate}
+            attributeCount={attributeCount}
+            setAttributeCount={setAttributeCount}
           />
         );
       case "import":

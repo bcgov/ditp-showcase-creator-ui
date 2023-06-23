@@ -45,7 +45,7 @@ function AttributesList({
                 label={"Attribute Value"}
                 personaIndex={selectedCharacter}
                 // element={["attributes", attributeCount - 1, "value", 0]}setAttributeCount(attributeCount + 1);
-                element={["attributes"]}
+                // element={["attributes"]}
                 handleJSONUpdate={handleLocalUpdate}
                 showcaseJSON={showcaseJSON}
                 localJSON={localJSON}

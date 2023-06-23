@@ -31,16 +31,14 @@ function CharacterScreen({
       })
   }, [selectedCharacter]);
 
-  // To-do: Create a function similar to handleJSONUpdate in App.js
+  // Function similar to handleJSONUpdate in App.js
   function handleLocalUpdate(element, newValue){
     setLocalJSON((json) => {
       json[element] = newValue;
     });
   }
 
-  // Then, instead of passing the actual JSON to the text fields in <CharacterEdit>, pass the mini json and the mini handler
-
-  // To-do: Impliment a save handler. When clicking save, send the mini JSON to the real, full JSON file
+  // Save handler. When clicking save, send the mini JSON to the real, full JSON file
   function saveJSON(){
     handleJSONUpdate(selectedCharacter, ["name"], localJSON.name)
     handleJSONUpdate(selectedCharacter, ["type"], localJSON.type)

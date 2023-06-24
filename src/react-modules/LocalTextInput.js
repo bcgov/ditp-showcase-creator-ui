@@ -57,7 +57,7 @@ function LocalTextInput({
     }
   }, [personaIndex]);
 
-  const handleChange = (newValue) => {
+  const handleChange = (newValue, id) => {
     setValue(newValue);
     handleJSONUpdate(element, newValue);
   };

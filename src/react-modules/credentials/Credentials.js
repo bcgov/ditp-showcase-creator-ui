@@ -26,7 +26,7 @@ function Credentials({
   const [localJSON, setLocalJSON] = useImmer();
   const parsedCredentials = showcaseJSON.personas[0].onboarding[4].credentials;
 
-  const [attributeCount, setAttributeCount] = useState(1);
+  const [attributeCount, setAttributeCount] = useState(0);
 
   // localJSON will hold the current values in showcaseJSON (top-level)
   // This has to be set every time you choose a new credential (selectedIndex)
@@ -36,15 +36,11 @@ function Credentials({
       cred_name: "",
       issuer_name: "",
       attributes: [
-        { name: "first_name", value: "Ryan" },
-        { name: "last_name", value: "Boado" },
+        // { name: "first_name", value: "ryan" },
+        // { name: "first_name", value: "ryan" },
       ],
     });
   }, []);
-
-  useEffect(() => {
-    console.log(attributeCount);
-  }, [attributeCount]);
 
   // ** For debugging **
   // Log the values in the localJSON everytime it gets changed.

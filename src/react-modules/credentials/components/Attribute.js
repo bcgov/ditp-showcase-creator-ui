@@ -5,6 +5,7 @@ function Attribute({
   index,
   getAttributeID,
   handleLocalUpdate,
+  handleJSONUpdate,
   showcaseJSON,
   localJSON,
   selectedCharacter,
@@ -21,7 +22,9 @@ function Attribute({
           key={index}
           label={"Attribute Name"}
           personaIndex={selectedCharacter}
+          // element={["attributes", 0, "name"]}
           element={["attributes"]}
+          // element={["onboarding", 4, "credentials", 0, "attributes"]}
           handleJSONUpdate={handleLocalUpdate}
           showcaseJSON={showcaseJSON}
           localJSON={localJSON}

@@ -36,8 +36,8 @@ function Credentials({
       cred_name: "",
       issuer_name: "",
       attributes: [
-        // { name: "first_name", value: "ryan" },
-        // { name: "first_name", value: "ryan" },
+        { name: "first_name", value: "ryan" },
+        { name: "PPID", value: "1234" },
       ],
     });
   }, []);
@@ -50,9 +50,27 @@ function Credentials({
 
   // Set the values from input boxes to the localJSON object.
   function handleLocalUpdate(element, newValue) {
-    setLocalJSON((json) => {
-      json[element] = newValue;
-    });
+    console.log(element[0], element[1], element[2], element[3]);
+
+    switch (element.length) {
+      case 1:
+        setLocalJSON((json) => {
+          json[element[0]] = newValue;
+        });
+        break;
+      case 2:
+        setLocalJSON((json) => {
+          json[element[0]][element[1]] = newValue;
+        });
+        break;
+      case 3:
+        setLocalJSON((json) => {
+          json[element[0]][element[1]][element[2]] = newValue;
+        });
+        break;
+      default:
+        return;
+    }
   }
 
   // Save the localJSON into the showcaseJSON (global).
@@ -82,10 +100,18 @@ function Credentials({
       ["onboarding", 4, "credentials", selectedIndex, "issuer_name"],
       localJSON.issuer_name
     );
+    handleJSONUpdate(
+      selectedCharacter,
+      ["onboarding", 4, "credentials", selectedIndex, "attributes"],
+      localJSON.attributes
+    );
+
+    setSelectedIndex(selectedIndex + 1);
   }
 
   // Handle page state by setting the componentToMount state variable to the buttons id (create)
   const handleCreateButtonClick = (e) => {
+    console.log(localJSON.attributes[0]);
     setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
   };
 
@@ -135,7 +161,8 @@ function Credentials({
             handleLocalUpdate={handleLocalUpdate}
             selectedCharacter={selectedCharacter}
             saveJSON={saveJSON}
-            handleJSONUpdate={handleLocalUpdate}
+            // handleJSONUpdate={handleLocalUpdate}
+            handleJSONUpdate={handleJSONUpdate}
             attributeCount={attributeCount}
             setAttributeCount={setAttributeCount}
           />

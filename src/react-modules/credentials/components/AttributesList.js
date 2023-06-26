@@ -4,13 +4,13 @@ import { Attribute } from "./Attribute";
 function AttributesList({
   showcaseJSON,
   selectedIndex,
-  selectedCharacter,
-  handleJSONUpdate,
-  handleLocalUpdate,
-  setLocalJSON,
   localJSON,
   attributeCount,
   setAttributeCount,
+  handleJSONUpdate,
+  selectedCharacter,
+  handleLocalUpdate,
+  setLocalJSON,
 }) {
   const addAttribute = () => {
     setLocalJSON((prevLocalJSON) => ({
@@ -29,7 +29,7 @@ function AttributesList({
   };
 
   const getAttributeID = (e) => {
-    console.log(e.target.parentNode.parentNode.parentNode.id);
+    console.log(e.currentTarget.id);
   };
 
   return (
@@ -40,6 +40,7 @@ function AttributesList({
             key={index}
             index={index}
             getAttributeID={getAttributeID}
+            handleJSONUpdate={handleJSONUpdate}
             handleLocalUpdate={handleLocalUpdate}
             showcaseJSON={showcaseJSON}
             localJSON={localJSON}

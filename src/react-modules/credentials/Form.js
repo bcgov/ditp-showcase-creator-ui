@@ -53,10 +53,10 @@ function Form({
         selectedIndex={selectedIndex}
         localJSON={localJSON}
         attributeCount={attributeCount}
+        setAttributeCount={setAttributeCount}
         handleJSONUpdate={handleJSONUpdate}
         selectedCharacter={selectedCharacter}
         handleLocalUpdate={handleLocalUpdate}
-        setAttributeCount={setAttributeCount}
         setLocalJSON={setLocalJSON}
       />
       <button onClick={saveJSON}>SAVE ( + )</button>

@@ -13,6 +13,13 @@ function LocalTextInput({
 
   useEffect(() => {
     switch (element.length) {
+      case 8:
+        setValue(
+          showcaseJSON.personas[personaIndex][element[0]][element[1]][
+            element[2]
+          ][element[3]][element[4]][element[5]][element[6]][element[7]]
+        );
+        break;
       case 7:
         setValue(
           showcaseJSON.personas[personaIndex][element[0]][element[1]][
@@ -54,10 +61,12 @@ function LocalTextInput({
       case 1:
         setValue(showcaseJSON.personas[personaIndex][element[0]]);
         break;
+      default:
+        return;
     }
   }, [personaIndex]);
 
-  const handleChange = (newValue, id) => {
+  const handleChange = (newValue) => {
     setValue(newValue);
     handleJSONUpdate(element, newValue);
   };

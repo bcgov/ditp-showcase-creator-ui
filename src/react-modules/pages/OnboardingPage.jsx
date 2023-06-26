@@ -25,6 +25,7 @@ export const OnboardingPage = ({
   showcaseJSON,
   selectedCharacter,
   setShowcaseJSON,
+  handleJSONUpdate
 }) => {
   
   
@@ -33,16 +34,47 @@ export const OnboardingPage = ({
     showcaseJSON.personas[selectedCharacter].onboarding
   );
 
-
   // Handling state; what step is editable
   const [selectedStep, setSelectedStep] = useState(null);
 
   // Handling state; what screen is shown, if not editing
   const [stepState, setStepState] = useState("no-selection");
 
+  // Add new step
+  const addNewStep = (isIssue) => {
+    if(isIssue){
+      setShowcaseJSON( (json) =>{
+        json.personas[selectedCharacter].onboarding.push(
+          {
+            screenId: `${new Date().now}`,
+            title: "",
+            text: "",
+            image: "",
+            credentials:[]
+          }
+        )
+      });
+    }else{
+      setShowcaseJSON( (json) =>{
+        json.personas[selectedCharacter].onboarding.push(
+          {
+            screenId: `${new Date().now}`,
+            title: "",
+            text: "",
+            image: "",
+          }
+        )
+      });
+    }
+      setSelectedStep(showcaseJSON.personas[selectedCharacter].onboarding.length)
+    
+  }
+
   useEffect(() => {
     if (selectedStep == null){
       setStepState("no-selection")
+    }else if (showcaseJSON.personas[selectedCharacter].onboarding[selectedStep].credentials){
+      setStepState("editing-issue")
     }else{
       setStepState("editing-basic")
     }
@@ -101,7 +133,8 @@ export const OnboardingPage = ({
               </p>
             </div>
             <div className="ml-auto m-5">
-              <button className="button-light p-2 hover:bg-neutral-600">
+              <button className="button-light p-2 hover:bg-neutral-600"
+              onClick={(e) => {setStepState("creating-new")}}>
                 Add Step <FontAwesomeIcon icon={faCirclePlus} />
               </button>
             </div>
@@ -146,10 +179,10 @@ export const OnboardingPage = ({
                 stepState == "no-selection" ? <NoSelection Text={"No Step Selected"}/> : null
                 }
                 {
-                stepState == "creating-new" ? <CreateNewStep/> : null
+                stepState == "creating-new" ? <CreateNewStep addNewStep={addNewStep}/> : null
                 }
                 {
-                stepState == "editing-basic" ? <BasicStepEdit selectedCharacter={selectedCharacter} selectedStep={selectedStep} showcaseJSON={showcaseJSON}
+                stepState == "editing-basic" ? <BasicStepEdit selectedCharacter={selectedCharacter} handleJSONUpdate={handleJSONUpdate} setSelectedStep={setSelectedStep} selectedStep={selectedStep} showcaseJSON={showcaseJSON}
                 setShowcaseJSON={setShowcaseJSON}/> : null
                 }
                 {

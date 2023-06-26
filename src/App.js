@@ -100,7 +100,7 @@ function App() {
             setSelectedIndex={setSelectedIndex}
           />
         )}
-        {currentPage === "setup" && <OnboardingPage showcaseJSON={showcaseJSON} selectedCharacter={selectedCharacter} setShowcaseJSON={setShowcaseJSON}/>}
+        {currentPage === "setup" && <OnboardingPage showcaseJSON={showcaseJSON} selectedCharacter={selectedCharacter} setShowcaseJSON={setShowcaseJSON} handleJSONUpdate={handleJSONUpdate}/>}
         {currentPage === "scenario" && <ScenarioPage />}
 
         <p className="p-10 m-5 border rounded dark:text-neutral-200">

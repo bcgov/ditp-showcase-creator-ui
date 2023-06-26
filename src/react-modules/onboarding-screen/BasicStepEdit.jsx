@@ -1,58 +1,107 @@
-import { useEffect } from 'react'
-import {useImmer} from 'use-immer'
+import { useEffect } from "react";
+import { useImmer } from "use-immer";
 
-import { LocalTextInput, LocalTextAreaInput } from "./../LocalTextInput";
-function BasicStepEdit({ selectedCharacter, selectedStep, showcaseJSON, setShowcaseJSON, saveJSON}) {
 
+import { FileUploadFull } from "./../FileUpload";
+function BasicStepEdit({
+  selectedCharacter,
+  setSelectedStep,
+  selectedStep,
+  showcaseJSON,
+  setShowcaseJSON,
+  saveJSON,
+  handleJSONUpdate
+}) {
   // Seperately update a mini version of the json, containing only the fields for this page
-  const [localJSON, setLocalJSON] = useImmer();
+  const [localJSON, setLocalJSON] = useImmer(
+    showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
+  );
 
-  // Change this mini version of the json, when the character changes
   useEffect(() => {
-    setLocalJSON({
-        "title":showcaseJSON.personas[selectedCharacter].onboarding[selectedStep].title,
-        "text":showcaseJSON.personas[selectedCharacter].onboarding[selectedStep].text,
-        "image":showcaseJSON.personas[selectedCharacter].onboarding[selectedStep].image,
-        "screenId":showcaseJSON.personas[selectedCharacter].onboarding[selectedStep].screenId,
-      })
-  }, [selectedCharacter, selectedStep]);
+    setLocalJSON(showcaseJSON.personas[selectedCharacter].onboarding[selectedStep])
+  },[selectedStep])
 
   // Function similar to handleJSONUpdate in App.js
-  function handleLocalUpdate(element, newValue){
+  function handleLocalUpdate(element, newValue) {
     setLocalJSON((json) => {
       json[element] = newValue;
     });
-
-    // Call save json immediately. Todo: wire this up to a save button
-    saveJSON();
   }
 
-  // Save handler. When clicking save after editing a step, send the mini JSON to the real, full JSON file
-  function saveJSON(localJSON){
+  // Function to handle saving/form submission
+  function handleSubmit(e) {
+    e.preventDefault();
     setShowcaseJSON((json) => {
-        json.personas[selectedCharacter].onboarding[selectedStep] = localJSON;
-      });
+      json.personas[selectedCharacter].onboarding[selectedStep] = localJSON;
+    });
+    setSelectedStep(null);
   }
-
-  
 
   return (
     <div className="flex flex-col p-5">
       <p>Onboarding</p>
       <p className="text-4xl font-bold">Edit a Basic Step</p>
       <hr />
-      <LocalTextInput
-        label={"Page Title"}
-        personaIndex={selectedCharacter}
-        element={["title"]}
-        handleJSONUpdate={handleLocalUpdate}
-        showcaseJSON={showcaseJSON}
-        localJSON={localJSON}
-      />
 
+      <form onSubmit={(e) => handleSubmit(e)}>
+        {/* TITLE */}
+        <div className="p-1">
+          <label
+            className="text-neutral-500 dark:text-neutral-200"
+            htmlFor={`${selectedStep}_title`}
+          >
+            {"Page Title"}
+          </label>
+          <br />
+          <input
+            className="p-1 w-full field-background"
+            id={`${selectedStep}_title`}
+            type="text"
+            value={localJSON.title}
+            onChange={(e) => handleLocalUpdate("title", e.target.value)}
+          />
+        </div>
 
+        {/* TEXT */}
+        <div className="p-1">
+          <label
+            className="text-neutral-500 dark:text-neutral-200"
+            htmlFor={`${selectedStep}_text`}
+          >
+            {"Page Description"}
+          </label>
+          <textarea
+            className="p-1 w-full h-full resize-none field-background"
+            rows="8"
+            id={`${selectedStep}_text`}
+            type="text"
+            value={localJSON.text}
+            onChange={(e) => handleLocalUpdate("text", e.target.value)}
+          />
+        </div>
+
+        <FileUploadFull
+          text={"Icon"}
+          personaIndex={selectedCharacter}
+          element={["onboarding",selectedStep,"image"]}
+          handleJSONUpdate={handleJSONUpdate}
+        />
+
+<div className="flex flex-cols mx-5 my-3 justify-end space-x-4">
+            <button
+              className="p-1 w-20 hover:underline uppercase"
+              onClick={() => setSelectedStep(null)}
+            >
+              Cancel
+            </button>
+
+            <input
+              type="submit" value="Save"
+              className="p-1 w-20 button-dark hover:bg-neutral-600"
+            />
+            </div>
+      </form>
     </div>
-
   );
 }
 

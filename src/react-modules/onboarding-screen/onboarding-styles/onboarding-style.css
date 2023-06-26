@@ -1,0 +1,12 @@
+.basic-step{
+    background-color: #303030;
+}
+
+.basic-step:hover{
+    background-color: #3F3F3F;
+    cursor: pointer;
+}
+
+.text-highlight{
+    color: #fcba19;
+}

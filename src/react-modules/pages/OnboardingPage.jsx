@@ -14,21 +14,18 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-
 import { SortableStep } from "../onboarding-screen/SortableStep";
 import { BasicStepEdit } from "../onboarding-screen/BasicStepEdit";
 import { IssueStepEdit } from "../onboarding-screen/IssueStepEdit";
 import { CreateNewStep } from "../onboarding-screen/CreateNewStep";
-import { NoSelection } from ".././credentials/NoSelection"
+import { NoSelection } from ".././credentials/NoSelection";
 
 export const OnboardingPage = ({
   showcaseJSON,
   selectedCharacter,
   setShowcaseJSON,
-  handleJSONUpdate
+  handleJSONUpdate,
 }) => {
-  
-  
   // Storing the onboarding data into local state.
   const [myScreens, setMyScreens] = useState(
     showcaseJSON.personas[selectedCharacter].onboarding
@@ -42,48 +39,46 @@ export const OnboardingPage = ({
 
   // Add new step
   const addNewStep = (isIssue) => {
-    if(isIssue){
-      setShowcaseJSON( (json) =>{
-        json.personas[selectedCharacter].onboarding.push(
-          {
-            screenId: `${new Date().now}`,
-            title: "",
-            text: "",
-            image: "",
-            credentials:[]
-          }
-        )
+    if (isIssue) {
+      setShowcaseJSON((json) => {
+        json.personas[selectedCharacter].onboarding.push({
+          screenId: `${new Date().now}`,
+          title: "",
+          text: "",
+          image: "",
+          credentials: [],
+        });
       });
-    }else{
-      setShowcaseJSON( (json) =>{
-        json.personas[selectedCharacter].onboarding.push(
-          {
-            screenId: `${new Date().now}`,
-            title: "",
-            text: "",
-            image: "",
-          }
-        )
+    } else {
+      setShowcaseJSON((json) => {
+        json.personas[selectedCharacter].onboarding.push({
+          screenId: `${new Date().now}`,
+          title: "",
+          text: "",
+          image: "",
+        });
       });
     }
-      setSelectedStep(showcaseJSON.personas[selectedCharacter].onboarding.length)
-    
-  }
+    setSelectedStep(showcaseJSON.personas[selectedCharacter].onboarding.length);
+  };
 
   useEffect(() => {
-    if (selectedStep == null){
-      setStepState("no-selection")
-    }else if (showcaseJSON.personas[selectedCharacter].onboarding[selectedStep].credentials){
-      setStepState("editing-issue")
-    }else{
-      setStepState("editing-basic")
+    if (selectedStep == null) {
+      setStepState("no-selection");
+    } else if (
+      showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
+        .credentials
+    ) {
+      setStepState("editing-issue");
+    } else {
+      setStepState("editing-basic");
     }
-  },[selectedStep])
+  }, [selectedStep]);
 
   // When the JSON changes, re-collect the onboarding data.
   // This is primarily used for when a step is deleted.
   useEffect(() => {
-    setMyScreens(showcaseJSON.personas[selectedCharacter].onboarding)
+    setMyScreens(showcaseJSON.personas[selectedCharacter].onboarding);
   }, [showcaseJSON.personas[selectedCharacter].onboarding]);
 
   // Handles a step being removed.
@@ -94,7 +89,6 @@ export const OnboardingPage = ({
       json.personas[selectedCharacter].onboarding.splice(i, 1);
     });
   };
-  
 
   // Handles how draggable componants are re-arranged
   const handleDragEnd = (event) => {
@@ -132,9 +126,13 @@ export const OnboardingPage = ({
                 Add pages below to create the onboarding steps.
               </p>
             </div>
-            <div className="ml-auto m-5">
-              <button className="button-light p-2 hover:bg-neutral-600"
-              onClick={(e) => {setStepState("creating-new")}}>
+            <div className="ml-auto m-3">
+              <button
+                className="button-light p-2 hover:bg-neutral-600"
+                onClick={(e) => {
+                  setStepState("creating-new");
+                }}
+              >
                 Add Step <FontAwesomeIcon icon={faCirclePlus} />
               </button>
             </div>
@@ -156,18 +154,20 @@ export const OnboardingPage = ({
                     stepIndex={index + 1}
                     totalSteps={myScreens.length}
                   />
+                  <div className="flex text-xl w-1/6 mt-10">
                   <button
-                    className="mx-1 mt-5"
+                    className="px-3"
                     onClick={(event) => handleRemoveStep(event, index)}
                   >
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
-                  <button 
-                    className="mx-1 mt-5"
-                    onClick={(e) => setSelectedStep(index)}>
-                    
+                  <button
+                    className="px-1"
+                    onClick={(e) => setSelectedStep(index)}
+                  >
                     <FontAwesomeIcon icon={faPen} />
                   </button>
+                  </div>
                 </div>
               ))}
             </SortableContext>
@@ -175,21 +175,32 @@ export const OnboardingPage = ({
         </div>
 
         <div className="highlight-container w-2/5 rounded p-3">
-                {
-                stepState == "no-selection" ? <NoSelection Text={"No Step Selected"}/> : null
-                }
-                {
-                stepState == "creating-new" ? <CreateNewStep addNewStep={addNewStep}/> : null
-                }
-                {
-                stepState == "editing-basic" ? <BasicStepEdit selectedCharacter={selectedCharacter} handleJSONUpdate={handleJSONUpdate} setSelectedStep={setSelectedStep} selectedStep={selectedStep} showcaseJSON={showcaseJSON}
-                setShowcaseJSON={setShowcaseJSON}/> : null
-                }
-                {
-                stepState == "editing-issue" ? <IssueStepEdit/> : null
-                }
-              
-          
+          {stepState == "no-selection" ? (
+            <NoSelection Text={"No Step Selected"} />
+          ) : null}
+          {stepState == "creating-new" ? (
+            <CreateNewStep addNewStep={addNewStep} />
+          ) : null}
+          {stepState == "editing-basic" ? (
+            <BasicStepEdit
+              selectedCharacter={selectedCharacter}
+              handleJSONUpdate={handleJSONUpdate}
+              setSelectedStep={setSelectedStep}
+              selectedStep={selectedStep}
+              showcaseJSON={showcaseJSON}
+              setShowcaseJSON={setShowcaseJSON}
+            />
+          ) : null}
+          {stepState == "editing-issue" ? (
+            <IssueStepEdit
+              selectedCharacter={selectedCharacter}
+              handleJSONUpdate={handleJSONUpdate}
+              setSelectedStep={setSelectedStep}
+              selectedStep={selectedStep}
+              showcaseJSON={showcaseJSON}
+              setShowcaseJSON={setShowcaseJSON}
+            />
+          ) : null}
         </div>
       </div>
     </DndContext>

@@ -1,20 +1,21 @@
 import React from "react";
 import { TextInput } from "../TextInput";
-import { Form } from "./Form";
 import { LocalTextInput } from "../LocalTextInput";
 import { AttributesList } from "./components/AttributesList";
 
-function Edit({
-  selectedIndex,
-  handleJSONUpdate,
-  showcaseJSON,
-  localJSON,
+function CredentialsEdit({
+  attributeCount,
+  setAttributeCount,
   handleLocalUpdate,
-  selectedCharacter,
+  handleJSONUpdate,
+  localJSON,
+  setLocalJSON,
+  showcaseJSON,
   setShowcaseJSON,
+  selectedIndex,
+  selectedCharacter,
   saveJSON,
   saveEditedJSON,
-  setLocalJSON,
 }) {
   return (
     <>
@@ -43,17 +44,19 @@ function Edit({
       />
       <div className="grid grid-cols-2"></div>
       <AttributesList
-        handleJSONUpdate={handleJSONUpdate}
-        handleLocalUpdate={handleLocalUpdate}
         showcaseJSON={showcaseJSON}
-        selectedCharacter={selectedCharacter}
         selectedIndex={selectedIndex}
-        setLocalJSON={setLocalJSON}
         localJSON={localJSON}
+        attributeCount={attributeCount}
+        setAttributeCount={setAttributeCount}
+        handleJSONUpdate={handleJSONUpdate}
+        selectedCharacter={selectedCharacter}
+        handleLocalUpdate={handleLocalUpdate}
+        setLocalJSON={setLocalJSON}
       />
       <button onClick={saveEditedJSON}>SAVE ( + )</button>
     </>
   );
 }
 
-export { Edit };
+export { CredentialsEdit };

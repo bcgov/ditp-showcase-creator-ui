@@ -4,17 +4,17 @@ import { LocalTextInput } from "../LocalTextInput";
 import { AttributesList } from "./components/AttributesList";
 import { FileUploadFull } from "../FileUpload";
 
-function Form({
-  selectedIndex,
-  showcaseJSON,
-  handleJSONUpdate,
-  localJSON,
-  handleLocalUpdate,
-  saveJSON,
-  selectedCharacter,
+function CredentialsForm({
   attributeCount,
   setAttributeCount,
+  localJSON,
   setLocalJSON,
+  selectedIndex,
+  showcaseJSON,
+  handleLocalUpdate,
+  selectedCharacter,
+  saveJSON,
+  handleJSONUpdate,
 }) {
   return (
     <>
@@ -65,4 +65,4 @@ function Form({
   );
 }
 
-export { Form };
+export { CredentialsForm };

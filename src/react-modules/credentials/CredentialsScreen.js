@@ -2,8 +2,9 @@ import React from "react";
 import "./styles/credentials.css";
 import { useState, useRef, useEffect } from "react";
 import { JSONUploadButton } from "../JSONUpload";
-import { NoSelection, Form, SelectionOverview } from "./components/index.js";
-import { CredentialsList, Edit } from "./index.js";
+import { NoSelection } from "./components/index.js";
+import { CredentialsForm } from "./index.js";
+import { CredentialsList, CredentialsEdit, CredentialsInfo } from "./index.js";
 import { useImmer } from "use-immer";
 import { LocalTextInput } from "../LocalTextInput";
 
@@ -12,7 +13,7 @@ import { LocalTextInput } from "../LocalTextInput";
 // - No form handling.
 // - Attributes adding,removing,deleting not done.
 
-function Credentials({
+function CredentialsScreen({
   showcaseJSON,
   handleJSONUpdate,
   setShowcaseJSON,
@@ -125,7 +126,7 @@ function Credentials({
     switch (component) {
       case "credential":
         return (
-          <SelectionOverview
+          <CredentialsInfo
             setEditButtonClicked={setEditButtonClicked}
             setComponentToMount={setComponentToMount}
             handleJSONUpdate={handleJSONUpdate}
@@ -139,32 +140,33 @@ function Credentials({
         );
       case "edit":
         return (
-          <Edit
-            selectedIndex={selectedIndex}
-            setLocalJSON={setLocalJSON}
-            handleJSONUpdate={handleJSONUpdate}
-            setShowcaseJSON={setShowcaseJSON}
-            showcaseJSON={showcaseJSON}
-            localJSON={localJSON}
-            selectedCharacter={selectedCharacter}
+          <CredentialsEdit
+            attributeCount={attributeCount}
+            setAttributeCount={setAttributeCount}
             handleLocalUpdate={handleLocalUpdate}
+            handleJSONUpdate={handleJSONUpdate}
+            localJSON={localJSON}
+            setLocalJSON={setLocalJSON}
+            showcaseJSON={showcaseJSON}
+            setShowcaseJSON={setShowcaseJSON}
+            selectedIndex={selectedIndex}
+            selectedCharacter={selectedCharacter}
             saveJSON={saveJSON}
             saveEditedJSON={saveEditedJSON}
           />
         );
       case "create":
         return (
-          <Form
-            showcaseJSON={showcaseJSON}
+          <CredentialsForm
+            attributeCount={attributeCount}
+            setAttributeCount={setAttributeCount}
             localJSON={localJSON}
             setLocalJSON={setLocalJSON}
+            showcaseJSON={showcaseJSON}
             handleLocalUpdate={handleLocalUpdate}
             selectedCharacter={selectedCharacter}
             saveJSON={saveJSON}
-            // handleJSONUpdate={handleLocalUpdate}
             handleJSONUpdate={handleJSONUpdate}
-            attributeCount={attributeCount}
-            setAttributeCount={setAttributeCount}
           />
         );
       case "import":
@@ -223,4 +225,4 @@ function Credentials({
   );
 }
 
-export { Credentials };
+export { CredentialsScreen };

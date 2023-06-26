@@ -1,7 +1,7 @@
 import React from "react";
 import { FormHeader } from "./components/index.js";
 
-function SelectionOverview({
+function CredentialsInfo({
   setEditButtonClicked,
   setComponentToMount,
   credentialSelected,
@@ -86,4 +86,4 @@ function SelectionOverview({
   );
 }
 
-export { SelectionOverview };
+export { CredentialsInfo };

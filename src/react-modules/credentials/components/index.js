@@ -1,3 +1,3 @@
-export { Form } from "../Form.js";
+export { CredentialsForm } from "../CredentialsForm.js";
 export { NoSelection } from "../NoSelection.js";
-export { SelectionOverview } from "../CredentialInfo.js";
+export { CredentialsInfo } from "../CredentialsInfo.js";

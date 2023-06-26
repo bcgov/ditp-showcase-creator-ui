@@ -11,7 +11,7 @@ import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
 import { CharacterScreen } from "./react-modules/character-screen/CharacterScreen";
 import { DEFAULT_JSON } from "./DEFAULT_JSON";
 
-import { Credentials } from "./react-modules/credentials/Credentials";
+import { CredentialsScreen } from "./react-modules/credentials/CredentialsScreen";
 
 function App() {
   const [showcaseJSON, setShowcaseJSON] = useImmer({
@@ -95,7 +95,7 @@ function App() {
           />
         )}
         {currentPage === "credential" && (
-          <Credentials
+          <CredentialsScreen
             handleJSONUpdate={handleJSONUpdate}
             showcaseJSON={showcaseJSON}
             setShowcaseJSON={setShowcaseJSON}

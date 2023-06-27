@@ -13,7 +13,7 @@ import { DEFAULT_JSON } from "./DEFAULT_JSON";
 
 // import { Credentials } from "./react-modules/credentials/Credentials";
 
-import { Credentials } from "./react-modules/credential-testing/Credentials";
+import { Credentials } from "./react-modules/credentials/Credentials";
 
 function App() {
   const [showcaseJSON, setShowcaseJSON] = useImmer({

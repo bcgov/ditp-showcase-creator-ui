@@ -7,27 +7,33 @@ function CredentialsList({
   parsedCredentials,
   setSelectedIndex,
   setComponentToMount,
+  data,
+  selectedCredential,
+  setSelectedCredential,
 }) {
   function handleClick(e) {
     const data = e.currentTarget.getAttribute("data-cred-id");
     setSelectedIndex(data);
     setCredentialSelected(true);
     setComponentToMount("credential");
+    setSelectedCredential(data);
   }
 
   return (
     <>
       <div className="text-slate-100 w-full mt-4 flex flex-row gap-5">
-        {parsedCredentials.map((credential, index) => (
-          <Credential
-            key={index}
-            index={index}
-            handleClick={handleClick}
-            issuerName={credential.issuer_name}
-            credentialName={credential.name}
-            attributeCount={credential.attributes.length}
-          />
-        ))}
+        {data.map((credential, index) => {
+          return (
+            <Credential
+              key={index}
+              index={index}
+              handleClick={handleClick}
+              issuerName={credential.issuer_name}
+              credentialName={credential.cred_name}
+              attributeCount={credential.attributes.length}
+            />
+          );
+        })}
       </div>
     </>
   );

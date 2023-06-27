@@ -4,18 +4,7 @@ import { LocalTextInput } from "../LocalTextInput";
 import { AttributesList } from "./components/AttributesList";
 import { FileUploadFull } from "../FileUpload";
 
-function Form({
-  selectedIndex,
-  showcaseJSON,
-  handleJSONUpdate,
-  localJSON,
-  handleLocalUpdate,
-  saveJSON,
-  selectedCharacter,
-  attributeCount,
-  setAttributeCount,
-  setLocalJSON,
-}) {
+function Form({ data, handleChange, addCredential }) {
   return (
     <>
       <div className="flex justify-between mt-3">
@@ -25,42 +14,38 @@ function Form({
         </div>
       </div>
       <hr></hr>
-      <LocalTextInput
-        label={"Credential Name"}
-        personaIndex={selectedCharacter}
-        element={["cred_name"]}
-        handleJSONUpdate={handleLocalUpdate}
-        showcaseJSON={showcaseJSON}
-        localJSON={localJSON}
+      <label htmlFor="cred_type">Credential Type</label>
+      <br></br>
+      <select name={`cred_type`} id={`cred_type`}>
+        <option value="none" selected="selected">
+          select
+        </option>
+        <option value="int">int</option>
+        <option value="dateint">dateint</option>
+        <option value="string">string</option>
+      </select>
+      <br></br>
+      <label htmlFor="cred_name">Credential Name</label>
+      <br />
+      <input
+        type="text"
+        id="cred_name"
+        name="cred_name"
+        value={data.cred_name}
+        onChange={handleChange}
       />
-      <LocalTextInput
-        label={"Issuer Name"}
-        personaIndex={selectedCharacter}
-        element={["issuer_name"]}
-        handleJSONUpdate={handleLocalUpdate}
-        showcaseJSON={showcaseJSON}
-        localJSON={localJSON}
+      <br />
+      <label htmlFor="issuer_name">Issuer Name</label>
+      <br />
+      <input
+        type="text"
+        id="issuer_name"
+        name="issuer_name"
+        value={data.issuer_name}
+        onChange={handleChange}
       />
-      <FileUploadFull
-        text={"Icon"}
-        personaIndex={selectedCharacter}
-        element={["icon"]}
-        handleJSONUpdate={handleJSONUpdate}
-        showcaseJSON={showcaseJSON}
-      />
-      <AttributesList
-        showcaseJSON={showcaseJSON}
-        selectedIndex={selectedIndex}
-        localJSON={localJSON}
-        attributeCount={attributeCount}
-        handleJSONUpdate={handleJSONUpdate}
-        selectedCharacter={selectedCharacter}
-        handleLocalUpdate={handleLocalUpdate}
-        setAttributeCount={setAttributeCount}
-        setLocalJSON={setLocalJSON}
-      />
-      <button onClick={saveJSON}>SAVE ( + )</button>
-      {/* <button onClick={saveJSON}>ADD ATTRIBUTE ( + )</button> */}
+      <br />
+      <button onClick={addCredential}>ADD CREDENTIAL ( + )</button>
     </>
   );
 }

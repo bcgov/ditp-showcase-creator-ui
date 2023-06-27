@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Credential } from "./Credential";
+import { CredentialComponent } from "./CredentialComponent";
 import { add } from "@dnd-kit/utilities";
 
 const Credentials = () => {
@@ -13,6 +14,8 @@ const Credentials = () => {
   ]);
 
   const [selectedCredential, setSelectedCredential] = useState(0);
+
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     console.log(data);
@@ -46,6 +49,7 @@ const Credentials = () => {
   };
 
   const addCredential = () => {
+    setShowForm(!showForm);
     setData((prevData) => [
       ...prevData,
       {
@@ -61,7 +65,32 @@ const Credentials = () => {
   return (
     <>
       <div className="text-slate-500">
-        {data.length > 0 &&
+        {data.map((data) => {
+          if (Object.values(data) === undefined) return null;
+          return (
+            <CredentialComponent
+              credentialName={data.cred_name}
+              issuerName={data.issuer_name}
+              attributes={data.attributes.length}
+            />
+          );
+        })}
+
+        {showForm && (
+          <Credential
+            key={selectedCredential}
+            handleChange={handleChange(selectedCredential)}
+            data={data}
+            addAttribute={addAttribute}
+          />
+        )}
+
+        {/* <CredentialComponent
+          credentialName={"Cred 1"}
+          issuerName={"Issuer 1"}
+          attributes={"3"}
+        /> */}
+        {/* {data.length > 0 &&
           data.map((credential, index) => (
             <Credential
               key={index}
@@ -69,7 +98,7 @@ const Credentials = () => {
               data={credential}
               addAttribute={addAttribute}
             />
-          ))}
+          ))} */}
         <button onClick={addCredential}>Add Credential</button>
       </div>
     </>

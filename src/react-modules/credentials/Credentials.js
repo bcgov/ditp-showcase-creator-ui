@@ -23,69 +23,79 @@ function Credentials({
   const [editButtonClicked, setEditButtonClicked] = useState(false);
   const [credentialSelected, setCredentialSelected] = useState(false);
   const [componentToMount, setComponentToMount] = useState("no selection");
-  const [localJSON, setLocalJSON] = useImmer();
-  const parsedCredentials = showcaseJSON.personas[0].onboarding[4].credentials;
 
   const [attributeCount, setAttributeCount] = useState(0);
 
-  // localJSON will hold the current values in showcaseJSON (top-level)
-  // This has to be set every time you choose a new credential (selectedIndex)
-  // This will set a credential object with blank values to the localJSON.
-  useEffect(() => {
-    setLocalJSON({
+  const [data, setData] = useState([
+    {
       cred_name: "",
       issuer_name: "",
-      attributes: [
-        // { name: "first_name", value: "ryan" },
-        // { name: "first_name", value: "ryan" },
-      ],
-    });
-  }, []);
+      icon: "",
+      attributes: [], // Provide a default empty array
+    },
+  ]);
 
-  // ** For debugging **
-  // Log the values in the localJSON everytime it gets changed.
+  const [selectedCredential, setSelectedCredential] = useState(0);
+
+  const [showForm, setShowForm] = useState(false);
+
   useEffect(() => {
-    console.log(localJSON);
-  }, [localJSON]);
+    console.log(data);
+  }, [data]);
 
-  // Set the values from input boxes to the localJSON object.
-  function handleLocalUpdate(element, newValue) {
-    setLocalJSON((json) => {
-      json[element] = newValue;
+  const handleChange = (index) => (e) => {
+    const { name, value } = e.target;
+    const newData = [...data]; // Create a copy of the data array
+    const attributeIndex = parseInt(name.slice(name.lastIndexOf("-") + 1)); // Get the attribute index
+    const attributeName = name.slice(0, name.lastIndexOf("-")); // Get the attribute name ("name" or "value")
+    if (name === "cred_name" || name === "issuer_name") {
+      newData[index][name] = value; // Update cred_name or issuer_name
+    } else {
+      newData[index].attributes[attributeIndex][attributeName] = value; // Update attribute name or value
+    }
+
+    setData(newData); // Update the state with the modified data
+  };
+
+  const addAttribute = () => {
+    setData((prevData) => {
+      const newData = [...prevData];
+      const selectedCred = { ...newData[selectedCredential] }; // Create a copy of the selected credential
+      selectedCred.attributes = [
+        ...selectedCred.attributes,
+        { name: "", value: "" },
+      ];
+      newData[selectedCredential] = selectedCred; // Update the selected credential in the new data array
+      return newData;
     });
-  }
+  };
 
-  // Save the localJSON into the showcaseJSON (global).
-  // To do: Error handling
-  function saveJSON() {
-    setShowcaseJSON((json) => {
-      json.personas[0].onboarding[4].credentials.push({
-        name: localJSON.cred_name,
-        issuer_name: localJSON.issuer_name,
-        version: "",
-        icon: "",
-        attributes: localJSON.attributes,
-      });
-    });
-  }
-
-  // Update the showcaseJSON values when the save button is clicked on the edit component.
-  // To do: Error handling
-  function saveEditedJSON() {
-    handleJSONUpdate(
-      selectedCharacter,
-      ["onboarding", 4, "credentials", selectedIndex, "name"],
-      localJSON.cred_name
-    );
-    handleJSONUpdate(
-      selectedCharacter,
-      ["onboarding", 4, "credentials", selectedIndex, "issuer_name"],
-      localJSON.issuer_name
-    );
-  }
+  const addCredential = () => {
+    // setShowForm(!showForm);
+    // setData((prevData) => [
+    //   ...prevData,
+    //   {
+    //     cred_name: "",
+    //     issuer_name: "",
+    //     icon: "",
+    //     attributes: [],
+    //   },
+    // ]);
+    // setSelectedCredential((prevVal) => prevVal + 1);
+  };
 
   // Handle page state by setting the componentToMount state variable to the buttons id (create)
   const handleCreateButtonClick = (e) => {
+    setData((prevData) => [
+      ...prevData,
+      {
+        cred_name: "",
+        issuer_name: "",
+        icon: "",
+        attributes: [],
+      },
+    ]);
+    setSelectedCredential((prevVal) => prevVal + 1);
     setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
   };
 
@@ -97,47 +107,38 @@ function Credentials({
   // Render component based on componentToMount state variable.
   const renderComponent = (component) => {
     switch (component) {
-      case "credential":
-        return (
-          <SelectionOverview
-            setEditButtonClicked={setEditButtonClicked}
-            setComponentToMount={setComponentToMount}
-            handleJSONUpdate={handleJSONUpdate}
-            credentialSelected={selectedIndex}
-            showcaseJSON={showcaseJSON}
-            selectedIndex={selectedIndex}
-            selectedCharacter={selectedCharacter}
-            setShowcaseJSON={setShowcaseJSON}
-            setSelectedIndex={setSelectedIndex}
-          />
-        );
-      case "edit":
-        return (
-          <Edit
-            selectedIndex={selectedIndex}
-            setLocalJSON={setLocalJSON}
-            handleJSONUpdate={handleJSONUpdate}
-            setShowcaseJSON={setShowcaseJSON}
-            showcaseJSON={showcaseJSON}
-            localJSON={localJSON}
-            selectedCharacter={selectedCharacter}
-            handleLocalUpdate={handleLocalUpdate}
-            saveJSON={saveJSON}
-            saveEditedJSON={saveEditedJSON}
-          />
-        );
+      // case "credential":
+      //   return (
+      //     <SelectionOverview
+      //       setEditButtonClicked={setEditButtonClicked}
+      //       setComponentToMount={setComponentToMount}
+      //       handleJSONUpdate={handleJSONUpdate}
+      //       credentialSelected={selectedIndex}
+      //       showcaseJSON={showcaseJSON}
+      //       selectedIndex={selectedIndex}
+      //       selectedCharacter={selectedCharacter}
+      //       setShowcaseJSON={setShowcaseJSON}
+      //       setSelectedIndex={setSelectedIndex}
+      //     />
+      //   );
+      // case "edit":
+      //   return (
+      //     <Edit
+      //       selectedIndex={selectedIndex}
+      //       handleJSONUpdate={handleJSONUpdate}
+      //       setShowcaseJSON={setShowcaseJSON}
+      //       showcaseJSON={showcaseJSON}
+      //       selectedCharacter={selectedCharacter}
+      //     />
+      //   );
       case "create":
         return (
           <Form
-            showcaseJSON={showcaseJSON}
-            localJSON={localJSON}
-            setLocalJSON={setLocalJSON}
-            handleLocalUpdate={handleLocalUpdate}
-            selectedCharacter={selectedCharacter}
-            saveJSON={saveJSON}
-            handleJSONUpdate={handleLocalUpdate}
-            attributeCount={attributeCount}
-            setAttributeCount={setAttributeCount}
+            addCredential={addCredential}
+            handleChange={handleChange(selectedCredential)}
+            data={data}
+            addAttribute={addAttribute}
+            selectedCredential={selectedCredential}
           />
         );
       case "import":
@@ -180,8 +181,10 @@ function Credentials({
           <CredentialsList
             setSelectedIndex={setSelectedIndex}
             setCredentialSelected={setCredentialSelected}
-            parsedCredentials={parsedCredentials}
             setComponentToMount={setComponentToMount}
+            data={data}
+            selectedCredential={selectedCredential}
+            setSelectedCredential={setSelectedCredential}
           />
           <p className="text-slate-50">{componentToMount}</p>
         </div>

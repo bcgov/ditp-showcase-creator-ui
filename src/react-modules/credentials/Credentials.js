@@ -217,7 +217,7 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
             CANCEL
           </button>
           <button className="border p-2 rounded" onClick={addCredential}>
-            ADD(+)
+            {componentToMount === "edit" ? "DONE" : "ADD"}
           </button>
         </div>
       </div>

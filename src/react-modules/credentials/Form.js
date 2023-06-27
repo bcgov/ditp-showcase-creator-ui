@@ -5,18 +5,18 @@ import { AttributesList } from "./components/AttributesList";
 import { FileUploadFull } from "../FileUpload";
 
 function Form({
-  data,
   handleChange,
-  addCredential,
   tempData,
   addAttribute,
   selectedCredential,
-  handleCancel,
+  setComponentToMount,
 }) {
-  const selectedAttributes =
-    tempData[selectedCredential] && tempData[selectedCredential].attributes
-      ? tempData[selectedCredential].attributes
-      : [];
+  // const selectedAttributes =
+  //   tempData[selectedCredential] && tempData[selectedCredential].attributes
+  //     ? tempData[selectedCredential].attributes
+  //     : [];
+
+  setComponentToMount("create");
 
   return (
     <>
@@ -69,7 +69,6 @@ function Form({
       <label>Attributes</label>
       <br />
       {tempData[selectedCredential] &&
-        tempData[selectedCredential].attributes &&
         tempData[selectedCredential].attributes.map((attr, index) => (
           <div key={index}>
             <input
@@ -88,9 +87,9 @@ function Form({
             />
           </div>
         ))}
-      <button onClick={addCredential}>ADD CREDENTIAL (+)</button>
+      {/* <button onClick={addCredential}>ADD(+)</button>
+      <button onClick={handleCancel}>CANCEL</button> */}
       <button onClick={addAttribute}>ADD ATTRIBUTE (+)</button>
-      <button onClick={handleCancel}>Cancel</button>
     </>
   );
 }

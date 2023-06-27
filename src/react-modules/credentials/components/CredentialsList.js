@@ -4,13 +4,9 @@ import { Credential } from "./Credential";
 
 function CredentialsList({
   setCredentialSelected,
-  parsedCredentials,
-  setSelectedIndex,
   setComponentToMount,
-  data,
-  selectedCredential,
   setSelectedCredential,
-  tempData,
+  formData,
 }) {
   function handleClick(e) {
     const data = e.currentTarget.getAttribute("data-cred-id");
@@ -22,8 +18,18 @@ function CredentialsList({
 
   return (
     <>
-      <div className="text-slate-100 w-full mt-4 flex flex-row gap-5">
-        {data.map((credential, index) => {
+      <div className="text-slate-100 w-full mt-4 flex flex-wrap gap-5">
+        {formData.map((credential, index) => {
+          // Check if all values in the object are ""
+          const allValuesEmpty = Object.values(credential)
+            .flat()
+            .every((value) => value === "");
+
+          // Skip rendering if all values are ""
+          if (allValuesEmpty) {
+            return null;
+          }
+
           return (
             <Credential
               key={index}

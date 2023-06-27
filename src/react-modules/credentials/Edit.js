@@ -1,20 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { TextInput } from "../TextInput";
 import { Form } from "./Form";
 import { LocalTextInput } from "../LocalTextInput";
 import { AttributesList } from "./components/AttributesList";
 
 function Edit({
-  selectedIndex,
-  handleJSONUpdate,
-  showcaseJSON,
-  localJSON,
-  handleLocalUpdate,
-  selectedCharacter,
-  setShowcaseJSON,
-  saveJSON,
-  saveEditedJSON,
-  setLocalJSON,
+  selectedCredential,
+  formData,
+  handleChange,
+  setComponentToMount,
+  addAttribute,
+  tempData,
 }) {
   return (
     <>
@@ -25,33 +21,53 @@ function Edit({
         </div>
       </div>
       <hr></hr>
-      <LocalTextInput
-        label={"Credential Name"}
-        personaIndex={selectedCharacter}
-        element={["cred_name"]}
-        handleJSONUpdate={handleLocalUpdate}
-        showcaseJSON={showcaseJSON}
-        localJSON={localJSON}
+      <label htmlFor="cred_name">Credential Name</label>
+      <br />
+      <input
+        type="text"
+        id="cred_name"
+        name="cred_name"
+        value={formData[selectedCredential].cred_name}
+        onChange={handleChange}
       />
-      <LocalTextInput
-        label={"Issuer Name"}
-        personaIndex={selectedCharacter}
-        element={["issuer_name"]}
-        handleJSONUpdate={handleLocalUpdate}
-        showcaseJSON={showcaseJSON}
-        localJSON={localJSON}
+      <br />
+      <label htmlFor="issuer_name">Issuer Name</label>
+      <br />
+      <input
+        type="text"
+        id="issuer_name"
+        name="issuer_name"
+        value={formData[selectedCredential].issuer_name}
+        onChange={handleChange}
       />
-      <div className="grid grid-cols-2"></div>
-      <AttributesList
-        handleJSONUpdate={handleJSONUpdate}
-        handleLocalUpdate={handleLocalUpdate}
-        showcaseJSON={showcaseJSON}
-        selectedCharacter={selectedCharacter}
-        selectedIndex={selectedIndex}
-        setLocalJSON={setLocalJSON}
-        localJSON={localJSON}
-      />
-      <button onClick={saveEditedJSON}>SAVE ( + )</button>
+      {tempData[selectedCredential].attributes.map((attr, index) => (
+        <div key={index} className=" grid grid-cols-2">
+          <div>
+            <label htmlFor={`name-${index}`}>Attribute Name</label>
+            <input
+              type="text"
+              id={`name-${index}`}
+              name={`name-${index}`}
+              // placeholder="Attribute Name"
+              value={attr.name || ""}
+              onChange={(e) => handleChange(e, index)}
+            />
+          </div>
+          <div>
+            <label htmlFor={`value-${index}`}>Attribute Value</label>
+            <input
+              type="text"
+              name={`value-${index}`}
+              id={`value-${index}`}
+              // placeholder="Attribute Value"
+              value={attr.value || ""}
+              onChange={(e) => handleChange(e, index)}
+            />
+          </div>
+        </div>
+      ))}
+      <button onClick={addAttribute}>ADD ATTRIBUTE (+)</button>
+      {/* <button onClick={handleSaveClick}>SAVE ( + )</button> */}
     </>
   );
 }

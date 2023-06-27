@@ -2,38 +2,36 @@ import React from "react";
 import { FormHeader } from "./components/index.js";
 
 function SelectionOverview({
-  setEditButtonClicked,
   setComponentToMount,
-  credentialSelected,
-  showcaseJSON,
-  selectedIndex,
-  selectedCharacter,
-  setShowcaseJSON,
-  setSelectedIndex,
   selectedCredential,
-  data,
-  setData,
+  setSelectedCredential,
+  formData,
+  setFormData,
   tempData,
   setTempData,
 }) {
   const handleEditButtonClick = () => {
-    // setEditButtonClicked((prevEditButtonSelected) => !prevEditButtonSelected);
     setComponentToMount("edit");
   };
 
   const handleCredentialRemoval = (index) => {
+    if (selectedCredential === 0) return;
     setTempData((prevData) => {
       const newData = [...prevData];
       newData.splice(index, 1);
       return newData;
     });
 
-    setData((prevData) => {
+    setFormData((prevData) => {
       const newData = [...prevData];
       newData.splice(index, 1);
       return newData;
     });
+
+    setSelectedCredential((prevVal) => prevVal + 1);
   };
+
+  console.log(formData);
 
   return (
     <>
@@ -65,16 +63,20 @@ function SelectionOverview({
           <div className="selection-overview-container w-full h-full mt-7 relative">
             <div className="selection-overview-credential-name">
               <h3 className="text-lg font-bold">Credential Name</h3>
-              {
-                showcaseJSON["personas"][selectedCharacter].onboarding[4]
-                  .credentials[selectedIndex].name
-              }
+              {formData[selectedCredential].cred_name}
             </div>
             <div className="selection-overview-issuer-name">
               <h3 className="text-lg font-bold mt-5">Issuer Name</h3>
+              {formData[selectedCredential].issuer_name}
             </div>
             <div className="selection-overview-attributes">
               <h3 className="text-lg font-bold mt-5">Attributes</h3>
+              {formData[selectedCredential].attributes.map((attr) => (
+                <div>
+                  <span className="font-bold">{attr.name}: </span>
+                  <span>{attr.value}</span>
+                </div>
+              ))}
               {/* {credentialAttributes.map((attr) => (
                 <div className="mt-2 text-sm">
                   <span className="font-bold">{`${attr.name}: `}</span>

@@ -6,31 +6,26 @@ import { CredentialsList, Edit } from "./index.js";
 import { useImmer } from "use-immer";
 import { LocalTextInput } from "../LocalTextInput";
 
-function Credentials({
-  showcaseJSON,
-  handleJSONUpdate,
-  setShowcaseJSON,
-  selectedCharacter,
-  setSelectedIndex,
-  selectedIndex,
-}) {
+function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
   const [editButtonClicked, setEditButtonClicked] = useState(false);
   const [credentialSelected, setCredentialSelected] = useState(false);
   const [componentToMount, setComponentToMount] = useState("no selection");
+  const [selectedCredential, setSelectedCredential] = useState(0);
 
   const [createButtonClicked, setCreateButtonClicked] = useState(false);
   const [addCredentialClicked, setAddCredentialClicked] = useState(false);
 
-  const [attributeCount, setAttributeCount] = useState(0);
-
-  const [data, setData] = useState([]);
-
+  const [formData, setFormData] = useState([]);
   const [tempData, setTempData] = useState([]);
+
+  const [showForm, setShowForm] = useState(false);
+
+  const [saveEditClicked, setSaveEditClicked] = useState(false);
 
   useEffect(() => {
     console.log(tempData);
-    console.log(data);
-  }, [tempData, data]);
+    console.log(formData);
+  }, [tempData, formData]);
 
   useEffect(() => {
     console.log(`your index is currently ${selectedCredential}`);
@@ -46,7 +41,7 @@ function Credentials({
         attributes: [], // Provide a default empty array
       },
     ]);
-    setData([
+    setFormData([
       ...tempData,
       {
         cred_name: "",
@@ -56,10 +51,6 @@ function Credentials({
       },
     ]);
   }, []);
-
-  const [selectedCredential, setSelectedCredential] = useState(0);
-
-  const [showForm, setShowForm] = useState(false);
 
   const handleChange = (index) => (e) => {
     const { name, value } = e.target;
@@ -88,16 +79,16 @@ function Credentials({
     });
   };
   const addCredential = () => {
-    // setSelectedCredential((prevVal) => prevVal + 1); // Increment selectedCredential
-    setData(tempData);
+    setFormData(tempData);
     setAddCredentialClicked(false);
     setCreateButtonClicked(false);
+    setComponentToMount("credential");
   };
 
   const handleCancel = () => {
     setTempData((prevData) => {
       const newData = [...prevData];
-      newData[selectedCredential] = data[selectedCredential];
+      newData[selectedCredential] = formData[selectedCredential];
       return newData;
     });
     setSelectedCredential((prevVal) => prevVal - 1);
@@ -108,8 +99,7 @@ function Credentials({
   const handleCreateButtonClick = (e) => {
     // if (!createButtonClicked) {
     setCreateButtonClicked(true);
-    // setSelectedCredential((prevVal) => prevVal + 1);
-    setSelectedCredential(data.length);
+    setSelectedCredential(formData.length);
     setTempData((prevData) => [
       ...prevData,
       {
@@ -134,26 +124,36 @@ function Credentials({
           <SelectionOverview
             setEditButtonClicked={setEditButtonClicked}
             setComponentToMount={setComponentToMount}
-            handleJSONUpdate={handleJSONUpdate}
             credentialSelected={selectedIndex}
-            showcaseJSON={showcaseJSON}
-            selectedIndex={selectedIndex}
             selectedCharacter={selectedCharacter}
-            setShowcaseJSON={setShowcaseJSON}
-            setSelectedIndex={setSelectedIndex}
-            data={data}
-            setData={setData}
+            formData={formData}
+            setFormData={setFormData}
             selectedCredential={selectedCredential}
             tempData={tempData}
             setTempData={setTempData}
+            setSelectedCredential={setSelectedCredential}
           />
         );
       case "create":
         return (
           <Form
             addCredential={addCredential}
+            setComponentToMount={setComponentToMount}
             handleChange={handleChange(selectedCredential)}
-            data={data}
+            formData={formData}
+            tempData={tempData}
+            addAttribute={addAttribute}
+            selectedCredential={selectedCredential}
+            handleCancel={handleCancel}
+          />
+        );
+      case "edit":
+        return (
+          <Edit
+            addCredential={addCredential}
+            setComponentToMount={setComponentToMount}
+            handleChange={handleChange(selectedCredential)}
+            formData={formData}
             tempData={tempData}
             addAttribute={addAttribute}
             selectedCredential={selectedCredential}
@@ -170,7 +170,7 @@ function Credentials({
   return (
     <>
       <div className=" two-column-container mx-20 my-16">
-        <div className="two-column-col md:w-3/5 pr-4 ">
+        <div className="two-column-col md:w-3/5 pr-4">
           <div className="flex justify-between">
             <div>
               <h3 className="text-4xl font-bold text-slate-50">
@@ -201,7 +201,7 @@ function Credentials({
             setSelectedIndex={setSelectedIndex}
             setCredentialSelected={setCredentialSelected}
             setComponentToMount={setComponentToMount}
-            data={data}
+            formData={formData}
             selectedCredential={selectedCredential}
             tempData={tempData}
             setSelectedCredential={setSelectedCredential}
@@ -211,6 +211,14 @@ function Credentials({
 
         <div className="two-column-col md:w-2/5 bg-gray-300 p-4 rounded-md right-col">
           {renderComponent(componentToMount)}
+        </div>
+        <div className="flex mt-5 w-full justify-end ">
+          <button className="border p-2 mr-4 rounded" onClick={handleCancel}>
+            CANCEL
+          </button>
+          <button className="border p-2 rounded" onClick={addCredential}>
+            ADD(+)
+          </button>
         </div>
       </div>
     </>

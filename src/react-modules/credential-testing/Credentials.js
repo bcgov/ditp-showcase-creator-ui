@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Credential } from "./Credential";
+import { add } from "@dnd-kit/utilities";
 
 const Credentials = () => {
   const [data, setData] = useState([
@@ -10,33 +12,37 @@ const Credentials = () => {
     },
   ]);
 
+  const [selectedCredential, setSelectedCredential] = useState(0);
+
   useEffect(() => {
     console.log(data);
   }, [data]);
 
-  const handleChange = (e, index) => {
+  const handleChange = (index) => (e) => {
     const { name, value } = e.target;
     const newData = [...data]; // Create a copy of the data array
-
+    const attributeIndex = parseInt(name.slice(name.lastIndexOf("-") + 1)); // Get the attribute index
+    const attributeName = name.slice(0, name.lastIndexOf("-")); // Get the attribute name ("name" or "value")
     if (name === "cred_name" || name === "issuer_name") {
-      newData[0][name] = value; // Update cred_name or issuer_name
+      newData[index][name] = value; // Update cred_name or issuer_name
     } else {
-      const attributeIndex = parseInt(name.slice(name.lastIndexOf("-") + 1)); // Get the attribute index
-      const attributeName = name.slice(0, name.lastIndexOf("-")); // Get the attribute name ("name" or "value")
-
-      newData[0].attributes[attributeIndex][attributeName] = value; // Update attribute name or value
+      newData[index].attributes[attributeIndex][attributeName] = value; // Update attribute name or value
     }
 
     setData(newData); // Update the state with the modified data
   };
 
   const addAttribute = () => {
-    setData((prevData) => [
-      {
-        ...prevData[0],
-        attributes: [...prevData[0].attributes, { name: "", value: "" }],
-      },
-    ]);
+    setData((prevData) => {
+      const newData = [...prevData];
+      const selectedCred = { ...newData[selectedCredential] }; // Create a copy of the selected credential
+      selectedCred.attributes = [
+        ...selectedCred.attributes,
+        { name: "", value: "" },
+      ];
+      newData[selectedCredential] = selectedCred; // Update the selected credential in the new data array
+      return newData;
+    });
   };
 
   const addCredential = () => {
@@ -49,53 +55,23 @@ const Credentials = () => {
         attributes: [],
       },
     ]);
+    setSelectedCredential((prevVal) => prevVal + 1);
   };
 
   return (
     <>
-      <label htmlFor="cred_name">Credential Name</label>
-      <br />
-      <input
-        type="text"
-        id="cred_name"
-        name="cred_name"
-        value={data[0].cred_name}
-        onChange={handleChange}
-      />
-      <br />
-      <label htmlFor="issuer_name">Issuer Name</label>
-      <br />
-      <input
-        type="text"
-        id="issuer_name"
-        name="issuer_name"
-        value={data[0].issuer_name}
-        onChange={handleChange}
-      />
-      <br />
-      <label>Attributes</label>
-      <br />
-      {data[0].attributes.map((attribute, index) => (
-        <div key={index}>
-          <select name="type" id={`credential-type-${index}`}></select>
-          <input
-            type="text"
-            name={`name-${index}`}
-            placeholder="Attribute Name"
-            value={attribute.name || ""}
-            onChange={(e) => handleChange(e, index)}
-          />
-          <input
-            type="text"
-            name={`value-${index}`}
-            placeholder="Attribute Value"
-            value={attribute.value || ""}
-            onChange={(e) => handleChange(e, index)}
-          />
-        </div>
-      ))}
-      <button onClick={addAttribute}>Add Attribute</button>
-      <button onClick={addCredential}>Add Credential</button>
+      <div className="text-slate-500">
+        {data.length > 0 &&
+          data.map((credential, index) => (
+            <Credential
+              key={index}
+              handleChange={handleChange(index)}
+              data={credential}
+              addAttribute={addAttribute}
+            />
+          ))}
+        <button onClick={addCredential}>Add Credential</button>
+      </div>
     </>
   );
 };

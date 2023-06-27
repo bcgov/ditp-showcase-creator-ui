@@ -36,7 +36,7 @@ const Credential = ({ handleChange, data, addAttribute }) => {
       <br />
       <label>Attributes</label>
       <br />
-      {/* {data.attributes.map((attribute, index) => (
+      {data.attributes.map((attribute, index) => (
         <div key={index}>
           <input
             type="text"
@@ -53,7 +53,7 @@ const Credential = ({ handleChange, data, addAttribute }) => {
             onChange={(e) => handleChange(e, index)}
           />
         </div>
-      ))} */}
+      ))}
       <button onClick={addAttribute}>Add Attribute</button>
     </>
   );

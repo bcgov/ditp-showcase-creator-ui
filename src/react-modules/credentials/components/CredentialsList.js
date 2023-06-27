@@ -10,13 +10,14 @@ function CredentialsList({
   data,
   selectedCredential,
   setSelectedCredential,
+  tempData,
 }) {
   function handleClick(e) {
     const data = e.currentTarget.getAttribute("data-cred-id");
-    setSelectedIndex(data);
+    // setSelectedIndex(data);
     setCredentialSelected(true);
     setComponentToMount("credential");
-    setSelectedCredential(data);
+    setSelectedCredential(parseInt(data));
   }
 
   return (

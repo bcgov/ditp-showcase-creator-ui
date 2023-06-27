@@ -4,7 +4,20 @@ import { LocalTextInput } from "../LocalTextInput";
 import { AttributesList } from "./components/AttributesList";
 import { FileUploadFull } from "../FileUpload";
 
-function Form({ data, handleChange, addCredential }) {
+function Form({
+  data,
+  handleChange,
+  addCredential,
+  tempData,
+  addAttribute,
+  selectedCredential,
+  handleCancel,
+}) {
+  const selectedAttributes =
+    tempData[selectedCredential] && tempData[selectedCredential].attributes
+      ? tempData[selectedCredential].attributes
+      : [];
+
   return (
     <>
       <div className="flex justify-between mt-3">
@@ -31,7 +44,11 @@ function Form({ data, handleChange, addCredential }) {
         type="text"
         id="cred_name"
         name="cred_name"
-        value={data.cred_name}
+        value={
+          tempData[selectedCredential]
+            ? tempData[selectedCredential].cred_name
+            : ""
+        }
         onChange={handleChange}
       />
       <br />
@@ -41,11 +58,39 @@ function Form({ data, handleChange, addCredential }) {
         type="text"
         id="issuer_name"
         name="issuer_name"
-        value={data.issuer_name}
+        value={
+          tempData[selectedCredential]
+            ? tempData[selectedCredential].issuer_name
+            : ""
+        }
         onChange={handleChange}
       />
       <br />
-      <button onClick={addCredential}>ADD CREDENTIAL ( + )</button>
+      <label>Attributes</label>
+      <br />
+      {tempData[selectedCredential] &&
+        tempData[selectedCredential].attributes &&
+        tempData[selectedCredential].attributes.map((attr, index) => (
+          <div key={index}>
+            <input
+              type="text"
+              name={`name-${index}`}
+              placeholder="Attribute Name"
+              value={attr.name || ""}
+              onChange={(e) => handleChange(e, index)}
+            />
+            <input
+              type="text"
+              name={`value-${index}`}
+              placeholder="Attribute Value"
+              value={attr.value || ""}
+              onChange={(e) => handleChange(e, index)}
+            />
+          </div>
+        ))}
+      <button onClick={addCredential}>ADD CREDENTIAL (+)</button>
+      <button onClick={addAttribute}>ADD ATTRIBUTE (+)</button>
+      <button onClick={handleCancel}>Cancel</button>
     </>
   );
 }

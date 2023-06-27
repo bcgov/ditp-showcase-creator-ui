@@ -10,18 +10,28 @@ function SelectionOverview({
   selectedCharacter,
   setShowcaseJSON,
   setSelectedIndex,
+  selectedCredential,
+  data,
+  setData,
+  tempData,
+  setTempData,
 }) {
   const handleEditButtonClick = () => {
     // setEditButtonClicked((prevEditButtonSelected) => !prevEditButtonSelected);
     setComponentToMount("edit");
   };
 
-  const handleCredentialRemoval = (i) => {
-    if (showcaseJSON.personas[0].onboarding[4].credentials.length === 1) return;
-    if (selectedIndex != 0) setSelectedIndex(selectedIndex - 1);
+  const handleCredentialRemoval = (index) => {
+    setTempData((prevData) => {
+      const newData = [...prevData];
+      newData.splice(index, 1);
+      return newData;
+    });
 
-    setShowcaseJSON((json) => {
-      json.personas[0].onboarding[4].credentials.splice(selectedIndex, 1);
+    setData((prevData) => {
+      const newData = [...prevData];
+      newData.splice(index, 1);
+      return newData;
     });
   };
 
@@ -43,7 +53,7 @@ function SelectionOverview({
                   Edit
                 </button>
                 <button
-                  onClick={() => handleCredentialRemoval(selectedIndex)}
+                  onClick={() => handleCredentialRemoval(selectedCredential)}
                   className=" text-sm py-1 px-3 mx-1 rounded bg-neutral-700 hover:bg-neutral-600 text-slate-100"
                 >
                   Delete
@@ -71,13 +81,13 @@ function SelectionOverview({
                   <span>{attr.value}</span>
                 </div>
               ))} */}
-              {showcaseJSON["personas"][
+              {/* {showcaseJSON["personas"][
                 selectedCharacter
               ].onboarding[4].credentials[selectedIndex].attributes.map(
                 (attr) => (
                   <p>{attr.name}</p>
                 )
-              )}
+              )} */}
             </div>
           </div>
         </div>

@@ -1,16 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./styles/credentials.css";
-import { useState, useRef, useEffect } from "react";
 import { JSONUploadButton } from "../JSONUpload";
 import { NoSelection, Form, SelectionOverview } from "./components/index.js";
 import { CredentialsList, Edit } from "./index.js";
 import { useImmer } from "use-immer";
 import { LocalTextInput } from "../LocalTextInput";
-
-// To Do:
-// - When typing in values for inputs, if you change pages, the localJSON doesn't clear.
-// - No form handling.
-// - Attributes adding,removing,deleting not done.
 
 function Credentials({
   showcaseJSON,
@@ -24,28 +18,52 @@ function Credentials({
   const [credentialSelected, setCredentialSelected] = useState(false);
   const [componentToMount, setComponentToMount] = useState("no selection");
 
+  const [createButtonClicked, setCreateButtonClicked] = useState(false);
+  const [addCredentialClicked, setAddCredentialClicked] = useState(false);
+
   const [attributeCount, setAttributeCount] = useState(0);
 
-  const [data, setData] = useState([
-    {
-      cred_name: "",
-      issuer_name: "",
-      icon: "",
-      attributes: [], // Provide a default empty array
-    },
-  ]);
+  const [data, setData] = useState([]);
+
+  const [tempData, setTempData] = useState([]);
+
+  useEffect(() => {
+    console.log(tempData);
+    console.log(data);
+  }, [tempData, data]);
+
+  useEffect(() => {
+    console.log(`your index is currently ${selectedCredential}`);
+  });
+
+  useEffect(() => {
+    setTempData([
+      ...tempData,
+      {
+        cred_name: "",
+        issuer_name: "",
+        icon: "",
+        attributes: [], // Provide a default empty array
+      },
+    ]);
+    setData([
+      ...tempData,
+      {
+        cred_name: "",
+        issuer_name: "",
+        icon: "",
+        attributes: [], // Provide a default empty array
+      },
+    ]);
+  }, []);
 
   const [selectedCredential, setSelectedCredential] = useState(0);
 
   const [showForm, setShowForm] = useState(false);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   const handleChange = (index) => (e) => {
     const { name, value } = e.target;
-    const newData = [...data]; // Create a copy of the data array
+    const newData = [...tempData]; // Create a copy of the data array
     const attributeIndex = parseInt(name.slice(name.lastIndexOf("-") + 1)); // Get the attribute index
     const attributeName = name.slice(0, name.lastIndexOf("-")); // Get the attribute name ("name" or "value")
     if (name === "cred_name" || name === "issuer_name") {
@@ -54,11 +72,11 @@ function Credentials({
       newData[index].attributes[attributeIndex][attributeName] = value; // Update attribute name or value
     }
 
-    setData(newData); // Update the state with the modified data
+    setTempData(newData); // Update the state with the modified data
   };
 
   const addAttribute = () => {
-    setData((prevData) => {
+    setTempData((prevData) => {
       const newData = [...prevData];
       const selectedCred = { ...newData[selectedCredential] }; // Create a copy of the selected credential
       selectedCred.attributes = [
@@ -69,24 +87,30 @@ function Credentials({
       return newData;
     });
   };
-
   const addCredential = () => {
-    // setShowForm(!showForm);
-    // setData((prevData) => [
-    //   ...prevData,
-    //   {
-    //     cred_name: "",
-    //     issuer_name: "",
-    //     icon: "",
-    //     attributes: [],
-    //   },
-    // ]);
-    // setSelectedCredential((prevVal) => prevVal + 1);
+    // setSelectedCredential((prevVal) => prevVal + 1); // Increment selectedCredential
+    setData(tempData);
+    setAddCredentialClicked(false);
+    setCreateButtonClicked(false);
   };
 
-  // Handle page state by setting the componentToMount state variable to the buttons id (create)
+  const handleCancel = () => {
+    setTempData((prevData) => {
+      const newData = [...prevData];
+      newData[selectedCredential] = data[selectedCredential];
+      return newData;
+    });
+    setSelectedCredential((prevVal) => prevVal - 1);
+    setCreateButtonClicked(false);
+    setComponentToMount("credential");
+  };
+
   const handleCreateButtonClick = (e) => {
-    setData((prevData) => [
+    // if (!createButtonClicked) {
+    setCreateButtonClicked(true);
+    // setSelectedCredential((prevVal) => prevVal + 1);
+    setSelectedCredential(data.length);
+    setTempData((prevData) => [
       ...prevData,
       {
         cred_name: "",
@@ -95,50 +119,45 @@ function Credentials({
         attributes: [],
       },
     ]);
-    setSelectedCredential((prevVal) => prevVal + 1);
     setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
+    // }
   };
 
-  // Handle page state by setting the componentToMount state variable to the buttons id (import)
   const handleImportButtonClick = (e) => {
     setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
   };
 
-  // Render component based on componentToMount state variable.
   const renderComponent = (component) => {
     switch (component) {
-      // case "credential":
-      //   return (
-      //     <SelectionOverview
-      //       setEditButtonClicked={setEditButtonClicked}
-      //       setComponentToMount={setComponentToMount}
-      //       handleJSONUpdate={handleJSONUpdate}
-      //       credentialSelected={selectedIndex}
-      //       showcaseJSON={showcaseJSON}
-      //       selectedIndex={selectedIndex}
-      //       selectedCharacter={selectedCharacter}
-      //       setShowcaseJSON={setShowcaseJSON}
-      //       setSelectedIndex={setSelectedIndex}
-      //     />
-      //   );
-      // case "edit":
-      //   return (
-      //     <Edit
-      //       selectedIndex={selectedIndex}
-      //       handleJSONUpdate={handleJSONUpdate}
-      //       setShowcaseJSON={setShowcaseJSON}
-      //       showcaseJSON={showcaseJSON}
-      //       selectedCharacter={selectedCharacter}
-      //     />
-      //   );
+      case "credential":
+        return (
+          <SelectionOverview
+            setEditButtonClicked={setEditButtonClicked}
+            setComponentToMount={setComponentToMount}
+            handleJSONUpdate={handleJSONUpdate}
+            credentialSelected={selectedIndex}
+            showcaseJSON={showcaseJSON}
+            selectedIndex={selectedIndex}
+            selectedCharacter={selectedCharacter}
+            setShowcaseJSON={setShowcaseJSON}
+            setSelectedIndex={setSelectedIndex}
+            data={data}
+            setData={setData}
+            selectedCredential={selectedCredential}
+            tempData={tempData}
+            setTempData={setTempData}
+          />
+        );
       case "create":
         return (
           <Form
             addCredential={addCredential}
             handleChange={handleChange(selectedCredential)}
             data={data}
+            tempData={tempData}
             addAttribute={addAttribute}
             selectedCredential={selectedCredential}
+            handleCancel={handleCancel}
           />
         );
       case "import":
@@ -184,16 +203,15 @@ function Credentials({
             setComponentToMount={setComponentToMount}
             data={data}
             selectedCredential={selectedCredential}
+            tempData={tempData}
             setSelectedCredential={setSelectedCredential}
           />
           <p className="text-slate-50">{componentToMount}</p>
         </div>
-        {/* end of column 1 */}
 
         <div className="two-column-col md:w-2/5 bg-gray-300 p-4 rounded-md right-col">
           {renderComponent(componentToMount)}
         </div>
-        {/* end of column 2 */}
       </div>
     </>
   );

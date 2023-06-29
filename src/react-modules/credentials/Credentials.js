@@ -7,50 +7,49 @@ import { useImmer } from "use-immer";
 import { LocalTextInput } from "../LocalTextInput";
 
 function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
-  const [editButtonClicked, setEditButtonClicked] = useState(false);
-  const [credentialSelected, setCredentialSelected] = useState(false);
+  // const [editButtonClicked, setEditButtonClicked] = useState(false);
+  // const [credentialSelected, setCredentialSelected] = useState(false);
+  // const [saveEditClicked, setSaveEditClicked] = useState(false);
+  // const [createButtonClicked, setCreateButtonClicked] = useState(false);
+  // const [addCredentialClicked, setAddCredentialClicked] = useState(false);
+
   const [componentToMount, setComponentToMount] = useState("no selection");
   const [selectedCredential, setSelectedCredential] = useState(0);
-
-  const [createButtonClicked, setCreateButtonClicked] = useState(false);
-  const [addCredentialClicked, setAddCredentialClicked] = useState(false);
 
   const [formData, setFormData] = useState([]);
   const [tempData, setTempData] = useState([]);
 
   const [showForm, setShowForm] = useState(false);
 
-  const [saveEditClicked, setSaveEditClicked] = useState(false);
-
   useEffect(() => {
-    console.log(tempData);
-    console.log(formData);
+    console.log("Your tempData array is: ", tempData);
+    console.log("Your formData array is: ", formData);
   }, [tempData, formData]);
 
   useEffect(() => {
     console.log(`your index is currently ${selectedCredential}`);
   });
 
-  useEffect(() => {
-    setTempData([
-      ...tempData,
-      {
-        cred_name: "",
-        issuer_name: "",
-        icon: "",
-        attributes: [], // Provide a default empty array
-      },
-    ]);
-    setFormData([
-      ...tempData,
-      {
-        cred_name: "",
-        issuer_name: "",
-        icon: "",
-        attributes: [], // Provide a default empty array
-      },
-    ]);
-  }, []);
+  // useEffect(() => {
+  //   setTempData([
+  //     ...tempData,
+  //     {
+  //       cred_name: "",
+  //       issuer_name: "",
+  //       icon: "",
+  //       attributes: [], // Provide a default empty array
+  //     },
+  //   ]);
+  //   // setFormData([
+  //   //   ...tempData,
+  //   //   {
+  //   //     cred_name: "",
+  //   //     issuer_name: "",
+  //   //     icon: "",
+  //   //     attributes: [], // Provide a default empty array
+  //   //   },
+  //   // ]);
+  // }, []);
 
   const handleChange = (index) => (e) => {
     const { name, value } = e.target;
@@ -80,8 +79,8 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
   };
   const addCredential = () => {
     setFormData(tempData);
-    setAddCredentialClicked(false);
-    setCreateButtonClicked(false);
+    // setAddCredentialClicked(false);
+    // setCreateButtonClicked(false);
     setComponentToMount("credential");
   };
 
@@ -92,13 +91,13 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
       return newData;
     });
     setSelectedCredential((prevVal) => prevVal - 1);
-    setCreateButtonClicked(false);
+    // setCreateButtonClicked(false);
     setComponentToMount("credential");
   };
 
   const handleCreateButtonClick = (e) => {
     // if (!createButtonClicked) {
-    setCreateButtonClicked(true);
+    // setCreateButtonClicked(true);
     setSelectedCredential(formData.length);
     setTempData((prevData) => [
       ...prevData,
@@ -122,7 +121,7 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
       case "credential":
         return (
           <SelectionOverview
-            setEditButtonClicked={setEditButtonClicked}
+            // setEditButtonClicked={setEditButtonClicked}
             setComponentToMount={setComponentToMount}
             credentialSelected={selectedIndex}
             selectedCharacter={selectedCharacter}
@@ -199,7 +198,7 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
           </div>
           <CredentialsList
             setSelectedIndex={setSelectedIndex}
-            setCredentialSelected={setCredentialSelected}
+            // setCredentialSelected={setCredentialSelected}
             setComponentToMount={setComponentToMount}
             formData={formData}
             selectedCredential={selectedCredential}

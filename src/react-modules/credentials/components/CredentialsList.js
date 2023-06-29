@@ -10,8 +10,7 @@ function CredentialsList({
 }) {
   function handleClick(e) {
     const data = e.currentTarget.getAttribute("data-cred-id");
-    // setSelectedIndex(data);
-    setCredentialSelected(true);
+    // setCredentialSelected(true);
     setComponentToMount("credential");
     setSelectedCredential(parseInt(data));
   }
@@ -21,14 +20,14 @@ function CredentialsList({
       <div className="text-slate-100 w-full mt-4 flex flex-wrap gap-5">
         {formData.map((credential, index) => {
           // Check if all values in the object are ""
-          const allValuesEmpty = Object.values(credential)
-            .flat()
-            .every((value) => value === "");
+          // const allValuesEmpty = Object.values(credential)
+          //   .flat()
+          //   .every((value) => value === "");
 
-          // Skip rendering if all values are ""
-          if (allValuesEmpty) {
-            return null;
-          }
+          // // Skip rendering if all values are ""
+          // if (allValuesEmpty) {
+          //   return null;
+          // }
 
           return (
             <Credential

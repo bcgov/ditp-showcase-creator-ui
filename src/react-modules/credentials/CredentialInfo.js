@@ -13,9 +13,9 @@ function SelectionOverview({
   const handleEditButtonClick = () => {
     setComponentToMount("edit");
   };
-
   const handleCredentialRemoval = (index) => {
-    if (selectedCredential === 0) return;
+    if (formData.length === 1) return;
+
     setTempData((prevData) => {
       const newData = [...prevData];
       newData.splice(index, 1);
@@ -28,7 +28,11 @@ function SelectionOverview({
       return newData;
     });
 
-    setSelectedCredential((prevVal) => prevVal + 1);
+    setSelectedCredential(null);
+    // if (selectedCredential === 0) {
+
+    // }
+    // setSelectedCredential((prevVal) => prevVal - 1);
   };
 
   console.log(formData);
@@ -77,19 +81,6 @@ function SelectionOverview({
                   <span>{attr.value}</span>
                 </div>
               ))}
-              {/* {credentialAttributes.map((attr) => (
-                <div className="mt-2 text-sm">
-                  <span className="font-bold">{`${attr.name}: `}</span>
-                  <span>{attr.value}</span>
-                </div>
-              ))} */}
-              {/* {showcaseJSON["personas"][
-                selectedCharacter
-              ].onboarding[4].credentials[selectedIndex].attributes.map(
-                (attr) => (
-                  <p>{attr.name}</p>
-                )
-              )} */}
             </div>
           </div>
         </div>

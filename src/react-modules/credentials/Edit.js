@@ -8,7 +8,6 @@ function Edit({
   selectedCredential,
   formData,
   handleChange,
-  setComponentToMount,
   addAttribute,
   tempData,
 }) {

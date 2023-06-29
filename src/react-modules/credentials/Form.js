@@ -87,8 +87,6 @@ function Form({
             />
           </div>
         ))}
-      {/* <button onClick={addCredential}>ADD(+)</button>
-      <button onClick={handleCancel}>CANCEL</button> */}
       <button onClick={addAttribute}>ADD ATTRIBUTE (+)</button>
     </>
   );

@@ -195,16 +195,18 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
               </button>
             </div>
           </div>
-          <CredentialsList
-            setSelectedIndex={setSelectedIndex}
-            setComponentToMount={setComponentToMount}
-            formData={formData}
-            setFormData={setFormData}
-            selectedCredential={selectedCredential}
-            tempData={tempData}
-            setTempData={setTempData}
-            setSelectedCredential={setSelectedCredential}
-          />
+          <div className="mt-8">
+            <CredentialsList
+              setSelectedIndex={setSelectedIndex}
+              setComponentToMount={setComponentToMount}
+              formData={formData}
+              setFormData={setFormData}
+              selectedCredential={selectedCredential}
+              tempData={tempData}
+              setTempData={setTempData}
+              setSelectedCredential={setSelectedCredential}
+            />
+          </div>
           {/* <Credential2 /> */}
         </div>
         <div className="two-column-col md:w-2/5 bg-gray-300 p-4 rounded-md right-col">

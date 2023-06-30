@@ -7,7 +7,6 @@ function SelectionOverview({
   setSelectedCredential,
   formData,
   setFormData,
-  tempData,
   setTempData,
 }) {
   const handleEditButtonClick = () => {
@@ -31,10 +30,9 @@ function SelectionOverview({
     setSelectedCredential((prevVal) => (prevVal - 1 === 0 ? prevVal - 1 : 0));
   };
 
-    if (formData.length === 0) {
-      return null;
-    }
-
+  if (formData.length === 0) {
+    return null;
+  }
 
   return (
     <>

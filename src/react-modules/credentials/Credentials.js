@@ -5,6 +5,7 @@ import { NoSelection, Form, SelectionOverview } from "./components/index.js";
 import { CredentialsList, Edit } from "./index.js";
 import { useImmer } from "use-immer";
 import { LocalTextInput } from "../LocalTextInput";
+import { Credential2 } from "./components/Credential2";
 
 function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
   const [componentToMount, setComponentToMount] = useState("no selection");
@@ -106,20 +107,20 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
 
   const renderComponent = (component) => {
     switch (component) {
-      case "credential":
-        return (
-          <SelectionOverview
-            setComponentToMount={setComponentToMount}
-            credentialSelected={selectedIndex}
-            selectedCharacter={selectedCharacter}
-            formData={formData}
-            setFormData={setFormData}
-            selectedCredential={selectedCredential}
-            tempData={tempData}
-            setTempData={setTempData}
-            setSelectedCredential={setSelectedCredential}
-          />
-        );
+      // case "credential":
+      //   return (
+      //     <SelectionOverview
+      //       setComponentToMount={setComponentToMount}
+      //       credentialSelected={selectedIndex}
+      //       selectedCharacter={selectedCharacter}
+      //       formData={formData}
+      //       setFormData={setFormData}
+      //       selectedCredential={selectedCredential}
+      //       tempData={tempData}
+      //       setTempData={setTempData}
+      //       setSelectedCredential={setSelectedCredential}
+      //     />
+      //   );
       case "create":
         return (
           <Form
@@ -180,10 +181,13 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
             setSelectedIndex={setSelectedIndex}
             setComponentToMount={setComponentToMount}
             formData={formData}
+            setFormData={setFormData}
             selectedCredential={selectedCredential}
             tempData={tempData}
+            setTempData={setTempData}
             setSelectedCredential={setSelectedCredential}
           />
+          {/* <Credential2 /> */}
           <p className="text-slate-50">{componentToMount}</p>
         </div>
 

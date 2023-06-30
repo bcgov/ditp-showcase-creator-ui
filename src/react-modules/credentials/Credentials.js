@@ -31,12 +31,15 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
   // Handle all input
   const handleChange = (index) => (e) => {
     const { name, value } = e.target;
-    const newData = [...tempData]; // Create a copy of the data array
-    const attributeIndex = parseInt(name.slice(name.lastIndexOf("-") + 1)); // Get the attribute index
-    const attributeName = name.slice(0, name.lastIndexOf("-")); // Get the attribute name ("name" or "value")
+    const newData = [...tempData];
+    const attributeIndex = parseInt(name.slice(name.lastIndexOf("-") + 1));
+    const attributeName = name.slice(0, name.lastIndexOf("-"));
 
     if (name === "cred_name" || name === "issuer_name") {
       newData[index][name] = value;
+    } else if (attributeName === "cred_type") {
+      // Update the condition to check the attributeName
+      newData[index].attributes[attributeIndex][attributeName] = value;
     } else {
       newData[index].attributes[attributeIndex][attributeName] = value;
     }
@@ -50,7 +53,7 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
       const selectedCred = { ...newData[selectedCredential] }; // Create a copy of the selected credential
       selectedCred.attributes = [
         ...selectedCred.attributes,
-        { name: "", value: "" },
+        { cred_type: "", name: "", value: "" },
       ];
       newData[selectedCredential] = selectedCred; // Update the selected credential in the new data array
       return newData;
@@ -66,8 +69,8 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
 
   // Remove the credential if cancel button is clicked
   const handleCancel = () => {
-    setCreateButtonClicked(false);
     if (componentToMount === "create") {
+      setCreateButtonClicked(false);
       setTempData((prevData) => {
         const newData = prevData.filter(
           (_, index) => index !== selectedCredential
@@ -76,7 +79,8 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
       });
       setSelectedCredential((prevVal) => (prevVal === 0 ? 0 : prevVal - 1));
       setComponentToMount("credential");
-    } else {
+    } else if (componentToMount === "edit") {
+      setTempData(JSON.parse(JSON.stringify(formData)));
       setComponentToMount("credential");
     }
   };
@@ -126,6 +130,9 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
           <Form
             handleChange={handleChange(selectedCredential)}
             tempData={tempData}
+            setTempData={setTempData}
+            formData={formData}
+            setFormData={setFormData}
             addAttribute={addAttribute}
             selectedCredential={selectedCredential}
           />
@@ -136,6 +143,7 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
             handleChange={handleChange(selectedCredential)}
             formData={formData}
             tempData={tempData}
+            setTempData={setTempData}
             addAttribute={addAttribute}
             selectedCredential={selectedCredential}
           />
@@ -188,16 +196,16 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
             setSelectedCredential={setSelectedCredential}
           />
           {/* <Credential2 /> */}
-          <p className="text-slate-50">{componentToMount}</p>
         </div>
-
         <div className="two-column-col md:w-2/5 bg-gray-300 p-4 rounded-md right-col">
           {renderComponent(componentToMount)}
         </div>
         <div className="flex mt-5 w-full justify-end ">
-          <button className="border p-2 mr-4 rounded" onClick={handleCancel}>
-            CANCEL
-          </button>
+          {(componentToMount === "edit" || componentToMount === "create") && (
+            <button className="border p-2 mr-4 rounded" onClick={handleCancel}>
+              CANCEL
+            </button>
+          )}
           <button
             className="border p-2 rounded"
             onClick={handleCredentialUpdate}

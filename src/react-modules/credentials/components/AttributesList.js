@@ -31,6 +31,7 @@ function AttributesList({
   const getAttributeID = (e) => {
     console.log(e.target.parentNode.parentNode.parentNode.id);
   };
+  
 
   return (
     <div className="credentials-form-attributes-container credentials-form-attributes-container text-gray-500  mt-4 rounded p-4">

@@ -1,18 +1,28 @@
 import React from "react";
 import { TextInput } from "../TextInput";
 import { LocalTextInput } from "../LocalTextInput";
-import { AttributesList } from "./components/AttributesList";
+import { CredentialAttributesList } from "./components/AttributesList";
 import { FileUploadFull } from "../FileUpload";
 
 function Form({
-  selectedIndex,
-  showcaseJSON,
-  handleJSONUpdate,
-  localJSON,
-  handleLocalUpdate,
-  saveJSON,
-  selectedCharacter,
+  handleChange,
+  tempData,
+  addAttribute,
+  selectedCredential,
+  setTempData,
 }) {
+  const handleAttributeRemoval = (attributeIndex) => {
+    setTempData((prevData) => {
+      const newData = [...prevData];
+      const selectedCred = { ...newData[selectedCredential] };
+      selectedCred.attributes = selectedCred.attributes.filter(
+        (_, index) => index !== attributeIndex
+      );
+      newData[selectedCredential] = selectedCred;
+      return newData;
+    });
+  };
+
   return (
     <>
       <div className="flex justify-between mt-3">
@@ -21,32 +31,47 @@ function Form({
           <h3 className="text-4xl font-bold text-slate-50">Title Here</h3>
         </div>
       </div>
-      <hr></hr>
-      <LocalTextInput
-        label={"Credential Name"}
-        personaIndex={selectedCharacter}
-        element={["cred_name"]}
-        handleJSONUpdate={handleLocalUpdate}
-        showcaseJSON={showcaseJSON}
-        localJSON={localJSON}
+      <hr className="mb-6"></hr>
+      <label htmlFor="cred_name">Credential Name</label>
+      <br />
+      <input
+        type="text"
+        id="cred_name"
+        name="cred_name"
+        placeholder="Credential Name"
+        value={
+          tempData[selectedCredential]
+            ? tempData[selectedCredential].cred_name
+            : ""
+        }
+        onChange={handleChange}
       />
-      <LocalTextInput
-        label={"Issuer Name"}
-        personaIndex={selectedCharacter}
-        element={["issuer_name"]}
-        handleJSONUpdate={handleLocalUpdate}
-        showcaseJSON={showcaseJSON}
-        localJSON={localJSON}
+      <br />
+      <label htmlFor="issuer_name">Issuer Name</label>
+      <br />
+      <input
+        type="text"
+        id="issuer_name"
+        name="issuer_name"
+        placeholder="Issuer Name"
+        value={
+          tempData[selectedCredential]
+            ? tempData[selectedCredential].issuer_name
+            : ""
+        }
+        onChange={handleChange}
       />
-      <FileUploadFull
-        text={"Icon"}
-        personaIndex={selectedCharacter}
-        element={["icon"]}
-        handleJSONUpdate={handleJSONUpdate}
-        showcaseJSON={showcaseJSON}
+      <br />
+      <label> Add Attributes</label>
+      <br />
+      <CredentialAttributesList
+        tempData={tempData}
+        selectedCredential={selectedCredential}
+        handleChange={handleChange}
+        handleAttributeRemoval={handleAttributeRemoval}
+        addAttribute={addAttribute}
       />
-      <button onClick={saveJSON}>SAVE ( + )</button>
-      <button onClick={saveJSON}>ADD ATTRIBUTE ( + )</button>
+
     </>
   );
 }

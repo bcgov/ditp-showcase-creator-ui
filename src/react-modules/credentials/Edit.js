@@ -1,21 +1,27 @@
 import React from "react";
-import { TextInput } from "../TextInput";
-import { Form } from "./Form";
-import { LocalTextInput } from "../LocalTextInput";
-import { AttributesList } from "./components/AttributesList";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { CredentialAttributesList } from "./components/AttributesList";
 
 function Edit({
-  selectedIndex,
-  handleJSONUpdate,
-  showcaseJSON,
-  localJSON,
-  handleLocalUpdate,
-  selectedCharacter,
-  setShowcaseJSON,
-  saveJSON,
-  saveEditedJSON,
-  setLocalJSON,
+  selectedCredential,
+  tempData,
+  handleChange,
+  addAttribute,
+  setTempData,
 }) {
+  const handleAttributeRemoval = (attributeIndex) => {
+    setTempData((prevData) => {
+      const newData = [...prevData];
+      const selectedCred = { ...newData[selectedCredential] }; // Create a copy of the selected credential
+      selectedCred.attributes = selectedCred.attributes.filter(
+        (_, index) => index !== attributeIndex
+      );
+      newData[selectedCredential] = selectedCred; // Update the selected credential in the new data array
+      return newData;
+    });
+  };
+
   return (
     <>
       <div className="flex justify-between mt-3">
@@ -24,34 +30,36 @@ function Edit({
           <h3 className="text-4xl font-bold text-slate-50">Title Here</h3>
         </div>
       </div>
-      <hr></hr>
-      <LocalTextInput
-        label={"Credential Name"}
-        personaIndex={selectedCharacter}
-        element={["cred_name"]}
-        handleJSONUpdate={handleLocalUpdate}
-        showcaseJSON={showcaseJSON}
-        localJSON={localJSON}
+      <hr className="mb-6"></hr>
+      <label htmlFor="cred_name">Credential Name</label>
+      <br />
+      <input
+        type="text"
+        id="cred_name"
+        name="cred_name"
+        value={tempData[selectedCredential].cred_name}
+        onChange={handleChange}
       />
-      <LocalTextInput
-        label={"Issuer Name"}
-        personaIndex={selectedCharacter}
-        element={["issuer_name"]}
-        handleJSONUpdate={handleLocalUpdate}
-        showcaseJSON={showcaseJSON}
-        localJSON={localJSON}
+      <br />
+      <label htmlFor="issuer_name">Issuer Name</label>
+      <br />
+      <input
+        type="text"
+        id="issuer_name"
+        name="issuer_name"
+        value={tempData[selectedCredential].issuer_name}
+        onChange={handleChange}
       />
-      <div className="grid grid-cols-2"></div>
-      <AttributesList
-        handleJSONUpdate={handleJSONUpdate}
-        handleLocalUpdate={handleLocalUpdate}
-        showcaseJSON={showcaseJSON}
-        selectedCharacter={selectedCharacter}
-        selectedIndex={selectedIndex}
-        setLocalJSON={setLocalJSON}
-        localJSON={localJSON}
+      <br />
+      <label> Add Attributes</label>
+      <br />
+      <CredentialAttributesList
+        tempData={tempData}
+        selectedCredential={selectedCredential}
+        handleChange={handleChange}
+        handleAttributeRemoval={handleAttributeRemoval}
+        addAttribute={addAttribute}
       />
-      <button onClick={saveEditedJSON}>SAVE ( + )</button>
     </>
   );
 }

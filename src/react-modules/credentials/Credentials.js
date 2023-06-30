@@ -1,147 +1,154 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./styles/credentials.css";
-import { useState, useRef, useEffect } from "react";
 import { JSONUploadButton } from "../JSONUpload";
 import { NoSelection, Form, SelectionOverview } from "./components/index.js";
 import { CredentialsList, Edit } from "./index.js";
 import { useImmer } from "use-immer";
+import { LocalTextInput } from "../LocalTextInput";
+import { Credential2 } from "./components/Credential2";
 
-// To Do:
-// - When typing in values for inputs, if you change pages, the localJSON doesn't clear.
-// - No form handling.
-// - Attributes adding,removing,deleting not done.
-
-function Credentials({
-  showcaseJSON,
-  handleJSONUpdate,
-  setShowcaseJSON,
-  selectedCharacter,
-  setSelectedIndex,
-  selectedIndex,
-}) {
-  const [editButtonClicked, setEditButtonClicked] = useState(false);
-  const [credentialSelected, setCredentialSelected] = useState(false);
+function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
   const [componentToMount, setComponentToMount] = useState("no selection");
-  const [localJSON, setLocalJSON] = useImmer();
-  const parsedCredentials = showcaseJSON.personas[0].onboarding[4].credentials;
+  const [selectedCredential, setSelectedCredential] = useState(0);
 
-  // localJSON will hold the current values in showcaseJSON (top-level)
-  // This has to be set every time you choose a new credential (selectedIndex)
-  // This will set a credential object with blank values to the localJSON.
-  useEffect(() => {
-    setLocalJSON({
-      cred_name: "",
-      issuer_name: "",
-      attributes: [
-        { name: "first_name", value: "ryan" },
-        { name: "PPID", value: "00123" },
-      ],
-    });
-  }, []);
+  const [formData, setFormData] = useState([]);
+  const [tempData, setTempData] = useState([]);
 
-  // ** For debugging **
-  // Log the values in the localJSON everytime it gets changed.
-  useEffect(() => {
-    console.log(
-      `This is what your localJSON in Credentials looks like: ${JSON.stringify(
-        localJSON
-      )}`
-    );
-  }, [localJSON]);
+  const [showForm, setShowForm] = useState(false);
 
-  // Set the values from input boxes to the localJSON object.
-  function handleLocalUpdate(element, newValue) {
-    setLocalJSON((json) => {
-      json[element] = newValue;
-    });
-  }
+  // Check if the create button has been clicked to ensure that you cant spam the button.
+  const [createButtonClicked, setCreateButtonClicked] = useState(false);
 
-  // Save the localJSON into the showcaseJSON (global).
-  // To do: Error handling
-  function saveJSON() {
-    // if (localJSON.cred_name === "") return;
-    setShowcaseJSON((json) => {
-      json.personas[0].onboarding[4].credentials.push({
-        name: localJSON.cred_name,
-        issuer_name: localJSON.issuer_name,
-        version: "",
-        icon: "",
-        attributes: localJSON.attributes,
-      });
-    });
-  }
+  // useEffect(() => {
+  //   console.log("Your tempData array is: ", tempData);
+  //   console.log("Your formData array is: ", formData);
+  // }, [tempData, formData]);
 
-  // Update the showcaseJSON values when the save button is clicked on the edit component.
-  // To do: Error handling
-  function saveEditedJSON() {
-    // if (localJSON.cred_name === "") return;
-    handleJSONUpdate(
-      selectedCharacter,
-      ["onboarding", 4, "credentials", selectedIndex, "name"],
-      localJSON.cred_name
-    );
-    handleJSONUpdate(
-      selectedCharacter,
-      ["onboarding", 4, "credentials", selectedIndex, "issuer_name"],
-      localJSON.issuer_name
-    );
-  }
+  // useEffect(() => {
+  //   console.log(`your index is currently ${selectedCredential}`);
+  // });
 
-  // Handle page state by setting the componentToMount state variable to the buttons id (create)
-  const handleCreateButtonClick = (e) => {
-    setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
+  const showMeMyJSON = () => {
+    console.log("Your current formData JSON is: ", formData);
   };
 
-  // Handle page state by setting the componentToMount state variable to the buttons id (import)
+  const clearJSON = () => {
+    setFormData([]);
+  };
+
+  // Handle all input
+  const handleChange = (index) => (e) => {
+    const { name, value } = e.target;
+    const newData = [...tempData];
+    const attributeIndex = parseInt(name.slice(name.lastIndexOf("-") + 1));
+    const attributeName = name.slice(0, name.lastIndexOf("-"));
+
+    if (name === "cred_name" || name === "issuer_name") {
+      newData[index][name] = value;
+    } else {
+      newData[index].attributes[attributeIndex][attributeName] = value;
+    }
+    setTempData(newData);
+  };
+
+  // Add an attribute
+  const addAttribute = () => {
+    setTempData((prevData) => {
+      const newData = [...prevData];
+      const selectedCred = { ...newData[selectedCredential] }; // Create a copy of the selected credential
+      selectedCred.attributes = [
+        ...selectedCred.attributes,
+        { cred_type: "", name: "", value: "" },
+      ];
+      newData[selectedCredential] = selectedCred; // Update the selected credential in the new data array
+      return newData;
+    });
+  };
+
+  // Add a credential
+  const handleCredentialUpdate = () => {
+    setCreateButtonClicked(false);
+    setFormData(JSON.parse(JSON.stringify(tempData)));
+    setComponentToMount("credential");
+  };
+
+  // Remove the credential if cancel button is clicked
+  const handleCancel = () => {
+    if (componentToMount === "create") {
+      setCreateButtonClicked(false);
+      setTempData((prevData) => {
+        const newData = prevData.filter(
+          (_, index) => index !== selectedCredential
+        );
+        return newData;
+      });
+      setSelectedCredential((prevVal) => (prevVal === 0 ? 0 : prevVal - 1));
+      setComponentToMount("credential");
+    } else if (componentToMount === "edit") {
+      setTempData(JSON.parse(JSON.stringify(formData)));
+      setComponentToMount("credential");
+    }
+  };
+
+  // Create a credential with an empty object.
+  const handleCreateButtonClick = (e) => {
+    // if (!createButtonClicked) {
+    setSelectedCredential(formData.length);
+    setTempData([
+      ...tempData,
+      {
+        cred_name: "",
+        issuer_name: "",
+        icon: "",
+        attributes: [],
+      },
+    ]);
+    setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
+    // }
+    setCreateButtonClicked(true);
+  };
+
   const handleImportButtonClick = (e) => {
     setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
   };
 
-  // Render component based on componentToMount state variable.
   const renderComponent = (component) => {
     switch (component) {
-      case "credential":
+      // case "credential":
+      //   return (
+      //     <SelectionOverview
+      //       setComponentToMount={setComponentToMount}
+      //       credentialSelected={selectedIndex}
+      //       selectedCharacter={selectedCharacter}
+      //       formData={formData}
+      //       setFormData={setFormData}
+      //       selectedCredential={selectedCredential}
+      //       tempData={tempData}
+      //       setTempData={setTempData}
+      //       setSelectedCredential={setSelectedCredential}
+      //     />
+      //   );
+      case "create":
         return (
-          <SelectionOverview
-            setEditButtonClicked={setEditButtonClicked}
-            setComponentToMount={setComponentToMount}
-            handleJSONUpdate={handleJSONUpdate}
-            credentialSelected={selectedIndex}
-            showcaseJSON={showcaseJSON}
-            selectedIndex={selectedIndex}
-            selectedCharacter={selectedCharacter}
-            setShowcaseJSON={setShowcaseJSON}
-            setSelectedIndex={setSelectedIndex}
+          <Form
+            handleChange={handleChange(selectedCredential)}
+            tempData={tempData}
+            setTempData={setTempData}
+            formData={formData}
+            setFormData={setFormData}
+            addAttribute={addAttribute}
+            selectedCredential={selectedCredential}
           />
         );
       case "edit":
         return (
           <Edit
-            selectedIndex={selectedIndex}
-            setLocalJSON={setLocalJSON}
-            handleJSONUpdate={handleJSONUpdate}
-            setShowcaseJSON={setShowcaseJSON}
-            showcaseJSON={showcaseJSON}
-            localJSON={localJSON}
-            selectedCharacter={selectedCharacter}
-            handleLocalUpdate={handleLocalUpdate}
-            saveJSON={saveJSON}
-            saveEditedJSON={saveEditedJSON}
-          />
-        );
-      case "create":
-        return (
-          <Form
-            showcaseJSON={showcaseJSON}
-            localJSON={localJSON}
-            setLocalJSON={setLocalJSON}
-            // selectedIndex={selectedIndex}
-            // setSelectedIndex={setSelectedIndex}
-            // credentialSelected={credentialSelected}
-            handleLocalUpdate={handleLocalUpdate}
-            selectedCharacter={selectedCharacter}
-            saveJSON={saveJSON}
-            handleJSONUpdate={handleLocalUpdate}
+            handleChange={handleChange(selectedCredential)}
+            formData={formData}
+            tempData={tempData}
+            setTempData={setTempData}
+            addAttribute={addAttribute}
+            selectedCredential={selectedCredential}
           />
         );
       case "import":
@@ -153,8 +160,14 @@ function Credentials({
 
   return (
     <>
+      <button className="border p-2 rounded" onClick={showMeMyJSON}>
+        SHOW ME MY JSON!!!!
+      </button>
+      <button className="border p-2 rounded" onClick={clearJSON}>
+        CLEAR JSON
+      </button>
       <div className=" two-column-container mx-20 my-16">
-        <div className="two-column-col md:w-3/5 pr-4 ">
+        <div className="two-column-col md:w-3/5 pr-4">
           <div className="flex justify-between">
             <div>
               <h3 className="text-4xl font-bold text-slate-50">
@@ -174,6 +187,7 @@ function Credentials({
               </button>
               <button
                 data-button-id="create-button-credentials"
+                disabled={createButtonClicked}
                 onClick={(e) => handleCreateButtonClick(e)}
                 className="px-3 py-1 mx-1 rounded bg-slate-400 hover:bg-slate-500 text-slate-100"
               >
@@ -181,20 +195,36 @@ function Credentials({
               </button>
             </div>
           </div>
-          <CredentialsList
-            setSelectedIndex={setSelectedIndex}
-            setCredentialSelected={setCredentialSelected}
-            parsedCredentials={parsedCredentials}
-            setComponentToMount={setComponentToMount}
-          />
-          <p className="text-slate-50">{componentToMount}</p>
+          <div className="mt-8">
+            <CredentialsList
+              setSelectedIndex={setSelectedIndex}
+              setComponentToMount={setComponentToMount}
+              formData={formData}
+              setFormData={setFormData}
+              selectedCredential={selectedCredential}
+              tempData={tempData}
+              setTempData={setTempData}
+              setSelectedCredential={setSelectedCredential}
+            />
+          </div>
+          {/* <Credential2 /> */}
         </div>
-        {/* end of column 1 */}
-
         <div className="two-column-col md:w-2/5 bg-gray-300 p-4 rounded-md right-col">
           {renderComponent(componentToMount)}
         </div>
-        {/* end of column 2 */}
+        <div className="flex mt-5 w-full justify-end ">
+          {(componentToMount === "edit" || componentToMount === "create") && (
+            <button className="border p-2 mr-4 rounded" onClick={handleCancel}>
+              CANCEL
+            </button>
+          )}
+          <button
+            className="border p-2 rounded"
+            onClick={handleCredentialUpdate}
+          >
+            {componentToMount === "edit" ? "DONE" : "ADD"}
+          </button>
+        </div>
       </div>
     </>
   );

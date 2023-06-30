@@ -11,12 +11,7 @@ function Form({
   selectedCredential,
   setComponentToMount,
 }) {
-  // const selectedAttributes =
-  //   tempData[selectedCredential] && tempData[selectedCredential].attributes
-  //     ? tempData[selectedCredential].attributes
-  //     : [];
-
-  setComponentToMount("create");
+  // setComponentToMount("create");
 
   return (
     <>

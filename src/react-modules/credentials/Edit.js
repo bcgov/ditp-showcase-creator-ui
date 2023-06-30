@@ -11,6 +11,9 @@ function Edit({
   addAttribute,
   tempData,
 }) {
+  console.log("In edit, your selected credential is : ", selectedCredential);
+  console.log("In edit, your formData is : ", formData);
+  console.log("In edit, your tempData is : ", tempData);
   return (
     <>
       <div className="flex justify-between mt-3">
@@ -26,7 +29,7 @@ function Edit({
         type="text"
         id="cred_name"
         name="cred_name"
-        value={formData[selectedCredential].cred_name}
+        value={tempData[selectedCredential].cred_name}
         onChange={handleChange}
       />
       <br />
@@ -36,7 +39,7 @@ function Edit({
         type="text"
         id="issuer_name"
         name="issuer_name"
-        value={formData[selectedCredential].issuer_name}
+        value={tempData[selectedCredential].issuer_name}
         onChange={handleChange}
       />
       {tempData[selectedCredential].attributes.map((attr, index) => (

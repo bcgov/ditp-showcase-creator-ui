@@ -7,10 +7,10 @@ function CredentialsList({
   setComponentToMount,
   setSelectedCredential,
   formData,
+  tempData,
 }) {
   function handleClick(e) {
     const data = e.currentTarget.getAttribute("data-cred-id");
-    // setCredentialSelected(true);
     setComponentToMount("credential");
     setSelectedCredential(parseInt(data));
   }
@@ -18,18 +18,8 @@ function CredentialsList({
   return (
     <>
       <div className="text-slate-100 w-full mt-4 flex flex-wrap gap-5">
-        {formData.map((credential, index) => {
-          // Check if all values in the object are ""
-          // const allValuesEmpty = Object.values(credential)
-          //   .flat()
-          //   .every((value) => value === "");
-
-          // // Skip rendering if all values are ""
-          // if (allValuesEmpty) {
-          //   return null;
-          // }
-
-          return (
+        {formData.length > 0 ? (
+          formData.map((credential, index) => (
             <Credential
               key={index}
               index={index}
@@ -38,8 +28,10 @@ function CredentialsList({
               credentialName={credential.cred_name}
               attributeCount={credential.attributes.length}
             />
-          );
-        })}
+          ))
+        ) : (
+          <p>No credentials available.</p>
+        )}
       </div>
     </>
   );

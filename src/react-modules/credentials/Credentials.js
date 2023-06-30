@@ -7,12 +7,6 @@ import { useImmer } from "use-immer";
 import { LocalTextInput } from "../LocalTextInput";
 
 function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
-  // const [editButtonClicked, setEditButtonClicked] = useState(false);
-  // const [credentialSelected, setCredentialSelected] = useState(false);
-  // const [saveEditClicked, setSaveEditClicked] = useState(false);
-  // const [createButtonClicked, setCreateButtonClicked] = useState(false);
-  // const [addCredentialClicked, setAddCredentialClicked] = useState(false);
-
   const [componentToMount, setComponentToMount] = useState("no selection");
   const [selectedCredential, setSelectedCredential] = useState(0);
 
@@ -20,6 +14,9 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
   const [tempData, setTempData] = useState([]);
 
   const [showForm, setShowForm] = useState(false);
+
+  // Check if the create button has been clicked to ensure that you cant spam the button.
+  const [createButtonClicked, setCreateButtonClicked] = useState(false);
 
   useEffect(() => {
     console.log("Your tempData array is: ", tempData);
@@ -30,41 +27,22 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
     console.log(`your index is currently ${selectedCredential}`);
   });
 
-  // useEffect(() => {
-  //   setTempData([
-  //     ...tempData,
-  //     {
-  //       cred_name: "",
-  //       issuer_name: "",
-  //       icon: "",
-  //       attributes: [], // Provide a default empty array
-  //     },
-  //   ]);
-  //   // setFormData([
-  //   //   ...tempData,
-  //   //   {
-  //   //     cred_name: "",
-  //   //     issuer_name: "",
-  //   //     icon: "",
-  //   //     attributes: [], // Provide a default empty array
-  //   //   },
-  //   // ]);
-  // }, []);
-
+  // Handle all input
   const handleChange = (index) => (e) => {
     const { name, value } = e.target;
     const newData = [...tempData]; // Create a copy of the data array
     const attributeIndex = parseInt(name.slice(name.lastIndexOf("-") + 1)); // Get the attribute index
     const attributeName = name.slice(0, name.lastIndexOf("-")); // Get the attribute name ("name" or "value")
-    if (name === "cred_name" || name === "issuer_name") {
-      newData[index][name] = value; // Update cred_name or issuer_name
-    } else {
-      newData[index].attributes[attributeIndex][attributeName] = value; // Update attribute name or value
-    }
 
-    setTempData(newData); // Update the state with the modified data
+    if (name === "cred_name" || name === "issuer_name") {
+      newData[index][name] = value;
+    } else {
+      newData[index].attributes[attributeIndex][attributeName] = value;
+    }
+    setTempData(newData);
   };
 
+  // Add an attribute
   const addAttribute = () => {
     setTempData((prevData) => {
       const newData = [...prevData];
@@ -77,39 +55,49 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
       return newData;
     });
   };
-  const addCredential = () => {
-    setFormData(tempData);
-    // setAddCredentialClicked(false);
-    // setCreateButtonClicked(false);
+
+  // Add a credential
+  const handleCredentialUpdate = () => {
+    setCreateButtonClicked(false);
+    setFormData(JSON.parse(JSON.stringify(tempData)));
     setComponentToMount("credential");
   };
 
+  // Remove the credential if cancel button is clicked
   const handleCancel = () => {
-    setTempData((prevData) => {
-      const newData = [...prevData];
-      newData[selectedCredential] = formData[selectedCredential];
-      return newData;
-    });
-    setSelectedCredential((prevVal) => prevVal - 1);
-    // setCreateButtonClicked(false);
-    setComponentToMount("credential");
+    setCreateButtonClicked(false);
+    if (componentToMount === "create") {
+      setTempData((prevData) => {
+        const newData = prevData.filter(
+          (_, index) => index !== selectedCredential
+        );
+        return newData;
+      });
+      setSelectedCredential((prevVal) => (prevVal === 0 ? 0 : prevVal - 1));
+      setComponentToMount("credential");
+    } else {
+      setComponentToMount("credential");
+    }
   };
 
+  // Create a credential with an empty object.
   const handleCreateButtonClick = (e) => {
-    // if (!createButtonClicked) {
-    // setCreateButtonClicked(true);
-    setSelectedCredential(formData.length);
-    setTempData((prevData) => [
-      ...prevData,
-      {
-        cred_name: "",
-        issuer_name: "",
-        icon: "",
-        attributes: [],
-      },
-    ]);
-    setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
-    // }
+    if (!createButtonClicked) {
+      setSelectedCredential(formData.length);
+      setTempData([
+        ...tempData,
+        {
+          cred_name: "",
+          issuer_name: "",
+          icon: "",
+          attributes: [],
+        },
+      ]);
+      setComponentToMount(
+        e.target.getAttribute("data-button-id").split("-")[0]
+      );
+    }
+    setCreateButtonClicked(true);
   };
 
   const handleImportButtonClick = (e) => {
@@ -121,7 +109,6 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
       case "credential":
         return (
           <SelectionOverview
-            // setEditButtonClicked={setEditButtonClicked}
             setComponentToMount={setComponentToMount}
             credentialSelected={selectedIndex}
             selectedCharacter={selectedCharacter}
@@ -136,27 +123,20 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
       case "create":
         return (
           <Form
-            addCredential={addCredential}
-            setComponentToMount={setComponentToMount}
             handleChange={handleChange(selectedCredential)}
-            formData={formData}
             tempData={tempData}
             addAttribute={addAttribute}
             selectedCredential={selectedCredential}
-            handleCancel={handleCancel}
           />
         );
       case "edit":
         return (
           <Edit
-            addCredential={addCredential}
-            setComponentToMount={setComponentToMount}
             handleChange={handleChange(selectedCredential)}
             formData={formData}
             tempData={tempData}
             addAttribute={addAttribute}
             selectedCredential={selectedCredential}
-            handleCancel={handleCancel}
           />
         );
       case "import":
@@ -198,7 +178,6 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
           </div>
           <CredentialsList
             setSelectedIndex={setSelectedIndex}
-            // setCredentialSelected={setCredentialSelected}
             setComponentToMount={setComponentToMount}
             formData={formData}
             selectedCredential={selectedCredential}
@@ -215,7 +194,10 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
           <button className="border p-2 mr-4 rounded" onClick={handleCancel}>
             CANCEL
           </button>
-          <button className="border p-2 rounded" onClick={addCredential}>
+          <button
+            className="border p-2 rounded"
+            onClick={handleCredentialUpdate}
+          >
             {componentToMount === "edit" ? "DONE" : "ADD"}
           </button>
         </div>

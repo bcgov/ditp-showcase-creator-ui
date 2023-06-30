@@ -28,14 +28,13 @@ function SelectionOverview({
       return newData;
     });
 
-    setSelectedCredential(null);
-    // if (selectedCredential === 0) {
-
-    // }
-    // setSelectedCredential((prevVal) => prevVal - 1);
+    setSelectedCredential((prevVal) => (prevVal - 1 === 0 ? prevVal - 1 : 0));
   };
 
-  console.log(formData);
+    if (formData.length === 0) {
+      return null;
+    }
+
 
   return (
     <>

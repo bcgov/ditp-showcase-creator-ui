@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { CredentialAttributesList } from "./components/AttributesList";
 
 function Edit({
   selectedCredential,
@@ -50,52 +51,15 @@ function Edit({
         onChange={handleChange}
       />
       <br />
-      <label>Attributes</label>
+      <label> Add Attributes</label>
       <br />
-      {tempData[selectedCredential].attributes.map((attr, index) => (
-        <div key={index} className="grid grid-cols-9 gap-2">
-          <select
-            name={`cred_type-${index}`} // Include the index in the name attribute
-            id={`cred_type-${index}`}
-            className="col-span-2 truncate"
-            value={attr.cred_type || "none"}
-            onChange={(e) => handleChange(e, index)} // Pass the index directly to the handleChange function
-          >
-            <option value="none" selected="selected">
-              select
-            </option>
-            <option value="int">int</option>
-            <option value="dateint">dateint</option>
-            <option value="string">string</option>
-          </select>
-
-          <input
-            type="text"
-            name={`name-${index}`}
-            placeholder="Attribute Name"
-            value={attr.name || ""}
-            onChange={(e) => handleChange(e, index)}
-            className="col-span-3"
-          />
-
-          <input
-            type="text"
-            name={`value-${index}`}
-            placeholder="Attribute Value"
-            value={attr.value || ""}
-            onChange={(e) => handleChange(e, index)}
-            className="col-span-3"
-          />
-
-          <div
-            className="col-span-1 p-2"
-            onClick={() => handleAttributeRemoval(index)}
-          >
-            <FontAwesomeIcon icon={faTrash} />
-          </div>
-        </div>
-      ))}
-      <button onClick={addAttribute}>ADD ATTRIBUTE (+)</button>
+      <CredentialAttributesList
+        tempData={tempData}
+        selectedCredential={selectedCredential}
+        handleChange={handleChange}
+        handleAttributeRemoval={handleAttributeRemoval}
+        addAttribute={addAttribute}
+      />
     </>
   );
 }

@@ -1,57 +1,43 @@
 import React from "react";
-import { LocalTextInput } from "../../LocalTextInput";
-import { Attribute } from "./Attribute";
-function AttributesList({
-  showcaseJSON,
-  selectedIndex,
-  selectedCharacter,
-  handleJSONUpdate,
-  handleLocalUpdate,
-  setLocalJSON,
-  localJSON,
-  attributeCount,
-  setAttributeCount,
+import { CredentialAttribute } from "./CredentialAttribute";
+
+function CredentialAttributesList({
+  tempData,
+  selectedCredential,
+  handleChange,
+  handleAttributeRemoval,
+  addAttribute,
 }) {
-  const addAttribute = () => {
-    setLocalJSON((prevLocalJSON) => ({
-      ...prevLocalJSON,
-      attributes: [...prevLocalJSON.attributes, { name: "", value: "" }],
-    }));
-    setAttributeCount(attributeCount + 1);
-  };
-
-  const removeAttribute = (i) => {
-    setLocalJSON((prevLocalJSON) => ({
-      ...prevLocalJSON,
-      attributes: prevLocalJSON.attributes.filter((_, index) => index !== i),
-    }));
-    setAttributeCount(attributeCount - 1);
-  };
-
-  const getAttributeID = (e) => {
-    console.log(e.target.parentNode.parentNode.parentNode.id);
-  };
-  
-
   return (
-    <div className="credentials-form-attributes-container credentials-form-attributes-container text-gray-500  mt-4 rounded p-4">
-      <div>
-        {Array.from({ length: attributeCount }, (_, index) => (
-          <Attribute
-            key={index}
-            index={index}
-            getAttributeID={getAttributeID}
-            handleLocalUpdate={handleLocalUpdate}
-            showcaseJSON={showcaseJSON}
-            localJSON={localJSON}
-            selectedCharacter={selectedCharacter}
-            removeAttribute={removeAttribute}
-          />
-        ))}
-        <button onClick={addAttribute}>ADD ATTRIBUTE ( + )</button>
+    <>
+      <div className="rounded p-5 bg-neutral-900 mt-3">
+        <div className="grid grid-cols-2 mb-3">
+          <p className="text-sm ">
+            Attributes Added:{" "}
+            <span className="font-bold">
+              {tempData[selectedCredential].attributes.length}
+            </span>
+          </p>
+          <button className="border rounded text-sm" onClick={addAttribute}>
+            ADD ATTRIBUTE (+)
+          </button>
+        </div>
+        <hr className="mb-3" />
+        {tempData[selectedCredential] &&
+          tempData[selectedCredential].attributes.map((attr, index) => (
+            <CredentialAttribute
+              key={index}
+              index={index}
+              attributeName={attr.name}
+              attributeValue={attr.value}
+              credType={attr.cred_type}
+              handleChange={handleChange}
+              handleAttributeRemoval={handleAttributeRemoval}
+            />
+          ))}
       </div>
-    </div>
+    </>
   );
 }
 
-export { AttributesList };
+export { CredentialAttributesList };

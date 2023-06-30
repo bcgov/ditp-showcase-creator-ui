@@ -19,14 +19,22 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
   // Check if the create button has been clicked to ensure that you cant spam the button.
   const [createButtonClicked, setCreateButtonClicked] = useState(false);
 
-  useEffect(() => {
-    console.log("Your tempData array is: ", tempData);
-    console.log("Your formData array is: ", formData);
-  }, [tempData, formData]);
+  // useEffect(() => {
+  //   console.log("Your tempData array is: ", tempData);
+  //   console.log("Your formData array is: ", formData);
+  // }, [tempData, formData]);
 
-  useEffect(() => {
-    console.log(`your index is currently ${selectedCredential}`);
-  });
+  // useEffect(() => {
+  //   console.log(`your index is currently ${selectedCredential}`);
+  // });
+
+  const showMeMyJSON = () => {
+    console.log("Your current formData JSON is: ", formData);
+  };
+
+  const clearJSON = () => {
+    setFormData([]);
+  };
 
   // Handle all input
   const handleChange = (index) => (e) => {
@@ -37,9 +45,6 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
 
     if (name === "cred_name" || name === "issuer_name") {
       newData[index][name] = value;
-    } else if (attributeName === "cred_type") {
-      // Update the condition to check the attributeName
-      newData[index].attributes[attributeIndex][attributeName] = value;
     } else {
       newData[index].attributes[attributeIndex][attributeName] = value;
     }
@@ -87,21 +92,19 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
 
   // Create a credential with an empty object.
   const handleCreateButtonClick = (e) => {
-    if (!createButtonClicked) {
-      setSelectedCredential(formData.length);
-      setTempData([
-        ...tempData,
-        {
-          cred_name: "",
-          issuer_name: "",
-          icon: "",
-          attributes: [],
-        },
-      ]);
-      setComponentToMount(
-        e.target.getAttribute("data-button-id").split("-")[0]
-      );
-    }
+    // if (!createButtonClicked) {
+    setSelectedCredential(formData.length);
+    setTempData([
+      ...tempData,
+      {
+        cred_name: "",
+        issuer_name: "",
+        icon: "",
+        attributes: [],
+      },
+    ]);
+    setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
+    // }
     setCreateButtonClicked(true);
   };
 
@@ -157,6 +160,12 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
 
   return (
     <>
+      <button className="border p-2 rounded" onClick={showMeMyJSON}>
+        SHOW ME MY JSON!!!!
+      </button>
+      <button className="border p-2 rounded" onClick={clearJSON}>
+        CLEAR JSON
+      </button>
       <div className=" two-column-container mx-20 my-16">
         <div className="two-column-col md:w-3/5 pr-4">
           <div className="flex justify-between">
@@ -178,6 +187,7 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
               </button>
               <button
                 data-button-id="create-button-credentials"
+                disabled={createButtonClicked}
                 onClick={(e) => handleCreateButtonClick(e)}
                 className="px-3 py-1 mx-1 rounded bg-slate-400 hover:bg-slate-500 text-slate-100"
               >

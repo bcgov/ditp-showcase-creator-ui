@@ -34,6 +34,7 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
 
   const clearJSON = () => {
     setFormData([]);
+    setTempData([]);
   };
 
   // Handle all input

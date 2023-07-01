@@ -22,6 +22,8 @@ function Edit({
     });
   };
 
+  if (tempData.length === 0) return;
+
   return (
     <>
       <div className="flex justify-between mt-3">

@@ -1,7 +1,7 @@
 import React from "react";
 import { FormHeader } from "./components/index.js";
 
-function CredentialsInfo({
+function SelectionOverview({
   setComponentToMount,
   selectedCredential,
   setSelectedCredential,

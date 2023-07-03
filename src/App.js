@@ -13,7 +13,7 @@ import { DEFAULT_JSON } from "./DEFAULT_JSON";
 
 // import { Credentials } from "./react-modules/credentials/Credentials";
 
-import { CredentialsScreen } from "./react-modules/credentials/CredentialsScreen";
+import { Credentials } from "./react-modules/credentials/Credentials";
 
 function App() {
   const [showcaseJSON, setShowcaseJSON] = useImmer({
@@ -105,7 +105,7 @@ function App() {
           />
         )}
         {currentPage === "setup" && <SetupPage />}
-        {currentPage === "scenario" && <ScenarioPage />}
+        {currentPage === "scenario" && <Credentials />}
 
         <p className="p-10 m-5 border rounded dark:text-neutral-200">
           {JSON.stringify(showcaseJSON, null, "\t")}

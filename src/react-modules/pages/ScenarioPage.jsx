@@ -1,5 +1,7 @@
 export const ScenarioPage = () => {
   return (
-    <div>ScenarioPage</div>
-  )
-}
+    <>
+      <p>First Commit</p>
+    </>
+  );
+};

@@ -168,6 +168,9 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
         CLEAR JSON
       </button>
       <div className=" two-column-container mx-20 my-16">
+
+
+        
         <div className="two-column-col md:w-3/5 pr-4">
           <div className="flex justify-between">
             <div>
@@ -210,9 +213,14 @@ function Credentials({ selectedCharacter, setSelectedIndex, selectedIndex }) {
           </div>
           {/* <Credential2 /> */}
         </div>
-        <div className="two-column-col md:w-2/5 bg-gray-300 p-4 rounded-md right-col">
+
+
+        <div className="two-column-col md:w-2/5 bg-gray-300 p-6 rounded-md right-col">
           {renderComponent(componentToMount)}
         </div>
+
+
+
         <div className="flex mt-5 w-full justify-end ">
           {(componentToMount === "edit" || componentToMount === "create") && (
             <button className="border p-2 mr-4 rounded" onClick={handleCancel}>

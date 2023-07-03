@@ -1,8 +1,6 @@
 import React from "react";
-import { TextInput } from "../TextInput";
-import { LocalTextInput } from "../LocalTextInput";
 import { CredentialAttributesList } from "./components/AttributesList";
-import { FileUploadFull } from "../FileUpload";
+// import { FileUploadFull } from "../FileUpload";
 
 function CredentialsForm({
   handleChange,

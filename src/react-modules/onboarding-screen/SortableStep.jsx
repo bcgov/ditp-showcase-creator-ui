@@ -10,6 +10,7 @@ import {
 
 export const SortableStep = ({
   selectedStep,
+  setSelectedStep,
   myScreen,
   stepIndex,
   totalSteps,
@@ -27,6 +28,7 @@ export const SortableStep = ({
   };
 
   return (
+    
     <div
       ref={setNodeRef}
       style={style}
@@ -34,6 +36,7 @@ export const SortableStep = ({
       {...listeners}
       className="p-4 flex flex-row justify-items-center items-center"
     >
+      
       <span className="text-2xl mt-10">
         <FontAwesomeIcon icon={faGripVertical} />
       </span>
@@ -51,7 +54,7 @@ export const SortableStep = ({
 
         <div
           className={`highlight-container w-full flex flex-row justify-items-center items-center rounded p-3 
-        ${selectedStep == stepIndex - 1 ? "selected-item" : ""}`}
+        ${selectedStep == stepIndex - 1 ? "selected-item" : "unselected-item"}`}
         >
           {
             // SCREEN IMAGE HERE
@@ -63,13 +66,19 @@ export const SortableStep = ({
           {myScreen.text.length > 90 ? (
             <p>
               {myScreen.text.slice(0, 90)}...{" "}
-              <span className="font-bold"> see more</span>
+
+              <span className="font-bold">
+              see more
+                 
+              </span>
             </p>
           ) : (
             myScreen.text
           )}
         </div>
       </div>
+      
     </div>
+    
   );
 };

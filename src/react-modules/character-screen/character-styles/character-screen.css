@@ -19,6 +19,10 @@
   border: 3px solid #fcba19;
 }
 
+.unselected-item {
+  border: 3px solid #525252;
+}
+
 .button-dark {
   background: #454545;
 }

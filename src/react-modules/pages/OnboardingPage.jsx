@@ -93,7 +93,7 @@ export const OnboardingPage = ({
   // Handles how draggable componants are re-arranged
   const handleDragEnd = (event) => {
     const { active, over } = event;
-    setSelectedStep(null);
+    
     setMyScreens((myScreens) => {
       const oldIndex = myScreens.findIndex(
         (myScreen) => myScreen.screenId === active.id
@@ -101,6 +101,7 @@ export const OnboardingPage = ({
       const newIndex = myScreens.findIndex(
         (myScreen) => myScreen.screenId === over.id
       );
+      setSelectedStep(newIndex);
       setShowcaseJSON((json) => {
         json.personas[selectedCharacter].onboarding = arrayMove(
           myScreens,
@@ -113,8 +114,15 @@ export const OnboardingPage = ({
     });
   };
 
+  const handleDragStart = (event) =>{
+    const index = myScreens.findIndex(
+      (myScreen) => myScreen.screenId === event.active.id
+    );
+    setSelectedStep(index);
+  }
+
   return (
-    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+    <DndContext collisionDetection={closestCenter} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div className="two-column-container mx-20 my-16">
         <div className="two-column-col md:w-3/5 pr-4">
           <div className="flex w-full">
@@ -145,7 +153,9 @@ export const OnboardingPage = ({
               strategy={verticalListSortingStrategy}
             >
               {myScreens.map((myScreen, index) => (
+                
                 <div className="flex flex-row">
+                  
                   <SortableStep
                     selectedStep={selectedStep}
                     setSelectedStep={setSelectedStep}
@@ -154,6 +164,7 @@ export const OnboardingPage = ({
                     stepIndex={index + 1}
                     totalSteps={myScreens.length}
                   />
+                  
                   <div className="flex text-xl w-1/6 mt-10">
                   <button
                     className="px-3"

@@ -3,6 +3,30 @@ const DEFAULT_JSON = {
   type: "Test",
   image: "/public/student/student.svg",
   description: "This is Bob's description.",
+  credentials: {
+    "test_card_id": {
+      "issuer_name": "Test College",
+      "name": "test_card",
+      "version": "1.10",
+      "icon": "/public/student/icon-student.svg",
+      "attributes": [
+        {
+          "name": "student_first_name",
+          "value": "Bob",
+          "type": "string"
+        },
+        {
+          "name": "student_last_name",
+          "value": "Smith"
+        },
+        {
+          "name": "expiry_date",
+          "value": "20270517",
+          "type": "dateint"
+        }
+      ]
+    }
+  },
   revocationInfo: [
     {
       credentialName: "Test Card",

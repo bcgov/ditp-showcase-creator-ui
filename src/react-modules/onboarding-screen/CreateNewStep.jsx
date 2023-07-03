@@ -9,32 +9,30 @@ function CreateNewStep({ addNewStep }) {
         <hr />
       </div>
 
-      <button className="basic-step rounded p-5 my-3 w-full text-start" onClick={(e) => addNewStep(false)}>
-        <p className="text-2xl font-bold">Basic Step</p>
-        <div className="my-3">
-          <p>You'll be asked to fill out the following:</p>
-          <ul className="list-disc mx-5">
-            <li>Title</li>
-            <li>Description</li>
-            <li>Image</li>
-          </ul>
-        </div>
-        <p className="text-2xl font-bold w-full text-end">Add Step →</p>
+      <button className="basic-step flex flex-row justify-between items-center rounded p-5 my-3 w-full text-start" onClick={(e) => addNewStep(false)}>
+        <p className="text-xl font-bold w-1/4">Basic</p>
+        <div className="w-1/4">
+          <ul className=" mx-5">
+              <li>Title</li>
+              <li>Description</li>
+              <li>Image</li>
+            </ul></div>
+          
+        <p className="text-2xl font-bold text-end">Add Step →</p>
       </button>
 
 
-      <button className="basic-step rounded p-5 my-3 w-full text-start" onClick={(e) => addNewStep(true)}>
-        <p className="text-2xl font-bold">Issue Credential Step</p>
-        <div className="my-3">
-          <p>You'll be asked to fill out the following:</p>
-          <ul className="list-disc mx-5">
-            <li>Title</li>
-            <li>Description</li>
-            <li>Image</li>
-            <li>Selected Credential(s)</li>
-          </ul>
-        </div>
-        <p className="text-2xl font-bold w-full text-end">Add Step →</p>
+      <button className="basic-step rounded flex flex-row justify-between items-center p-5 my-3 w-full text-start" onClick={(e) => addNewStep(true)}>
+      <p className="text-xl font-bold w-1/4">Issue Credential</p>
+        <div className="w-1/4">
+          <ul className=" mx-5">
+              <li>Title</li>
+              <li>Description</li>
+              <li>Image</li>
+              <li>Credential(s)</li>
+            </ul></div>
+          
+        <p className="text-2xl font-bold text-end">Add Step →</p>
       </button>
     </>
   );

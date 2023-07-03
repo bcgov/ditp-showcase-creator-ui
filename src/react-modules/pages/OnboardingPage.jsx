@@ -182,7 +182,20 @@ export const OnboardingPage = ({
                 </div>
               ))}
             </SortableContext>
+            
           </div>
+          <div className="w-full pt-5 flex flex-col justify-center items-center">
+
+          <button
+                className="button-light p-2 hover:bg-neutral-600"
+                onClick={(e) => {
+                  setStepState("creating-new");
+                }}
+              >
+                Add Step <FontAwesomeIcon icon={faCirclePlus} />
+              </button>
+          </div>
+          
         </div>
 
         <div className="highlight-container w-2/5 rounded p-3">

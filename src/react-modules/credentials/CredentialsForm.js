@@ -1,23 +1,22 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { CredentialAttributesList } from "./components/AttributesList";
+// import { FileUploadFull } from "../FileUpload";
 
-function Edit({
-  selectedCredential,
-  tempData,
+function CredentialsForm({
   handleChange,
+  tempData,
   addAttribute,
+  selectedCredential,
   setTempData,
 }) {
   const handleAttributeRemoval = (attributeIndex) => {
     setTempData((prevData) => {
       const newData = [...prevData];
-      const selectedCred = { ...newData[selectedCredential] }; // Create a copy of the selected credential
+      const selectedCred = { ...newData[selectedCredential] };
       selectedCred.attributes = selectedCred.attributes.filter(
         (_, index) => index !== attributeIndex
       );
-      newData[selectedCredential] = selectedCred; // Update the selected credential in the new data array
+      newData[selectedCredential] = selectedCred;
       return newData;
     });
   };
@@ -37,7 +36,12 @@ function Edit({
         type="text"
         id="cred_name"
         name="cred_name"
-        value={tempData[selectedCredential].cred_name}
+        placeholder="Credential Name"
+        value={
+          tempData[selectedCredential]
+            ? tempData[selectedCredential].cred_name
+            : ""
+        }
         onChange={handleChange}
       />
       <br />
@@ -47,7 +51,12 @@ function Edit({
         type="text"
         id="issuer_name"
         name="issuer_name"
-        value={tempData[selectedCredential].issuer_name}
+        placeholder="Issuer Name"
+        value={
+          tempData[selectedCredential]
+            ? tempData[selectedCredential].issuer_name
+            : ""
+        }
         onChange={handleChange}
       />
       <br />
@@ -60,8 +69,9 @@ function Edit({
         handleAttributeRemoval={handleAttributeRemoval}
         addAttribute={addAttribute}
       />
+
     </>
   );
 }
 
-export { Edit };
+export { CredentialsForm };

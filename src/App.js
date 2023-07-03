@@ -30,9 +30,8 @@ function App() {
     setCurrentPage(page);
   };
 
-  useEffect(() => {
-    console.log(`Current selected credential index: ${selectedIndex}`);
-  }, [selectedIndex]);
+  const [formData, setFormData] = useState([]);
+  const [tempData, setTempData] = useState([]);
 
   function handleJSONUpdate(index, element, newValue) {
     switch (element.length) {
@@ -98,11 +97,10 @@ function App() {
         )}
         {currentPage === "credential" && (
           <CredentialsScreen
-            handleJSONUpdate={handleJSONUpdate}
-            showcaseJSON={showcaseJSON}
-            setShowcaseJSON={setShowcaseJSON}
-            selectedCharacter={selectedCharacter}
-            selectedIndex={selectedIndex}
+            tempData={tempData}
+            setTempData={setTempData}
+            formData={formData}
+            setFormData={setFormData}
             setSelectedIndex={setSelectedIndex}
           />
         )}

@@ -5,7 +5,7 @@ import { FileUploadFull, FileUploadBar } from "./react-modules/FileUpload";
 import { TextInput } from "./react-modules/TextInput";
 import { NavBar } from "./react-modules/NavBar";
 import { CharacterPage } from "./react-modules/pages/CharacterPage";
-import { CredentialPage } from "./react-modules/pages/CredentialPage";
+// import { CredentialPage } from "./react-modules/pages/CredentialPage";
 import { SetupPage } from "./react-modules/pages/SetupPage";
 import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
 import { CharacterScreen } from "./react-modules/character-screen/CharacterScreen";
@@ -13,7 +13,7 @@ import { DEFAULT_JSON } from "./DEFAULT_JSON";
 
 // import { Credentials } from "./react-modules/credentials/Credentials";
 
-import { Credentials } from "./react-modules/credentials/Credentials";
+import { CredentialsScreen } from "./react-modules/credentials/CredentialsScreen";
 
 function App() {
   const [showcaseJSON, setShowcaseJSON] = useImmer({
@@ -97,7 +97,7 @@ function App() {
           />
         )}
         {currentPage === "credential" && (
-          <Credentials
+          <CredentialsScreen
             handleJSONUpdate={handleJSONUpdate}
             showcaseJSON={showcaseJSON}
             setShowcaseJSON={setShowcaseJSON}
@@ -107,7 +107,7 @@ function App() {
           />
         )}
         {currentPage === "setup" && <SetupPage />}
-        {currentPage === "scenario" && <Credentials />}
+        {currentPage === "scenario" && <ScenarioPage />}
 
         <p className="p-10 m-5 border rounded dark:text-neutral-200">
           {JSON.stringify(showcaseJSON, null, "\t")}

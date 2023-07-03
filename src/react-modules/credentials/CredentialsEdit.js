@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { CredentialAttributesList } from "./components/AttributesList";
 
-function Edit({
+function CredentialsEdit({
   selectedCredential,
   tempData,
   handleChange,
@@ -66,4 +66,4 @@ function Edit({
   );
 }
 
-export { Edit };
+export { CredentialsEdit };

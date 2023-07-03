@@ -4,7 +4,7 @@ import { LocalTextInput } from "../LocalTextInput";
 import { CredentialAttributesList } from "./components/AttributesList";
 import { FileUploadFull } from "../FileUpload";
 
-function Form({
+function CredentialsForm({
   handleChange,
   tempData,
   addAttribute,
@@ -76,4 +76,4 @@ function Form({
   );
 }
 
-export { Form };
+export { CredentialsForm };

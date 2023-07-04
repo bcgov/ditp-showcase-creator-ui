@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { current } from "immer";
 
-export const ScenarioPage = ({
+export const ScenarioPage2 = ({
   tempData,
   setTempData,
   formData,
@@ -15,42 +16,34 @@ export const ScenarioPage = ({
   const [currentProofSelected, setCurrentProofSelected] = useState(0);
 
   const handleChange = (index) => (e) => {
-    const { name, value, selectedIndex } = e.target;
+    const { name, value } = e.target;
+    const newData = [...proofRequestData];
 
-    if (name === "name") {
-      const optionId = e.target.options[selectedIndex].value;
-      const attributeName = formData[0].attributes[optionId]?.name || "";
-
-      setProofRequestData((prevData) => {
-        const newData = [...prevData];
-        newData[index] = {
-          ...newData[index],
-          name: attributeName,
-          value: formData[0].attributes[optionId]?.value || "",
-        };
-        return newData;
-      });
-    } else {
-      setProofRequestData((prevData) => {
-        const newData = [...prevData];
-        newData[index][name] = value;
-        return newData;
-      });
-    }
+    // const { name, value, selectedIndex } = e.target;
+    // const optionId = e.target.options[selectedIndex].id;
+    // if (name === "name") {
+    //   setCurrentProofSelected(parseInt(optionId));
+    // }
+    newData[index][name] = value;
+    setProofRequestData(newData);
   };
 
   const addProofRequest = () => {
-    setCurrentProofSelected((prevVal) => parseInt(prevVal) + 1);
     setProofRequestData([
       ...proofRequestData,
       { name: "", type: "", value: "" },
     ]);
   };
 
+  const removeProofRequest = (index) => {
+    const newData = [...proofRequestData];
+    newData.splice(index, 1);
+    setProofRequestData(newData);
+  };
+
   useEffect(() => {
-    console.log("your proofRequestData is: ", proofRequestData);
-    console.log("formdata is: ", formData);
     console.log("your currentProofSelected index is: ", currentProofSelected);
+    console.log("your formData is: ", formData);
   }, [proofRequestData, formData, currentProofSelected]);
 
   if (!formData || formData.length === 0) {
@@ -74,7 +67,7 @@ export const ScenarioPage = ({
                     name={`name`}
                     id={`name`}
                     className="col-span-2 truncate"
-                    value={formData[0].attributes[0].name}
+                    value={attr.name}
                     onChange={(e) => handleChange(index)(e)}
                   >
                     <option value="">No selection</option>
@@ -82,7 +75,7 @@ export const ScenarioPage = ({
                       <option
                         id={optionIndex}
                         key={optionIndex}
-                        value={optionIndex}
+                        value={optionAttr.name}
                       >
                         {optionAttr.name}
                       </option>
@@ -90,16 +83,21 @@ export const ScenarioPage = ({
                   </select>
                 </div>
                 <div className="col-span-1">
-                  <label className="text-xs" htmlFor={`attr-value-${index}`}>
+                  <label className="text-xs" htmlFor={`value-${index}`}>
                     Attribute Value
                   </label>
                   <input
                     type="text"
-                    name={`attr-value`}
-                    id={`attr-value`}
-                    placeholder=""
-                    value={proofRequestData[index].value || ""}
+                    name={`value`}
+                    id={`value-${index}`}
+                    value={
+                      formData[0].attributes.find(
+                        (attr) => attr.name === proofRequestData[index].name
+                      )?.value || ""
+                    }
+                    // value={formData[0].attributes[index].value}
                     className="col-span-3"
+                    onChange={handleChange(index)}
                   />
                 </div>
                 <div className="col-span-1">
@@ -120,7 +118,7 @@ export const ScenarioPage = ({
                     <option value="<=">{"<="}</option>
                   </select>
                 </div>
-                <div className="col-span-1">
+                {/* <div className="col-span-1">
                   <label className="text-xs" htmlFor={`value`}>
                     Condition Value
                   </label>
@@ -128,11 +126,16 @@ export const ScenarioPage = ({
                     type="text"
                     name={`value`}
                     id={`value`}
-                    // placeholder=""
+                    placeholder="Condition Value"
                     value={proofRequestData[index].value || ""}
                     className="col-span-3"
                     onChange={(e) => handleChange(index)(e)}
                   />
+                </div> */}
+                <div className="col-span-1">
+                  <button onClick={() => removeProofRequest(index)}>
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
                 </div>
               </div>
             ))}

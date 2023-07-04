@@ -12,10 +12,12 @@ function CredentialsScreen({
   tempData,
   setTempData,
   formData,
-  setFormData
+  setFormData,
+  selectedCredential,
+  setSelectedCredential
 }) {
   const [componentToMount, setComponentToMount] = useState("no selection");
-  const [selectedCredential, setSelectedCredential] = useState(0);
+  // const [selectedCredential, setSelectedCredential] = useState(0);
 
   // Check if the create button has been clicked to ensure that you cant spam the button.
   const [createButtonClicked, setCreateButtonClicked] = useState(false);

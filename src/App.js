@@ -7,7 +7,8 @@ import { NavBar } from "./react-modules/NavBar";
 import { CharacterPage } from "./react-modules/pages/CharacterPage";
 // import { CredentialPage } from "./react-modules/pages/CredentialPage";
 import { SetupPage } from "./react-modules/pages/SetupPage";
-import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
+// import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
+import { ScenarioPage2 } from "./react-modules/pages/ScenarioPage2";
 import { CharacterScreen } from "./react-modules/character-screen/CharacterScreen";
 import { DEFAULT_JSON } from "./DEFAULT_JSON";
 
@@ -23,15 +24,41 @@ function App() {
   const [darkMode, setDarkMode] = useState(true);
 
   const [selectedCharacter, setSelectedCharacter] = useState(0);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  // const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedCredential, setSelectedCredential] = useState(0);
 
   const [currentPage, setCurrentPage] = useState("character");
   const changePage = (page) => {
     setCurrentPage(page);
   };
 
-  const [formData, setFormData] = useState([]);
+  // const [formData, setFormData] = useState([
+  //   {
+  //     cred_name: "Developer Card",
+  //     issuer_name: "Apple",
+  //     icon: "",
+  //     attributes: [
+  //       {
+  //         cred_type: "string",
+  //         name: "first_name",
+  //         value: "Ryan",
+  //       },
+  //       {
+  //         cred_type: "int",
+  //         name: "PPID",
+  //         value: "001234",
+  //       },
+  //       {
+  //         cred_type: "dateint",
+  //         name: "date_of_birth",
+  //         value: "07/05/1998",
+  //       },
+  //     ],
+  //   },
+  // ]);
+
   const [tempData, setTempData] = useState([]);
+  const [formData, setFormData] = useState([]);
 
   function handleJSONUpdate(index, element, newValue) {
     switch (element.length) {
@@ -101,15 +128,26 @@ function App() {
             setTempData={setTempData}
             formData={formData}
             setFormData={setFormData}
-            setSelectedIndex={setSelectedIndex}
+            // setSelectedIndex={setSelectedIndex}
+            selectedCredential={selectedCredential}
+            setSelectedCredential={setSelectedCredential}
           />
         )}
         {currentPage === "setup" && <SetupPage />}
-        {currentPage === "scenario" && <ScenarioPage />}
+        {currentPage === "scenario" && (
+          <ScenarioPage2
+            tempData={tempData}
+            setTempData={setTempData}
+            formData={formData}
+            setFormData={setFormData}
+            selectedCredential={selectedCredential}
+            setSelectedCredential={setSelectedCredential}
+          />
+        )}
 
-        <p className="p-10 m-5 border rounded dark:text-neutral-200">
-          {JSON.stringify(showcaseJSON, null, "\t")}
-        </p>
+        <pre className="p-10 m-5 border text-xs rounded dark:text-neutral-200 whitespace-pre-wrap break-words">
+          {JSON.stringify(showcaseJSON, null, 2)}
+        </pre>
       </div>
     </>
   );

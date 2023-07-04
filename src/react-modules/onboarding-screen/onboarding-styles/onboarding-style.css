@@ -10,3 +10,15 @@
 .text-highlight{
     color: #fcba19;
 }
+
+.dropdown-border{
+    border: 1px #3F3F3F solid;
+}
+
+.added-credential-main{
+    background-color: #3E3D3D;
+
+}
+.added-credential-attributes{
+    background-color: #222222;
+}

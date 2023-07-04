@@ -154,7 +154,7 @@ export const OnboardingPage = ({
             >
               {myScreens.map((myScreen, index) => (
                 
-                <div className="flex flex-row">
+                <div key={myScreen.screenId} className="flex flex-row">
                   
                   <SortableStep
                     selectedStep={selectedStep}

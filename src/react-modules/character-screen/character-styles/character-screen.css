@@ -11,8 +11,8 @@
 .character-circle {
   background: #525252;
   border-radius: 50%;
-  width: 80px;
-  height: 80px;
+  width: 150px;
+  height: 150px;
 }
 
 .selected-item {

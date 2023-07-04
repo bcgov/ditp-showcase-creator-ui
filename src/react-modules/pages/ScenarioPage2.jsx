@@ -16,23 +16,46 @@ export const ScenarioPage2 = ({
   setSelectedCredential,
 }) => {
   const [proofRequestData, setProofRequestData] = useState([]);
-
+  const [isDisabled, setIsDisabled] = useState(true);
   const [currentProofSelected, setCurrentProofSelected] = useState(0);
-  const handleChange = (index) => (e) => {
-    const { name, value } = e.target;
-    const newData = [...proofRequestData];
 
+  // ** for debugging **
+  useEffect(() => {
+    console.log("your currentProofSelected index is: ", currentProofSelected);
+    console.log("your formData is: ", formData);
+    console.log("your proofRequestData is: ", proofRequestData);
+  }, [proofRequestData, formData, currentProofSelected]);
+
+  // FUNCTION: Handle all input changes
+  const handleChange = (index) => (e) => {
+    const { name, value } = e.target; // Get the name and value from the event target
+    const newData = [...proofRequestData]; // Create a copy of the current proofRequestData
+
+    // Disable / enable inputs if an attribute name is selected or not.
+    if (name === "name" && value !== "") {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+      if (name === "name") {
+        newData[index].value = ""; // Clear out the condition value
+      } else if (name === "type") {
+        newData[index].type = ""; // Clear out the condition value
+      }
+    }
+
+    // To do:
+    // seperate "predicates" from "properties"
     if (value.toString() === "") {
       console.log("YOU CHOSE NOT SELECTED!!!!");
       const properties = { [name]: value };
-      // Do something with the properties object, such as sending it to an API or storing it in state
       console.log("Properties:", properties);
     }
 
-    newData[index][name] = value;
-    setProofRequestData(newData);
+    newData[index][name] = value; // Update function scoped object newData with new values
+    setProofRequestData(newData); // Update proofRequestData object
   };
 
+  // FUNCTION: Add an empty proof request object
   const addProofRequest = () => {
     setProofRequestData([
       ...proofRequestData,
@@ -40,17 +63,12 @@ export const ScenarioPage2 = ({
     ]);
   };
 
+  // FUNCTION: Remove a proof request
   const removeProofRequest = (index) => {
     const newData = [...proofRequestData];
     newData.splice(index, 1);
     setProofRequestData(newData);
   };
-
-  useEffect(() => {
-    console.log("your currentProofSelected index is: ", currentProofSelected);
-    console.log("your formData is: ", formData);
-    console.log("your proofRequestData is: ", proofRequestData);
-  }, [proofRequestData, formData, currentProofSelected]);
 
   if (!formData || formData.length === 0) {
     return <h1>YOU HAVE NO DATA IN HERE GO BACK</h1>; // Don't render the component if formData is undefined or empty
@@ -105,6 +123,7 @@ export const ScenarioPage2 = ({
                     // value={formData[0].attributes[index].value}
                     className="col-span-3 truncate"
                     onChange={handleChange(index)}
+                    disabled={attr.name === "" ? "disabled" : ""}
                   />
                 </div>
                 <div className="col-span-1">
@@ -117,6 +136,7 @@ export const ScenarioPage2 = ({
                     className="col-span-1 truncate"
                     value={attr.condition}
                     onChange={(e) => handleChange(index)(e)}
+                    disabled={attr.name === "" ? "disabled" : ""}
                   >
                     <option value="None">None</option>
                     <option value=">">{">"}</option>
@@ -137,6 +157,7 @@ export const ScenarioPage2 = ({
                     value={proofRequestData[index].value || ""}
                     className="col-span-3"
                     onChange={(e) => handleChange(index)(e)}
+                    disabled={attr.name === "" ? "disabled" : ""}
                   />
                 </div>
                 <div className="col-span-1">

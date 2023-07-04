@@ -19,8 +19,8 @@ function CharacterList({showcaseJSON, setEditMode, selectedCharacter, setSelecte
                   }`}
                 >
                   {
-                    showcaseJSON.personas[selectedCharacter].image 
-                    ? <img className="rounded-3xl" width="100px" src={showcaseJSON.personas[selectedCharacter].image}/>
+                    showcaseJSON.personas[selectedCharacter].headshot_image 
+                    ? <img className="" width="70px" src={showcaseJSON.personas[selectedCharacter].headshot_image}/>
                     : <FontAwesomeIcon icon={faUser} />
                   }
                   

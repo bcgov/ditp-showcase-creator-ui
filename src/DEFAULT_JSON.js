@@ -1,7 +1,8 @@
 const DEFAULT_JSON = {
   name: "Bob",
   type: "Test",
-  image: "",
+  headshot_image: "",
+  body_image: "",
   description: "This is Bob's description.",
   revocationInfo: [
     {

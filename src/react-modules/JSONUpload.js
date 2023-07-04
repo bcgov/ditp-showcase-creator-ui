@@ -49,7 +49,7 @@ function JSONUploadButton({ setShowcaseJSON }) {
           onClick={handleClick}
         >
           {/* <BookmarkSquareIcon className="-ml-0.5 h-5 w-5" aria-hidden="true" /> */}
-          DOWNLOAD BUTTON
+          LOAD
         </button>
       </div>
 

@@ -18,7 +18,12 @@ function CharacterList({showcaseJSON, setEditMode, selectedCharacter, setSelecte
                     selectedCharacter == index ? "selected-item" : ""
                   }`}
                 >
-                  <FontAwesomeIcon icon={faUser} />
+                  {
+                    showcaseJSON.personas[selectedCharacter].image 
+                    ? <img src={showcaseJSON.personas[selectedCharacter].image}/>
+                    : <FontAwesomeIcon icon={faUser} />
+                  }
+                  
                 </div>
                 <div className="p-2">
                   <p className="text-center">{person.name}</p>

@@ -63,6 +63,7 @@ export const OnboardingPage = ({
   };
 
   useEffect(() => {
+
     if (selectedStep == null) {
       setStepState("no-selection");
     } else if (
@@ -102,6 +103,7 @@ export const OnboardingPage = ({
         (myScreen) => myScreen.screenId === over.id
       );
       setSelectedStep(newIndex);
+
       setShowcaseJSON((json) => {
         json.personas[selectedCharacter].onboarding = arrayMove(
           myScreens,
@@ -138,6 +140,7 @@ export const OnboardingPage = ({
               <button
                 className="button-light p-2 hover:bg-neutral-600"
                 onClick={(e) => {
+                  e.preventDefault();
                   setStepState("creating-new");
                 }}
               >
@@ -168,13 +171,18 @@ export const OnboardingPage = ({
                   <div className="flex text-xl w-1/6 mt-10">
                   <button
                     className="px-3"
-                    onClick={(event) => handleRemoveStep(event, index)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleRemoveStep(e, index);}}
                   >
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
                   <button
                     className="px-1"
-                    onClick={(e) => setSelectedStep(index)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setSelectedStep(index);
+                    }}
                   >
                     <FontAwesomeIcon icon={faPen} />
                   </button>
@@ -189,6 +197,7 @@ export const OnboardingPage = ({
           <button
                 className="button-light p-2 hover:bg-neutral-600"
                 onClick={(e) => {
+                  e.preventDefault();
                   setStepState("creating-new");
                 }}
               >
@@ -223,6 +232,7 @@ export const OnboardingPage = ({
               selectedStep={selectedStep}
               showcaseJSON={showcaseJSON}
               setShowcaseJSON={setShowcaseJSON}
+              setStepState={setStepState}
             />
           ) : null}
         </div>

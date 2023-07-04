@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useImmer } from "use-immer";
 
-
 import { FileUploadFull } from "./../FileUpload";
 function BasicStepEdit({
   selectedCharacter,
@@ -9,17 +8,18 @@ function BasicStepEdit({
   selectedStep,
   showcaseJSON,
   setShowcaseJSON,
-  saveJSON,
-  handleJSONUpdate
+  handleJSONUpdate,
 }) {
   // Seperately update a mini version of the json, containing only the fields for this page
   const [localJSON, setLocalJSON] = useImmer(
     showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
   );
 
-  useEffect(() => {
-    setLocalJSON(showcaseJSON.personas[selectedCharacter].onboarding[selectedStep])
-  },[selectedStep])
+  // useEffect(() => {
+  //   setLocalJSON(
+  //     showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
+  //   );
+  // }, [selectedStep]);
 
   // Function similar to handleJSONUpdate in App.js
   function handleLocalUpdate(element, newValue) {
@@ -28,13 +28,24 @@ function BasicStepEdit({
     });
   }
 
+  function cancelSubmit(e){
+    e.preventDefault();
+    setSelectedStep(null);
+    
+  }
+
   // Function to handle saving/form submission
   function handleSubmit(e) {
-    e.preventDefault();
-    setShowcaseJSON((json) => {
-      json.personas[selectedCharacter].onboarding[selectedStep] = localJSON;
-    });
-    setSelectedStep(null);
+    try{
+      e.preventDefault();
+      setShowcaseJSON((json) => {
+        json.personas[selectedCharacter].onboarding[selectedStep] = localJSON;
+      });
+      setSelectedStep(null);
+    }catch(e){
+      console.log(e);
+    }
+    
   }
 
   return (
@@ -83,23 +94,24 @@ function BasicStepEdit({
         <FileUploadFull
           text={"Icon"}
           personaIndex={selectedCharacter}
-          element={["onboarding",selectedStep,"image"]}
+          element={["onboarding", selectedStep, "image"]}
           handleJSONUpdate={handleJSONUpdate}
         />
 
-<div className="flex flex-cols mx-5 my-3 justify-end space-x-4">
-            <button
-              className="p-1 w-20 hover:underline uppercase"
-              onClick={() => setSelectedStep(null)}
-            >
-              Cancel
-            </button>
+        <div className="flex flex-cols mx-5 my-3 justify-end space-x-4">
+          <button
+            className="p-1 w-20 hover:underline uppercase"
+            onClick={(e) => cancelSubmit(e)}
+          >
+            Cancel
+          </button>
 
-            <input
-              type="submit" value="Save"
-              className="p-1 w-20 button-dark hover:bg-neutral-600"
-            />
-            </div>
+          <input
+            type="submit"
+            value="Save"
+            className="p-1 w-20 button-dark hover:bg-neutral-600"
+          />
+        </div>
       </form>
     </div>
   );

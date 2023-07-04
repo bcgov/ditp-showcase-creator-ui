@@ -4,10 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { NoSelection } from ".././credentials/NoSelection";
 import { FileUploadFull } from "./../FileUpload";
-import {DisplaySearchResults} from "./DisplaySearchResults"
-import {DisplayAddedCredentials} from "./DisplayAddedCredentials"
-
-
+import { DisplaySearchResults } from "./DisplaySearchResults";
+import { DisplayAddedCredentials } from "./DisplayAddedCredentials";
 
 function IssueStepEdit({
   selectedCharacter,
@@ -18,8 +16,6 @@ function IssueStepEdit({
   handleJSONUpdate,
   setStepState,
 }) {
-  
-
   // Seperately update a mini version of the json, containing only the fields for this page
   const [localJSON, setLocalJSON] = useImmer(
     showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
@@ -34,9 +30,22 @@ function IssueStepEdit({
     });
   }
 
+  // Functionality for removing a credential from an issue step
+  function removeCredential(e, credential) {
+    e.preventDefault();
+    console.log(credential);
+    setLocalJSON((json) => {
+      const index = json.credentials.indexOf(credential);
+      if(index !== -1){
+        json.credentials.splice(index,1);
+      }
+  });
+    console.log(localJSON)
+  }
+
   function cancelSubmit(e) {
     e.preventDefault();
-    setStepState("no-selection")
+    setStepState("no-selection");
     setSelectedStep(null);
   }
 
@@ -72,7 +81,7 @@ function IssueStepEdit({
   // Function to handle saving/form submission
   function handleSubmit(e) {
     e.preventDefault();
-    setStepState("no-selection")
+    setStepState("no-selection");
     setShowcaseJSON((json) => {
       json.personas[selectedCharacter].onboarding[selectedStep] = localJSON;
     });
@@ -147,14 +156,20 @@ function IssueStepEdit({
           </span>
         </div>
         {/* RESULTS */}
-        <DisplaySearchResults selectedCharacter={selectedCharacter}
-  showcaseJSON={showcaseJSON}
-  localJSON={localJSON}
-  searchResults={searchResults}
-  addCredential={addCredential}/>
-        <DisplayAddedCredentials selectedCharacter={selectedCharacter} showcaseJSON={showcaseJSON} localJSON={localJSON} selectedStep={selectedStep}/>
-
-        
+        <DisplaySearchResults
+          selectedCharacter={selectedCharacter}
+          showcaseJSON={showcaseJSON}
+          localJSON={localJSON}
+          searchResults={searchResults}
+          addCredential={addCredential}
+        />
+        <DisplayAddedCredentials
+          selectedCharacter={selectedCharacter}
+          showcaseJSON={showcaseJSON}
+          localJSON={localJSON}
+          selectedStep={selectedStep}
+          removeCredential={removeCredential}
+        />
 
         <div className="flex flex-cols mx-5 my-3 justify-end space-x-4">
           <button

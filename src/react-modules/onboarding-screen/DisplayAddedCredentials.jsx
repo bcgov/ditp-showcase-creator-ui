@@ -1,17 +1,19 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { NoSelection } from ".././credentials/NoSelection";
 function DisplayAddedCredentials({
   selectedCharacter,
   showcaseJSON,
   localJSON,
   selectedStep,
+  removeCredential
 }) {
+
+    
     
   return (
     <>
-
-
-
-
       {
     showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
     && showcaseJSON.personas[selectedCharacter].onboarding[selectedStep].credentials  
@@ -25,6 +27,8 @@ function DisplayAddedCredentials({
 
           {localJSON.credentials.map((credential, index) => (
             <>
+            <div className="flex flex-row">
+                <div className="w-full">
               <div className="added-credential-main p-2 mt-5 rounded-t-lg">
                 <p>
                   {
@@ -53,6 +57,12 @@ function DisplayAddedCredentials({
                   </span>
                 </p>
               </div>
+              </div>
+              <button className="text-2xl pl-3 hover-red" onClick={(e) => removeCredential(e, credential)}>
+                <FontAwesomeIcon icon={faTrash} /><
+                    /button>
+              </div>
+              
             </>
                 ))}
         </div>

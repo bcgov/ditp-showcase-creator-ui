@@ -39,6 +39,7 @@ export const OnboardingPage = ({
 
   // Add new step
   const addNewStep = (isIssue) => {
+
     if (isIssue) {
       setShowcaseJSON((json) => {
         json.personas[selectedCharacter].onboarding.push({
@@ -168,23 +169,14 @@ export const OnboardingPage = ({
                     totalSteps={myScreens.length}
                   />
                   
-                  <div className="flex text-xl w-1/6 mt-10">
+                  <div className="flex text-xl mt-10">
                   <button
-                    className="px-3"
+                    className="px-3 hover-red"
                     onClick={(e) => {
                       e.preventDefault();
                       handleRemoveStep(e, index);}}
                   >
                     <FontAwesomeIcon icon={faTrash} />
-                  </button>
-                  <button
-                    className="px-1"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setSelectedStep(index);
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faPen} />
                   </button>
                   </div>
                 </div>
@@ -199,6 +191,7 @@ export const OnboardingPage = ({
                 onClick={(e) => {
                   e.preventDefault();
                   setStepState("creating-new");
+                  window.scrollTo({top: 200, behavior: "smooth", });
                 }}
               >
                 Add Step <FontAwesomeIcon icon={faCirclePlus} />
@@ -207,7 +200,7 @@ export const OnboardingPage = ({
           
         </div>
 
-        <div className="highlight-container w-2/5 rounded p-3">
+        <div id="editStep" className="highlight-container w-2/5 rounded p-3">
           {stepState == "no-selection" ? (
             <NoSelection Text={"No Step Selected"} />
           ) : null}

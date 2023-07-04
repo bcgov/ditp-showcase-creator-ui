@@ -34,7 +34,7 @@ export const SortableStep = ({
       style={style}
       {...attributes}
       {...listeners}
-      className="p-4 flex flex-row justify-items-center items-center"
+      className="p-4 flex flex-row justify-items-center items-center w-full"
     >
       
       <span className="text-2xl mt-10">

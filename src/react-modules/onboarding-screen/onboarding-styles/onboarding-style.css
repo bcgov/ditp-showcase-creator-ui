@@ -22,3 +22,7 @@
 .added-credential-attributes{
     background-color: #222222;
 }
+
+.hover-red:hover {
+    color:red;
+}

@@ -7,7 +7,9 @@ import { OnboardingPage } from "./react-modules/pages/OnboardingPage";
 import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
 import { DEFAULT_JSON } from "./DEFAULT_JSON";
 
-import { Credentials } from "./react-modules/credentials/Credentials";
+// import { Credentials } from "./react-modules/credentials/Credentials";
+
+import { CredentialsScreen } from "./react-modules/credentials/CredentialsScreen";
 
 function App() {
   const [showcaseJSON, setShowcaseJSON] = useImmer({
@@ -24,9 +26,8 @@ function App() {
     setCurrentPage(page);
   };
 
-  useEffect(() => {
-    console.log(`Current selected credential index: ${selectedIndex}`);
-  }, [selectedIndex]);
+  const [formData, setFormData] = useState([]);
+  const [tempData, setTempData] = useState([]);
 
   function handleJSONUpdate(index, element, newValue) {
     switch (element.length) {
@@ -91,12 +92,11 @@ function App() {
           />
         )}
         {currentPage === "credential" && (
-          <Credentials
-            handleJSONUpdate={handleJSONUpdate}
-            showcaseJSON={showcaseJSON}
-            setShowcaseJSON={setShowcaseJSON}
-            selectedCharacter={selectedCharacter}
-            selectedIndex={selectedIndex}
+          <CredentialsScreen
+            tempData={tempData}
+            setTempData={setTempData}
+            formData={formData}
+            setFormData={setFormData}
             setSelectedIndex={setSelectedIndex}
           />
         )}

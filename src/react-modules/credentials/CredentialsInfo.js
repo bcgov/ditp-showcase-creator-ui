@@ -1,29 +1,37 @@
 import React from "react";
-import { FormHeader } from "./components/index.js";
 
-function SelectionOverview({
-  setEditButtonClicked,
+function CredentialsInfo({
   setComponentToMount,
-  credentialSelected,
-  showcaseJSON,
-  selectedIndex,
-  selectedCharacter,
-  setShowcaseJSON,
-  setSelectedIndex,
+  selectedCredential,
+  setSelectedCredential,
+  formData,
+  setFormData,
+  setTempData,
 }) {
   const handleEditButtonClick = () => {
-    // setEditButtonClicked((prevEditButtonSelected) => !prevEditButtonSelected);
     setComponentToMount("edit");
   };
+  const handleCredentialRemoval = (index) => {
+    if (formData.length === 1) return;
 
-  const handleCredentialRemoval = (i) => {
-    if (showcaseJSON.personas[0].onboarding[4].credentials.length === 1) return;
-    if (selectedIndex != 0) setSelectedIndex(selectedIndex - 1);
-
-    setShowcaseJSON((json) => {
-      json.personas[0].onboarding[4].credentials.splice(selectedIndex, 1);
+    setTempData((prevData) => {
+      const newData = [...prevData];
+      newData.splice(index, 1);
+      return newData;
     });
+
+    setFormData((prevData) => {
+      const newData = [...prevData];
+      newData.splice(index, 1);
+      return newData;
+    });
+
+    setSelectedCredential((prevVal) => (prevVal - 1 === 0 ? prevVal - 1 : 0));
   };
+
+  if (formData.length === 0) {
+    return null;
+  }
 
   return (
     <>
@@ -43,7 +51,7 @@ function SelectionOverview({
                   Edit
                 </button>
                 <button
-                  onClick={() => handleCredentialRemoval(selectedIndex)}
+                  onClick={() => handleCredentialRemoval(selectedCredential)}
                   className=" text-sm py-1 px-3 mx-1 rounded bg-neutral-700 hover:bg-neutral-600 text-slate-100"
                 >
                   Delete
@@ -55,29 +63,20 @@ function SelectionOverview({
           <div className="selection-overview-container w-full h-full mt-7 relative">
             <div className="selection-overview-credential-name">
               <h3 className="text-lg font-bold">Credential Name</h3>
-              {
-                showcaseJSON["personas"][selectedCharacter].onboarding[4]
-                  .credentials[selectedIndex].name
-              }
+              {formData[selectedCredential].cred_name}
             </div>
             <div className="selection-overview-issuer-name">
               <h3 className="text-lg font-bold mt-5">Issuer Name</h3>
+              {formData[selectedCredential].issuer_name}
             </div>
             <div className="selection-overview-attributes">
               <h3 className="text-lg font-bold mt-5">Attributes</h3>
-              {/* {credentialAttributes.map((attr) => (
-                <div className="mt-2 text-sm">
-                  <span className="font-bold">{`${attr.name}: `}</span>
+              {formData[selectedCredential].attributes.map((attr) => (
+                <div>
+                  <span className="font-bold">{attr.name}: </span>
                   <span>{attr.value}</span>
                 </div>
-              ))} */}
-              {showcaseJSON["personas"][
-                selectedCharacter
-              ].onboarding[4].credentials[selectedIndex].attributes.map(
-                (attr) => (
-                  <p>{attr.name}</p>
-                )
-              )}
+              ))}
             </div>
           </div>
         </div>
@@ -86,4 +85,4 @@ function SelectionOverview({
   );
 }
 
-export { SelectionOverview };
+export { CredentialsInfo };

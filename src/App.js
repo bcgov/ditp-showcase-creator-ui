@@ -22,6 +22,7 @@ function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const [currentPage, setCurrentPage] = useState("character");
+
   const changePage = (page) => {
     setCurrentPage(page);
   };
@@ -81,6 +82,7 @@ function App() {
           setDarkMode={setDarkMode}
           showcaseJSON={showcaseJSON}
           changePage={changePage}
+          currentPage={currentPage}
         />
         {currentPage === "character" && (
           <CharacterPage

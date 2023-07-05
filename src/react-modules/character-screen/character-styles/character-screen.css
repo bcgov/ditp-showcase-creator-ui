@@ -11,12 +11,18 @@
 .character-circle {
   background: #525252;
   border-radius: 50%;
-  width: 120px;
-  height: 120px;
+
+  width: 100px;
+  height: 100px;
+
 }
 
 .selected-item {
   border: 3px solid #fcba19;
+}
+
+.unselected-item {
+  border: 3px solid #525252;
 }
 
 .button-dark {

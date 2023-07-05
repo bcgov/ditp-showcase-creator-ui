@@ -43,13 +43,13 @@ function NavBar({ darkMode, setDarkMode, showcaseJSON, setShowcaseJSON, changePa
 
           />
           <NavBarButton
-            title={"Credential"}
+            title={"Credentials"}
             src={require("../assets/NavBar/credentials.svg").default}
             page="credential"
             changePage={changePage}
           />
           <NavBarButton
-            title={"Set Up"}
+            title={"Onboarding"}
             src={require("../assets/NavBar/setup.svg").default}
             page="setup"
             changePage={changePage}

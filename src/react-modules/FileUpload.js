@@ -11,6 +11,11 @@ function FileUploadFull({
 }) {
   const [preview, setPreview] = useState();
 
+  // To-Do: Impliment a feature to show the preview directly from the JSON data
+  // useEffect(() => {
+  //   setPreview(showcaseJSON.personas[personaIndex])
+  // },[element])
+
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();

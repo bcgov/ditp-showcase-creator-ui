@@ -3,6 +3,52 @@ const DEFAULT_JSON = {
   type: "Test",
   image: "/public/student/student.svg",
   description: "This is Bob's description.",
+  credentials: {
+    "test_card_id": {
+      "issuer_name": "Test College",
+      "name": "test_card",
+      "version": "1.10",
+      "icon": "/public/student/icon-student.svg",
+      "attributes": [
+        {
+          "name": "student_first_name",
+          "value": "Bob",
+          "type": "string"
+        },
+        {
+          "name": "student_last_name",
+          "value": "Smith"
+        },
+        {
+          "name": "expiry_date",
+          "value": "20270517",
+          "type": "dateint"
+        }
+      ]
+    },
+    "test_card_id_2": {
+      "issuer_name": "My Workplace",
+      "name": "test_card",
+      "version": "1.10",
+      "icon": "/public/student/icon-student.svg",
+      "attributes": [
+        {
+          "name": "student_first_name",
+          "value": "Bob",
+          "type": "string"
+        },
+        {
+          "name": "student_last_name",
+          "value": "Smith"
+        },
+        {
+          "name": "expiry_date",
+          "value": "20270517",
+          "type": "dateint"
+        }
+      ]
+    }
+  },
   revocationInfo: [
     {
       credentialName: "Test Card",
@@ -74,26 +120,7 @@ const DEFAULT_JSON = {
       text: "Your wallet now has a secure and private connection with BestBC College. You should have received an offer in BC Wallet for a Student Card.\nReview what they are sending, and choose 'Accept offer'.",
       image: "/public/common/onboarding-credential-light.svg",
       credentials: [
-        {
-          issuer_name: "Test College",
-          name: "test_card",
-          version: "1.9",
-          icon: "/public/student/icon-student.svg",
-          attributes: [
-            {
-              name: "student_first_name",
-              value: "Bob",
-            },
-            {
-              name: "student_last_name",
-              value: "Smith",
-            },
-            {
-              name: "expiry_date",
-              value: "20270517",
-            },
-          ],
-        },
+        "test_card_id",
       ],
     },
     {

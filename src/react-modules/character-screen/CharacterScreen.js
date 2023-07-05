@@ -31,16 +31,14 @@ function CharacterScreen({
       })
   }, [selectedCharacter]);
 
-  // To-do: Create a function similar to handleJSONUpdate in App.js
+  // Function similar to handleJSONUpdate in App.js
   function handleLocalUpdate(element, newValue){
     setLocalJSON((json) => {
       json[element] = newValue;
     });
   }
 
-  // Then, instead of passing the actual JSON to the text fields in <CharacterEdit>, pass the mini json and the mini handler
-
-  // To-do: Impliment a save handler. When clicking save, send the mini JSON to the real, full JSON file
+  // Save handler. When clicking save, send the mini JSON to the real, full JSON file
   function saveJSON(){
     handleJSONUpdate(selectedCharacter, ["name"], localJSON.name)
     handleJSONUpdate(selectedCharacter, ["type"], localJSON.type)
@@ -51,11 +49,11 @@ function CharacterScreen({
   
   return (
     <>
-      <div className="justify-center items-center flex content-center">
-        <div className="flex p-3 w-2/5 justify-center items-center flex-col">
+      <div className="two-column-container mx-20 my-16">
+        <div className="two-column-col md:w-3/5 pr-4">
           <div className="flex w-full">
             <div>
-              <h2 className="text-2xl text-white text-start w-full font-bold">
+              <h2 className="text-4xl font-bold text-slate-50 text-start w-full">
                 Select Your Character
               </h2>
               <p className="w-full">

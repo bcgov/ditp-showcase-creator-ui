@@ -12,9 +12,9 @@ function CharacterList({showcaseJSON, setEditMode, selectedCharacter, setSelecte
         <div className="grid grid-cols-3">
           {showcaseJSON.personas.map((person, index) => (
             <button value={index} key={index} onClick={handleClick}>
-              <div>
+              <div className="flex flex-col items-center justify-center">
                 <div
-                  className={`character-circle flex items-center justify-center p-3 m-3  ${
+                  className={`character-circle p-3 m-3 flex items-center justify-center  ${
                     selectedCharacter == index ? "selected-item" : ""
                   }`}
                 >

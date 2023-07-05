@@ -1,6 +1,7 @@
 
 .App {
   text-align: center;
+  color:white;
 }
 
 .App-logo {
@@ -8,8 +9,9 @@
   pointer-events: none;
 }
 
-p, h1, h2, h3, h4, h5 {
+p, h1, h2, h3, h4, h5, span, button{
   font-family: 'Montserrat', sans-serif!important;
+  color:white;
 }
 
 .dark {

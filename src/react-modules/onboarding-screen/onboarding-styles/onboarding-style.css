@@ -1,0 +1,28 @@
+.basic-step{
+    background-color: #303030;
+}
+
+.basic-step:hover{
+    background-color: #3F3F3F;
+    cursor: pointer;
+}
+
+.text-highlight{
+    color: #fcba19;
+}
+
+.dropdown-border{
+    border: 1px #3F3F3F solid;
+}
+
+.added-credential-main{
+    background-color: #3E3D3D;
+
+}
+.added-credential-attributes{
+    background-color: #222222;
+}
+
+.hover-red:hover {
+    color:red;
+}

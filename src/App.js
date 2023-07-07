@@ -11,14 +11,21 @@ import { SetupPage } from "./react-modules/pages/SetupPage";
 import { ScenarioPage2 } from "./react-modules/pages/ScenarioPage2";
 import { CharacterScreen } from "./react-modules/character-screen/CharacterScreen";
 import { DEFAULT_JSON } from "./DEFAULT_JSON";
+import { TEST_JSON } from "./TEST_JSON";
 
 // import { Credentials } from "./react-modules/credentials/Credentials";
 
-import { CredentialsScreen } from "./react-modules/credentials/CredentialsScreen";
+// import { CredentialsScreen } from "./react-modules/credentials/CredentialsScreen";
+import { CredentialsScreen2 } from "./react-modules/credentials/CredentialsScreen2";
 
 function App() {
   const [showcaseJSON, setShowcaseJSON] = useImmer({
     personas: [DEFAULT_JSON],
+  });
+
+  // Seperate JSON for testing
+  const [testJSON, setTestJSON] = useImmer({
+    character: [TEST_JSON],
   });
 
   const [darkMode, setDarkMode] = useState(true);
@@ -32,33 +39,8 @@ function App() {
     setCurrentPage(page);
   };
 
-  // const [formData, setFormData] = useState([
-  //   {
-  //     cred_name: "Developer Card",
-  //     issuer_name: "Apple",
-  //     icon: "",
-  //     attributes: [
-  //       {
-  //         cred_type: "string",
-  //         name: "first_name",
-  //         value: "Ryan",
-  //       },
-  //       {
-  //         cred_type: "int",
-  //         name: "PPID",
-  //         value: "001234",
-  //       },
-  //       {
-  //         cred_type: "dateint",
-  //         name: "date_of_birth",
-  //         value: "07/05/1998",
-  //       },
-  //     ],
-  //   },
-  // ]);
-
   const [tempData, setTempData] = useState([]);
-  const [formData, setFormData] = useState([]);
+  const [formData, setFormData] = useState(TEST_JSON);
 
   function handleJSONUpdate(index, element, newValue) {
     switch (element.length) {
@@ -123,7 +105,18 @@ function App() {
           />
         )}
         {currentPage === "credential" && (
-          <CredentialsScreen
+          // <CredentialsScreen
+          //   tempData={tempData}
+          //   setTempData={setTempData}
+          //   formData={formData}
+          //   setFormData={setFormData}
+          //   // setSelectedIndex={setSelectedIndex}
+          //   selectedCredential={selectedCredential}
+          //   setSelectedCredential={setSelectedCredential}
+          //   testJSON={testJSON}
+          //   setTestJSON={setTestJSON}
+          // />
+          <CredentialsScreen2
             tempData={tempData}
             setTempData={setTempData}
             formData={formData}
@@ -131,6 +124,8 @@ function App() {
             // setSelectedIndex={setSelectedIndex}
             selectedCredential={selectedCredential}
             setSelectedCredential={setSelectedCredential}
+            testJSON={testJSON}
+            setTestJSON={setTestJSON}
           />
         )}
         {currentPage === "setup" && <SetupPage />}
@@ -142,6 +137,8 @@ function App() {
             setFormData={setFormData}
             selectedCredential={selectedCredential}
             setSelectedCredential={setSelectedCredential}
+            testJSON={testJSON}
+            setTestJSON={setTestJSON}
           />
         )}
 

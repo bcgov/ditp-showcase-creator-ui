@@ -14,16 +14,36 @@ function CredentialsScreen({
   formData,
   setFormData,
   selectedCredential,
-  setSelectedCredential
+  setSelectedCredential,
+  testJSON,
+  setTestJSON,
 }) {
   const [componentToMount, setComponentToMount] = useState("no selection");
   // const [selectedCredential, setSelectedCredential] = useState(0);
 
+  const [showJSON, setShowJSON] = useState(false);
+
   // Check if the create button has been clicked to ensure that you cant spam the button.
   const [createButtonClicked, setCreateButtonClicked] = useState(false);
 
+  useEffect(() => {
+    console.log(testJSON);
+  }, []);
+
+  
+  // useEffect(() => {
+  //   console.log(componentToMount);
+  // }, [componentToMount]);
+
+  // useEffect(() => {
+  //   console.log("formData is: ", formData);
+  //   console.log("tempData is: ", tempData);
+  //   console.log("index is: ", selectedCredential);
+  // }, [formData, tempData, selectedCredential]);
+
   const showMeMyJSON = () => {
     console.log("Your current formData JSON is: ", formData);
+    setShowJSON(!showJSON);
   };
 
   const clearJSON = () => {
@@ -53,7 +73,7 @@ function CredentialsScreen({
       const selectedCred = { ...newData[selectedCredential] }; // Create a copy of the selected credential
       selectedCred.attributes = [
         ...selectedCred.attributes,
-        { cred_type: "", name: "", value: "" },
+        { type: "", name: "", value: "" },
       ];
       newData[selectedCredential] = selectedCred; // Update the selected credential in the new data array
       return newData;
@@ -62,7 +82,6 @@ function CredentialsScreen({
 
   // Add a credential
   const handleCredentialUpdate = () => {
-    setCreateButtonClicked(false);
     setFormData(JSON.parse(JSON.stringify(tempData)));
     setComponentToMount("credential");
   };
@@ -70,19 +89,12 @@ function CredentialsScreen({
   // Remove the credential if cancel button is clicked
   const handleCancel = () => {
     if (componentToMount === "create") {
-      setCreateButtonClicked(false);
-      setTempData((prevData) => {
-        const newData = prevData.filter(
-          (_, index) => index !== selectedCredential
-        );
-        return newData;
-      });
-      setSelectedCredential((prevVal) => (prevVal === 0 ? 0 : prevVal - 1));
-      setComponentToMount("credential");
+      setTempData((prevData) => prevData.slice(0, -1));
+      setSelectedCredential(null);
     } else if (componentToMount === "edit") {
       setTempData(JSON.parse(JSON.stringify(formData)));
-      setComponentToMount("credential");
     }
+    setComponentToMount("credential");
   };
 
   // Create a credential with an empty object.
@@ -98,7 +110,6 @@ function CredentialsScreen({
       },
     ]);
     setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
-    setCreateButtonClicked(true);
   };
 
   const handleImportButtonClick = (e) => {
@@ -153,6 +164,11 @@ function CredentialsScreen({
 
   return (
     <>
+      {showJSON && (
+        <pre className="p-10 m-5 border text-xs rounded dark:text-neutral-200 whitespace-pre-wrap break-words">
+          {JSON.stringify(formData, null, 2)}
+        </pre>
+      )}
       <button className="border p-2 rounded" onClick={showMeMyJSON}>
         SHOW ME MY JSON!!!!
       </button>
@@ -180,7 +196,8 @@ function CredentialsScreen({
               </button>
               <button
                 data-button-id="create-button-credentials"
-                disabled={createButtonClicked}
+                // disabled={createButtonClicked}
+                disabled={componentToMount === "create"}
                 onClick={(e) => handleCreateButtonClick(e)}
                 className="px-3 py-1 mx-1 rounded bg-slate-400 hover:bg-slate-500 text-slate-100"
               >

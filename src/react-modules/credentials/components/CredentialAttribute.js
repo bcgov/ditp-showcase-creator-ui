@@ -13,8 +13,8 @@ function CredentialAttribute({
   return (
     <div className="grid grid-cols-9 gap-2">
       <select
-        name={`cred_type-${index}`}
-        id={`cred_type-${index}`}
+        name={`type-${index}`}
+        id={`type-${index}`}
         className="col-span-2 truncate"
         value={credType}
         onChange={(e) => handleChange(e, index)}

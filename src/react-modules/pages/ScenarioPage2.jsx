@@ -123,7 +123,8 @@ export const ScenarioPage2 = ({
                     // value={formData[0].attributes[index].value}
                     className="col-span-3 truncate"
                     onChange={handleChange(index)}
-                    disabled={attr.name === "" ? "disabled" : ""}
+                    // disabled={attr.name === "" ? "disabled" : ""}
+                    disabled={true}
                   />
                 </div>
                 <div className="col-span-1">

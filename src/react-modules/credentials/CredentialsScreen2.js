@@ -24,15 +24,18 @@ function CredentialsScreen2({
 
   useEffect(() => {
     console.log(formData);
-    console.log("test json:", testJSON);
-  }, [formData, testJSON]);
+  }, [formData]);
 
   const handleChange = (index) => (e) => {
     const { name, value } = e.target;
+    const newData = [...tempData];
 
-    setTestJSON((prevJSON) => {
-      prevJSON["credentials"] = value;
-    });
+    console.log("newData ", newData);
+    console.log("value ", value);
+    console.log("index ", index);
+    console.log("name ", name);
+    // newData["credentials"][0][name] = value;
+    // setFormData(newData);
   };
 
   // const handleCreateButtonClick = (e) => {
@@ -52,23 +55,72 @@ function CredentialsScreen2({
   //   });
   // };
 
+  // const handleCreateButtonClick = (e) => {
+  //   setFormData((prevData) => {
+  //     return {
+  //       ...prevData,
+  //       credentials: [
+  //         ...prevData.credentials,
+  //         {
+  //           cred_name: "",
+  //           issuer_name: "",
+  //           icon: "",
+  //           attributes: [],
+  //         },
+  //       ],
+  //     };
+  //   });
+  // };
+
+  // const handleCreateButtonClick = (e) => {
+  //   setFormData((prevData) => {
+  //     const newCredentials = [...prevData.credentials];
+
+  //     const newCredObj = {
+  //       cred_name: "",
+  //       issuer_name: "",
+  //       icon: "",
+  //       attributes: [],
+  //     };
+
+  //     const wrappedCred = { cred_name: newCredObj };
+
+  //     newCredentials.push(wrappedCred);
+
+  //     return {
+  //       ...prevData,
+  //       credentials: newCredentials,
+  //     };
+  //   });
+  // };
 
   const handleCreateButtonClick = (e) => {
-    setTestJSON((prevData) => {
+    setTempData((prevData) => {
+      const newCredentials = [...prevData.credentials];
+
+      const newCredObj = {
+        cred_name: "",
+        issuer_name: "",
+        icon: "",
+        attributes: [],
+      };
+
+      const wrappedCred = { cred_name: newCredObj };
+
+      newCredentials.push(wrappedCred);
+
       return {
         ...prevData,
-        credentials: [
-          ...prevData.credentials,
-          {
-            cred_name: "",
-            issuer_name: "",
-            icon: "",
-            attributes: [],
-          },
-        ],
+        credentials: newCredentials,
       };
     });
   };
+
+  // const handleCreateButtonClick = (e) => {
+  //   setTestJSON((prevData) => {
+  //     prevData, prevData.push(...prevData.credentials, { cred_name: "" });
+  //   });
+  // };
 
   return (
     <>
@@ -85,7 +137,7 @@ function CredentialsScreen2({
         id="cred_name"
         name="cred_name"
         placeholder="Credential Name"
-        value={testJSON["credentials"]}
+        value={formData["credentials"]}
         onChange={handleChange()}
       />
     </>

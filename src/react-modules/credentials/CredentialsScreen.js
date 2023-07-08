@@ -15,8 +15,8 @@ function CredentialsScreen({
   setFormData,
   selectedCredential,
   setSelectedCredential,
-  testJSON,
-  setTestJSON,
+  // testJSON,
+  // setTestJSON,
 }) {
   const [componentToMount, setComponentToMount] = useState("no selection");
   // const [selectedCredential, setSelectedCredential] = useState(0);
@@ -27,10 +27,9 @@ function CredentialsScreen({
   const [createButtonClicked, setCreateButtonClicked] = useState(false);
 
   useEffect(() => {
-    console.log(testJSON);
-  }, []);
+    console.log(formData);
+  }, [formData]);
 
-  
   // useEffect(() => {
   //   console.log(componentToMount);
   // }, [componentToMount]);
@@ -109,6 +108,17 @@ function CredentialsScreen({
         attributes: [],
       },
     ]);
+    // setTempData([
+    //   ...tempData,
+    //   {
+    //     name: {
+    //       cred_name: "",
+    //       issuer_name: "",
+    //       icon: "",
+    //       attributes: [],
+    //     },
+    //   },
+    // ]);
     setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
   };
 

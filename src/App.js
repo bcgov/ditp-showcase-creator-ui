@@ -15,7 +15,7 @@ import { TEST_JSON } from "./TEST_JSON";
 
 // import { Credentials } from "./react-modules/credentials/Credentials";
 
-// import { CredentialsScreen } from "./react-modules/credentials/CredentialsScreen";
+import { CredentialsScreen } from "./react-modules/credentials/CredentialsScreen";
 import { CredentialsScreen2 } from "./react-modules/credentials/CredentialsScreen2";
 
 function App() {
@@ -24,9 +24,9 @@ function App() {
   });
 
   // Seperate JSON for testing
-  const [testJSON, setTestJSON] = useImmer({
-    character: [TEST_JSON],
-  });
+  // const [testJSON, setTestJSON] = useImmer({
+  //   character: [TEST_JSON],
+  // });
 
   const [darkMode, setDarkMode] = useState(true);
 
@@ -40,7 +40,7 @@ function App() {
   };
 
   const [tempData, setTempData] = useState([]);
-  const [formData, setFormData] = useState(TEST_JSON);
+  const [formData, setFormData] = useState([]);
 
   function handleJSONUpdate(index, element, newValue) {
     switch (element.length) {
@@ -105,18 +105,7 @@ function App() {
           />
         )}
         {currentPage === "credential" && (
-          // <CredentialsScreen
-          //   tempData={tempData}
-          //   setTempData={setTempData}
-          //   formData={formData}
-          //   setFormData={setFormData}
-          //   // setSelectedIndex={setSelectedIndex}
-          //   selectedCredential={selectedCredential}
-          //   setSelectedCredential={setSelectedCredential}
-          //   testJSON={testJSON}
-          //   setTestJSON={setTestJSON}
-          // />
-          <CredentialsScreen2
+          <CredentialsScreen
             tempData={tempData}
             setTempData={setTempData}
             formData={formData}
@@ -124,9 +113,18 @@ function App() {
             // setSelectedIndex={setSelectedIndex}
             selectedCredential={selectedCredential}
             setSelectedCredential={setSelectedCredential}
-            testJSON={testJSON}
-            setTestJSON={setTestJSON}
           />
+          // <CredentialsScreen2
+          //   tempData={tempData}
+          //   setTempData={setTempData}
+          //   formData={formData}
+          //   setFormData={setFormData}
+          //   // setSelectedIndex={setSelectedIndex}
+          //   selectedCredential={selectedCredential}
+          //   setSelectedCredential={setSelectedCredential}
+          //   // testJSON={testJSON}
+          //   // setTestJSON={setTestJSON}
+          // />
         )}
         {currentPage === "setup" && <SetupPage />}
         {currentPage === "scenario" && (
@@ -137,8 +135,8 @@ function App() {
             setFormData={setFormData}
             selectedCredential={selectedCredential}
             setSelectedCredential={setSelectedCredential}
-            testJSON={testJSON}
-            setTestJSON={setTestJSON}
+            // testJSON={testJSON}
+            // setTestJSON={setTestJSON}
           />
         )}
 

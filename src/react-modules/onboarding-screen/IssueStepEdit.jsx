@@ -23,9 +23,10 @@ function IssueStepEdit({
 
 
   useEffect(() => {
-    
-    
-  },[selectedStep]);
+    setLocalJSON(
+      showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
+    );
+  }, [selectedStep]);
 
   const [searchResults, setSearchResults] = useState([]);
 

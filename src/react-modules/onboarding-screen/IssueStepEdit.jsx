@@ -21,6 +21,12 @@ function IssueStepEdit({
     showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
   );
 
+
+  useEffect(() => {
+    
+    
+  },[selectedStep]);
+
   const [searchResults, setSearchResults] = useState([]);
 
   // Function similar to handleJSONUpdate in App.js

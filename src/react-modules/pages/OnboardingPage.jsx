@@ -43,7 +43,7 @@ export const OnboardingPage = ({
     if (isIssue) {
       setShowcaseJSON((json) => {
         json.personas[selectedCharacter].onboarding.push({
-          screenId: `${new Date().now}`,
+          screenId: `${Date.now()}`,
           title: "",
           text: "",
           image: "",
@@ -53,7 +53,7 @@ export const OnboardingPage = ({
     } else {
       setShowcaseJSON((json) => {
         json.personas[selectedCharacter].onboarding.push({
-          screenId: `${new Date().now}`,
+          screenId: `${Date.now()}`,
           title: "",
           text: "",
           image: "",

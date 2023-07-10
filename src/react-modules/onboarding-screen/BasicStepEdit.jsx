@@ -15,11 +15,11 @@ function BasicStepEdit({
     showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
   );
 
-  // useEffect(() => {
-  //   setLocalJSON(
-  //     showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
-  //   );
-  // }, [selectedStep]);
+  useEffect(() => {
+    setLocalJSON(
+      showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
+    );
+  }, [selectedStep]);
 
   // Function similar to handleJSONUpdate in App.js
   function handleLocalUpdate(element, newValue) {

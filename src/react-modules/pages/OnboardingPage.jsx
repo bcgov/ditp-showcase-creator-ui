@@ -167,6 +167,8 @@ export const OnboardingPage = ({
                     key={myScreen.screenId}
                     stepIndex={index + 1}
                     totalSteps={myScreens.length}
+                    showcaseJSON={showcaseJSON}
+                    selectedCharacter={selectedCharacter}
                   />
                   
                   <div className="flex text-xl mt-10">

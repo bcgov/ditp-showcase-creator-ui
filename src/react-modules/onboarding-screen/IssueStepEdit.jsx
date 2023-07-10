@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { NoSelection } from ".././credentials/NoSelection";
 import { FileUploadFull } from "./../FileUpload";
+import { LocalFileUpload } from "./LocalFileUpload";
 import { DisplaySearchResults } from "./DisplaySearchResults";
 import { DisplayAddedCredentials } from "./DisplayAddedCredentials";
 
@@ -138,12 +139,11 @@ function IssueStepEdit({
           />
         </div>
 
-        <FileUploadFull
-          text={"Icon"}
-          personaIndex={selectedCharacter}
-          element={["onboarding", selectedStep, "image"]}
-          handle
-          JSONUpdate={handleJSONUpdate}
+        <LocalFileUpload
+        text={"Icon"}
+        element={"image"}
+        handleLocalUpdate={handleLocalUpdate}
+        localJSON={localJSON}
         />
 
         <p className="text-2xl pt-10 font-bold">Add your Credential</p>
@@ -158,7 +158,7 @@ function IssueStepEdit({
             type="text"
             onChange={(e) => searchCredential(e)}
           />
-          <span className="px-3 text-xl">
+          <span className="pb-4 px-2 text-xl">
             <FontAwesomeIcon icon={faSearch} />
           </span>
         </div>

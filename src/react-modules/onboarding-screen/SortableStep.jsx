@@ -11,9 +11,11 @@ import {
 export const SortableStep = ({
   selectedStep,
   setSelectedStep,
+  selectedCharacter,
   myScreen,
   stepIndex,
   totalSteps,
+  showcaseJSON
 }) => {
   //Attribute we need to apply to the element we want to make sortable
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -26,6 +28,9 @@ export const SortableStep = ({
     transform: CSS.Transform.toString(transform),
     transition,
   };
+
+  const MAX_CHARS = 110;
+
 
   return (
     
@@ -59,13 +64,19 @@ export const SortableStep = ({
           {
             // SCREEN IMAGE HERE
             <p className="text-2xl p-2 mx-2 rounded highlight-text">
-              <FontAwesomeIcon icon={faDisplay} />
+              {
+                showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1].image
+
+                ? <img width="100px" src={showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1].image}/> :
+                <FontAwesomeIcon icon={faDisplay} />
+              }
+              
             </p>
           }
 
-          {myScreen.text.length > 90 ? (
+          {myScreen.text.length > MAX_CHARS ? (
             <p>
-              {myScreen.text.slice(0, 90)}...{" "}
+              {myScreen.text.slice(0, MAX_CHARS)}...{" "}
 
               <span className="font-bold">
               see more

@@ -4,6 +4,10 @@
   color:white;
 }
 
+.blur-xs{
+  filter: blur(2px);
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

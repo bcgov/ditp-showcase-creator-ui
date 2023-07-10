@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { DndContext, closestCenter } from "@dnd-kit/core";
+import { DndContext, closestCenter, DragOverlay } from "@dnd-kit/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -183,6 +183,17 @@ export const OnboardingPage = ({
                   </div>
                 </div>
               ))}
+
+            <DragOverlay>
+              <div className="top-1">
+              <p>{showcaseJSON.personas[selectedCharacter].onboarding[selectedStep].title} </p>
+              <div className="highlight-container w-full flex flex-row justify-items-center items-center rounded p-3 unselected-item backdrop-blur">
+              <p className="text-sm">
+             {showcaseJSON.personas[selectedCharacter].onboarding[selectedStep].text} 
+            </p>
+              </div>
+              </div>
+            </DragOverlay>
             </SortableContext>
             
           </div>

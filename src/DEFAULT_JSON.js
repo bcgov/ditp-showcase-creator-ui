@@ -1,7 +1,8 @@
 const DEFAULT_JSON = {
   name: "Bob",
   type: "Test",
-  image: "/public/student/student.svg",
+  headshot_image: "",
+  body_image: "",
   description: "This is Bob's description.",
   credentials: {
     "test_card_id": {

@@ -36,30 +36,23 @@ function CharacterEdit({selectedCharacter, handleJSONUpdate, handleLocalUpdate, 
               localJSON={localJSON}
               showcaseJSON={showcaseJSON}
             />
-            <div className="grid grid-cols-3 w-full">
+            <div className="grid grid-cols-2 w-full">
               <FileUploadFull
-                text={"Body Image"}
+                text={"Headshot Image"}
                 personaIndex={selectedCharacter}
-                element={["image"]}
+                element={["headshot_image"]}
                 handleJSONUpdate={handleJSONUpdate}
                 showcaseJSON={showcaseJSON}
               />
 
               <FileUploadFull
-                text={"Avatar Image"}
+                text={"Full-Body Image"}
                 personaIndex={selectedCharacter}
-                element={["revocationInfo", 0]}
+                element={["body_image"]}
                 handleJSONUpdate={handleJSONUpdate}
                 showcaseJSON={showcaseJSON}
               />
-              
-              <FileUploadFull
-                text={"Celebration Image"}
-                personaIndex={selectedCharacter}
-                element={["revocationInfo", 0]}
-                handleJSONUpdate={handleJSONUpdate}
-                showcaseJSON={showcaseJSON}
-              />
+          
             </div>
           </div>
     )

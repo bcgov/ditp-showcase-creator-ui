@@ -62,11 +62,6 @@ function CharacterScreen({
             </div>
             {/* ADD BUTTON */}
             <div className="ml-auto m-5">
-              <NewCharacterButton
-                showcaseJSON={showcaseJSON}
-                setShowcaseJSON={setShowcaseJSON}
-                setSelectedCharacter={setSelectedCharacter}
-              />
             </div>
           </div>
 

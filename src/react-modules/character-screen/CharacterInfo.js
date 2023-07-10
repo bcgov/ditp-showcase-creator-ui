@@ -69,44 +69,30 @@ function CharacterInfo({
         <p>{showcaseJSON["personas"][selectedCharacter].description}</p>
       </div>
 
-      <div className="grid grid-cols-3">
+      <div className="grid grid-cols-2">
         <div className="p-2 m-2">
-          <p>Body Image</p>
+          <p>Headshot Image</p>
           <div className="highlight-text p-6 m-1 flex justify-center items-center">
-            {showcaseJSON.personas[selectedCharacter].image == null ? (
+            {!showcaseJSON.personas[selectedCharacter].headshot_image ? (
               <FontAwesomeIcon icon={faUser} />
             ) : (
               <img
                 width="100px"
-                src={`${showcaseJSON.personas[selectedCharacter].image}`}
+                src={`${showcaseJSON.personas[selectedCharacter].headshot_image}`}
               />
             )}
           </div>
         </div>
 
         <div className="p-2 m-2">
-          <p>Avatar Image</p>
+          <p>Full-Body Image</p>
           <div className="highlight-text p-6 m-1 flex justify-center items-center">
-            {characterImages[1] == null ? (
+            {!showcaseJSON.personas[selectedCharacter].body_image ? (
               <FontAwesomeIcon icon={faUser} />
             ) : (
               <img
                 width="100px"
-                src={`${showcaseJSON.personas[selectedCharacter].image}`}
-              />
-            )}
-          </div>
-        </div>
-
-        <div className="p-2 m-2">
-          <p>Celebration Image</p>
-          <div className="highlight-text p-6 m-1 flex justify-center items-center">
-            {characterImages[2] == null ? (
-              <FontAwesomeIcon icon={faUser} />
-            ) : (
-              <img
-                width="100px"
-                src={`${showcaseJSON.personas[selectedCharacter].image}`}
+                src={`${showcaseJSON.personas[selectedCharacter].body_image}`}
               />
             )}
           </div>

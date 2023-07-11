@@ -7,20 +7,21 @@ function CredentialsEdit({
   handleChange,
   addAttribute,
   setTempData,
+  testJSON,
+  setTestJSON,
 }) {
   const handleAttributeRemoval = (attributeIndex) => {
     setTempData((prevData) => {
+      console.log(attributeIndex);
       const newData = [...prevData];
-      const selectedCred = { ...newData[selectedCredential] }; // Create a copy of the selected credential
-      selectedCred.attributes = selectedCred.attributes.filter(
-        (_, index) => index !== attributeIndex
-      );
-      newData[selectedCredential] = selectedCred; // Update the selected credential in the new data array
+      newData[selectedCredential].attributes.splice(attributeIndex, 1);
       return newData;
     });
   };
 
-  if (tempData.length === 0) return;
+  // console.log(testJSON);
+
+  // if (tempData.length === 0) return;
 
   return (
     <>
@@ -37,7 +38,8 @@ function CredentialsEdit({
         type="text"
         id="cred_name"
         name="cred_name"
-        value={tempData[selectedCredential].cred_name}
+        // value={tempData[selectedCredential].cred_name}
+        value={testJSON.character[0].credentials[selectedCredential].cred_name}
         onChange={handleChange}
       />
       <br />
@@ -53,13 +55,13 @@ function CredentialsEdit({
       <br />
       <label> Add Attributes</label>
       <br />
-      <CredentialAttributesList
+      {/* <CredentialAttributesList
         tempData={tempData}
         selectedCredential={selectedCredential}
         handleChange={handleChange}
         handleAttributeRemoval={handleAttributeRemoval}
         addAttribute={addAttribute}
-      />
+      /> */}
     </>
   );
 }

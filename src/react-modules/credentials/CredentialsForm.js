@@ -8,18 +8,29 @@ function CredentialsForm({
   addAttribute,
   selectedCredential,
   setTempData,
+  testJSON,
+  setTestJSON,
 }) {
   const handleAttributeRemoval = (attributeIndex) => {
+    console.log("attr index: ", attributeIndex);
+
     setTempData((prevData) => {
       const newData = [...prevData];
       const selectedCred = { ...newData[selectedCredential] };
-      selectedCred.attributes = selectedCred.attributes.filter(
-        (_, index) => index !== attributeIndex
-      );
+
+      if (
+        selectedCred.attributes &&
+        selectedCred.attributes.length > attributeIndex
+      ) {
+        selectedCred.attributes.splice(attributeIndex, 1);
+      }
+
       newData[selectedCredential] = selectedCred;
       return newData;
     });
   };
+
+  const test = `cred_id${selectedCredential + 1}`;
 
   return (
     <>
@@ -42,6 +53,7 @@ function CredentialsForm({
             ? tempData[selectedCredential].cred_name
             : ""
         }
+        // value={testJSON.character[0].credentials[selectedCredential].cred_name}
         onChange={handleChange}
       />
       <br />
@@ -62,14 +74,13 @@ function CredentialsForm({
       <br />
       <label> Add Attributes</label>
       <br />
-      <CredentialAttributesList
+      {/* <CredentialAttributesList
         tempData={tempData}
         selectedCredential={selectedCredential}
         handleChange={handleChange}
         handleAttributeRemoval={handleAttributeRemoval}
         addAttribute={addAttribute}
-      />
-
+      /> */}
     </>
   );
 }

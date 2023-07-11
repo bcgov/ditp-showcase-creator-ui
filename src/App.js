@@ -23,10 +23,28 @@ function App() {
     personas: [DEFAULT_JSON],
   });
 
+  const [componentToMount, setComponentToMount] = useState("no selection");
+
   // Seperate JSON for testing
-  // const [testJSON, setTestJSON] = useImmer({
-  //   character: [TEST_JSON],
-  // });
+  const [testJSON, setTestJSON] = useImmer({
+    character: [TEST_JSON],
+  });
+
+  useEffect(() => {
+    console.log("your starting testJSON is: ", testJSON);
+  }, []);
+
+  const handleCredentialUpdate = () => {
+    // setFormData(JSON.parse(JSON.stringify(tempData)));
+    // setTestJSON(JSON.parse(JSON.stringify(tempData)));
+    setTestJSON((prevData) => {
+      prevData.character[0].credentials[prevData.character[0].credentials.length + 1] = tempData;
+    });
+    setComponentToMount("credential");
+  };
+
+  const [tempData, setTempData] = useState([]);
+  const [formData, setFormData] = useState([]);
 
   const [darkMode, setDarkMode] = useState(true);
 
@@ -35,12 +53,10 @@ function App() {
   const [selectedCredential, setSelectedCredential] = useState(0);
 
   const [currentPage, setCurrentPage] = useState("character");
+
   const changePage = (page) => {
     setCurrentPage(page);
   };
-
-  const [tempData, setTempData] = useState([]);
-  const [formData, setFormData] = useState([]);
 
   function handleJSONUpdate(index, element, newValue) {
     switch (element.length) {
@@ -113,6 +129,11 @@ function App() {
             // setSelectedIndex={setSelectedIndex}
             selectedCredential={selectedCredential}
             setSelectedCredential={setSelectedCredential}
+            setTestJSON={setTestJSON}
+            testJSON={testJSON}
+            handleCredentialUpdate={handleCredentialUpdate}
+            setComponentToMount={setComponentToMount}
+            componentToMount={componentToMount}
           />
           // <CredentialsScreen2
           //   tempData={tempData}

@@ -15,30 +15,18 @@ function CredentialsScreen({
   setFormData,
   selectedCredential,
   setSelectedCredential,
-  // testJSON,
-  // setTestJSON,
+  testJSON,
+  setTestJSON,
+  handleCredentialUpdate,
+  componentToMount,
+  setComponentToMount,
 }) {
-  const [componentToMount, setComponentToMount] = useState("no selection");
   // const [selectedCredential, setSelectedCredential] = useState(0);
 
   const [showJSON, setShowJSON] = useState(false);
 
   // Check if the create button has been clicked to ensure that you cant spam the button.
   const [createButtonClicked, setCreateButtonClicked] = useState(false);
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
-  // useEffect(() => {
-  //   console.log(componentToMount);
-  // }, [componentToMount]);
-
-  // useEffect(() => {
-  //   console.log("formData is: ", formData);
-  //   console.log("tempData is: ", tempData);
-  //   console.log("index is: ", selectedCredential);
-  // }, [formData, tempData, selectedCredential]);
 
   const showMeMyJSON = () => {
     console.log("Your current formData JSON is: ", formData);
@@ -51,6 +39,20 @@ function CredentialsScreen({
   };
 
   // Handle all input
+  // const handleChange = (index) => (e) => {
+  //   const { name, value } = e.target;
+  //   const newData = [...tempData];
+  //   const attributeIndex = parseInt(name.slice(name.lastIndexOf("-") + 1));
+  //   const attributeName = name.slice(0, name.lastIndexOf("-"));
+
+  //   if (name === "cred_name" || name === "issuer_name") {
+  //     newData[index][name] = value;
+  //   } else {
+  //     newData[index].attributes[attributeIndex][attributeName] = value;
+  //   }
+  //   setTempData(newData);
+  // };
+
   const handleChange = (index) => (e) => {
     const { name, value } = e.target;
     const newData = [...tempData];
@@ -80,10 +82,10 @@ function CredentialsScreen({
   };
 
   // Add a credential
-  const handleCredentialUpdate = () => {
-    setFormData(JSON.parse(JSON.stringify(tempData)));
-    setComponentToMount("credential");
-  };
+  // const handleCredentialUpdate = () => {
+  //   setFormData(JSON.parse(JSON.stringify(tempData)));
+  //   setComponentToMount("credential");
+  // };
 
   // Remove the credential if cancel button is clicked
   const handleCancel = () => {
@@ -98,7 +100,9 @@ function CredentialsScreen({
 
   // Create a credential with an empty object.
   const handleCreateButtonClick = (e) => {
-    setSelectedCredential(formData.length);
+    // setSelectedCredential(tempData.length);
+    // setSelectedCredential((prevVal) => prevVal + 1);
+    console.log(selectedCredential);
     setTempData([
       ...tempData,
       {
@@ -108,17 +112,6 @@ function CredentialsScreen({
         attributes: [],
       },
     ]);
-    // setTempData([
-    //   ...tempData,
-    //   {
-    //     name: {
-    //       cred_name: "",
-    //       issuer_name: "",
-    //       icon: "",
-    //       attributes: [],
-    //     },
-    //   },
-    // ]);
     setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
   };
 
@@ -152,19 +145,21 @@ function CredentialsScreen({
             setFormData={setFormData}
             addAttribute={addAttribute}
             selectedCredential={selectedCredential}
+            testJSON={testJSON}
+            setTestJSON={setTestJSON}
           />
         );
-      case "edit":
-        return (
-          <CredentialsEdit
-            handleChange={handleChange(selectedCredential)}
-            formData={formData}
-            tempData={tempData}
-            setTempData={setTempData}
-            addAttribute={addAttribute}
-            selectedCredential={selectedCredential}
-          />
-        );
+      // case "edit":
+      //   return (
+      //     <CredentialsEdit
+      //       handleChange={handleChange(selectedCredential)}
+      //       formData={formData}
+      //       tempData={tempData}
+      //       setTempData={setTempData}
+      //       addAttribute={addAttribute}
+      //       selectedCredential={selectedCredential}
+      //     />
+      //   );
       case "import":
         return "";
       default:
@@ -176,7 +171,7 @@ function CredentialsScreen({
     <>
       {showJSON && (
         <pre className="p-10 m-5 border text-xs rounded dark:text-neutral-200 whitespace-pre-wrap break-words">
-          {JSON.stringify(formData, null, 2)}
+          {JSON.stringify(testJSON, null, 2)}
         </pre>
       )}
       <button className="border p-2 rounded" onClick={showMeMyJSON}>
@@ -225,6 +220,8 @@ function CredentialsScreen({
               tempData={tempData}
               setTempData={setTempData}
               setSelectedCredential={setSelectedCredential}
+              testJSON={testJSON}
+              setTestJSON={setTestJSON}
             />
           </div>
           {/* <Credential2 /> */}

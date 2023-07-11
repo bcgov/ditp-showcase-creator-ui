@@ -9,7 +9,7 @@ const DEFAULT_JSON = {
       "issuer_name": "Test College",
       "name": "test_card",
       "version": "1.10",
-      "icon": "/public/student/icon-student.svg",
+      "icon": "",
       "attributes": [
         {
           "name": "student_first_name",
@@ -31,7 +31,7 @@ const DEFAULT_JSON = {
       "issuer_name": "My Workplace",
       "name": "test_card",
       "version": "1.10",
-      "icon": "/public/student/icon-student.svg",
+      "icon": "",
       "attributes": [
         {
           "name": "student_first_name",
@@ -53,7 +53,7 @@ const DEFAULT_JSON = {
   revocationInfo: [
     {
       credentialName: "Test Card",
-      credentialIcon: "/public/student/icon-student.svg",
+      credentialIcon: "",
       title: "Revoke your Test card",
       description:
         "Test College allows you to revoke your Student Card if:\n• there is a problem with your credential.\n• your device was lost or stolen and you want to secure your personal information.",
@@ -63,32 +63,32 @@ const DEFAULT_JSON = {
     {
       name: "person",
       onboardingStep: "PICK_CHARACTER",
-      iconLight: "/public/common/icon-person-light.svg",
-      iconDark: "/public/common/icon-person-dark.svg",
+      iconLight: "",
+      iconDark: "",
     },
     {
       name: "moon",
       onboardingStep: "SETUP_START",
-      iconLight: "/public/common/icon-moon-light.svg",
-      iconDark: "/public/common/icon-moon-dark.svg",
+      iconLight: "",
+      iconDark: "",
     },
     {
       name: "wallet",
       onboardingStep: "CHOOSE_WALLET",
-      iconLight: "/public/common/icon-wallet-light.svg",
-      iconDark: "/public/common/icon-wallet-dark.svg",
+      iconLight: "",
+      iconDark: "",
     },
     {
       name: "notification",
       onboardingStep: "ACCEPT_CREDENTIAL",
-      iconLight: "/public/common/icon-notification-light.svg",
-      iconDark: "/public/common/icon-notification-dark.svg",
+      iconLight: "",
+      iconDark: "",
     },
     {
       name: "balloon",
       onboardingStep: "SETUP_COMPLETED",
-      iconLight: "/public/common/icon-balloon-light.svg",
-      iconDark: "/public/common/icon-balloon-dark.svg",
+      iconLight: "",
+      iconDark: "",
     },
   ],
   onboarding: [
@@ -101,25 +101,25 @@ const DEFAULT_JSON = {
       screenId: "SETUP_START",
       title: "Let's get started!",
       text: "BC Wallet is a new app for storing and using credentials on your smartphone. Credentials are things like IDs, licenses and diplomas. \nUsing your BC Wallet is fast and simple. In the future it can be used online and in person. You approve every use, and share only what is needed. \nIn this demo, you will use two credentials to prove who you are and access court materials online instead of in-person.",
-      image: "/public/common/getStarted.svg",
+      image: "",
     },
     {
       screenId: "CHOOSE_WALLET",
       title: "Install BC Wallet",
       text: "First, install the BC Wallet app onto your smartphone. Select the button below for instructions and the next step.",
-      image: "/public/common/app-store-screenshots.png",
+      image: "",
     },
     {
       screenId: "CONNECT",
       title: "Connect with Test College",
       text: "Imagine, as Alice, you are logged into the BestBC College website (see below). They want to offer you a Digital Student Card. Use your BC Wallet to scan the QR code from the website.",
-      image: "/public/student/onboarding-connect-light.svg",
+      image: "",
     },
     {
       screenId: "ACCEPT_CREDENTIAL",
       title: "Accept your test card",
       text: "Your wallet now has a secure and private connection with BestBC College. You should have received an offer in BC Wallet for a Student Card.\nReview what they are sending, and choose 'Accept offer'.",
-      image: "/public/common/onboarding-credential-light.svg",
+      image: "",
       credentials: [
         "test_card_id",
       ],
@@ -128,7 +128,7 @@ const DEFAULT_JSON = {
       screenId: "SETUP_COMPLETED",
       title: "You're all set!",
       text: "Congratulations, you’ve just received your first digital credentials. They are safely stored in your wallet and ready to be used. So, what are you waiting for? Let’s go!",
-      image: "/public/common/onboarding-completed-light.svg",
+      image: "",
     },
   ],
   useCases: [
@@ -140,16 +140,16 @@ const DEFAULT_JSON = {
           screenId: "START",
           title: "Getting a student discount",
           text: "Bob (that's you in this demo!) can get a student discount on her online purchase. In this example, you will just tell Cool Clothes Online you're a student.",
-          image: "/public/student/useCases/store/card-school.svg",
+          image: "",
         },
         {
           screenId: "CONNECTION",
           title: "Start proving you're a student",
           text: "Imagine, as Alice, you are in the checkout process for Cool Clothes Online. They're offering you a 15% discount on your purchase if you can prove you're a student. First, scan the QR code.",
-          image: "/public/student/useCases/store/cool-clothes-no-overlay.png",
+          image: "",
           verifier: {
             name: "Cool Clothes Online",
-            icon: "/public/student/useCases/store/logo-university.png",
+            icon: "",
           },
         },
         {
@@ -161,7 +161,7 @@ const DEFAULT_JSON = {
             text: "Cool Clothes Online would like some of your personal information.",
             requestedCredentials: [
               {
-                icon: "/public/student/useCases/school/icon-university-card.png",
+                icon: "",
                 name: "test_card",
                 predicates: {
                   name: "expiry_date",
@@ -176,7 +176,7 @@ const DEFAULT_JSON = {
           screenId: "STEP_END",
           title: "You're done!",
           text: "You proved that you're a student, and Cool Clothes Online gave you the discount. It only took a few seconds, you revealed minimal information, and Cool Clothes Online could easily and automatically trust what you sent.",
-          image: "/public/student/student-accepted.svg",
+          image: "",
         },
       ],
     },
@@ -188,17 +188,17 @@ const DEFAULT_JSON = {
           screenId: "START",
           title: "Book a study room",
           text: "Alice has lots of work to do, and needs a study room for some peace and quiet. In this example, we'll present some info from our Student Card, but just what's needed to book the room.",
-          image: "/public/student/useCases/school/card-school.svg",
+          image: "",
         },
         {
           screenId: "CONNECTION",
           title: "Start booking the room",
           text: "Imagine you're on the room booking page for BestBC College, abd you've chosen a data and time. Now they just need to confirm a few details. Scan the QR code to continue.",
           image:
-            "/public/student/useCases/school/best-bc-college-no-overlay.png",
+            "",
           verifier: {
             name: "BestBC College",
-            icon: "/public/student/useCases/school/logo-university.png",
+            icon: "",
           },
         },
         {
@@ -210,7 +210,7 @@ const DEFAULT_JSON = {
             text: "BestBC College would like some of your personal information.",
             requestedCredentials: [
               {
-                icon: "/public/student/useCases/school/icon-university-card.png",
+                icon: "",
                 name: "test_card",
                 properties: ["student_first_name"],
               },
@@ -221,7 +221,7 @@ const DEFAULT_JSON = {
           screenId: "STEP_END",
           title: "You're done!",
           text: "The room is booked. Just by proving your first name, Best BC College could trust you are a current student, and could let others know there's a booking without revealing too much about you.",
-          image: "/public/student/student-accepted.svg",
+          image: "",
         },
       ],
     },

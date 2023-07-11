@@ -17,7 +17,7 @@ function DisplaySearchResults({
         index < MAX_SEARCH_CREDENTIALS ? (
           <button
             key={`${result}_${index}`}
-            className="basic-step dropdown-border w-5/6 flex flex-row items-center justify-around text-center"
+            className="basic-step dropdown-border w-full flex flex-row items-center justify-around text-center text-sm py-1 rounded m-1"
             onClick={(e) => addCredential(e, result)}
           >
             <div className="w-1/2">

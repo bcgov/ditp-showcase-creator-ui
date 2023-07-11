@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useImmer } from "use-immer";
+import { LocalFileUpload } from "./LocalFileUpload";
 
 import { FileUploadFull } from "./../FileUpload";
 function BasicStepEdit({
@@ -15,11 +16,11 @@ function BasicStepEdit({
     showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
   );
 
-  // useEffect(() => {
-  //   setLocalJSON(
-  //     showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
-  //   );
-  // }, [selectedStep]);
+  useEffect(() => {
+    setLocalJSON(
+      showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
+    );
+  }, [selectedStep]);
 
   // Function similar to handleJSONUpdate in App.js
   function handleLocalUpdate(element, newValue) {
@@ -91,11 +92,11 @@ function BasicStepEdit({
           />
         </div>
 
-        <FileUploadFull
-          text={"Icon"}
-          personaIndex={selectedCharacter}
-          element={["onboarding", selectedStep, "image"]}
-          handleJSONUpdate={handleJSONUpdate}
+        <LocalFileUpload
+        text={"Icon"}
+        element={"image"}
+        handleLocalUpdate={handleLocalUpdate}
+        localJSON={localJSON}
         />
 
         <div className="flex flex-cols mx-5 my-3 justify-end space-x-4">

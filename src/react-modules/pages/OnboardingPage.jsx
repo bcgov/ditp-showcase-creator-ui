@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { DndContext, closestCenter } from "@dnd-kit/core";
+import { DndContext, closestCenter, DragOverlay } from "@dnd-kit/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -43,7 +43,7 @@ export const OnboardingPage = ({
     if (isIssue) {
       setShowcaseJSON((json) => {
         json.personas[selectedCharacter].onboarding.push({
-          screenId: `${new Date().now}`,
+          screenId: `${Date.now()}`,
           title: "",
           text: "",
           image: "",
@@ -53,7 +53,7 @@ export const OnboardingPage = ({
     } else {
       setShowcaseJSON((json) => {
         json.personas[selectedCharacter].onboarding.push({
-          screenId: `${new Date().now}`,
+          screenId: `${Date.now()}`,
           title: "",
           text: "",
           image: "",
@@ -167,6 +167,8 @@ export const OnboardingPage = ({
                     key={myScreen.screenId}
                     stepIndex={index + 1}
                     totalSteps={myScreens.length}
+                    showcaseJSON={showcaseJSON}
+                    selectedCharacter={selectedCharacter}
                   />
                   
                   <div className="flex text-xl mt-10">
@@ -181,6 +183,17 @@ export const OnboardingPage = ({
                   </div>
                 </div>
               ))}
+
+            <DragOverlay>
+              <div className="top-1">
+              <p>{showcaseJSON.personas[selectedCharacter].onboarding[selectedStep].title} </p>
+              <div className="highlight-container w-full flex flex-row justify-items-center items-center rounded p-3 unselected-item backdrop-blur">
+              <p className="text-sm">
+             {showcaseJSON.personas[selectedCharacter].onboarding[selectedStep].text} 
+            </p>
+              </div>
+              </div>
+            </DragOverlay>
             </SortableContext>
             
           </div>

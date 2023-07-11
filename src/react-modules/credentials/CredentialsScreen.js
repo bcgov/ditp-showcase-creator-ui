@@ -38,21 +38,6 @@ function CredentialsScreen({
     setTempData([]);
   };
 
-  // Handle all input
-  // const handleChange = (index) => (e) => {
-  //   const { name, value } = e.target;
-  //   const newData = [...tempData];
-  //   const attributeIndex = parseInt(name.slice(name.lastIndexOf("-") + 1));
-  //   const attributeName = name.slice(0, name.lastIndexOf("-"));
-
-  //   if (name === "cred_name" || name === "issuer_name") {
-  //     newData[index][name] = value;
-  //   } else {
-  //     newData[index].attributes[attributeIndex][attributeName] = value;
-  //   }
-  //   setTempData(newData);
-  // };
-
   const handleChange = (index) => (e) => {
     const { name, value } = e.target;
     const newData = [...tempData];
@@ -100,18 +85,20 @@ function CredentialsScreen({
 
   // Create a credential with an empty object.
   const handleCreateButtonClick = (e) => {
-    // setSelectedCredential(tempData.length);
-    // setSelectedCredential((prevVal) => prevVal + 1);
-    console.log(selectedCredential);
-    setTempData([
-      ...tempData,
-      {
-        cred_name: "",
-        issuer_name: "",
-        icon: "",
-        attributes: [],
-      },
-    ]);
+    setSelectedCredential(tempData.length);
+    // setTempData(...tempData, {
+    // cred_name: "",
+    // issuer_name: "",
+    // icon: "",
+    // attributes: [],
+    // });
+    setTempData((prevData) => {
+      const newData = [
+        ...prevData,
+        { cred_name: "", issuer_name: "", icon: "", attributes: [] },
+      ];
+      return newData;
+    });
     setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
   };
 

@@ -23,6 +23,9 @@ function App() {
     personas: [DEFAULT_JSON],
   });
 
+  const [tempData, setTempData] = useState([]);
+  const [formData, setFormData] = useState([]);
+
   const [componentToMount, setComponentToMount] = useState("no selection");
 
   // Seperate JSON for testing
@@ -34,17 +37,25 @@ function App() {
     console.log("your starting testJSON is: ", testJSON);
   }, []);
 
+  useEffect(() => {
+    console.log("your starting TEMPDATA is: ", tempData);
+  }, [tempData]);
+
   const handleCredentialUpdate = () => {
-    // setFormData(JSON.parse(JSON.stringify(tempData)));
-    // setTestJSON(JSON.parse(JSON.stringify(tempData)));
+    let id = Object.keys(testJSON.character[0].credentials).length;
+    const newKey = `cred_id_${id}`;
+
+    const test = { ...tempData[0] };
+
     setTestJSON((prevData) => {
-      prevData.character[0].credentials[prevData.character[0].credentials.length + 1] = tempData;
+      prevData.character[0].credentials[newKey] = test;
+      id++;
+      return prevData;
     });
+
+    setTempData([]);
     setComponentToMount("credential");
   };
-
-  const [tempData, setTempData] = useState([]);
-  const [formData, setFormData] = useState([]);
 
   const [darkMode, setDarkMode] = useState(true);
 

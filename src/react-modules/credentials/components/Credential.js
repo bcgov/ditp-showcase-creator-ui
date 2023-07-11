@@ -13,9 +13,11 @@ function Credential({
   setTempData,
   selectedCredential,
   setSelectedCredential,
+  testJSON,
+  setTestJSON,
 }) {
   const handleCredentialRemoval = (index) => {
-    if (formData.length === 1) return;
+    // if (formData.length === 1) return;
 
     setTempData((prevData) => {
       const newData = [...prevData];
@@ -23,13 +25,18 @@ function Credential({
       return newData;
     });
 
-    setFormData((prevData) => {
-      const newData = [...prevData];
-      newData.splice(index, 1);
-      return newData;
+    // setFormData((prevData) => {
+    //   const newData = [...prevData];
+    //   newData.splice(index, 1);
+    //   return newData;
+    // });
+
+    setTestJSON((prevData) => {
+      console.log(selectedCredential);
+      delete prevData.character[0].credentials[selectedCredential];
     });
 
-    setSelectedCredential((prevVal) => (prevVal - 1 === 0 ? prevVal - 1 : 0));
+    // setSelectedCredential((prevVal) => (prevVal - 1 === 0 ? prevVal - 1 : 0));
   };
   return (
     <>

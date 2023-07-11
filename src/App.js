@@ -26,6 +26,8 @@ function App() {
   const [tempData, setTempData] = useState([]);
   const [formData, setFormData] = useState([]);
 
+  const [selectedCredential, setSelectedCredential] = useState(0);
+
   const [componentToMount, setComponentToMount] = useState("no selection");
 
   // Seperate JSON for testing
@@ -38,30 +40,41 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log("your starting TEMPDATA is: ", tempData);
-  }, [tempData]);
+    console.log("your TEMPDATA is: ", tempData);
+    console.log("Your testjson is :", testJSON);
+  }, [tempData, testJSON]);
+
+  useEffect(() => {
+    console.log("Your index is : ", selectedCredential);
+  });
 
   const handleCredentialUpdate = () => {
-    let id = Object.keys(testJSON.character[0].credentials).length;
-    const newKey = `cred_id_${id}`;
+    const test = { ...tempData[selectedCredential] };
 
-    const test = { ...tempData[0] };
+    if (componentToMount === "create") {
+      let id = Object.keys(testJSON.character[0].credentials).length;
+      const newKey = `cred_id_${id}`;
+      setTestJSON((prevData) => {
+        prevData.character[0].credentials[newKey] = test;
+        id++;
+      });
+    } else if (componentToMount === "edit") {
+      console.log(test);
+      console.log(selectedCredential);
+      setTestJSON((prevData) => {
+        prevData.character[0].credentials[`cred_id_${selectedCredential}`] =
+          test;
+      });
+    }
 
-    setTestJSON((prevData) => {
-      prevData.character[0].credentials[newKey] = test;
-      id++;
-      return prevData;
-    });
-
-    setTempData([]);
     setComponentToMount("credential");
+    // setTempData([]);
   };
 
   const [darkMode, setDarkMode] = useState(true);
 
   const [selectedCharacter, setSelectedCharacter] = useState(0);
   // const [selectedIndex, setSelectedIndex] = useState(0);
-  const [selectedCredential, setSelectedCredential] = useState(0);
 
   const [currentPage, setCurrentPage] = useState("character");
 

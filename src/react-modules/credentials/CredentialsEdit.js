@@ -19,10 +19,6 @@ function CredentialsEdit({
     });
   };
 
-  // console.log(testJSON);
-
-  // if (tempData.length === 0) return;
-
   return (
     <>
       <div className="flex justify-between mt-3">
@@ -38,8 +34,11 @@ function CredentialsEdit({
         type="text"
         id="cred_name"
         name="cred_name"
-        // value={tempData[selectedCredential].cred_name}
-        value={testJSON.character[0].credentials[selectedCredential].cred_name}
+        value={
+          tempData[selectedCredential].cred_name
+            ? tempData[selectedCredential].cred_name
+            : ""
+        }
         onChange={handleChange}
       />
       <br />
@@ -49,7 +48,11 @@ function CredentialsEdit({
         type="text"
         id="issuer_name"
         name="issuer_name"
-        value={tempData[selectedCredential].issuer_name}
+        value={
+          tempData[selectedCredential].issuer_name
+            ? tempData[selectedCredential].issuer_name
+            : ""
+        }
         onChange={handleChange}
       />
       <br />

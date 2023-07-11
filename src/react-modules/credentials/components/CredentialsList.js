@@ -14,7 +14,6 @@ function CredentialsList({
 }) {
   function handleClick(e) {
     const data = e.currentTarget.getAttribute("data-cred-id");
-    console.log(data);
     setComponentToMount("edit");
     setSelectedCredential(parseInt(data));
   }
@@ -22,7 +21,7 @@ function CredentialsList({
   // console.log(testJSON.character[0].credentials);
   return (
     <>
-      {/* <div className="">
+      <div className="">
         {Object.entries(testJSON.character[0].credentials).map(
           (credential, index) => (
             <Credential
@@ -30,17 +29,18 @@ function CredentialsList({
               index={index}
               handleClick={handleClick}
               issuerName={credential[1].issuer_name}
-              credentialName={credential[1].name}
-              attributeCount={credential[1].attributes.length}
+              credentialName={credential[1].cred_name}
+              // attributeCount={credential[1].attributes.length}
               formData={formData}
               setTempData={setTempData}
-              setFormData={setFormData}
               selectedCredential={selectedCredential}
               setSelectedCredential={setSelectedCredential}
+              testJSON={testJSON}
+              setTestJSON={setTestJSON}
             />
           )
         )}
-      </div> */}
+      </div>
       {/* <div className="">
         {formData.length > 0 ? (
           formData.map((credential, index) => (

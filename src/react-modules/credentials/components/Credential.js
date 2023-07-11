@@ -17,7 +17,7 @@ function Credential({
   setTestJSON,
 }) {
   const handleCredentialRemoval = (index) => {
-    // if (formData.length === 1) return;
+    if (Object.keys(testJSON.character[0].credentials).length === 1) return;
 
     setTempData((prevData) => {
       const newData = [...prevData];
@@ -25,15 +25,9 @@ function Credential({
       return newData;
     });
 
-    // setFormData((prevData) => {
-    //   const newData = [...prevData];
-    //   newData.splice(index, 1);
-    //   return newData;
-    // });
-
     setTestJSON((prevData) => {
-      console.log(selectedCredential);
-      delete prevData.character[0].credentials[selectedCredential];
+      delete prevData.character[0].credentials[`cred_id_${index}`];
+      setSelectedCredential((prevVal) => (prevVal - 1 === 0 ? prevVal - 1 : 0));
     });
 
     // setSelectedCredential((prevVal) => (prevVal - 1 === 0 ? prevVal - 1 : 0));
@@ -41,12 +35,12 @@ function Credential({
   return (
     <>
       <div>
-        <div className="credential-container grid grid-cols-7">
-          <div
-            className="credential rounded col-span-6 grid grid-cols-4"
-            data-cred-id={index}
-            onClick={handleClick}
-          >
+        <div
+          className="credential-container grid grid-cols-7 "
+          data-cred-id={index}
+          onClick={handleClick}
+        >
+          <div className="credential rounded col-span-6 grid grid-cols-4">
             <div className="cred-image"></div>
             <div className="cred-info col-span-2">
               <p className="cred-issuer-name">{issuerName}</p>

@@ -18,7 +18,6 @@ function CredentialsList({
     setSelectedCredential(parseInt(data));
   }
 
-  // console.log(testJSON.character[0].credentials);
   return (
     <>
       <div className="">

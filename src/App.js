@@ -16,7 +16,6 @@ import { TEST_JSON } from "./TEST_JSON";
 // import { Credentials } from "./react-modules/credentials/Credentials";
 
 import { CredentialsScreen } from "./react-modules/credentials/CredentialsScreen";
-import { CredentialsScreen2 } from "./react-modules/credentials/CredentialsScreen2";
 
 function App() {
   const [showcaseJSON, setShowcaseJSON] = useImmer({
@@ -25,9 +24,13 @@ function App() {
 
   const [tempData, setTempData] = useState([]);
   const [formData, setFormData] = useState([]);
-
+  
+  const [darkMode, setDarkMode] = useState(true);
+  
+  const [selectedCharacter, setSelectedCharacter] = useState(0);
   const [selectedCredential, setSelectedCredential] = useState(0);
 
+  const [currentPage, setCurrentPage] = useState("character");
   const [componentToMount, setComponentToMount] = useState("no selection");
 
   // Seperate JSON for testing
@@ -35,18 +38,14 @@ function App() {
     character: [TEST_JSON],
   });
 
-  useEffect(() => {
-    console.log("your starting testJSON is: ", testJSON);
-  }, []);
+  // useEffect(() => {
+  //   console.log("your TEMPDATA is: ", tempData);
+  //   console.log("Your testjson is :", testJSON);
+  // }, [tempData, testJSON]);
 
-  useEffect(() => {
-    console.log("your TEMPDATA is: ", tempData);
-    console.log("Your testjson is :", testJSON);
-  }, [tempData, testJSON]);
-
-  useEffect(() => {
-    console.log("Your index is : ", selectedCredential);
-  });
+  // useEffect(() => {
+  //   console.log("Your index is : ", selectedCredential);
+  // });
 
   const handleCredentialUpdate = () => {
     const test = { ...tempData[selectedCredential] };
@@ -59,24 +58,16 @@ function App() {
         id++;
       });
     } else if (componentToMount === "edit") {
-      console.log(test);
-      console.log(selectedCredential);
       setTestJSON((prevData) => {
         prevData.character[0].credentials[`cred_id_${selectedCredential}`] =
           test;
       });
     }
 
-    setComponentToMount("credential");
+    // setComponentToMount("credential");
+    setComponentToMount(null);
     // setTempData([]);
   };
-
-  const [darkMode, setDarkMode] = useState(true);
-
-  const [selectedCharacter, setSelectedCharacter] = useState(0);
-  // const [selectedIndex, setSelectedIndex] = useState(0);
-
-  const [currentPage, setCurrentPage] = useState("character");
 
   const changePage = (page) => {
     setCurrentPage(page);
@@ -150,7 +141,6 @@ function App() {
             setTempData={setTempData}
             formData={formData}
             setFormData={setFormData}
-            // setSelectedIndex={setSelectedIndex}
             selectedCredential={selectedCredential}
             setSelectedCredential={setSelectedCredential}
             setTestJSON={setTestJSON}
@@ -159,17 +149,6 @@ function App() {
             setComponentToMount={setComponentToMount}
             componentToMount={componentToMount}
           />
-          // <CredentialsScreen2
-          //   tempData={tempData}
-          //   setTempData={setTempData}
-          //   formData={formData}
-          //   setFormData={setFormData}
-          //   // setSelectedIndex={setSelectedIndex}
-          //   selectedCredential={selectedCredential}
-          //   setSelectedCredential={setSelectedCredential}
-          //   // testJSON={testJSON}
-          //   // setTestJSON={setTestJSON}
-          // />
         )}
         {currentPage === "setup" && <SetupPage />}
         {currentPage === "scenario" && (
@@ -180,8 +159,6 @@ function App() {
             setFormData={setFormData}
             selectedCredential={selectedCredential}
             setSelectedCredential={setSelectedCredential}
-            // testJSON={testJSON}
-            // setTestJSON={setTestJSON}
           />
         )}
 

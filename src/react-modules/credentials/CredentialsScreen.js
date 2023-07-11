@@ -5,7 +5,6 @@ import { CredentialsEdit } from "./CredentialsEdit";
 import { CredentialsList } from "./components/CredentialsList";
 import { NoSelection } from "../credentials/NoSelection";
 
-
 /// current working one !!!
 
 function CredentialsScreen({
@@ -30,10 +29,6 @@ function CredentialsScreen({
 
   // Check if the create button has been clicked to ensure that you cant spam the button.
   const [createButtonClicked, setCreateButtonClicked] = useState(false);
-
-  useEffect(() => {
-    setTempData([]);
-  }, []);
 
   const showMeMyJSON = () => {
     console.log("Your current formData JSON is: ", formData);
@@ -68,6 +63,8 @@ function CredentialsScreen({
       }
     }
 
+    // setComponentToMount(null);
+
     // if (name === "cred_name" || name === "issuer_name") {
     //   newData[index][name] = value;
     // } else {
@@ -98,16 +95,10 @@ function CredentialsScreen({
       console.log("in create");
       setTempData((prevData) => prevData.slice(0, -1));
     } else if (componentToMount === "edit") {
-      console.log(
-        testJSON.character[0].credentials[`cred_id_${selectedCredential}`]
-      );
       const editedCredential = {
         ...testJSON.character[0].credentials[`cred_id_${selectedCredential}`],
       };
       setTempData([editedCredential]);
-      // Alternatively, you can use other cloning methods like JSON.parse(JSON.stringify()) to create a deep copy:
-      // const editedCredential = JSON.parse(JSON.stringify(testJSON.character[0].credentials[`cred_id_${selectedCredential}`]));
-      // setTempData([editedCredential]);
     }
 
     console.log("selectedCredential after cancel : ", selectedCredential);

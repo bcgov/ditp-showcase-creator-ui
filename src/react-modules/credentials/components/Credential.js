@@ -13,32 +13,17 @@ function Credential({
   setTempData,
   selectedCredential,
   setSelectedCredential,
+  setComponentToMount,
+  handleCredentialRemoval,
   testJSON,
   setTestJSON,
 }) {
-  const handleCredentialRemoval = (index) => {
-    if (Object.keys(testJSON.character[0].credentials).length === 1) return;
-
-    setTempData((prevData) => {
-      const newData = [...prevData];
-      newData.splice(index, 1);
-      return newData;
-    });
-
-    setTestJSON((prevData) => {
-      delete prevData.character[0].credentials[`cred_id_${index}`];
-      setSelectedCredential((prevVal) => (prevVal - 1 === 0 ? prevVal - 1 : 0));
-    });
-
-    // setSelectedCredential((prevVal) => (prevVal - 1 === 0 ? prevVal - 1 : 0));
-  };
   return (
     <>
-      <div>
-        <div
-          className="credential-container grid grid-cols-7 "
+      <div className="credential-container flex flex-row ">
+        <div className="w-full"
           data-cred-id={index}
-          onClick={handleClick}
+          onClick={(e) => handleClick(index)}
         >
           <div className="credential rounded col-span-6 grid grid-cols-4">
             <div className="cred-image"></div>
@@ -51,12 +36,13 @@ function Credential({
             </div>
           </div>
           {/* end of one credential  */}
-          <div className="cred-actions">
-            <p onClick={() => handleCredentialRemoval(index)}>
+          
+        </div>
+        <div className="cred-actions px-5">
+            <p onClick={(e) => handleCredentialRemoval(index)}>
               <FontAwesomeIcon icon={faTrash} />
             </p>
           </div>
-        </div>
       </div>
     </>
   );

@@ -3,41 +3,56 @@ import { useState } from "react";
 import { Credential } from "./Credential";
 
 function CredentialsList({
+  selectedCharacter,
   setComponentToMount,
   setSelectedCredential,
   formData,
+  tempData,
+  showcaseJSON,
+  setShowcaseJSON,
   setTempData,
   setFormData,
   selectedCredential,
   testJSON,
   setTestJSON,
+  handleCredentialRemoval,
+  setCreateButtonClicked
 }) {
-  function handleClick(e) {
-    const data = e.currentTarget.getAttribute("data-cred-id");
+
+
+  function handleClick(credential) {
+    setCreateButtonClicked(false);
     setComponentToMount("edit");
-    setSelectedCredential(parseInt(data));
+    setSelectedCredential(credential);
   }
+
+  // console.log(tempData);
 
   return (
     <>
       <div className="">
-        {Object.entries(testJSON.character[0].credentials).map(
-          (credential, index) => (
-            <Credential
+        {Object.entries(showcaseJSON.personas[selectedCharacter].credentials).map(
+          (credential, index) => {
+            return(
+              <Credential
               key={index}
-              index={index}
+              index={credential[0]}
               handleClick={handleClick}
               issuerName={credential[1].issuer_name}
-              credentialName={credential[1].cred_name}
-              // attributeCount={credential[1].attributes.length}
+              credentialName={credential[1].name}
+              attributeCount={credential[1].attributes.length}
               formData={formData}
               setTempData={setTempData}
               selectedCredential={selectedCredential}
               setSelectedCredential={setSelectedCredential}
               testJSON={testJSON}
               setTestJSON={setTestJSON}
+              setComponentToMount={setComponentToMount}
+              handleCredentialRemoval={handleCredentialRemoval}
             />
-          )
+            )
+            
+          }
         )}
       </div>
       {/* <div className="">

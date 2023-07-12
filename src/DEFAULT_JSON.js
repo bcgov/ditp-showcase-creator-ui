@@ -12,6 +12,30 @@ const DEFAULT_JSON = {
         "Test College allows you to revoke your Student Card if:\n• there is a problem with your credential.\n• your device was lost or stolen and you want to secure your personal information.",
     },
   ],
+  credentials: {
+    "test_card_id": {
+      "issuer_name": "Test College",
+      "name": "test_card",
+      "version": "1.10",
+      "icon": "/public/student/icon-student.svg",
+      "attributes": [
+        {
+          "name": "student_first_name",
+          "value": "Bob",
+          "type": "string"
+        },
+        {
+          "name": "student_last_name",
+          "value": "Smith"
+        },
+        {
+          "name": "expiry_date",
+          "value": "20270517",
+          "type": "dateint"
+        }
+      ]
+    }
+  },
   progressBar: [
     {
       name: "person",

@@ -1,14 +1,15 @@
-import React from "react";
+import { useEffect } from "react";
+import {useImmer} from 'use-immer';
 import { CredentialAttributesList } from "./components/AttributesList";
 
 function CredentialsEdit({
   selectedCredential,
   tempData,
-  handleChange,
   addAttribute,
   setTempData,
-  testJSON,
-  setTestJSON,
+  selectedCharacter,
+  showcaseJSON,
+  handleChange
 }) {
   const handleAttributeRemoval = (attributeIndex) => {
     setTempData((prevData) => {
@@ -18,6 +19,8 @@ function CredentialsEdit({
       return newData;
     });
   };
+  
+
 
   return (
     <>
@@ -28,18 +31,16 @@ function CredentialsEdit({
         </div>
       </div>
       <hr className="mb-6"></hr>
-      <label htmlFor="cred_name">Credential Name</label>
+      <label htmlFor="name">Credential Name</label>
       <br />
       <input
         type="text"
-        id="cred_name"
-        name="cred_name"
+        id="name"
+        name="name"
         value={
-          tempData[selectedCredential].cred_name
-            ? tempData[selectedCredential].cred_name
-            : ""
+          tempData[selectedCredential].name
         }
-        onChange={handleChange}
+        onChange={(e) => handleChange(e, "name")}
       />
       <br />
       <label htmlFor="issuer_name">Issuer Name</label>
@@ -50,10 +51,8 @@ function CredentialsEdit({
         name="issuer_name"
         value={
           tempData[selectedCredential].issuer_name
-            ? tempData[selectedCredential].issuer_name
-            : ""
         }
-        onChange={handleChange}
+        onChange={(e) => handleChange(e, "issuer_name")}
       />
       <br />
       <label> Add Attributes</label>

@@ -22,13 +22,13 @@ function App() {
     personas: [DEFAULT_JSON],
   });
 
-  const [tempData, setTempData] = useState([]);
+  
   const [formData, setFormData] = useState([]);
   
   const [darkMode, setDarkMode] = useState(true);
   
   const [selectedCharacter, setSelectedCharacter] = useState(0);
-  const [selectedCredential, setSelectedCredential] = useState(0);
+  
 
   const [currentPage, setCurrentPage] = useState("character");
   const [componentToMount, setComponentToMount] = useState("no selection");
@@ -46,28 +46,6 @@ function App() {
   // useEffect(() => {
   //   console.log("Your index is : ", selectedCredential);
   // });
-
-  const handleCredentialUpdate = () => {
-    const test = { ...tempData[selectedCredential] };
-
-    if (componentToMount === "create") {
-      let id = Object.keys(testJSON.character[0].credentials).length;
-      const newKey = `cred_id_${id}`;
-      setTestJSON((prevData) => {
-        prevData.character[0].credentials[newKey] = test;
-        id++;
-      });
-    } else if (componentToMount === "edit") {
-      setTestJSON((prevData) => {
-        prevData.character[0].credentials[`cred_id_${selectedCredential}`] =
-          test;
-      });
-    }
-
-    // setComponentToMount("credential");
-    setComponentToMount(null);
-    // setTempData([]);
-  };
 
   const changePage = (page) => {
     setCurrentPage(page);
@@ -137,15 +115,13 @@ function App() {
         )}
         {currentPage === "credential" && (
           <CredentialsScreen
-            tempData={tempData}
-            setTempData={setTempData}
+            showcaseJSON={showcaseJSON}
+            setShowcaseJSON={setShowcaseJSON}
+            selectedCharacter={selectedCharacter}
             formData={formData}
             setFormData={setFormData}
-            selectedCredential={selectedCredential}
-            setSelectedCredential={setSelectedCredential}
             setTestJSON={setTestJSON}
             testJSON={testJSON}
-            handleCredentialUpdate={handleCredentialUpdate}
             setComponentToMount={setComponentToMount}
             componentToMount={componentToMount}
           />
@@ -153,12 +129,8 @@ function App() {
         {currentPage === "setup" && <SetupPage />}
         {currentPage === "scenario" && (
           <ScenarioPage2
-            tempData={tempData}
-            setTempData={setTempData}
             formData={formData}
             setFormData={setFormData}
-            selectedCredential={selectedCredential}
-            setSelectedCredential={setSelectedCredential}
           />
         )}
 

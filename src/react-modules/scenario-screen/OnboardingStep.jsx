@@ -6,7 +6,7 @@ import {
   faPen,
   faTrash,
   faDisplay,
-  faBuilding
+  faBuilding,
 } from "@fortawesome/free-solid-svg-icons";
 
 export const OnboardingStep = ({
@@ -79,31 +79,47 @@ export const OnboardingStep = ({
             step.text
           )}
         </div>
-        <hr/>
+        <hr />
         <div className="flex-col flex">
-          {
-          step.requestOptions.requestedCredentials ?
-          step.requestOptions.requestedCredentials.map((credential, index) => (
-            <div className="flex-row flex items-center justify-between">
-              <div className='flex'>{
-              credential.icon ? (
-                <img width="100px" src={credential.icon} />
-              ) : (
-                <FontAwesomeIcon icon={faBuilding} />
+          {step.requestOptions.requestedCredentials
+            ? step.requestOptions.requestedCredentials.map(
+                (credential, index) => (
+                  <div className="flex-row flex items-center justify-between">
+                    <div className="flex">
+                      {credential.icon ? (
+                        <img width="100px" src={credential.icon} />
+                      ) : (
+                        <FontAwesomeIcon icon={faBuilding} />
+                      )}
+                    </div>
+                    <div className="mx-5 w-full">
+                      <p className="text-xs">
+                        {
+                          showcaseJSON.personas[selectedCharacter].credentials[
+                            credential.name
+                          ].issuer_name
+                        }
+                      </p>
+                      <p className="text-lg font-bold">
+                        {
+                          showcaseJSON.personas[selectedCharacter].credentials[
+                            credential.name
+                          ].name
+                        }
+                      </p>
+                    </div>
+                    <p className="text-center">
+                      Total Proofs: <span className="font-bold">{"???"}</span>
+                    </p>
+                  </div>
+                )
               )
-              
-              
-              }</div>
-              <div className="mx-5 w-full">
-                <p className="text-xs">{showcaseJSON.personas[selectedCharacter].credentials[credential.name].issuer_name}</p>
-                <p className="text-lg font-bold">{showcaseJSON.personas[selectedCharacter].credentials[credential.name].name}</p>
-              </div>
-              <p className="text-center">Total Proofs: <span className="font-bold">{"???"}</span></p>
-            </div>
-          )): null 
-          }
+            : null}
         </div>
       </div>
+      <button className="px-3 hover-red">
+        <FontAwesomeIcon icon={faTrash} />
+      </button>
     </div>
   );
 };

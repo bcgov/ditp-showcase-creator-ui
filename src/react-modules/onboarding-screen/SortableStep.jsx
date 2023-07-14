@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGripVertical,
   faPen,
-  faTrash,
   faDisplay,
 } from "@fortawesome/free-solid-svg-icons";
 

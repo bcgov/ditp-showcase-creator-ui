@@ -5,8 +5,8 @@ function CredentialAttributesList({
   tempData,
   selectedCredential,
   handleChange,
-  handleAttributeRemoval,
   addAttribute,
+  removeAttribute,
 }) {
   return (
     <>
@@ -15,24 +15,32 @@ function CredentialAttributesList({
           <p className="text-sm ">
             Attributes Added:{" "}
             <span className="font-bold">
-              {tempData[selectedCredential].attributes.length}
+              {tempData[selectedCredential].attributes.length !== 0
+                ? tempData[selectedCredential].attributes.length
+                : "0"}
             </span>
           </p>
-          <button className="border rounded text-sm" onClick={addAttribute}>
+          <button
+            className="border rounded text-sm"
+            onClick={() => addAttribute(selectedCredential)}
+          >
             ADD ATTRIBUTE (+)
           </button>
         </div>
         <hr className="mb-3" />
         {tempData[selectedCredential] &&
+          tempData[selectedCredential].attributes.length !== 0 &&
           tempData[selectedCredential].attributes.map((attr, index) => (
             <CredentialAttribute
               key={index}
               index={index}
               attributeName={attr.name}
               attributeValue={attr.value}
-              credType={attr.cred_type}
+              credType={attr.type}
               handleChange={handleChange}
-              handleAttributeRemoval={handleAttributeRemoval}
+              tempData={tempData}
+              selectedCredential={selectedCredential}
+              removeAttribute={removeAttribute}
             />
           ))}
       </div>

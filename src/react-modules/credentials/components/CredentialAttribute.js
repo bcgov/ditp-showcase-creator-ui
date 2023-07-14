@@ -8,16 +8,18 @@ function CredentialAttribute({
   attributeValue,
   credType,
   handleChange,
-  handleAttributeRemoval,
+  selectedCredential,
+  tempData,
+  removeAttribute,
 }) {
   return (
-    <div className="grid grid-cols-9 gap-2">
+    <div className="grid grid-cols-9 gap-2" id={index}>
       <select
-        name={`cred_type-${index}`}
-        id={`cred_type-${index}`}
+        name={`type`}
+        id={`type`}
         className="col-span-2 truncate"
-        value={credType}
-        onChange={(e) => handleChange(e, index)}
+        value={credType || ""}
+        onChange={(e) => handleChange(e, ["attributes", "type"], index)}
       >
         <option value="none">select</option>
         <option value="int">int</option>
@@ -27,25 +29,25 @@ function CredentialAttribute({
 
       <input
         type="text"
-        name={`name-${index}`}
+        name={`name`}
         placeholder="Attribute Name"
         value={attributeName || ""}
-        onChange={(e) => handleChange(e, index)}
+        onChange={(e) => handleChange(e, ["attributes", "name"], index)}
         className="col-span-3"
       />
 
       <input
         type="text"
-        name={`value-${index}`}
+        name={`value`}
         placeholder="Attribute Value"
         value={attributeValue || ""}
-        onChange={(e) => handleChange(e, index)}
+        onChange={(e) => handleChange(e, ["attributes", "value"], index)}
         className="col-span-3"
       />
 
       <div
         className="col-span-1 p-2"
-        onClick={() => handleAttributeRemoval(index)}
+        onClick={() => removeAttribute(selectedCredential, index)}
       >
         <FontAwesomeIcon icon={faTrash} />
       </div>

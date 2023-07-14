@@ -27,7 +27,6 @@ function CredentialsScreen({
 
   // ** for debugging **
   const showMeMyJSON = () => {
-    console.log("Your current formData JSON is: ", showcaseJSON);
     setShowJSON(!showJSON);
   };
 
@@ -48,7 +47,6 @@ function CredentialsScreen({
     setTempData((json) => {
       delete json[credential];
     });
-    console.log(tempData);
   }
 
   // Handle all inputs

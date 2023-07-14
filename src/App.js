@@ -12,9 +12,6 @@ import { ScenarioPage2 } from "./react-modules/pages/ScenarioPage2";
 import { CharacterScreen } from "./react-modules/character-screen/CharacterScreen";
 import { DEFAULT_JSON } from "./DEFAULT_JSON";
 import { TEST_JSON } from "./TEST_JSON";
-
-// import { Credentials } from "./react-modules/credentials/Credentials";
-
 import { CredentialsScreen } from "./react-modules/credentials/CredentialsScreen";
 
 function App() {
@@ -22,13 +19,11 @@ function App() {
     personas: [DEFAULT_JSON],
   });
 
-  
   const [formData, setFormData] = useState([]);
-  
+
   const [darkMode, setDarkMode] = useState(true);
-  
+
   const [selectedCharacter, setSelectedCharacter] = useState(0);
-  
 
   const [currentPage, setCurrentPage] = useState("character");
   const [componentToMount, setComponentToMount] = useState("no selection");
@@ -37,15 +32,6 @@ function App() {
   const [testJSON, setTestJSON] = useImmer({
     character: [TEST_JSON],
   });
-
-  // useEffect(() => {
-  //   console.log("your TEMPDATA is: ", tempData);
-  //   console.log("Your testjson is :", testJSON);
-  // }, [tempData, testJSON]);
-
-  // useEffect(() => {
-  //   console.log("Your index is : ", selectedCredential);
-  // });
 
   const changePage = (page) => {
     setCurrentPage(page);
@@ -128,10 +114,7 @@ function App() {
         )}
         {currentPage === "setup" && <SetupPage />}
         {currentPage === "scenario" && (
-          <ScenarioPage2
-            formData={formData}
-            setFormData={setFormData}
-          />
+          <ScenarioPage2 formData={formData} setFormData={setFormData} />
         )}
 
         <pre className="p-10 m-5 border text-xs rounded dark:text-neutral-200 whitespace-pre-wrap break-words">

@@ -1,22 +1,15 @@
 import React from "react";
-import { CredentialAttributesList } from "./components/AttributesList";
-// import { FileUploadFull } from "../FileUpload";
+import { CredentialAttributesList } from "./components/CredentialAttributesList";
 
 function CredentialsForm({
   handleChange,
   tempData,
-  addAttribute,
   selectedCredential,
-  setTempData,
-  testJSON,
-  setTestJSON,
+  addAttribute,
+  removeAttribute,
+  showcaseJSON,
+  selectedCharacter,
 }) {
-  const handleAttributeRemoval = (attributeIndex) => {
-    console.log("attr index: ", attributeIndex);
-  };
-
-  console.log(selectedCredential);
-
   return (
     <>
       <div className="flex justify-between mt-3">
@@ -34,10 +27,9 @@ function CredentialsForm({
         name="cred_name"
         placeholder="Credential Name"
         value={
-          tempData[selectedCredential] ?
-          tempData[selectedCredential].name : ""
+          tempData[selectedCredential] ? tempData[selectedCredential].name : ""
         }
-        onChange={(e) => handleChange(e, "name")}
+        onChange={(e) => handleChange(e, ["name"])}
       />
       <br />
       <label htmlFor="issuer_name">Issuer Name</label>
@@ -48,21 +40,24 @@ function CredentialsForm({
         name="issuer_name"
         placeholder="Issuer Name"
         value={
-          tempData[selectedCredential] ?
-          tempData[selectedCredential].issuer_name : ""
+          tempData[selectedCredential]
+            ? tempData[selectedCredential].issuer_name
+            : ""
         }
-        onChange={(e) => handleChange(e, "issuer_name")}
+        onChange={(e) => handleChange(e, ["issuer_name"])}
       />
       <br />
       <label> Add Attributes</label>
       <br />
-      {/* <CredentialAttributesList
+      <CredentialAttributesList
         tempData={tempData}
         selectedCredential={selectedCredential}
         handleChange={handleChange}
-        handleAttributeRemoval={handleAttributeRemoval}
         addAttribute={addAttribute}
-      /> */}
+        removeAttribute={removeAttribute}
+        showcaseJSON={showcaseJSON}
+        selectedCharacter={selectedCharacter}
+      />
     </>
   );
 }

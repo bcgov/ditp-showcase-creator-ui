@@ -1,149 +1,146 @@
-import React, { useState, useEffect } from "react";
-import "./styles/credentials.css";
+import { useState, useEffect } from "react";
 import { CredentialsForm } from "./CredentialsForm";
 import { CredentialsEdit } from "./CredentialsEdit";
 import { CredentialsList } from "./components/CredentialsList";
 import { NoSelection } from "../credentials/NoSelection";
+import { useImmer } from "use-immer";
+import "./styles/credentials.css";
+
+/// current working one !!!
 
 function CredentialsScreen({
+  showcaseJSON,
+  setShowcaseJSON,
   selectedCharacter,
-  setSelectedIndex,
-  selectedIndex,
-  tempData,
-  setTempData,
-  formData,
-  setFormData
+  componentToMount,
+  setComponentToMount,
 }) {
-  const [componentToMount, setComponentToMount] = useState("no selection");
-  const [selectedCredential, setSelectedCredential] = useState(0);
+  const [selectedCredential, setSelectedCredential] = useState(null);
+  const [tempData, setTempData] = useImmer(
+    showcaseJSON.personas[selectedCharacter].credentials
+  );
+
+  const [showJSON, setShowJSON] = useState(false);
 
   // Check if the create button has been clicked to ensure that you cant spam the button.
   const [createButtonClicked, setCreateButtonClicked] = useState(false);
 
+  // ** for debugging **
   const showMeMyJSON = () => {
-    console.log("Your current formData JSON is: ", formData);
+    setShowJSON(!showJSON);
   };
 
+  // ** for debugging **
   const clearJSON = () => {
-    setFormData([]);
+    showcaseJSON([]);
     setTempData([]);
   };
 
-  // Handle all input
-  const handleChange = (index) => (e) => {
-    const { name, value } = e.target;
-    const newData = [...tempData];
-    const attributeIndex = parseInt(name.slice(name.lastIndexOf("-") + 1));
-    const attributeName = name.slice(0, name.lastIndexOf("-"));
+  // Remove a credential
+  function handleCredentialRemoval(credential) {
+    setComponentToMount(null);
+    setCreateButtonClicked(false);
+    setSelectedCredential(null);
+    setShowcaseJSON((json) => {
+      delete json.personas[selectedCharacter].credentials[credential];
+    });
+    setTempData((json) => {
+      delete json[credential];
+    });
+  }
 
-    if (name === "cred_name" || name === "issuer_name") {
-      newData[index][name] = value;
-    } else {
-      newData[index].attributes[attributeIndex][attributeName] = value;
+  // Handle all inputs
+  function handleChange(e, element, index) {
+    if (element.length === 1) {
+      setTempData((json) => {
+        json[selectedCredential][element[0]] = e.target.value;
+      });
+    } else if (element.length === 2) {
+      setTempData((json) => {
+        json[selectedCredential][element[0]][index][element[1]] =
+          e.target.value;
+      });
     }
-    setTempData(newData);
-  };
+  }
 
-  // Add an attribute
-  const addAttribute = () => {
-    setTempData((prevData) => {
-      const newData = [...prevData];
-      const selectedCred = { ...newData[selectedCredential] }; // Create a copy of the selected credential
-      selectedCred.attributes = [
-        ...selectedCred.attributes,
-        { cred_type: "", name: "", value: "" },
-      ];
-      newData[selectedCredential] = selectedCred; // Update the selected credential in the new data array
-      return newData;
+  // Set the real JSON
+  const handleCredentialUpdate = () => {
+    setComponentToMount(null);
+    setCreateButtonClicked(false);
+    setSelectedCredential(null);
+    setShowcaseJSON((json) => {
+      json.personas[selectedCharacter].credentials = tempData;
     });
   };
 
-  // Add a credential
-  const handleCredentialUpdate = () => {
-    setCreateButtonClicked(false);
-    setFormData(JSON.parse(JSON.stringify(tempData)));
-    setComponentToMount("credential");
+  // Add an attribute
+  const addAttribute = (credential) => {
+    setTempData((prevData) => {
+      prevData[credential].attributes.push({
+        name: "",
+        value: "",
+        type: "",
+      });
+    });
+  };
+
+  // Remove an attribute
+  const removeAttribute = (credential, index) => {
+    setTempData((prevData) => {
+      prevData[credential].attributes.splice(index, 1);
+    });
   };
 
   // Remove the credential if cancel button is clicked
   const handleCancel = () => {
-    if (componentToMount === "create") {
-      setCreateButtonClicked(false);
-      setTempData((prevData) => {
-        const newData = prevData.filter(
-          (_, index) => index !== selectedCredential
-        );
-        return newData;
-      });
-      setSelectedCredential((prevVal) => (prevVal === 0 ? 0 : prevVal - 1));
-      setComponentToMount("credential");
-    } else if (componentToMount === "edit") {
-      setTempData(JSON.parse(JSON.stringify(formData)));
-      setComponentToMount("credential");
-    }
+    setSelectedCredential(null);
+    setComponentToMount(null);
+    setCreateButtonClicked(false);
+    setTempData(showcaseJSON.personas[selectedCharacter].credentials);
   };
 
   // Create a credential with an empty object.
   const handleCreateButtonClick = (e) => {
-    setSelectedCredential(formData.length);
-    setTempData([
-      ...tempData,
-      {
-        cred_name: "",
+    let credential_id = Date.now();
+    setTempData((temp) => {
+      temp[credential_id] = {
         issuer_name: "",
+        name: "",
+        version: "1.0",
         icon: "",
         attributes: [],
-      },
-    ]);
-    setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
+      };
+    });
     setCreateButtonClicked(true);
-  };
-
-  const handleImportButtonClick = (e) => {
-    setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
+    setSelectedCredential(credential_id);
+    setComponentToMount("create");
   };
 
   const renderComponent = (component) => {
     switch (component) {
-      // case "credential":
-      //   return (
-      //     <SelectionOverview
-      //       setComponentToMount={setComponentToMount}
-      //       credentialSelected={selectedIndex}
-      //       selectedCharacter={selectedCharacter}
-      //       formData={formData}
-      //       setFormData={setFormData}
-      //       selectedCredential={selectedCredential}
-      //       tempData={tempData}
-      //       setTempData={setTempData}
-      //       setSelectedCredential={setSelectedCredential}
-      //     />
-      //   );
       case "create":
         return (
           <CredentialsForm
-            handleChange={handleChange(selectedCredential)}
+            handleChange={handleChange}
             tempData={tempData}
-            setTempData={setTempData}
-            formData={formData}
-            setFormData={setFormData}
             addAttribute={addAttribute}
             selectedCredential={selectedCredential}
+            removeAttribute={removeAttribute}
+            showcaseJSON={showcaseJSON}
+            selectedCharacter={selectedCharacter}
           />
         );
       case "edit":
         return (
           <CredentialsEdit
-            handleChange={handleChange(selectedCredential)}
-            formData={formData}
+            selectedCredential={selectedCredential}
             tempData={tempData}
             setTempData={setTempData}
             addAttribute={addAttribute}
-            selectedCredential={selectedCredential}
+            handleChange={handleChange}
+            removeAttribute={removeAttribute}
           />
         );
-      case "import":
-        return "";
       default:
         return <NoSelection Text={"You have no credential selected."} />;
     }
@@ -151,6 +148,11 @@ function CredentialsScreen({
 
   return (
     <>
+      {showJSON && (
+        <pre className="p-10 m-5 border text-xs rounded dark:text-neutral-200 whitespace-pre-wrap break-words">
+          {JSON.stringify(showcaseJSON, null, 2)}
+        </pre>
+      )}
       <button className="border p-2 rounded" onClick={showMeMyJSON}>
         SHOW ME MY JSON!!!!
       </button>
@@ -169,33 +171,28 @@ function CredentialsScreen({
               </p>
             </div>
             <div>
-              <button
-                data-button-id="import-button-credentials"
-                onClick={(e) => handleImportButtonClick(e)}
-                className="px-3 py-1 mx-1 rounded bg-slate-400 hover:bg-slate-500 text-slate-100"
-              >
-                Import
-              </button>
-              <button
-                data-button-id="create-button-credentials"
-                disabled={createButtonClicked}
-                onClick={(e) => handleCreateButtonClick(e)}
-                className="px-3 py-1 mx-1 rounded bg-slate-400 hover:bg-slate-500 text-slate-100"
-              >
-                Create
-              </button>
+              {!createButtonClicked ? (
+                <button
+                  data-button-id="create-button-credentials"
+                  onClick={(e) => handleCreateButtonClick(e)}
+                  className="px-3 py-1 mx-1 rounded bg-slate-400 hover:bg-slate-500 text-slate-100"
+                >
+                  Create
+                </button>
+              ) : null}
             </div>
           </div>
           <div className="mt-8">
             <CredentialsList
-              setSelectedIndex={setSelectedIndex}
+              selectedCharacter={selectedCharacter}
+              showcaseJSON={showcaseJSON}
               setComponentToMount={setComponentToMount}
-              formData={formData}
-              setFormData={setFormData}
-              selectedCredential={selectedCredential}
               tempData={tempData}
               setTempData={setTempData}
+              selectedCredential={selectedCredential}
               setSelectedCredential={setSelectedCredential}
+              handleCredentialRemoval={handleCredentialRemoval}
+              setCreateButtonClicked={setCreateButtonClicked}
             />
           </div>
           {/* <Credential2 /> */}
@@ -206,17 +203,23 @@ function CredentialsScreen({
         </div>
 
         <div className="flex mt-5 w-full justify-end ">
-          {(componentToMount === "edit" || componentToMount === "create") && (
-            <button className="border p-2 mr-4 rounded" onClick={handleCancel}>
-              CANCEL
-            </button>
-          )}
-          <button
-            className="border p-2 rounded"
-            onClick={handleCredentialUpdate}
-          >
-            {componentToMount === "edit" ? "DONE" : "ADD"}
-          </button>
+          {componentToMount === "edit" || componentToMount === "create" ? (
+            <>
+              <button
+                className="border p-2 mr-4 rounded"
+                onClick={handleCancel}
+              >
+                CANCEL
+              </button>
+
+              <button
+                className="border p-2 rounded"
+                onClick={handleCredentialUpdate}
+              >
+                {componentToMount === "edit" ? "DONE" : "ADD"}
+              </button>
+            </>
+          ) : null}
         </div>
       </div>
     </>

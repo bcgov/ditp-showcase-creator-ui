@@ -8,37 +8,21 @@ function Credential({
   attributeCount,
   index,
   handleClick,
-  formData,
-  setFormData,
-  setTempData,
   selectedCredential,
-  setSelectedCredential,
+  handleCredentialRemoval,
 }) {
-  const handleCredentialRemoval = (index) => {
-    if (formData.length === 1) return;
-
-    setTempData((prevData) => {
-      const newData = [...prevData];
-      newData.splice(index, 1);
-      return newData;
-    });
-
-    setFormData((prevData) => {
-      const newData = [...prevData];
-      newData.splice(index, 1);
-      return newData;
-    });
-
-    setSelectedCredential((prevVal) => (prevVal - 1 === 0 ? prevVal - 1 : 0));
-  };
   return (
     <>
-      <div>
-        <div className="credential-container grid grid-cols-7">
+      <div className="credential-container flex flex-row">
+        <div
+          className="w-full"
+          data-cred-id={index}
+          onClick={(e) => handleClick(index)}
+        >
           <div
-            className="credential rounded col-span-6 grid grid-cols-4"
-            data-cred-id={index}
-            onClick={handleClick}
+            className={`credential rounded col-span-6 grid grid-cols-4 ${
+              selectedCredential === index ? "selected-cred" : ""
+            }`}
           >
             <div className="cred-image"></div>
             <div className="cred-info col-span-2">
@@ -50,11 +34,11 @@ function Credential({
             </div>
           </div>
           {/* end of one credential  */}
-          <div className="cred-actions">
-            <p onClick={() => handleCredentialRemoval(index)}>
-              <FontAwesomeIcon icon={faTrash} />
-            </p>
-          </div>
+        </div>
+        <div className="cred-actions px-5">
+          <p onClick={(e) => handleCredentialRemoval(selectedCredential)}>
+            <FontAwesomeIcon icon={faTrash} />
+          </p>
         </div>
       </div>
     </>

@@ -1,14 +1,15 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import { useImmer } from "use-immer"; // useImmer is an alternative to useState; it is useful for dealing with nested JSON
-import { FileUploadFull, FileUploadBar } from "./react-modules/FileUpload";
-import { TextInput } from "./react-modules/TextInput";
 import { NavBar } from "./react-modules/NavBar";
 import { CharacterPage } from "./react-modules/pages/CharacterPage";
+<<<<<<< HEAD
 // import { CredentialPage } from "./react-modules/pages/CredentialPage";
 import { SetupPage } from "./react-modules/pages/SetupPage";
+=======
+import { OnboardingPage } from "./react-modules/pages/OnboardingPage";
+>>>>>>> 3b876e78c62451a3dc3b0ac8a22c89b874e8d27d
 import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
-import { CharacterScreen } from "./react-modules/character-screen/CharacterScreen";
 import { DEFAULT_JSON } from "./DEFAULT_JSON";
 
 // import { Credentials } from "./react-modules/credentials/Credentials";
@@ -26,6 +27,7 @@ function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const [currentPage, setCurrentPage] = useState("character");
+
   const changePage = (page) => {
     setCurrentPage(page);
   };
@@ -85,6 +87,7 @@ function App() {
           setDarkMode={setDarkMode}
           showcaseJSON={showcaseJSON}
           changePage={changePage}
+          currentPage={currentPage}
         />
         {currentPage === "character" && (
           <CharacterPage
@@ -104,7 +107,11 @@ function App() {
             setSelectedIndex={setSelectedIndex}
           />
         )}
+<<<<<<< HEAD
         {currentPage === "setup" && <SetupPage />}
+=======
+        {currentPage === "setup" && <OnboardingPage showcaseJSON={showcaseJSON} selectedCharacter={selectedCharacter} setShowcaseJSON={setShowcaseJSON} handleJSONUpdate={handleJSONUpdate}/>}
+>>>>>>> 3b876e78c62451a3dc3b0ac8a22c89b874e8d27d
         {currentPage === "scenario" && <ScenarioPage />}
 
         <p className="p-10 m-5 border rounded dark:text-neutral-200">

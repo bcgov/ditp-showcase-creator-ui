@@ -1,6 +1,11 @@
 
 .App {
   text-align: center;
+  color:white;
+}
+
+.blur-xs{
+  filter: blur(2px);
 }
 
 .App-logo {
@@ -8,8 +13,9 @@
   pointer-events: none;
 }
 
-p, h1, h2, h3, h4, h5 {
+p, h1, h2, h3, h4, h5, span, button{
   font-family: 'Montserrat', sans-serif!important;
+  color:white;
 }
 
 .dark {
@@ -21,6 +27,10 @@ p, h1, h2, h3, h4, h5 {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+
+.yellow-background{
+  background-color: #FCBA19;
 }
 
 

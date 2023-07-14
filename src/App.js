@@ -3,9 +3,6 @@ import { useState, useEffect } from "react";
 import { useImmer } from "use-immer"; // useImmer is an alternative to useState; it is useful for dealing with nested JSON
 import { NavBar } from "./react-modules/NavBar";
 import { CharacterPage } from "./react-modules/pages/CharacterPage";
-<<<<<<< HEAD
-// import { CredentialPage } from "./react-modules/pages/CredentialPage";
-import { SetupPage } from "./react-modules/pages/SetupPage";
 // import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
 import { ScenarioPage2 } from "./react-modules/pages/ScenarioPage2";
 import { CharacterScreen } from "./react-modules/character-screen/CharacterScreen";
@@ -112,8 +109,6 @@ function App() {
             componentToMount={componentToMount}
           />
         )}
-<<<<<<< HEAD
-        {currentPage === "setup" && <SetupPage />}
         {currentPage === "scenario" && (
           <ScenarioPage2 formData={formData} setFormData={setFormData} />
         )}

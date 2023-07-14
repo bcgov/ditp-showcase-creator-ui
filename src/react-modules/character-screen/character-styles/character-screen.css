@@ -29,6 +29,14 @@
   background: #454545;
 }
 
+.button-red{
+  background-color: rgb(230, 0, 0);
+}
+
+.button-red:hover{
+  background-color: rgb(189, 0, 0);
+}
+
 .button-light {
   background: #898a8a;
   border-radius: 5px;

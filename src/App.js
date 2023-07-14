@@ -6,14 +6,11 @@ import { CharacterPage } from "./react-modules/pages/CharacterPage";
 <<<<<<< HEAD
 // import { CredentialPage } from "./react-modules/pages/CredentialPage";
 import { SetupPage } from "./react-modules/pages/SetupPage";
-=======
-import { OnboardingPage } from "./react-modules/pages/OnboardingPage";
->>>>>>> 3b876e78c62451a3dc3b0ac8a22c89b874e8d27d
-import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
+// import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
+import { ScenarioPage2 } from "./react-modules/pages/ScenarioPage2";
+import { CharacterScreen } from "./react-modules/character-screen/CharacterScreen";
 import { DEFAULT_JSON } from "./DEFAULT_JSON";
-
-// import { Credentials } from "./react-modules/credentials/Credentials";
-
+import { TEST_JSON } from "./TEST_JSON";
 import { CredentialsScreen } from "./react-modules/credentials/CredentialsScreen";
 
 function App() {
@@ -21,19 +18,23 @@ function App() {
     personas: [DEFAULT_JSON],
   });
 
+  const [formData, setFormData] = useState([]);
+
   const [darkMode, setDarkMode] = useState(true);
 
   const [selectedCharacter, setSelectedCharacter] = useState(0);
-  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const [currentPage, setCurrentPage] = useState("character");
+  const [componentToMount, setComponentToMount] = useState("no selection");
+
+  // Seperate JSON for testing
+  const [testJSON, setTestJSON] = useImmer({
+    character: [TEST_JSON],
+  });
 
   const changePage = (page) => {
     setCurrentPage(page);
   };
-
-  const [formData, setFormData] = useState([]);
-  const [tempData, setTempData] = useState([]);
 
   function handleJSONUpdate(index, element, newValue) {
     switch (element.length) {
@@ -100,23 +101,26 @@ function App() {
         )}
         {currentPage === "credential" && (
           <CredentialsScreen
-            tempData={tempData}
-            setTempData={setTempData}
+            showcaseJSON={showcaseJSON}
+            setShowcaseJSON={setShowcaseJSON}
+            selectedCharacter={selectedCharacter}
             formData={formData}
             setFormData={setFormData}
-            setSelectedIndex={setSelectedIndex}
+            setTestJSON={setTestJSON}
+            testJSON={testJSON}
+            setComponentToMount={setComponentToMount}
+            componentToMount={componentToMount}
           />
         )}
 <<<<<<< HEAD
         {currentPage === "setup" && <SetupPage />}
-=======
-        {currentPage === "setup" && <OnboardingPage showcaseJSON={showcaseJSON} selectedCharacter={selectedCharacter} setShowcaseJSON={setShowcaseJSON} handleJSONUpdate={handleJSONUpdate}/>}
->>>>>>> 3b876e78c62451a3dc3b0ac8a22c89b874e8d27d
-        {currentPage === "scenario" && <ScenarioPage />}
+        {currentPage === "scenario" && (
+          <ScenarioPage2 formData={formData} setFormData={setFormData} />
+        )}
 
-        <p className="p-10 m-5 border rounded dark:text-neutral-200">
-          {JSON.stringify(showcaseJSON, null, "\t")}
-        </p>
+        <pre className="p-10 m-5 border text-xs rounded dark:text-neutral-200 whitespace-pre-wrap break-words">
+          {JSON.stringify(showcaseJSON, null, 2)}
+        </pre>
       </div>
     </>
   );

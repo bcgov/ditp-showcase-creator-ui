@@ -55,36 +55,36 @@ export const OnboardingStep = ({
         </p>
 
         <div
-          className={`highlight-container w-full flex flex-row justify-items-center items-center rounded p-3 
+          className={`highlight-container w-full flex flex-col justify-items-center items-center rounded p-3 
         ${selectedStep == stepIndex - 1 ? "selected-item" : "unselected-item"}`}
         >
-          {
-            // SCREEN IMAGE HERE
-            <p className="text-2xl p-2 mx-2 rounded highlight-text">
-              {
-                // showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1].image
+          <div className="highlight-container w-full flex flex-row justify-items-center items-center rounded p-3">
+            {
+              // SCREEN IMAGE HERE
+              <p className="text-2xl p-2 mx-2 rounded highlight-text">
+                {
+                  // showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1].image
 
-                // ? <img width="100px" src={showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1].image}/> :
-                <FontAwesomeIcon icon={faDisplay} />
-              }
-            </p>
-          }
+                  // ? <img width="100px" src={showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1].image}/> :
+                  <FontAwesomeIcon icon={faDisplay} />
+                }
+              </p>
+            }
 
-          {step.text.length > MAX_CHARS ? (
-            <p>
-              {step.text.slice(0, MAX_CHARS)}...{" "}
-              <span className="font-bold">see more</span>
-            </p>
-          ) : (
-            step.text
-          )}
-        </div>
-        <hr />
-        <div className="flex-col flex">
+            {step.text.length > MAX_CHARS ? (
+              <p>
+                {step.text.slice(0, MAX_CHARS)}...{" "}
+                <span className="font-bold">see more</span>
+              </p>
+            ) : (
+              step.text
+            )}
+          </div>
+
           {step.requestOptions.requestedCredentials
             ? step.requestOptions.requestedCredentials.map(
                 (credential, index) => (
-                  <div className="flex-row flex items-center justify-between">
+                  <div className="flex-row flex items-center justify-around w-full">
                     <div className="flex">
                       {credential.icon ? (
                         <img width="100px" src={credential.icon} />
@@ -92,7 +92,7 @@ export const OnboardingStep = ({
                         <FontAwesomeIcon icon={faBuilding} />
                       )}
                     </div>
-                    <div className="mx-5 w-full">
+                    <div className="mx-5">
                       <p className="text-xs">
                         {
                           showcaseJSON.personas[selectedCharacter].credentials[
@@ -116,6 +116,7 @@ export const OnboardingStep = ({
               )
             : null}
         </div>
+        <hr />
       </div>
       <button className="px-3 hover-red">
         <FontAwesomeIcon icon={faTrash} />

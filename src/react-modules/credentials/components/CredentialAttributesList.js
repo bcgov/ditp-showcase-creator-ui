@@ -15,7 +15,8 @@ function CredentialAttributesList({
           <p className="text-sm ">
             Attributes Added:{" "}
             <span className="font-bold">
-              {tempData[selectedCredential].attributes.length !== 0
+              {tempData[selectedCredential].attributes &&
+              tempData[selectedCredential].attributes.length !== 0
                 ? tempData[selectedCredential].attributes.length
                 : "0"}
             </span>

@@ -46,7 +46,7 @@ function CredentialAttribute({
       />
 
       <div
-        className="col-span-1 p-2"
+        className=" flex items-center text-xl mb-5 justify-center"
         onClick={() => removeAttribute(selectedCredential, index)}
       >
         <FontAwesomeIcon icon={faTrash} />

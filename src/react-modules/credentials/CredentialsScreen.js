@@ -5,6 +5,8 @@ import { CredentialsList } from "./components/CredentialsList";
 import { NoSelection } from "../credentials/NoSelection";
 import { useImmer } from "use-immer";
 import "./styles/credentials.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 /// current working one !!!
 
@@ -19,6 +21,11 @@ function CredentialsScreen({
   const [tempData, setTempData] = useImmer(
     showcaseJSON.personas[selectedCharacter].credentials
   );
+
+  useEffect(() => {
+    // setSelectedCredential(null);
+    console.log(selectedCredential);
+  }, [selectedCredential]);
 
   const [showJSON, setShowJSON] = useState(false);
 
@@ -38,6 +45,14 @@ function CredentialsScreen({
 
   // Remove a credential
   function handleCredentialRemoval(credential) {
+    console.log(selectedCredential);
+
+    if (
+      Object.keys(showcaseJSON.personas[selectedCharacter].credentials)
+        .length === 1
+    ) {
+      return;
+    }
     setComponentToMount(null);
     setCreateButtonClicked(false);
     setSelectedCredential(null);
@@ -47,6 +62,8 @@ function CredentialsScreen({
     setTempData((json) => {
       delete json[credential];
     });
+
+    // console.log(selectedCredential)
   }
 
   // Handle all inputs
@@ -159,8 +176,8 @@ function CredentialsScreen({
       <button className="border p-2 rounded" onClick={clearJSON}>
         CLEAR JSON
       </button>
-      <div className=" two-column-container mx-20 my-16">
-        <div className="two-column-col md:w-3/5 pr-4">
+      <div className="flex m-20 gap-5">
+        <div className="w-2/5 rounded">
           <div className="flex justify-between">
             <div>
               <h3 className="text-4xl font-bold text-slate-50">
@@ -183,6 +200,7 @@ function CredentialsScreen({
             </div>
           </div>
           <div className="mt-8">
+            <h3>Credentials:</h3>
             <CredentialsList
               selectedCharacter={selectedCharacter}
               showcaseJSON={showcaseJSON}
@@ -195,35 +213,96 @@ function CredentialsScreen({
               setCreateButtonClicked={setCreateButtonClicked}
             />
           </div>
-          {/* <Credential2 /> */}
         </div>
-
-        <div className="two-column-col md:w-2/5 bg-gray-300 p-6 rounded-md right-col">
+        {/* End of col 1  */}
+        <div className="w-3/5 two-column-col  bg-gray-300 p-8 rounded-md right-col ">
           {renderComponent(componentToMount)}
         </div>
+        {/* End of col 2  */}
+      </div>
+      <div className="flex border mr-20 w-full justify-end ">
+        {componentToMount === "edit" || componentToMount === "create" ? (
+          <>
+            <button className="border p-2 mr-4 rounded" onClick={handleCancel}>
+              CANCEL
+            </button>
 
-        <div className="flex mt-5 w-full justify-end ">
-          {componentToMount === "edit" || componentToMount === "create" ? (
-            <>
-              <button
-                className="border p-2 mr-4 rounded"
-                onClick={handleCancel}
-              >
-                CANCEL
-              </button>
-
-              <button
-                className="border p-2 rounded"
-                onClick={handleCredentialUpdate}
-              >
-                {componentToMount === "edit" ? "DONE" : "ADD"}
-              </button>
-            </>
-          ) : null}
-        </div>
+            <button
+              className="border p-2 rounded"
+              onClick={handleCredentialUpdate}
+            >
+              {componentToMount === "edit" ? "DONE" : "ADD"}
+            </button>
+          </>
+        ) : null}
       </div>
     </>
   );
 }
 
 export { CredentialsScreen };
+
+// <div className=" two-column-container mx-20 my-16">
+//   <div className="two-column-col md:w-3/5 pr-4">
+// <div className="flex justify-between">
+//   <div>
+//     <h3 className="text-4xl font-bold text-slate-50">
+//       Select your Credential
+//     </h3>
+//     <p className="text-slate-100">
+//       Select a character below or create a new one.
+//     </p>
+//   </div>
+//   <div>
+//     {!createButtonClicked ? (
+//       <button
+//         data-button-id="create-button-credentials"
+//         onClick={(e) => handleCreateButtonClick(e)}
+//         className="px-3 py-1 mx-1 rounded bg-slate-400 hover:bg-slate-500 text-slate-100"
+//       >
+//         Create
+//       </button>
+//     ) : null}
+//   </div>
+// </div>
+// <div className="mt-8">
+//   <CredentialsList
+//     selectedCharacter={selectedCharacter}
+//     showcaseJSON={showcaseJSON}
+//     setComponentToMount={setComponentToMount}
+//     tempData={tempData}
+//     setTempData={setTempData}
+//     selectedCredential={selectedCredential}
+//     setSelectedCredential={setSelectedCredential}
+//     handleCredentialRemoval={handleCredentialRemoval}
+//     setCreateButtonClicked={setCreateButtonClicked}
+//   />
+// </div>
+//     {/* <Credential2 /> */}
+//   </div>
+
+//   <div className="two-column-col md:w-2/5 bg-gray-300 p-6 rounded-md right-col">
+//     {renderComponent(componentToMount)}
+//   </div>
+
+/* <div className="flex mt-5 w-full justify-end ">
+  {componentToMount === "edit" || componentToMount === "create" ? (
+    <>
+      <button
+        className="border p-2 mr-4 rounded"
+        onClick={handleCancel}
+      >
+        CANCEL
+      </button>
+
+      <button
+        className="border p-2 rounded"
+        onClick={handleCredentialUpdate}
+      >
+        {componentToMount === "edit" ? "DONE" : "ADD"}
+      </button>
+    </>
+  ) : null}
+</div> */
+
+// </div>;

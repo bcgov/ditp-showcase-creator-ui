@@ -10,6 +10,8 @@ import { DEFAULT_JSON } from "./DEFAULT_JSON";
 import { TEST_JSON } from "./TEST_JSON";
 import { CredentialsScreen } from "./react-modules/credentials/CredentialsScreen";
 
+import { Layouts } from "./react-modules/Layouts";
+
 function App() {
   const [showcaseJSON, setShowcaseJSON] = useImmer({
     personas: [DEFAULT_JSON],
@@ -79,6 +81,7 @@ function App() {
 
   return (
     <>
+      {/* <Layouts /> */}
       <div className={`dark:bg-gray-500 bg-white ${darkMode ? "dark" : ""}`}>
         <NavBar
           darkMode={darkMode}
@@ -121,3 +124,6 @@ function App() {
   );
 }
 export default App;
+
+
+

@@ -17,7 +17,7 @@ import {
 import { OnboardingStep } from "../scenario-screen/OnboardingStep";
 import { BasicStepEdit } from "../onboarding-screen/BasicStepEdit";
 import { IssueStepEdit } from "../onboarding-screen/IssueStepEdit";
-import { CreateNewStep } from "../onboarding-screen/CreateNewStep";
+import { ScenarioEdit } from "../scenario-screen/ScenarioEdit";
 import { NoSelection } from ".././credentials/NoSelection";
 
 export const ScenarioPage = ({
@@ -145,7 +145,7 @@ export const ScenarioPage = ({
                 className="button-light w-1/5 p-2 hover:bg-neutral-600"
                 onClick={(e) => {
                   e.preventDefault();
-                  setStepState("creating-new");
+                  setStepState("editing-scenario");
                 }}
               >
                 Add a scenario <FontAwesomeIcon icon={faCirclePlus} />
@@ -250,8 +250,8 @@ export const ScenarioPage = ({
           {stepState == "no-selection" ? (
             <NoSelection Text={"Nothing Selected"} />
           ) : null}
-          {stepState == "creating-new" ? (
-            <CreateNewStep addNewStep={addNewStep} />
+          {stepState == "editing-scenario" ? (
+            <ScenarioEdit/>
           ) : null}
           {stepState == "editing-basic" ? (
             <BasicStepEdit

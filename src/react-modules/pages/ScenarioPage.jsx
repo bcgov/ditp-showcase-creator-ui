@@ -6,6 +6,7 @@ import {
   faCirclePlus,
   faTrash,
   faDisplay,
+  faPen,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -14,7 +15,8 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-import { OnboardingStep } from "../scenario-screen/OnboardingStep";
+import { ScenarioStep } from "../scenario-screen/ScenarioStep";
+import { ChooseStepType } from "../scenario-screen/ChooseStepType";
 import { BasicStepEdit } from "../onboarding-screen/BasicStepEdit";
 import { IssueStepEdit } from "../onboarding-screen/IssueStepEdit";
 import { ScenarioEdit } from "../scenario-screen/ScenarioEdit";
@@ -62,18 +64,19 @@ export const ScenarioPage = ({
     setSelectedStep(showcaseJSON.personas[selectedCharacter].onboarding.length);
   };
 
-  useEffect(() => {
-    if (selectedStep == null) {
-      setStepState("no-selection");
-    } else if (
-      showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
-        .credentials
-    ) {
-      setStepState("editing-issue");
-    } else {
-      setStepState("editing-basic");
-    }
-  }, [selectedStep]);
+  // example useEffect, perhaps not relevent here
+  // useEffect(() => {
+  //   if (selectedStep == null) {
+  //     setStepState("no-selection");
+  //   } else if (
+  //     showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
+  //       .credentials
+  //   ) {
+  //     setStepState("editing-issue");
+  //   } else {
+  //     setStepState("editing-basic");
+  //   }
+  // }, [selectedStep]);
 
   // When the JSON changes, re-collect the onboarding data.
   // This is primarily used for when a step is deleted.
@@ -89,6 +92,8 @@ export const ScenarioPage = ({
       json.personas[selectedCharacter].onboarding.splice(i, 1);
     });
   };
+  
+  
 
   // Handles how draggable componants are re-arranged
   const handleDragEnd = (event) => {
@@ -122,6 +127,62 @@ export const ScenarioPage = ({
     setSelectedStep(index);
   };
 
+  
+
+
+
+
+
+
+  //.
+  const [selectedScenario, setSelectedScenario] = useState(null);
+
+
+  //.
+  const deleteScenario = (e, i) => {
+    setSelectedStep('no-selection');
+
+    setShowcaseJSON((json) => {
+      json.personas[selectedCharacter].scenarios.splice(i, 1);
+    });
+  };
+
+  //.
+  const addScenario = (e) =>{
+    e.preventDefault();
+    let id = Date.now();
+    setShowcaseJSON((json) =>{
+      json.personas[selectedCharacter].scenarios.push({
+        "id": `${Date.now()}`,
+        "name": "",
+        "overview":{
+          "title": "",
+          "text": "",
+          "image": ""
+        },
+        "summary":{
+          "title": "",
+          "text": "",
+          "image": ""
+        },
+        "steps": [
+        ]
+      });
+  })
+    
+    setSelectedScenario(showcaseJSON.personas[selectedCharacter].scenarios.length - 1)
+    setStepState("editing-scenario");
+  }
+
+  //.
+  const saveScenario = (e, newScenario) =>{
+    e.preventDefault();
+    setShowcaseJSON(json =>{
+      json.personas[selectedCharacter].scenarios[selectedScenario] = newScenario;
+    })
+    setStepState("none-selected")
+  }
+
   return (
     
       <div className="two-column-container mx-20 my-16">
@@ -144,8 +205,7 @@ export const ScenarioPage = ({
               <button
                 className="button-light w-1/5 p-2 hover:bg-neutral-600"
                 onClick={(e) => {
-                  e.preventDefault();
-                  setStepState("editing-scenario");
+                  addScenario(e)
                 }}
               >
                 Add a scenario <FontAwesomeIcon icon={faCirclePlus} />
@@ -156,7 +216,19 @@ export const ScenarioPage = ({
                   key={myScreen.screenId}
                   className=" button-dark rounded my-5"
                 >
-                  <p className="text-xl font-bold p-5">{myScreen.name}</p>
+                  <div className="flex flex-row">
+                  <p className="text-xl font-bold p-5 w-full">{myScreen.name}</p> 
+                  <p className="text-xl font-bold p-5">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setSelectedScenario(index);
+                        setStepState("editing-scenario");
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faPen} />
+                    </button></p> 
+                  </div>
 
                   {/* Scenario Overview */}
                   <div className="m-5">
@@ -188,7 +260,7 @@ export const ScenarioPage = ({
                   >
                   {myScreen.steps.map((step,index)=>(
                     
-                    <OnboardingStep 
+                    <ScenarioStep 
                     selectedCharacter={selectedCharacter}
                     step={step}
                     stepIndex={index}
@@ -207,7 +279,7 @@ export const ScenarioPage = ({
                       className="button-light p-2 hover:bg-neutral-600"
                       onClick={(e) => {
                         e.preventDefault();
-                        setStepState("creating-new");
+                        setStepState("adding-step");
                       }}
                     >
                       Add Step <FontAwesomeIcon icon={faCirclePlus} />
@@ -232,7 +304,8 @@ export const ScenarioPage = ({
                     </div>
                   </div>
 
-                  <button className="mt-10 button-red font-bold rounded p-1 pl-3 m-2">
+                  <button className="mt-10 button-red font-bold rounded p-1 pl-3 m-2" onClick={(e, index) => deleteScenario(e,index)}>
+                    
                     DELETE SCENARIO
                     <span className="px-2">
                       <FontAwesomeIcon icon={faTrash} />
@@ -247,11 +320,11 @@ export const ScenarioPage = ({
         </div>
 
         <div id="editStep" className="highlight-container w-2/5 rounded p-3">
-          {stepState == "no-selection" ? (
+          {stepState == "no-selection" || stepState == null ? (
             <NoSelection Text={"Nothing Selected"} />
           ) : null}
           {stepState == "editing-scenario" ? (
-            <ScenarioEdit/>
+            <ScenarioEdit selectedScenario={selectedScenario} saveScenario={saveScenario} showcaseJSON={showcaseJSON} selectedCharacter={selectedCharacter}/>
           ) : null}
           {stepState == "editing-basic" ? (
             <BasicStepEdit
@@ -265,6 +338,17 @@ export const ScenarioPage = ({
           ) : null}
           {stepState == "editing-issue" ? (
             <IssueStepEdit
+              selectedCharacter={selectedCharacter}
+              handleJSONUpdate={handleJSONUpdate}
+              setSelectedStep={setSelectedStep}
+              selectedStep={selectedStep}
+              showcaseJSON={showcaseJSON}
+              setShowcaseJSON={setShowcaseJSON}
+              setStepState={setStepState}
+            />
+          ) : null}
+          {stepState == "adding-step" ? (
+            <ChooseStepType
               selectedCharacter={selectedCharacter}
               handleJSONUpdate={handleJSONUpdate}
               setSelectedStep={setSelectedStep}

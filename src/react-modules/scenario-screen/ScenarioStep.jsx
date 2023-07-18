@@ -9,7 +9,7 @@ import {
   faBuilding,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const OnboardingStep = ({
+export const ScenarioStep = ({
   selectedStep,
   setSelectedStep,
   selectedCharacter,
@@ -84,6 +84,8 @@ export const OnboardingStep = ({
           {step.requestOptions.requestedCredentials
             ? step.requestOptions.requestedCredentials.map(
                 (credential, index) => (
+                  <>
+                  <hr/>
                   <div className="flex-row flex items-center justify-around w-full">
                     <div className="flex">
                       {credential.icon ? (
@@ -112,11 +114,11 @@ export const OnboardingStep = ({
                       Total Proofs: <span className="font-bold">{"???"}</span>
                     </p>
                   </div>
+                  </>
                 )
               )
             : null}
         </div>
-        <hr />
       </div>
       <button className="px-3 hover-red">
         <FontAwesomeIcon icon={faTrash} />

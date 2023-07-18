@@ -2,7 +2,24 @@ import { useEffect } from "react";
 import { useImmer } from "use-immer";
 import { LocalFileUpload } from "./../onboarding-screen/LocalFileUpload";
 
-function ScenarioEdit({ selectedScenario }) {
+function ScenarioEdit({ selectedScenario, saveScenario, showcaseJSON, selectedCharacter }) {
+
+  const [localData, setLocalData] = useImmer(showcaseJSON.personas[selectedCharacter].scenarios[selectedScenario])
+
+  const changeScenario = (newValue, element, secondElement) => {
+    if(!secondElement){
+      console.log("SETTING FIRST")
+      setLocalData(json =>{
+        json[element] = newValue
+      })
+    }else{
+      console.log("SETTING SECOND")
+      setLocalData(json =>{
+        json[element][secondElement] = newValue
+      })
+    }
+  }
+
   return (
     <div className="flex flex-col p-5">
       <p>Scenario</p>
@@ -16,7 +33,7 @@ function ScenarioEdit({ selectedScenario }) {
             <span className="p-1 text-xl font-bold">Scenario Name</span>
           </label>
           <br />
-          <input className="p-1 w-full field-background" type="text" />
+          <input className="p-1 w-full field-background" type="text" value={localData.name} onChange={(e) => changeScenario(e.target.value, "name")}/>
         </div>
 
         <div className="my-5">
@@ -27,7 +44,7 @@ function ScenarioEdit({ selectedScenario }) {
               <span className="">Page Title</span>
             </label>
             <br />
-            <input className="p-1 w-full field-background" type="text" />
+            <input className="p-1 w-full field-background" type="text" value={localData.overview.title} onChange={(e) => changeScenario(e.target.value, "overview", "title" )}/>
           </div>
 
           <div className="flex flex-row">
@@ -39,6 +56,7 @@ function ScenarioEdit({ selectedScenario }) {
                 className="p-1 w-full resize-none field-background"
                 rows="8"
                 type="text"
+                value={localData.overview.text} onChange={(e) => changeScenario(e.target.value, "overview", "text" )}
               />
             </div>
             {/* <LocalFileUpload
@@ -62,7 +80,7 @@ function ScenarioEdit({ selectedScenario }) {
               <span className="">Page Title</span>
             </label>
             <br />
-            <input className="p-1 w-full field-background" type="text" />
+            <input className="p-1 w-full field-background" type="text" value={localData.summary.title} onChange={(e) => changeScenario(e.target.value, "summary", "title" )}/>
           </div>
 
           <div className="flex flex-row">
@@ -74,6 +92,7 @@ function ScenarioEdit({ selectedScenario }) {
                 className="p-1 w-full resize-none field-background"
                 rows="8"
                 type="text"
+                value={localData.summary.text} onChange={(e) => changeScenario(e.target.value, "summary", "text" )}
               />
             </div>
             {/* <LocalFileUpload
@@ -92,6 +111,7 @@ function ScenarioEdit({ selectedScenario }) {
           <input
             type="submit"
             value="Save"
+            onClick={(e) => saveScenario(e, localData)}
             className="p-1 w-20 button-dark hover:bg-neutral-600"
           />
         </div>

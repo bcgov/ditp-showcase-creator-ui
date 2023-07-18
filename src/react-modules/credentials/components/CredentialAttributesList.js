@@ -11,18 +11,19 @@ function CredentialAttributesList({
   return (
     <>
       <div className="rounded p-5 bg-neutral-900 mt-3">
-        <div className="grid grid-cols-2 mb-3">
-          <p className="text-sm ">
+        <div className="flex justify-between mb-3">
+          <p className="text-md ">
             Attributes Added:{" "}
             <span className="font-bold">
-              {tempData[selectedCredential].attributes &&
+              {selectedCredential &&
+              tempData[selectedCredential].attributes &&
               tempData[selectedCredential].attributes.length !== 0
                 ? tempData[selectedCredential].attributes.length
                 : "0"}
             </span>
           </p>
           <button
-            className="border rounded text-sm"
+            className=" font-bold rounded text-sm w-50 align-end justify-end add-attr-btn"
             onClick={() => addAttribute(selectedCredential)}
           >
             ADD ATTRIBUTE (+)

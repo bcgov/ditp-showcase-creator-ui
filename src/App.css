@@ -1,10 +1,9 @@
-
 .App {
   text-align: center;
-  color:white;
+  color: white;
 }
 
-.blur-xs{
+.blur-xs {
   filter: blur(2px);
 }
 
@@ -13,14 +12,21 @@
   pointer-events: none;
 }
 
-p, h1, h2, h3, h4, h5, span, button{
-  font-family: 'Montserrat', sans-serif!important;
-  color:white;
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+span,
+button {
+  font-family: "Montserrat", sans-serif !important;
+  color: white;
 }
 
 .dark {
-  background: #222222!important;
-  color:white;
+  background: #222222 !important;
+  color: white;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -29,11 +35,9 @@ p, h1, h2, h3, h4, h5, span, button{
   }
 }
 
-.yellow-background{
-  background-color: #FCBA19;
+.yellow-background {
+  background-color: #fcba19;
 }
-
-
 
 .App-header {
   background: #222222;

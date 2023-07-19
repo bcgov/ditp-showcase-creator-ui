@@ -114,18 +114,7 @@ function App() {
           <ScenarioPage2 formData={formData} setFormData={setFormData} />
         )}
 
-<<<<<<< HEAD
-        {currentPage === "setup" && (
-          <OnboardingPage
-            showcaseJSON={showcaseJSON}
-            selectedCharacter={selectedCharacter}
-            setShowcaseJSON={setShowcaseJSON}
-            handleJSONUpdate={handleJSONUpdate}
-          />
-        )}
-=======
 {currentPage === "setup" && <OnboardingPage showcaseJSON={showcaseJSON} selectedCharacter={selectedCharacter} setShowcaseJSON={setShowcaseJSON} handleJSONUpdate={handleJSONUpdate}/>}
->>>>>>> main
 
         <pre className="p-10 m-5 border text-xs rounded dark:text-neutral-200 whitespace-pre-wrap break-words">
           {JSON.stringify(showcaseJSON, null, 2)}

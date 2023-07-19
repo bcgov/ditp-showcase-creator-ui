@@ -164,7 +164,7 @@ function CredentialsScreen({
       <div className="flex gap-5 container mx-auto px-4 py-8">
         <div className="w-2/5 rounded left-column">
           <div className="flex justify-between">
-            {/* <div>
+            <div>
               <h3 className="text-4xl font-bold text-slate-50">
                 Select your Credential
               </h3>

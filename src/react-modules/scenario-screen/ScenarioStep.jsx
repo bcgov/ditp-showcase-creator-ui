@@ -12,6 +12,7 @@ import {
 export const ScenarioStep = ({
   selectedStep,
   setSelectedStep,
+  setSelectedScenario,
   selectedCharacter,
   step,
   stepIndex,
@@ -19,6 +20,7 @@ export const ScenarioStep = ({
   totalSteps,
   showcaseJSON,
   deleteStep,
+  setState,
 }) => {
   //Attribute we need to apply to the element we want to make sortable
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -33,6 +35,8 @@ export const ScenarioStep = ({
   };
 
   const MAX_CHARS = 110;
+
+  
   return (
     <div
       ref={setNodeRef}
@@ -44,6 +48,13 @@ export const ScenarioStep = ({
       <span className="text-2xl mt-10">
         <FontAwesomeIcon icon={faGripVertical} />
       </span>
+      <button className="w-full" onClick={(e) => {
+        e.preventDefault();
+        console.log(stepIndex);
+        setSelectedStep(stepIndex);
+        setSelectedScenario(scenarioIndex);
+        setState("basic-step-edit")
+      }}>
       <div className="px-3 flex-flex-col w-full justify-items-center">
         <p
           className={`text-sm ${
@@ -60,6 +71,7 @@ export const ScenarioStep = ({
           className={`highlight-container w-full flex flex-col justify-items-center items-center rounded p-3 
         ${selectedStep == stepIndex - 1 ? "selected-item" : "unselected-item"}`}
         >
+          
           <div className="highlight-container w-full flex flex-row justify-items-center items-center rounded p-3">
             {
               // SCREEN IMAGE HERE
@@ -82,6 +94,7 @@ export const ScenarioStep = ({
               step.text
             )}
           </div>
+          
 
           {step.requestOptions && step.requestOptions.requestedCredentials
             ? step.requestOptions.requestedCredentials.map(
@@ -128,6 +141,7 @@ export const ScenarioStep = ({
             : null}
         </div>
       </div>
+      </button>
       <button className="px-3 hover-red" onClick={e => deleteStep(e,scenarioIndex,stepIndex)}>
         <FontAwesomeIcon icon={faTrash} />
       </button>

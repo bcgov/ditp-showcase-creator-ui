@@ -8,12 +8,10 @@ function ScenarioEdit({ selectedScenario, saveScenario, showcaseJSON, selectedCh
 
   const changeScenario = (newValue, element, secondElement) => {
     if(!secondElement){
-      console.log("SETTING FIRST")
       setLocalData(json =>{
         json[element] = newValue
       })
     }else{
-      console.log("SETTING SECOND")
       setLocalData(json =>{
         json[element][secondElement] = newValue
       })

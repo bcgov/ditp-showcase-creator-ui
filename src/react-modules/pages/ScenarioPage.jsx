@@ -16,8 +16,8 @@ import {
 } from "@dnd-kit/sortable";
 
 import { ScenarioStep } from "../scenario-screen/ScenarioStep";
+import { BasicStepEdit } from "../scenario-screen/BasicStepEdit";
 import { ChooseStepType } from "../scenario-screen/ChooseStepType";
-import { BasicStepEdit } from "../onboarding-screen/BasicStepEdit";
 import { IssueStepEdit } from "../onboarding-screen/IssueStepEdit";
 import { ScenarioEdit } from "../scenario-screen/ScenarioEdit";
 import { NoSelection } from ".././credentials/NoSelection";
@@ -33,14 +33,13 @@ export const ScenarioPage = ({
     showcaseJSON.personas[selectedCharacter].scenarios
   );
 
-  // Handling state; what step is editable
-  const [selectedStep, setSelectedStep] = useState(null);
+  
 
   // Handling state; what screen is shown, if not editing
   const [state, setState] = useState("no-selection");
 
   // Add new step
-  const addNewStep = (e, type) => {
+  const addNewStep = (e, type, scenarioIndex) => {
     e.preventDefault();
     
     if (type === "basic") {
@@ -51,6 +50,9 @@ export const ScenarioPage = ({
           "text": "",
           });
       })
+
+      setState("basic-step-edit");
+
     } else if (type === "proof") {
       setShowcaseJSON((json) => {
         json.personas[selectedCharacter].scenarios[selectedScenario].steps.push({
@@ -77,8 +79,9 @@ export const ScenarioPage = ({
           ]
         }});
       });
+      setState("proof-step-edit");
     }
-    setSelectedStep(showcaseJSON.personas[selectedCharacter].onboarding.length);
+    setSelectedStep(showcaseJSON.personas[selectedCharacter].scenarios[selectedScenario].steps.length);
   };
 
   // example useEffect, perhaps not relevent here
@@ -154,6 +157,9 @@ export const ScenarioPage = ({
   //.
   const [selectedScenario, setSelectedScenario] = useState(null);
 
+  //. Handling step state; what step is editable
+  const [selectedStep, setSelectedStep] = useState(null);
+
 
   //.
   const deleteScenario = (e, i) => {
@@ -211,6 +217,15 @@ export const ScenarioPage = ({
     });
   };
 
+  //.
+  const saveStep = (e, newStep) =>{
+    e.preventDefault();
+    setShowcaseJSON(json =>{
+      json.personas[selectedCharacter].scenarios[selectedScenario].steps[selectedStep] = newStep;
+    })
+    setState("none-selected")
+  }
+
   return (
     
       <div className="two-column-container mx-20 my-16">
@@ -241,13 +256,14 @@ export const ScenarioPage = ({
             </div>
               {myScreens.map((myScreen, scenarioIndex) => (
                 <div
-                  key={myScreen.screenId + "_" + Date.now()}
+                  key={scenarioIndex + "_" + Date.now()}
                   className=" button-dark rounded my-5"
                 >
                   <div className="flex flex-row">
                   <p className="text-xl font-bold p-5 w-full">{myScreen.name}</p> 
                   <p className="text-xl font-bold p-5">
                     <button
+                    className="w-full"
                       onClick={(e) => {
                         e.preventDefault();
                         setSelectedScenario(scenarioIndex);
@@ -289,9 +305,13 @@ export const ScenarioPage = ({
                   {myScreen.steps.map((step,index)=>(
                     
                     <ScenarioStep 
-                    key={step + "_"+Date.now()}
+                    key={index + "_"+Date.now()}
                     selectedCharacter={selectedCharacter}
                     step={step}
+                    setSelectedStep={setSelectedStep}
+                    setSelectedScenario={setSelectedScenario}
+                    scenarioIndex={scenarioIndex}
+                    setState={setState}
                     stepIndex={index}
                     scenarioIndex={scenarioIndex}
                     totalSteps={myScreen.steps.length}
@@ -360,14 +380,9 @@ export const ScenarioPage = ({
           {state == "editing-scenario" ? (
             <ScenarioEdit selectedScenario={selectedScenario} saveScenario={saveScenario} showcaseJSON={showcaseJSON} selectedCharacter={selectedCharacter} setState={setState}/>
           ) : null}
-          {state == "editing-basic" ? (
+          {state == "basic-step-edit" ? (
             <BasicStepEdit
-              selectedCharacter={selectedCharacter}
-              handleJSONUpdate={handleJSONUpdate}
-              setSelectedStep={setSelectedStep}
-              selectedStep={selectedStep}
-              showcaseJSON={showcaseJSON}
-              setShowcaseJSON={setShowcaseJSON}
+            selectedScenario={selectedScenario} selectedStep={selectedStep} saveStep={saveStep} showcaseJSON={showcaseJSON} selectedCharacter={selectedCharacter} setState={setState}
             />
           ) : null}
           {state == "editing-issue" ? (

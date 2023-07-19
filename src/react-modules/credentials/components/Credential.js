@@ -20,25 +20,35 @@ function Credential({
           onClick={(e) => handleClick(index)}
         >
           <div
-            className={`credential rounded col-span-6 grid grid-cols-4 ${
+            className={`credential rounded  ${
               selectedCredential === index ? "selected-cred" : ""
             }`}
           >
-            <div className="cred-image"></div>
-            <div className="cred-info col-span-2">
-              <p className="cred-issuer-name">{issuerName}</p>
-              <p className="cred-credential-name">{credentialName}</p>
-            </div>
-            <div className=" cred-attributes">
-              <p className="">Attributes: {attributeCount}</p>
+            <div className="grid grid-cols-3">
+              <div className="col-span-2">
+                <div className="credential-issuer-name">
+                  <p>{issuerName}</p>
+                </div>
+                <div className="credential-credential-name">
+                  <p>{credentialName}</p>
+                </div>
+              </div>
+              <div className="flex justify-center items-center align-center">
+                <p className="credential-attributes">
+                  {" "}
+                  Attributes: {attributeCount}
+                </p>
+              </div>
             </div>
           </div>
-          {/* end of one credential  */}
         </div>
-        <div className="cred-actions px-5">
-          <p onClick={(e) => handleCredentialRemoval(selectedCredential)}>
-            <FontAwesomeIcon icon={faTrash} />
-          </p>
+        <div
+          className="remove flex items-center justify-center w-1/5 trash-button"
+          onClick={(e) => {
+            handleCredentialRemoval(index);
+          }}
+        >
+          <FontAwesomeIcon icon={faTrash} />
         </div>
       </div>
     </>

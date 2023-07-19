@@ -171,7 +171,7 @@ function CredentialsScreen({
               <p className="text-slate-100">
                 Select a character below or create a new one.
               </p>
-            </div> */}
+            </div>
           </div>
           <div className="mt-8">
             <div className="flex justify-between mb-4">

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { CharacterInfo } from "./CharacterInfo";
 import { CharacterEdit } from "./CharacterEdit";
 import { CharacterList } from "./CharacterList";
-import { useImmer } from 'use-immer';
+import { useImmer } from "use-immer";
 
 function CharacterScreen({
   showcaseJSON,
@@ -13,9 +13,8 @@ function CharacterScreen({
   setSelectedCharacter,
   handleJSONUpdate,
 }) {
-
   const [editMode, setEditMode] = useState(false);
-  
+
   // To-do: Set the character images, so they can be previewed... ideally this would be the auto-gen URLs for them
   const [characterImages, setCharacterImages] = useState([]);
 
@@ -25,28 +24,28 @@ function CharacterScreen({
   // Change this mini version of the json, when the character changes
   useEffect(() => {
     setLocalJSON({
-        "name":showcaseJSON.personas[selectedCharacter].name,
-        "type":showcaseJSON.personas[selectedCharacter].type,
-        "description":showcaseJSON.personas[selectedCharacter].description,
-      })
+      name: showcaseJSON.personas[selectedCharacter].name,
+      type: showcaseJSON.personas[selectedCharacter].type,
+      description: showcaseJSON.personas[selectedCharacter].description,
+    });
   }, [selectedCharacter]);
 
   // Function similar to handleJSONUpdate in App.js
-  function handleLocalUpdate(element, newValue){
+  function handleLocalUpdate(element, newValue) {
     setLocalJSON((json) => {
       json[element] = newValue;
     });
   }
 
   // Save handler. When clicking save, send the mini JSON to the real, full JSON file
-  function saveJSON(){
-    handleJSONUpdate(selectedCharacter, ["name"], localJSON.name)
-    handleJSONUpdate(selectedCharacter, ["type"], localJSON.type)
-    handleJSONUpdate(selectedCharacter, ["description"], localJSON.description)
+  function saveJSON() {
+    handleJSONUpdate(selectedCharacter, ["name"], localJSON.name);
+    handleJSONUpdate(selectedCharacter, ["type"], localJSON.type);
+    handleJSONUpdate(selectedCharacter, ["description"], localJSON.description);
 
     setEditMode(false);
   }
-  
+
   return (
     <>
       <div className="two-column-container mx-20 my-16">
@@ -61,8 +60,7 @@ function CharacterScreen({
               </p>
             </div>
             {/* ADD BUTTON */}
-            <div className="ml-auto m-5">
-            </div>
+            <div className="ml-auto m-5"></div>
           </div>
 
           <CharacterList
@@ -80,11 +78,11 @@ function CharacterScreen({
             <CharacterEdit
               selectedCharacter={selectedCharacter}
               handleLocalUpdate={handleLocalUpdate}
-              handleJSONUpdate={handleJSONUpdate}  // Updated this line
-              showcaseJSON={showcaseJSON}           // Updated this line
-              localJSON={localJSON}                 // Added this line
+              handleJSONUpdate={handleJSONUpdate} // Updated this line
+              showcaseJSON={showcaseJSON} // Updated this line
+              localJSON={localJSON} // Added this line
               setCharacterImages={setCharacterImages}
-            />  
+            />
           ) : (
             <CharacterInfo
               setShowcaseJSON={setShowcaseJSON}
@@ -95,23 +93,25 @@ function CharacterScreen({
               characterImages={characterImages}
             />
           )}
-          {/* Save or cancel button */
-          editMode ? (
-          <div className="flex flex-cols mx-5 my-3 justify-end space-x-4">
-            <button
-              className="p-1 w-20 hover:underline uppercase"
-              onClick={() => setEditMode(false)}
-            >
-              Cancel
-            </button>
+          {
+            /* Save or cancel button */
+            editMode ? (
+              <div className="flex flex-cols mx-5 my-3 justify-end space-x-4">
+                <button
+                  className="p-1 w-20 hover:underline uppercase"
+                  onClick={() => setEditMode(false)}
+                >
+                  Cancel
+                </button>
 
-            <button
-              className="p-1 w-20 button-dark hover:bg-neutral-600"
-              onClick={saveJSON}
-            >
-              SAVE
-            </button>
-          </div>) : null
+                <button
+                  className="p-1 w-20 button-dark hover:bg-neutral-600"
+                  onClick={saveJSON}
+                >
+                  SAVE
+                </button>
+              </div>
+            ) : null
           }
         </div>
       </div>

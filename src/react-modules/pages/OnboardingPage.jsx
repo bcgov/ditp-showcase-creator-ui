@@ -39,7 +39,6 @@ export const OnboardingPage = ({
 
   // Add new step
   const addNewStep = (isIssue) => {
-
     if (isIssue) {
       setShowcaseJSON((json) => {
         json.personas[selectedCharacter].onboarding.push({
@@ -64,7 +63,6 @@ export const OnboardingPage = ({
   };
 
   useEffect(() => {
-
     if (selectedStep == null) {
       setStepState("no-selection");
     } else if (
@@ -95,7 +93,7 @@ export const OnboardingPage = ({
   // Handles how draggable componants are re-arranged
   const handleDragEnd = (event) => {
     const { active, over } = event;
-    
+
     setMyScreens((myScreens) => {
       const oldIndex = myScreens.findIndex(
         (myScreen) => myScreen.screenId === active.id
@@ -117,17 +115,21 @@ export const OnboardingPage = ({
     });
   };
 
-  const handleDragStart = (event) =>{
+  const handleDragStart = (event) => {
     const index = myScreens.findIndex(
       (myScreen) => myScreen.screenId === event.active.id
     );
     setSelectedStep(index);
-  }
+  };
 
   return (
-    <DndContext collisionDetection={closestCenter} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-      <div className="two-column-container mx-20 my-16">
-        <div className="two-column-col md:w-3/5 pr-4">
+    <DndContext
+      collisionDetection={closestCenter}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+    >
+      <div className="flex gap-12 container mx-auto px-4 py-8">
+        <div className="w-1/2 rounded left-column">
           <div className="flex w-full">
             <div>
               <h2 className="text-4xl font-bold text-slate-50">
@@ -157,9 +159,7 @@ export const OnboardingPage = ({
               strategy={verticalListSortingStrategy}
             >
               {myScreens.map((myScreen, index) => (
-                
                 <div key={myScreen.screenId} className="flex flex-row">
-                  
                   <SortableStep
                     selectedStep={selectedStep}
                     setSelectedStep={setSelectedStep}
@@ -170,52 +170,65 @@ export const OnboardingPage = ({
                     showcaseJSON={showcaseJSON}
                     selectedCharacter={selectedCharacter}
                   />
-                  
+
                   <div className="flex text-xl mt-10">
-                  <button
-                    className="px-3 hover-red"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleRemoveStep(e, index);}}
-                  >
-                    <FontAwesomeIcon icon={faTrash} />
-                  </button>
+                    <button
+                      className="px-3 hover-red"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleRemoveStep(e, index);
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button>
                   </div>
                 </div>
               ))}
 
-            <DragOverlay>
-              <div className="top-1">
-              <p>{selectedStep ? showcaseJSON.personas[selectedCharacter].onboarding[selectedStep].title : null} </p>
-              <div className="highlight-container w-full flex flex-row justify-items-center items-center rounded p-3 unselected-item backdrop-blur">
-              <p className="text-sm">
-             {selectedStep ? showcaseJSON.personas[selectedCharacter].onboarding[selectedStep].text : null} 
-            </p>
-              </div>
-              </div>
-            </DragOverlay>
+              <DragOverlay>
+                <div className="top-1">
+                  <p>
+                    {selectedStep
+                      ? showcaseJSON.personas[selectedCharacter].onboarding[
+                          selectedStep
+                        ].title
+                      : null}{" "}
+                  </p>
+                  <div className="highlight-container w-full flex flex-row justify-items-center items-center rounded p-3 unselected-item backdrop-blur">
+                    <p className="text-sm">
+                      {selectedStep
+                        ? showcaseJSON.personas[selectedCharacter].onboarding[
+                            selectedStep
+                          ].text
+                        : null}
+                    </p>
+                  </div>
+                </div>
+              </DragOverlay>
             </SortableContext>
-            
           </div>
           <div className="w-full pt-5 flex flex-col justify-center items-center">
-
-          <button
-                className="button-light p-2 hover:bg-neutral-600"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setStepState("creating-new");
-                  window.scrollTo({top: 200, behavior: "smooth", });
-                }}
-              >
-                Add Step <FontAwesomeIcon icon={faCirclePlus} />
-              </button>
+            <button
+              className="button-light p-2 hover:bg-neutral-600"
+              onClick={(e) => {
+                e.preventDefault();
+                setStepState("creating-new");
+                window.scrollTo({ top: 200, behavior: "smooth" });
+              }}
+            >
+              Add Step <FontAwesomeIcon icon={faCirclePlus} />
+            </button>
           </div>
-          
         </div>
 
-        <div id="editStep" className="highlight-container w-2/5 rounded p-3">
+        <div
+          id="editStep"
+          className="w-1/2 two-column-col  bg-gray-300 p-1 rounded-md right-col "
+        >
           {stepState == "no-selection" ? (
-            <NoSelection Text={"No Step Selected"} />
+            <div className="p-5">
+              <NoSelection Text={"No Step Selected"} />
+            </div>
           ) : null}
           {stepState == "creating-new" ? (
             <CreateNewStep addNewStep={addNewStep} />

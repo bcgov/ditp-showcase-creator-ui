@@ -48,31 +48,36 @@ function CharacterScreen({
 
   return (
     <>
-      <div className="two-column-container mx-20 my-16">
-        <div className="two-column-col md:w-3/5 pr-4">
-          <div className="flex w-full">
+      <div className="flex gap-5 container mx-auto px-4 py-8">
+        <div className="w-1/2 rounded left-column">
+          <div className="flex justify-between">
             <div>
-              <h2 className="text-4xl font-bold text-slate-50 text-start w-full">
-                Select Your Character
-              </h2>
-              <p className="w-full">
-                Select a character below or create a new one.
+              <h3 className="text-4xl font-bold text-slate-50">
+                Create your Character
+              </h3>
+              <p className="text-slate-100 mt-3">
+                Fill in the details on the right to create your character for
+                this showcase.
               </p>
             </div>
-            {/* ADD BUTTON */}
-            <div className="ml-auto m-5"></div>
           </div>
+          <div className="mt-8">
+            <div className="flex justify-between mb-4">
+              <h3 className="text-xl font-bold">Your Character:</h3>
+            </div>
 
-          <CharacterList
-            setEditMode={setEditMode}
-            showcaseJSON={showcaseJSON}
-            localJSON={localJSON}
-            selectedCharacter={selectedCharacter}
-            setSelectedCharacter={setSelectedCharacter}
-          />
+            <CharacterList
+              setEditMode={setEditMode}
+              showcaseJSON={showcaseJSON}
+              localJSON={localJSON}
+              selectedCharacter={selectedCharacter}
+              setSelectedCharacter={setSelectedCharacter}
+            />
+          </div>
         </div>
+        {/* end of column 1  */}
 
-        <div className="highlight-container w-2/5 rounded p-3">
+        <div className="w-1/2 two-column-col  bg-gray-300 p-3 rounded-md right-col ">
           {editMode ? (
             // Toggling edit mode
             <CharacterEdit

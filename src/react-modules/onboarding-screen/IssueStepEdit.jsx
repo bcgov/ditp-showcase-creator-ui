@@ -22,7 +22,6 @@ function IssueStepEdit({
     showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
   );
 
-
   useEffect(() => {
     setLocalJSON(
       showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
@@ -44,11 +43,11 @@ function IssueStepEdit({
     console.log(credential);
     setLocalJSON((json) => {
       const index = json.credentials.indexOf(credential);
-      if(index !== -1){
-        json.credentials.splice(index,1);
+      if (index !== -1) {
+        json.credentials.splice(index, 1);
       }
-  });
-    console.log(localJSON)
+    });
+    console.log(localJSON);
   }
 
   function cancelSubmit(e) {
@@ -140,10 +139,10 @@ function IssueStepEdit({
         </div>
 
         <LocalFileUpload
-        text={"Icon"}
-        element={"image"}
-        handleLocalUpdate={handleLocalUpdate}
-        localJSON={localJSON}
+          text={"Icon"}
+          element={"image"}
+          handleLocalUpdate={handleLocalUpdate}
+          localJSON={localJSON}
         />
 
         <p className="text-2xl pt-10 font-bold">Add your Credential</p>

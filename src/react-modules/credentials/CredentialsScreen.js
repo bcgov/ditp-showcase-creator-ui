@@ -155,27 +155,32 @@ function CredentialsScreen({
           />
         );
       default:
-        return <NoSelection Text={"You have no credential selected."} />;
+        return (
+          <div className="">
+            <NoSelection Text={"You have no credential selected."} />
+          </div>
+        );
     }
   };
 
   return (
     <>
-      <div className="flex gap-5 container mx-auto px-4 py-8">
-        <div className="w-2/5 rounded left-column">
+      <div className="flex gap-12 container mx-auto px-4 py-8">
+        <div className="w-1/2 rounded left-col">
           <div className="flex justify-between">
             <div>
               <h3 className="text-4xl font-bold text-slate-50">
-                Select your Credential
+                Add your Credentials
               </h3>
-              <p className="text-slate-100">
-                Select a character below or create a new one.
+              <p className="text-slate-100 mt-3">
+                Fill in the details on the right to create a credential for this
+                showcase.
               </p>
             </div>
           </div>
           <div className="mt-8">
             <div className="flex justify-between mb-4">
-              <h3 className="text-xl font-bold">Your Credentials:</h3>
+              <h3 className="text-xl font-bold">Credentials Added:</h3>
               <div className="">
                 {!createButtonClicked ? (
                   <button
@@ -203,9 +208,16 @@ function CredentialsScreen({
           </div>
         </div>
         {/* End of col 1  */}
-        <div className="w-3/5 two-column-col  bg-gray-300 p-8 rounded-md right-col ">
+        <div className="w-1/2 two-column-col bg-gray-300 p-6 rounded-md right-col">
           {renderComponent(componentToMount)}
+          {/* <div
+            class="border w-full h-full flex items-center justify-center"
+            style="min-height: 480px;"
+          >
+            Nothing is selected
+          </div> */}
         </div>
+
         {/* End of col 2  */}
       </div>
       <div className="flex container mx-auto px-4 w-full justify-end ">

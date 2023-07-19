@@ -9,31 +9,40 @@ function CreateNewStep({ addNewStep }) {
         <hr />
       </div>
 
-      <button className="basic-step flex flex-row justify-between items-center rounded p-5 my-3 w-full text-start" onClick={(e) => addNewStep(false)}>
-        <p className="text-xl font-bold w-1/4">Basic</p>
-        <div className="w-1/4">
-          <ul className=" mx-5">
+      <div className="p-5">
+        <button
+          className="basic-step flex flex-row justify-between items-center rounded p-5 my-3 w-full text-start"
+          onClick={(e) => addNewStep(false)}
+        >
+          <p className="text-xl font-bold w-1/4">Basic</p>
+          <div className="w-1/4">
+            <ul className=" mx-5">
               <li>Title</li>
               <li>Description</li>
               <li>Image</li>
-            </ul></div>
-          
-        <p className="text-2xl font-bold text-end">Add Step →</p>
-      </button>
+            </ul>
+          </div>
 
+          <p className="text-2xl font-bold text-end">Add Step →</p>
+        </button>
 
-      <button className="basic-step rounded flex flex-row justify-between items-center p-5 my-3 w-full text-start" onClick={(e) => addNewStep(true)}>
-      <p className="text-xl font-bold w-1/4">Issue Credential</p>
-        <div className="w-1/4">
-          <ul className=" mx-5">
+        <button
+          className="basic-step rounded flex flex-row justify-between items-center p-5 my-3 w-full text-start"
+          onClick={(e) => addNewStep(true)}
+        >
+          <p className="text-xl font-bold w-1/4">Issue Credential</p>
+          <div className="w-1/4">
+            <ul className=" mx-5">
               <li>Title</li>
               <li>Description</li>
               <li>Image</li>
               <li>Credential(s)</li>
-            </ul></div>
-          
-        <p className="text-2xl font-bold text-end">Add Step →</p>
-      </button>
+            </ul>
+          </div>
+
+          <p className="text-2xl font-bold text-end">Add Step →</p>
+        </button>
+      </div>
     </>
   );
 }

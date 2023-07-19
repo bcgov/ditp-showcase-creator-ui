@@ -15,8 +15,10 @@ export const ScenarioStep = ({
   selectedCharacter,
   step,
   stepIndex,
+  scenarioIndex,
   totalSteps,
   showcaseJSON,
+  deleteStep,
 }) => {
   //Attribute we need to apply to the element we want to make sortable
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -86,7 +88,7 @@ export const ScenarioStep = ({
                 (credential, index) => (
                   <>
                     <hr />
-                    <div className="flex-row flex items-center justify-around w-full">
+                    <div className="flex-row flex items-center justify-around w-full" key={credential+"_"+Date.now()}>
                       <div className="flex">
                         {credential.icon ? (
                           <img width="100px" src={credential.icon} />
@@ -126,7 +128,7 @@ export const ScenarioStep = ({
             : null}
         </div>
       </div>
-      <button className="px-3 hover-red">
+      <button className="px-3 hover-red" onClick={e => deleteStep(e,scenarioIndex,stepIndex)}>
         <FontAwesomeIcon icon={faTrash} />
       </button>
     </div>

@@ -157,6 +157,7 @@ export const ScenarioPage = ({
 
   //.
   const deleteScenario = (e, i) => {
+    e.preventDefault();
     setSelectedStep('no-selection');
 
     setShowcaseJSON((json) => {
@@ -187,7 +188,7 @@ export const ScenarioPage = ({
       });
   })
     
-    setSelectedScenario(showcaseJSON.personas[selectedCharacter].scenarios.length - 1)
+    setSelectedScenario(showcaseJSON.personas[selectedCharacter].scenarios.length)
     setState("editing-scenario");
   }
 
@@ -199,6 +200,16 @@ export const ScenarioPage = ({
     })
     setState("none-selected")
   }
+
+  //.
+  const deleteStep = (e, scenarioIndex, stepIndex) => {
+    e.preventDefault();
+    setSelectedStep('no-selection');
+
+    setShowcaseJSON((json) => {
+      json.personas[selectedCharacter].scenarios[scenarioIndex].steps.splice(stepIndex, 1);
+    });
+  };
 
   return (
     
@@ -228,9 +239,9 @@ export const ScenarioPage = ({
                 Add a scenario <FontAwesomeIcon icon={faCirclePlus} />
               </button>
             </div>
-              {myScreens.map((myScreen, index) => (
+              {myScreens.map((myScreen, scenarioIndex) => (
                 <div
-                  key={myScreen.screenId}
+                  key={myScreen.screenId + "_" + Date.now()}
                   className=" button-dark rounded my-5"
                 >
                   <div className="flex flex-row">
@@ -239,7 +250,7 @@ export const ScenarioPage = ({
                     <button
                       onClick={(e) => {
                         e.preventDefault();
-                        setSelectedScenario(index);
+                        setSelectedScenario(scenarioIndex);
                         setState("editing-scenario");
                       }}
                     >
@@ -278,11 +289,16 @@ export const ScenarioPage = ({
                   {myScreen.steps.map((step,index)=>(
                     
                     <ScenarioStep 
+                    key={step + "_"+Date.now()}
                     selectedCharacter={selectedCharacter}
                     step={step}
                     stepIndex={index}
+                    scenarioIndex={scenarioIndex}
                     totalSteps={myScreen.steps.length}
-                    showcaseJSON={showcaseJSON}/>
+                    showcaseJSON={showcaseJSON}
+                    deleteStep={deleteStep}
+                    />
+                    
                   ))}
                   </SortableContext>
                   </DndContext>
@@ -297,7 +313,7 @@ export const ScenarioPage = ({
                       onClick={(e) => {
                         e.preventDefault();
                         setState("adding-step");
-                        setSelectedScenario(index)
+                        setSelectedScenario(scenarioIndex)
                       }}
                     >
                       Add Step <FontAwesomeIcon icon={faCirclePlus} />
@@ -322,7 +338,7 @@ export const ScenarioPage = ({
                     </div>
                   </div>
 
-                  <button className="mt-10 button-red font-bold rounded p-1 pl-3 m-2" onClick={(e, index) => deleteScenario(e,index)}>
+                  <button className="mt-10 button-red font-bold rounded p-1 pl-3 m-2" onClick={(e, index) => deleteScenario(e, index + 1)}>
                     
                     DELETE SCENARIO
                     <span className="px-2">

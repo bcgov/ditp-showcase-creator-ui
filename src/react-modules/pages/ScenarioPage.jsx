@@ -37,28 +37,45 @@ export const ScenarioPage = ({
   const [selectedStep, setSelectedStep] = useState(null);
 
   // Handling state; what screen is shown, if not editing
-  const [stepState, setStepState] = useState("no-selection");
+  const [state, setState] = useState("no-selection");
 
   // Add new step
-  const addNewStep = (isIssue) => {
-    if (isIssue) {
+  const addNewStep = (e, type) => {
+    e.preventDefault();
+    
+    if (type === "basic") {
       setShowcaseJSON((json) => {
-        json.personas[selectedCharacter].onboarding.push({
-          screenId: `${Date.now()}`,
-          title: "",
-          text: "",
-          image: "",
-          credentials: [],
-        });
-      });
-    } else {
+        json.personas[selectedCharacter].scenarios[selectedScenario].steps.push({
+          "type": "BASIC",
+          "title": "",
+          "text": "",
+          });
+      })
+    } else if (type === "proof") {
       setShowcaseJSON((json) => {
-        json.personas[selectedCharacter].onboarding.push({
-          screenId: `${Date.now()}`,
-          title: "",
-          text: "",
-          image: "",
-        });
+        json.personas[selectedCharacter].scenarios[selectedScenario].steps.push({
+          
+        "type": "CONNET_AND_VERIFY",
+        "title": "Confirm the information to send",
+        "text": "",
+        "requestOptions": {
+          "type": "OOB",
+          "title": "",
+          "text": "",
+          "requestedCredentials": [
+            {
+              "icon": "",
+              "attributes": {
+                  "all":{
+                     "names":[],
+                     "restrictions": []
+                  }
+              },
+              "predicates": {
+              }
+            }
+          ]
+        }});
       });
     }
     setSelectedStep(showcaseJSON.personas[selectedCharacter].onboarding.length);
@@ -67,14 +84,14 @@ export const ScenarioPage = ({
   // example useEffect, perhaps not relevent here
   // useEffect(() => {
   //   if (selectedStep == null) {
-  //     setStepState("no-selection");
+  //     setState("no-selection");
   //   } else if (
   //     showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
   //       .credentials
   //   ) {
-  //     setStepState("editing-issue");
+  //     setState("editing-issue");
   //   } else {
-  //     setStepState("editing-basic");
+  //     setState("editing-basic");
   //   }
   // }, [selectedStep]);
 
@@ -171,7 +188,7 @@ export const ScenarioPage = ({
   })
     
     setSelectedScenario(showcaseJSON.personas[selectedCharacter].scenarios.length - 1)
-    setStepState("editing-scenario");
+    setState("editing-scenario");
   }
 
   //.
@@ -180,7 +197,7 @@ export const ScenarioPage = ({
     setShowcaseJSON(json =>{
       json.personas[selectedCharacter].scenarios[selectedScenario] = newScenario;
     })
-    setStepState("none-selected")
+    setState("none-selected")
   }
 
   return (
@@ -223,7 +240,7 @@ export const ScenarioPage = ({
                       onClick={(e) => {
                         e.preventDefault();
                         setSelectedScenario(index);
-                        setStepState("editing-scenario");
+                        setState("editing-scenario");
                       }}
                     >
                       <FontAwesomeIcon icon={faPen} />
@@ -279,7 +296,8 @@ export const ScenarioPage = ({
                       className="button-light p-2 hover:bg-neutral-600"
                       onClick={(e) => {
                         e.preventDefault();
-                        setStepState("adding-step");
+                        setState("adding-step");
+                        setSelectedScenario(index)
                       }}
                     >
                       Add Step <FontAwesomeIcon icon={faCirclePlus} />
@@ -320,13 +338,13 @@ export const ScenarioPage = ({
         </div>
 
         <div id="editStep" className="highlight-container w-2/5 rounded p-3">
-          {stepState == "no-selection" || stepState == null ? (
+          {state == "no-selection" || state == null ? (
             <NoSelection Text={"Nothing Selected"} />
           ) : null}
-          {stepState == "editing-scenario" ? (
-            <ScenarioEdit selectedScenario={selectedScenario} saveScenario={saveScenario} showcaseJSON={showcaseJSON} selectedCharacter={selectedCharacter}/>
+          {state == "editing-scenario" ? (
+            <ScenarioEdit selectedScenario={selectedScenario} saveScenario={saveScenario} showcaseJSON={showcaseJSON} selectedCharacter={selectedCharacter} setState={setState}/>
           ) : null}
-          {stepState == "editing-basic" ? (
+          {state == "editing-basic" ? (
             <BasicStepEdit
               selectedCharacter={selectedCharacter}
               handleJSONUpdate={handleJSONUpdate}
@@ -336,7 +354,7 @@ export const ScenarioPage = ({
               setShowcaseJSON={setShowcaseJSON}
             />
           ) : null}
-          {stepState == "editing-issue" ? (
+          {state == "editing-issue" ? (
             <IssueStepEdit
               selectedCharacter={selectedCharacter}
               handleJSONUpdate={handleJSONUpdate}
@@ -344,18 +362,12 @@ export const ScenarioPage = ({
               selectedStep={selectedStep}
               showcaseJSON={showcaseJSON}
               setShowcaseJSON={setShowcaseJSON}
-              setStepState={setStepState}
+              setState={setState}
             />
           ) : null}
-          {stepState == "adding-step" ? (
+          {state == "adding-step" ? (
             <ChooseStepType
-              selectedCharacter={selectedCharacter}
-              handleJSONUpdate={handleJSONUpdate}
-              setSelectedStep={setSelectedStep}
-              selectedStep={selectedStep}
-              showcaseJSON={showcaseJSON}
-              setShowcaseJSON={setShowcaseJSON}
-              setStepState={setStepState}
+              addNewStep={addNewStep}
             />
           ) : null}
         </div>

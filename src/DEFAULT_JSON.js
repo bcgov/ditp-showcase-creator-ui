@@ -157,11 +157,19 @@ const DEFAULT_JSON = {
             "requestedCredentials": [
               {
                 "icon": "",
-                "name": "test_card_id",
+                "attributes": {
+                    "all":{
+                       "names":["student_first_name", "student_last_name"],
+                       "restrictions": ["test_card_id"]
+                    }
+                },
                 "predicates": {
-                  "name": "expiry_date",
-                  "type": ">=",
-                  "value": 20230517
+                  "expiry_date":{
+                    "name": "expiry_date",
+                    "type": ">=",
+                    "value": 20230517,
+                    "restrictions": ["test_card_id"]
+                  }
                 }
               }
             ]

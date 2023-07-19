@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useImmer } from "use-immer";
 import { LocalFileUpload } from "./../onboarding-screen/LocalFileUpload";
 
-function ScenarioEdit({ selectedScenario, saveScenario, showcaseJSON, selectedCharacter }) {
+function ScenarioEdit({ selectedScenario, saveScenario, showcaseJSON, selectedCharacter, setState }) {
 
   const [localData, setLocalData] = useImmer(showcaseJSON.personas[selectedCharacter].scenarios[selectedScenario])
 
@@ -106,7 +106,13 @@ function ScenarioEdit({ selectedScenario, saveScenario, showcaseJSON, selectedCh
         </div>
 
         <div className="flex flex-cols mx-5 my-3 justify-end space-x-4 items-baseline">
-          <button className="p-1 w-20 hover:underline uppercase">Cancel</button>
+          <button onClick={e => {
+            e.preventDefault()
+            setState("none-selected")
+          }} 
+          className="p-1 w-20 hover:underline uppercase">
+            Cancel
+            </button>
 
           <input
             type="submit"

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useImmer } from "use-immer"; // useImmer is an alternative to useState; it is useful for dealing with nested JSON
 import { NavBar } from "./react-modules/NavBar";
 import { CharacterPage } from "./react-modules/pages/CharacterPage";
+import { OnboardingPage } from "./react-modules/pages/OnboardingPage";
 // import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
 import { ScenarioPage2 } from "./react-modules/pages/ScenarioPage2";
 import { CharacterScreen } from "./react-modules/character-screen/CharacterScreen";
@@ -112,6 +113,8 @@ function App() {
         {currentPage === "scenario" && (
           <ScenarioPage2 formData={formData} setFormData={setFormData} />
         )}
+
+{currentPage === "setup" && <OnboardingPage showcaseJSON={showcaseJSON} selectedCharacter={selectedCharacter} setShowcaseJSON={setShowcaseJSON} handleJSONUpdate={handleJSONUpdate}/>}
 
         <pre className="p-10 m-5 border text-xs rounded dark:text-neutral-200 whitespace-pre-wrap break-words">
           {JSON.stringify(showcaseJSON, null, 2)}

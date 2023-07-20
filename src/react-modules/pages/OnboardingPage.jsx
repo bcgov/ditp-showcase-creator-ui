@@ -139,21 +139,24 @@ export const OnboardingPage = ({
                 Add pages below to create the onboarding steps.
               </p>
             </div>
-            <div className="ml-auto m-3">
-              <button
-                className="button-light p-2 hover:bg-neutral-600"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setStepState("creating-new");
-                }}
-              >
-                Add Step <FontAwesomeIcon icon={faCirclePlus} />
-              </button>
-            </div>
           </div>
-
           <div className="mt-10">
-            <p className="font-bold">Steps Added: ({myScreens.length})</p>
+            <div className="flex justify-between mb-4">
+              <p className="font-bold text-xl">
+                Steps Added: ({myScreens.length})
+              </p>
+              <div className="">
+                <button
+                  className="button-light p-2 hover:bg-neutral-600"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setStepState("creating-new");
+                  }}
+                >
+                  Add Step <FontAwesomeIcon icon={faCirclePlus} />
+                </button>
+              </div>
+            </div>
             <SortableContext
               items={myScreens}
               strategy={verticalListSortingStrategy}

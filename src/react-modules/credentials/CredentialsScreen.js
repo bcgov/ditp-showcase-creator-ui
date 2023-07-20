@@ -8,6 +8,8 @@ import "./styles/credentials.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+
 /// current working one !!!
 
 function CredentialsScreen({
@@ -175,9 +177,9 @@ function CredentialsScreen({
                   <button
                     data-button-id="create-button-credentials"
                     onClick={(e) => handleCreateButtonClick(e)}
-                    className="px-3 py-1 mx-1 rounded bg-slate-400 hover:bg-slate-500 text-slate-100"
+                    className="p-2 mx-1 rounded button-light hover:bg-neutral-600 text-slate-100"
                   >
-                    Add Credential ( + )
+                    Add Credential <FontAwesomeIcon icon={faCirclePlus} />
                   </button>
                 ) : null}
               </div>
@@ -194,6 +196,7 @@ function CredentialsScreen({
               handleCredentialRemoval={handleCredentialRemoval}
               setCreateButtonClicked={setCreateButtonClicked}
             />
+            
           </div>
         </div>
         {/* End of col 1  */}

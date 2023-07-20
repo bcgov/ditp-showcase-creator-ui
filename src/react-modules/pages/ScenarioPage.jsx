@@ -17,6 +17,7 @@ import {
 
 import { ScenarioStep } from "../scenario-screen/ScenarioStep";
 import { BasicStepEdit } from "../scenario-screen/BasicStepEdit";
+import { ProofStepEdit } from "../scenario-screen/ProofStepEdit";
 import { ChooseStepType } from "../scenario-screen/ChooseStepType";
 import { IssueStepEdit } from "../onboarding-screen/IssueStepEdit";
 import { ScenarioEdit } from "../scenario-screen/ScenarioEdit";
@@ -226,6 +227,8 @@ export const ScenarioPage = ({
     setState("none-selected")
   }
 
+  console.log(showcaseJSON.personas[selectedCharacter].scenarios[selectedScenario].steps[selectedStep]);
+
   return (
     
       <div className="two-column-container mx-20 my-16">
@@ -374,14 +377,23 @@ export const ScenarioPage = ({
         </div>
 
         <div id="editStep" className="highlight-container w-2/5 rounded p-3">
+
           {state == "no-selection" || state == null ? (
             <NoSelection Text={"Nothing Selected"} />
           ) : null}
+
           {state == "editing-scenario" ? (
             <ScenarioEdit selectedScenario={selectedScenario} saveScenario={saveScenario} showcaseJSON={showcaseJSON} selectedCharacter={selectedCharacter} setState={setState}/>
           ) : null}
-          {state == "basic-step-edit" ? (
+
+          {state == "basic-step-edit" && showcaseJSON.personas[selectedCharacter].scenarios[selectedScenario].steps[selectedStep].type === "BASIC" ? (
             <BasicStepEdit
+            selectedScenario={selectedScenario} selectedStep={selectedStep} saveStep={saveStep} showcaseJSON={showcaseJSON} selectedCharacter={selectedCharacter} setState={setState}
+            />
+          ) : null}
+          
+          {state == "basic-step-edit" && showcaseJSON.personas[selectedCharacter].scenarios[selectedScenario].steps[selectedStep].type === "CONNET_AND_VERIFY" ? (
+            <ProofStepEdit
             selectedScenario={selectedScenario} selectedStep={selectedStep} saveStep={saveStep} showcaseJSON={showcaseJSON} selectedCharacter={selectedCharacter} setState={setState}
             />
           ) : null}

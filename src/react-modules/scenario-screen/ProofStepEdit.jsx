@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useImmer } from "use-immer";
 import { LocalFileUpload } from "./../onboarding-screen/LocalFileUpload";
 
-function BasicStepEdit({
+function ProofStepEdit({
   selectedScenario,
   selectedStep,
   saveStep,
@@ -29,17 +29,23 @@ function BasicStepEdit({
     });
   };
 
+  const changeRequestOption = (newValue, element) => {
+    setLocalData((json) => {
+        json.requestOptions[element] = newValue;
+      });
+  }
+
   return (
     <div className="flex flex-col p-5">
       <p>Scenario</p>
-      <p className="text-4xl font-bold">Edit Basic Step</p>
+      <p className="text-4xl font-bold">Edit Proof Step</p>
       <hr />
 
       <form onSubmit={null}>
         {/* TITLE */}
         <div className="p-1 mt-5">
           <label className="text-neutral-500 dark:text-neutral-200">
-            <span className="p-1 text-xl font-bold">Title</span>
+            <span className=" text-xl font-bold">Title</span>
           </label>
           <br />
           <input
@@ -65,6 +71,42 @@ function BasicStepEdit({
           </div>
         </div>
 
+
+
+        <p className="text-2xl mt-5 font-bold">Request Options</p>
+        <hr className="my-3"/>
+        <label className="text-neutral-500 dark:text-neutral-200">
+            <span className="">Type</span>
+          </label>
+          <input
+            className="p-1 w-full field-background"
+            type="text"
+            value={localData.requestOptions.type}
+            onChange={(e) => changeRequestOption(e.target.value, "type")}
+          />
+
+
+<label className="text-neutral-500 dark:text-neutral-200">
+            <span className="">Title</span>
+          </label>
+          <input
+            className="p-1 w-full field-background"
+            type="text"
+            value={localData.requestOptions.title}
+            onChange={(e) => changeRequestOption(e.target.value, "title")}
+          />
+
+<label className="text-neutral-500 dark:text-neutral-200">
+              {"Text"}
+            </label>
+            <textarea
+              className="p-1 w-full resize-none field-background"
+              rows="4"
+              type="text"
+              value={localData.requestOptions.text}
+              onChange={(e) => changeRequestOption(e.target.value, "text")}
+            />
+
         <div className="flex flex-cols mx-5 my-3 justify-end space-x-4 items-baseline">
           <button
             onClick={(e) => {
@@ -88,4 +130,4 @@ function BasicStepEdit({
   );
 }
 
-export { BasicStepEdit };
+export { ProofStepEdit };

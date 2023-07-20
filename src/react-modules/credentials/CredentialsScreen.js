@@ -31,17 +31,6 @@ function CredentialsScreen({
   // Check if the create button has been clicked to ensure that you cant spam the button.
   const [createButtonClicked, setCreateButtonClicked] = useState(false);
 
-  // ** for debugging **
-  const showMeMyJSON = () => {
-    setShowJSON(!showJSON);
-  };
-
-  // ** for debugging **
-  const clearJSON = () => {
-    showcaseJSON([]);
-    setTempData([]);
-  };
-
   // Remove a credential
   function handleCredentialRemoval(credential) {
     console.log(selectedCredential);
@@ -186,9 +175,9 @@ function CredentialsScreen({
                   <button
                     data-button-id="create-button-credentials"
                     onClick={(e) => handleCreateButtonClick(e)}
-                    className="px-3 font-bold py-1 mx-1 rounded bg-slate-400 hover:bg-slate-500 text-slate-100"
+                    className="px-3 py-1 mx-1 rounded bg-slate-400 hover:bg-slate-500 text-slate-100"
                   >
-                    Add a Credential ( + )
+                    Add Credential ( + )
                   </button>
                 ) : null}
               </div>
@@ -210,12 +199,6 @@ function CredentialsScreen({
         {/* End of col 1  */}
         <div className="w-1/2 two-column-col bg-gray-300 p-6 rounded-md right-col">
           {renderComponent(componentToMount)}
-          {/* <div
-            class="border w-full h-full flex items-center justify-center"
-            style="min-height: 480px;"
-          >
-            Nothing is selected
-          </div> */}
         </div>
 
         {/* End of col 2  */}

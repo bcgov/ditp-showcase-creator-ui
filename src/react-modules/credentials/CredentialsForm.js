@@ -14,8 +14,10 @@ function CredentialsForm({
     <>
       <div className="flex justify-between mt-3">
         <div>
-          <p className="text-slate-100 text-sm">Creating a new credential</p>
-          <h3 className="text-4xl font-bold text-slate-50">Add Credential</h3>
+          <p className="text-slate-100 text-sm">Credentials</p>
+          <h3 className="text-4xl font-bold text-slate-50">
+            Add a new Credential
+          </h3>
         </div>
       </div>
       <hr className="mb-6"></hr>

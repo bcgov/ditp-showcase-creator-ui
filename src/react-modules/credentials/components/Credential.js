@@ -21,7 +21,9 @@ function Credential({
         >
           <div
             className={`credential rounded  ${
-              selectedCredential === index ? "selected-cred" : ""
+              selectedCredential === index
+                ? "selected-item"
+                : "credential-border"
             }`}
           >
             <div className="grid grid-cols-3">

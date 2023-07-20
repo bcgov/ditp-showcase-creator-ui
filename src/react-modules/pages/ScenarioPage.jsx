@@ -227,7 +227,6 @@ export const ScenarioPage = ({
     setState("none-selected")
   }
 
-  console.log(showcaseJSON.personas[selectedCharacter].scenarios[selectedScenario].steps[selectedStep]);
 
   return (
     

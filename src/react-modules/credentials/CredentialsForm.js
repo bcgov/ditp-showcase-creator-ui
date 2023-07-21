@@ -21,7 +21,9 @@ function CredentialsForm({
         </div>
       </div>
       <hr className="mb-6"></hr>
-      <label htmlFor="cred_name">Credential Name</label>
+      <label className="text-md" htmlFor="cred_name">
+        Credential Name
+      </label>
       <br />
       <input
         type="text"
@@ -32,6 +34,7 @@ function CredentialsForm({
           tempData[selectedCredential] ? tempData[selectedCredential].name : ""
         }
         onChange={(e) => handleChange(e, ["name"])}
+        className="mt-2"
       />
       <br />
       <label htmlFor="issuer_name">Issuer Name</label>
@@ -47,6 +50,7 @@ function CredentialsForm({
             : ""
         }
         onChange={(e) => handleChange(e, ["issuer_name"])}
+        className="mt-2"
       />
       <br />
       <label> Add Attributes</label>

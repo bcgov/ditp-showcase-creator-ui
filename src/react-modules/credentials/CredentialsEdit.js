@@ -30,6 +30,7 @@ function CredentialsEdit({
           tempData[selectedCredential] ? tempData[selectedCredential].name : ""
         }
         onChange={(e) => handleChange(e, ["name"])}
+        className="mt-2"
       />
       <br />
       <label htmlFor="issuer_name">Issuer Name</label>
@@ -45,6 +46,7 @@ function CredentialsEdit({
             : ""
         }
         onChange={(e) => handleChange(e, ["issuer_name"])}
+        className="mt-2"
       />
       <br />
       <label> Add Attributes</label>

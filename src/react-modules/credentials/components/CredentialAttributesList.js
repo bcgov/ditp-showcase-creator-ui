@@ -1,5 +1,7 @@
 import React from "react";
 import { CredentialAttribute } from "./CredentialAttribute";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 
 function CredentialAttributesList({
   tempData,
@@ -12,7 +14,7 @@ function CredentialAttributesList({
     <>
       <div className="rounded p-5 bg-neutral-900 mt-3">
         <div className="flex justify-between mb-3">
-          <p className="text-md ">
+          <p className="text-sm font-bold">
             Attributes Added:{" "}
             <span className="font-bold">
               {selectedCredential &&
@@ -23,10 +25,13 @@ function CredentialAttributesList({
             </span>
           </p>
           <button
-            className=" font-bold rounded text-sm w-50 align-end justify-end add-attr-btn"
+            className="  text-xs add-attr-btn  text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
             onClick={() => addAttribute(selectedCredential)}
           >
-            ADD ATTRIBUTE (+)
+            <span>ADD ATTRIBUTE </span>
+            <span className="text-md ml-2">
+              <FontAwesomeIcon icon={faCirclePlus} />
+            </span>
           </button>
         </div>
         <hr className="mb-3" />

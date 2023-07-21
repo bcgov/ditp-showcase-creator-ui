@@ -38,7 +38,7 @@ function CredentialAttribute({
         placeholder="Attribute Name"
         value={attributeName || ""}
         onChange={(e) => handleChange(e, ["attributes", "name"], index)}
-        className="col-span-3"
+        className="col-span-3 text-sm"
       />
 
       <input
@@ -49,7 +49,7 @@ function CredentialAttribute({
         }
         value={attributeValue || ""}
         onChange={(e) => handleChange(e, ["attributes", "value"], index)}
-        className="col-span-3"
+        className="col-span-3 text-sm"
       />
 
       <div

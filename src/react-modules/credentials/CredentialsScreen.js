@@ -196,7 +196,6 @@ function CredentialsScreen({
               handleCredentialRemoval={handleCredentialRemoval}
               setCreateButtonClicked={setCreateButtonClicked}
             />
-            
           </div>
         </div>
         {/* End of col 1  */}

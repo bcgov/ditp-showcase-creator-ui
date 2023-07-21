@@ -135,7 +135,7 @@ export const OnboardingPage = ({
               <h2 className="text-4xl font-bold text-slate-50">
                 Add your Steps
               </h2>
-              <p className="w-full">
+              <p className="w-full mt-3">
                 Add pages below to create the onboarding steps.
               </p>
             </div>

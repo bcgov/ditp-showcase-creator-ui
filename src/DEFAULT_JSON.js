@@ -154,25 +154,33 @@ const DEFAULT_JSON = {
             "type": "OOB",
             "title": "Cool Clothes Online Request",
             "text": "Cool Clothes Online would like some of your personal information.",
-            "requestedCredentials": [
+            "proofRequest":
               {
-                "icon": "",
                 "attributes": {
-                    "all":{
+                    "test_card_id":{
                        "names":["student_first_name", "student_last_name"],
                        "restrictions": ["test_card_id"]
+                    },
+                    "student_card":{
+                       "names":["student_first_name", "student_last_name"],
+                       "restrictions": ["student_card"]
                     }
                 },
                 "predicates": {
-                  "expiry_date":{
+                  "test_card_id_expiry_date":{
                     "name": "expiry_date",
                     "type": ">=",
                     "value": 20230517,
                     "restrictions": ["test_card_id"]
+                  },
+                  "student_card_expiry_date":{
+                    "name": "expiry_date",
+                    "type": ">=",
+                    "value": 20230517,
+                    "restrictions": ["student_card"]
                   }
                 }
               }
-            ]
           }
         }
       ]

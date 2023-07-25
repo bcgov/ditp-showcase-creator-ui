@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useImmer } from "use-immer";
-import { LocalFileUpload } from "./../onboarding-screen/LocalFileUpload";
+import { LocalFileUpload } from "./LocalFileUpload";
 
 function ScenarioEdit({ selectedScenario, saveScenario, showcaseJSON, selectedCharacter, setState }) {
 
@@ -16,6 +16,13 @@ function ScenarioEdit({ selectedScenario, saveScenario, showcaseJSON, selectedCh
         json[element][secondElement] = newValue
       })
     }
+  }
+
+  const handleLocalUpdate = (element, newValue) => {
+    setLocalData(json =>{
+      json[element[0]][element[1]] = newValue;
+    })
+
   }
 
   return (
@@ -52,18 +59,19 @@ function ScenarioEdit({ selectedScenario, saveScenario, showcaseJSON, selectedCh
               </label>
               <textarea
                 className="p-1 w-full resize-none field-background"
-                rows="8"
+                rows="10"
                 type="text"
                 value={localData.overview.text} onChange={(e) => changeScenario(e.target.value, "overview", "text" )}
               />
             </div>
-            {/* <LocalFileUpload
-            text={null}
-            element={"test"}
-            handleLocalUpdate={null}
-            localJSON={null}
-          /> */}
-            FILE UPLOAD HERE
+
+
+            <LocalFileUpload
+            text={"Image"}
+            element={["overview", "image"]}
+            handleLocalUpdate={handleLocalUpdate}
+            localJSON={localData.overview}
+          />
           </div>
         </div>
 
@@ -93,13 +101,12 @@ function ScenarioEdit({ selectedScenario, saveScenario, showcaseJSON, selectedCh
                 value={localData.summary.text} onChange={(e) => changeScenario(e.target.value, "summary", "text" )}
               />
             </div>
-            {/* <LocalFileUpload
-            text={null}
-            element={"test"}
-            handleLocalUpdate={null}
-            localJSON={null}
-          /> */}
-            FILE UPLOAD HERE
+            <LocalFileUpload
+            text={"Image"}
+            element={["summary", "image"]}
+            handleLocalUpdate={handleLocalUpdate}
+            localJSON={localData.overview}
+          />
           </div>
         </div>
 

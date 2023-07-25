@@ -111,15 +111,20 @@ const EditProofRequest = (
 
     const SaveProofRequest = (e) => {
         e.preventDefault();
+
+      // close the proof request edit window
+      showcaseJSON.setEditingCredentials(prev => {
+        // let temp = prev.splice(showcaseJSON.editingIndex,1)
+        // console.log(temp)
+        // return temp
+        return []
+    })
+
         showcaseJSON.setShowcaseJSON(json =>{
             json.personas[showcaseJSON.selectedCharacter].scenarios[showcaseJSON.selectedScenario].steps[showcaseJSON.selectedStep].requestOptions.proofRequest = localData
         })
 
-        // close the proof request edit window
-        showcaseJSON.setEditingCredentials(prev => {
-            let temp = prev.splice(showcaseJSON.editingIndex,1)
-            return temp
-        })
+        
   
     }
 

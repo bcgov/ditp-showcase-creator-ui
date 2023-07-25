@@ -35,7 +35,6 @@ export const ScenarioStep = ({
   };
 
   const MAX_CHARS = 110;
-
   
   return (
     <div
@@ -60,7 +59,7 @@ export const ScenarioStep = ({
             step.credentials ? "text-highlight font-bold" : ""
           }`}
         >
-          {step.credentials ? "Issue Step" : "Basic Step"}
+          {step.requestOptions ? "Proof Step" : "Basic Step"}
         </p>
         <p className="font-bold">
           {step.title} - ({stepIndex + 1} / {totalSteps})
@@ -95,49 +94,29 @@ export const ScenarioStep = ({
           </div>
           
 
-          {step.requestOptions && step.requestOptions.requestedCredentials
-            ? step.requestOptions.requestedCredentials.map(
-                (credential, index) => (
-                  <>
+          {
+            step.requestOptions ? (
+              <>
                     <hr />
-                    <div className="flex-row flex items-center justify-around w-full" key={credential+"_"+Date.now()}>
-                      <div className="flex">
-                        {credential.icon ? (
-                          <img width="100px" src={credential.icon} />
-                        ) : (
-                          <FontAwesomeIcon icon={faBuilding} />
-                        )}
-                      </div>
-                      <div className="mx-5">
-                        <p className="text-xs">
-                          {showcaseJSON.personas[selectedCharacter].credentials[
-                            credential.attributes.all.restrictions[0]
-                          ]
-                            ? showcaseJSON.personas[selectedCharacter]
-                                .credentials[
-                                credential.attributes.all.restrictions[0]
-                              ].issuer_name
-                            : null}
-                        </p>
-                        <p className="text-lg font-bold">
-                          {showcaseJSON.personas[selectedCharacter].credentials[
-                            credential.attributes.all.restrictions[0]
-                          ]
-                            ? showcaseJSON.personas[selectedCharacter]
-                                .credentials[
-                                credential.attributes.all.restrictions[0]
-                              ].name
-                            : null}
-                        </p>
-                      </div>
+                    <div className="flex-row flex items-center justify-around w-full">
                       <p className="text-center">
-                        Total Proofs: <span className="font-bold">{"???"}</span>
+                        Proof Request
                       </p>
+                      <div className="added-credential-main p-2 m-2 rounded">
+                    {
+                        Object.keys(step.requestOptions.proofRequest.attributes).map(key =>
+                          <p key={key}>{key}</p>
+                        )
+
+                      }
+                      </div>
+                      
                     </div>
+                    
                   </>
-                )
-              )
-            : null}
+            ) : null
+                  
+                }
         </div>
       </div>
       </button>

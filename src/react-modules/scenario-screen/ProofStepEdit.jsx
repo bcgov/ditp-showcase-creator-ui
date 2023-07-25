@@ -61,35 +61,23 @@ function ProofStepEdit({
         setSearchResults((results) => [...results, credential]);
       }
     }
-    console.log(searchResults);
   }
 
   // Add a new credential to the selected step
   function addCredential(event, credential) {
     event.preventDefault();
     setSearchResults([]);
-    console.log(credential);
-    setLocalData((json) => {
-      json.requestOptions.requestedCredentials.push(
-        {
-            "icon": "",
-            "attributes": {
-                "all":{
-                   "values":[],
-                   "restrictions": [credential]
-                }
-            },
-            "predicates": {
-            }
-          }
-      );
-    });
+    if(!localData.requestOptions.proofRequest.attributes[credential]){
+      setLocalData(json =>{
+        json.requestOptions.proofRequest.attributes[credential] = [showcaseJSON.personas[selectedCharacter].credentials[credential].attributes[0].name]
+      })
+    }
+    
   }
 
   // Functionality for removing a credential from a proof step
   function removeCredential(e, credential) {
     e.preventDefault();
-    console.log(credential);
 
     setLocalData(json =>{
       delete json.requestOptions.proofRequest.attributes[credential]

@@ -83,7 +83,6 @@ const EditProofRequest = (
                   }
             })
         }
-        console.log(localData);
     }
 
     const AddAttribute = (e) =>{
@@ -130,6 +129,11 @@ const EditProofRequest = (
     {/* MAP FOR ALL ATTRIBUTES */}
       {
         // SETTING ATTRIBUTE
+        localData &&
+        localData.attributes &&
+        localData.attributes[showcaseJSON.credentialName] &&
+        localData.attributes[showcaseJSON.credentialName].attributes
+        ?
         localData.attributes[showcaseJSON.credentialName].attributes.map(
           (attribute, index) => (
             <div className="flex flex-row" key={index+"_"+attribute+"_"+Date.now()}>
@@ -221,7 +225,7 @@ const EditProofRequest = (
               <button className="hover-red" onClick={(e) => RemoveAttribute(e, "attributes", index)}><FontAwesomeIcon icon={faTrash}/></button>
             </div>
           )
-        )
+        ) : null
       }
 
 
@@ -341,12 +345,12 @@ const EditProofRequest = (
         )
       }
       <div className='w-full text-center'>
-      <button className="text-center p-1 mb-2 button-light"
+      <button className="text-center p-1 mb-2 mx-2 button-light"
       onClick={(e) => AddAttribute(e)}>
         Add Attribute
       </button>
       
-      <button className="text-center p-1 mb-2 button-light"
+      <button className="text-center p-1 mx-2 mb-2 button-light"
       onClick={(e) => SaveProofRequest(e)}>
         Save
       </button>

@@ -50,7 +50,7 @@ function BasicStepEdit({
           />
         </div>
 
-        <div className="flex flex-row">
+        <div className=" w-full">
           <div className="p-1">
             <label className="text-neutral-500 dark:text-neutral-200">
               {"Page Description"}

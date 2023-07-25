@@ -50,7 +50,6 @@ export const ScenarioStep = ({
       </span>
       <button className="w-full" onClick={(e) => {
         e.preventDefault();
-        console.log(stepIndex);
         setSelectedStep(stepIndex);
         setSelectedScenario(scenarioIndex);
         setState("basic-step-edit")

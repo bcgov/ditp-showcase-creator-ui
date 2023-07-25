@@ -393,7 +393,7 @@ export const ScenarioPage = ({
           
           {state == "basic-step-edit" && showcaseJSON.personas[selectedCharacter].scenarios[selectedScenario].steps[selectedStep].type === "CONNET_AND_VERIFY" ? (
             <ProofStepEdit
-            selectedScenario={selectedScenario} selectedStep={selectedStep} saveStep={saveStep} showcaseJSON={showcaseJSON} selectedCharacter={selectedCharacter} setState={setState}
+            selectedScenario={selectedScenario} selectedStep={selectedStep} saveStep={saveStep} showcaseJSON={showcaseJSON} selectedCharacter={selectedCharacter} setState={setState} setShowcaseJSON={setShowcaseJSON}
             />
           ) : null}
           {state == "editing-issue" ? (

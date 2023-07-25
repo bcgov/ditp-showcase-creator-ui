@@ -16,6 +16,7 @@ function ProofStepEdit({
   showcaseJSON,
   selectedCharacter,
   setState,
+  setShowcaseJSON
 }) {
   const [localData, setLocalData] = useImmer(
     showcaseJSON.personas[selectedCharacter].scenarios[selectedScenario].steps[
@@ -89,13 +90,19 @@ function ProofStepEdit({
   function removeCredential(e, credential) {
     e.preventDefault();
     console.log(credential);
-    setLocalData((json) => {
-      const index = json.requestOptions.requestedCredentials.indexOf(credential);
-      if(index !== -1){
-        json.credentials.splice(index,1);
+
+    setLocalData(json =>{
+      delete json.requestOptions.proofRequest.attributes[credential]
+    })
+
+
+    for(const property in localData.requestOptions.proofRequest.predicates){
+      if(localData.requestOptions.proofRequest.predicates[property].restrictions[0] === credential){
+        setLocalData(json =>{
+          delete json.requestOptions.proofRequest.predicates[property]
+        })
       }
-  });
-    console.log(localData)
+    }
   }
 
   return (
@@ -138,7 +145,10 @@ function ProofStepEdit({
 
         <p className="text-2xl mt-5 font-bold">Request Options</p>
         <hr className="my-3"/>
-        <label className="text-neutral-500 dark:text-neutral-200">
+
+        {/* REQUEST TYPE OPTION */}
+
+        {/* <label className="text-neutral-500 dark:text-neutral-200">
             <span className="">Type</span>
           </label>
           <input
@@ -146,7 +156,7 @@ function ProofStepEdit({
             type="text"
             value={localData.requestOptions.type}
             onChange={(e) => changeRequestOption(e.target.value, "type")}
-          />
+          /> */}
 
 
 <label className="text-neutral-500 dark:text-neutral-200">
@@ -196,7 +206,9 @@ function ProofStepEdit({
           showcaseJSON={showcaseJSON}
           localData={localData}
           selectedStep={selectedStep}
-        //   removeCredential={removeCredential}
+          removeCredential={removeCredential}
+          selectedScenario={selectedScenario}
+          setShowcaseJSON={setShowcaseJSON}
         />
 
         <div className="flex flex-cols mx-5 my-3 justify-end space-x-4 items-baseline">

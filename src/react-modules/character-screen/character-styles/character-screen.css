@@ -41,3 +41,7 @@
   background: #898a8a;
   border-radius: 5px;
 }
+.button-light:hover {
+  background: #747474;
+  border-radius: 5px;
+}

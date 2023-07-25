@@ -5,7 +5,7 @@ const DEFAULT_JSON = {
   body_image: "",
   description: "This is Bob's description.",
   credentials: {
-    "test_card_id": {
+    "student_card": {
       "issuer_name": "Test College",
       "name": "test_card",
       "version": "1.10",
@@ -27,7 +27,7 @@ const DEFAULT_JSON = {
         }
       ]
     },
-    "test_card_id_2": {
+    "test_card_id": {
       "issuer_name": "My Workplace",
       "name": "test_card",
       "version": "1.10",
@@ -158,11 +158,11 @@ const DEFAULT_JSON = {
               {
                 "attributes": {
                     "test_card_id":{
-                       "names":["student_first_name", "student_last_name"],
+                       "attributes":["student_first_name", "student_last_name"],
                        "restrictions": ["test_card_id"]
                     },
                     "student_card":{
-                       "names":["student_first_name", "student_last_name"],
+                       "attributes":["student_first_name", "student_last_name"],
                        "restrictions": ["student_card"]
                     }
                 },

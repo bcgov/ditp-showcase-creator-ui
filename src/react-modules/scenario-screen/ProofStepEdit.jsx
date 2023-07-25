@@ -114,7 +114,7 @@ function ProofStepEdit({
           />
         </div>
 
-        <div className="flex flex-row">
+        <div className="">
           <div className="p-1">
             <label className="text-neutral-500 dark:text-neutral-200">
               {"Page Description"}

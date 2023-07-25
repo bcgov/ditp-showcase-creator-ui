@@ -148,10 +148,6 @@ export const ScenarioPage = ({
     setSelectedStep(index);
   };
 
-  
-
-
-
 
 
 
@@ -297,8 +293,8 @@ export const ScenarioPage = ({
                   {/* Scenario Steps */}
                   <DndContext
       collisionDetection={closestCenter}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
+      // onDragStart={handleDragStart}
+      // onDragEnd={handleDragEnd}
     >
       <SortableContext
                     items={myScreen.steps}
@@ -324,9 +320,9 @@ export const ScenarioPage = ({
                   ))}
                   </SortableContext>
                   </DndContext>
-                  <DragOverlay>
+                  {/* <DragOverlay>
                 <p>TEST DRAG OVERLAY</p>
-              </DragOverlay>
+              </DragOverlay> */}
 
                   {/* Add Step Button */}
                   <div className="text-center">

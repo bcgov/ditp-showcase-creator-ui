@@ -83,7 +83,6 @@ function IssueStepEdit({
         setSearchResults((results) => [...results, credential]);
       }
     }
-    console.log(searchResults);
   }
 
   // Function to handle saving/form submission

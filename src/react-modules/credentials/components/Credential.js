@@ -13,14 +13,14 @@ function Credential({
 }) {
   return (
     <>
-      <div className="credential-container flex flex-row">
+      <div className="flex flex-row">
         <div
           className="w-full"
           data-cred-id={index}
           onClick={(e) => handleClick(index)}
         >
           <div
-            className={`credential rounded  ${
+            className={`credential rounded p-3 mt-3 ${
               selectedCredential === index
                 ? "selected-item"
                 : "credential-border"

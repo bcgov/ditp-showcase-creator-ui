@@ -3,43 +3,42 @@ import { useState } from "react";
 import { Credential } from "./Credential";
 
 function CredentialsList({
-  formData,
-  selectedCharacter,
   setComponentToMount,
   setSelectedCredential,
-  showcaseJSON,
+  formData,
   setTempData,
-  setCreateButtonClicked,
+  setFormData,
   selectedCredential,
-  handleCredentialRemoval,
 }) {
-  function handleClick(credential) {
-    setCreateButtonClicked(false);
+  function handleClick(e) {
+    const data = e.currentTarget.getAttribute("data-cred-id");
+    console.log(data);
     setComponentToMount("edit");
-    setSelectedCredential(credential);
+    setSelectedCredential(parseInt(data));
   }
 
   return (
     <>
       <div className="">
-        {Object.entries(
-          showcaseJSON.personas[selectedCharacter].credentials
-        ).map((credential, index) => {
-          return (
+        {formData.length > 0 ? (
+          formData.map((credential, index) => (
             <Credential
               key={index}
-              index={credential[0]}
+              index={index}
               handleClick={handleClick}
-              issuerName={credential[1].issuer_name}
-              credentialName={credential[1].name}
-              attributeCount={credential[1].attributes.length}
+              issuerName={credential.issuer_name}
+              credentialName={credential.cred_name}
+              attributeCount={credential.attributes.length}
               formData={formData}
               setTempData={setTempData}
+              setFormData={setFormData}
               selectedCredential={selectedCredential}
-              handleCredentialRemoval={handleCredentialRemoval}
+              setSelectedCredential={setSelectedCredential}
             />
-          );
-        })}
+          ))
+        ) : (
+          <p>No credentials available.</p>
+        )}
       </div>
     </>
   );

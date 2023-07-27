@@ -28,9 +28,9 @@ function DisplayAddedCredentials({
               <div className="flex flex-row">
                 <div className="w-full">
                   <div className={`credential rounded p-3 mt-3`}>
-                    <div className="grid grid-cols-3">
+                    <div className="grid grid-cols-3 p-1">
                       <div className="col-span-2">
-                        <div className="credential-issuer-name">
+                        <div className="text-xs">
                           <p>
                             {
                               showcaseJSON.personas[selectedCharacter]
@@ -38,7 +38,7 @@ function DisplayAddedCredentials({
                             }
                           </p>
                         </div>
-                        <div className="credential-credential-name">
+                        <div className="text-lg font-bold">
                           <p>
                             {
                               showcaseJSON.personas[selectedCharacter]
@@ -61,7 +61,7 @@ function DisplayAddedCredentials({
                   </div>
                 </div>
                 <div
-                  className="remove flex items-center justify-center w-1/5 trash-button"
+                  className="remove flex items-center text-xl justify-center w-1/5 trash-button"
                   onClick={(e) => removeCredential(e, credential)}
                 >
                   <FontAwesomeIcon icon={faTrash} />

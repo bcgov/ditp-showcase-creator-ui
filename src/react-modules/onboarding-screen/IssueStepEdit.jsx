@@ -103,7 +103,10 @@ function IssueStepEdit({
       <form onSubmit={(e) => handleSubmit(e)}>
         {/* TITLE */}
         <div className="my-6">
-          <label className="text-lg bold" htmlFor={`${selectedStep}_title`}>
+          <label
+            className="text-lg font-bold"
+            htmlFor={`${selectedStep}_title`}
+          >
             {"Page Title"}
           </label>
           <br />
@@ -118,7 +121,7 @@ function IssueStepEdit({
 
         {/* TEXT */}
         <div className="my-6">
-          <label className="text-lg bold" htmlFor={`${selectedStep}_text`}>
+          <label className="text-lg font-bold" htmlFor={`${selectedStep}_text`}>
             {"Page Description"}
           </label>
           <textarea
@@ -145,18 +148,20 @@ function IssueStepEdit({
         <hr />
 
         {/* SEARCHING FOR A CREDENTIAL*/}
-        <p className="pt-4 text-lg">Search for a Credential:</p>
-        <div className="flex flex-row justify-center items-center my-4">
-          <div className="relative w-full">
-            <input
-              className="field-background rounded pl-2 pr-10 mb-2 w-full"
-              placeholder="ex. Student Card"
-              type="text"
-              onChange={(e) => searchCredential(e)}
-            />
-            <span className="absolute right-4 top-1/4">
-              <FontAwesomeIcon icon={faSearch} />
-            </span>
+        <div className="my-6">
+          <p className="text-lg font-bold">Search for a Credential:</p>
+          <div className="flex flex-row justify-center items-center my-4">
+            <div className="relative w-full">
+              <input
+                className="field-background rounded pl-2 pr-10 mb-2 w-full"
+                placeholder="ex. Student Card"
+                type="text"
+                onChange={(e) => searchCredential(e)}
+              />
+              <span className="absolute right-4 top-1/4">
+                <FontAwesomeIcon icon={faSearch} />
+              </span>
+            </div>
           </div>
         </div>
         {/* RESULTS */}

@@ -65,7 +65,10 @@ function LocalTextInput({
 
   return (
     <div className="">
-      <label className="text-lg" htmlFor={`${personaIndex}_${element}`}>
+      <label
+        className="text-lg font-bold"
+        htmlFor={`${personaIndex}_${element}`}
+      >
         {label}
       </label>
       <input
@@ -129,7 +132,7 @@ function LocalTextAreaInput({
 
   return (
     <div className="">
-      <label className="text-lg" htmlFor={`${personaIndex}_${element}`}>
+      <label className="text-lg font-bold" htmlFor={`${personaIndex}_${element}`}>
         {label}{" "}
       </label>
       <textarea

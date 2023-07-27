@@ -21,7 +21,7 @@ function App() {
   const [selectedCharacter, setSelectedCharacter] = useState(0);
 
   const [currentPage, setCurrentPage] = useState("character");
-  const [componentToMount, setComponentToMount] = useState("no selection");
+  // const [componentToMount, setComponentToMount] = useState("no selection");
 
   const changePage = (page) => {
     setCurrentPage(page);
@@ -97,8 +97,6 @@ function App() {
             selectedCharacter={selectedCharacter}
             formData={formData}
             setFormData={setFormData}
-            setComponentToMount={setComponentToMount}
-            componentToMount={componentToMount}
           />
         )}
         {currentPage === "scenario" && (

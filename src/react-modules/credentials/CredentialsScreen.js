@@ -16,13 +16,13 @@ function CredentialsScreen({
   showcaseJSON,
   setShowcaseJSON,
   selectedCharacter,
-  componentToMount,
-  setComponentToMount,
 }) {
   const [selectedCredential, setSelectedCredential] = useState(null);
   const [tempData, setTempData] = useImmer(
     showcaseJSON.personas[selectedCharacter].credentials
   );
+
+  const [componentToMount, setComponentToMount] = useState("no selection");
 
   // Check if the create button has been clicked to ensure that you cant spam the button.
   const [createButtonClicked, setCreateButtonClicked] = useState(false);

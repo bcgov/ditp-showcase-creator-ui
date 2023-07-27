@@ -1,26 +1,15 @@
 import React from "react";
-import { CredentialAttributesList } from "./components/AttributesList";
-// import { FileUploadFull } from "../FileUpload";
+import { CredentialAttributesList } from "./components/CredentialAttributesList";
 
 function CredentialsForm({
   handleChange,
   tempData,
-  addAttribute,
   selectedCredential,
-  setTempData,
+  addAttribute,
+  removeAttribute,
+  showcaseJSON,
+  selectedCharacter,
 }) {
-  const handleAttributeRemoval = (attributeIndex) => {
-    setTempData((prevData) => {
-      const newData = [...prevData];
-      const selectedCred = { ...newData[selectedCredential] };
-      selectedCred.attributes = selectedCred.attributes.filter(
-        (_, index) => index !== attributeIndex
-      );
-      newData[selectedCredential] = selectedCred;
-      return newData;
-    });
-  };
-
   return (
     <>
       <div className="flex justify-between mt-3">

@@ -8,29 +8,9 @@ function Credential({
   attributeCount,
   index,
   handleClick,
-  formData,
-  setFormData,
-  setTempData,
   selectedCredential,
-  setSelectedCredential,
+  handleCredentialRemoval,
 }) {
-  const handleCredentialRemoval = (index) => {
-    if (formData.length === 1) return;
-
-    setTempData((prevData) => {
-      const newData = [...prevData];
-      newData.splice(index, 1);
-      return newData;
-    });
-
-    setFormData((prevData) => {
-      const newData = [...prevData];
-      newData.splice(index, 1);
-      return newData;
-    });
-
-    setSelectedCredential((prevVal) => (prevVal - 1 === 0 ? prevVal - 1 : 0));
-  };
   return (
     <>
       <div className="flex flex-row">

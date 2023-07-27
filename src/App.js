@@ -22,7 +22,6 @@ function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const [currentPage, setCurrentPage] = useState("character");
-  const [componentToMount, setComponentToMount] = useState("no selection");
 
   const changePage = (page) => {
     setCurrentPage(page);
@@ -100,8 +99,6 @@ function App() {
             setTempData={setTempData}
             formData={formData}
             setFormData={setFormData}
-            setComponentToMount={setComponentToMount}
-            componentToMount={componentToMount}
           />
         )}
         {currentPage === "setup" && (

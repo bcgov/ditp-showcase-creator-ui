@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import { Overview } from "./Overview";
 
 /// current working one !!!
 
@@ -139,6 +140,7 @@ function CredentialsScreen({
         );
       default:
         return (
+          // <Overview showcaseJSON={showcaseJSON}></Overview>
           <div className="">
             <NoSelection Text={"You have no credential selected."} />
           </div>
@@ -152,8 +154,6 @@ function CredentialsScreen({
         <div className="container mx-auto px-4 py-8 flex-grow">
           <div className="flex gap-12 h-full">
             <div className="w-1/2 rounded left-col">
-              
-              
               <div className="flex justify-between">
                 <div>
                   <h3 className="text-4xl font-bold text-slate-50">

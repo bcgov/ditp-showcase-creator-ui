@@ -7,9 +7,6 @@ import { OnboardingPage } from "./react-modules/pages/OnboardingPage";
 import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
 import { DEFAULT_JSON } from "./DEFAULT_JSON";
 import { Footer } from "./react-modules/Footer";
-
-// import { Credentials } from "./react-modules/credentials/Credentials";
-
 import { CredentialsScreen } from "./react-modules/credentials/CredentialsScreen";
 
 function App() {
@@ -18,18 +15,12 @@ function App() {
   });
 
   const [darkMode, setDarkMode] = useState(true);
-
   const [selectedCharacter, setSelectedCharacter] = useState(0);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
   const [currentPage, setCurrentPage] = useState("character");
 
   const changePage = (page) => {
     setCurrentPage(page);
   };
-
-  const [formData, setFormData] = useState([]);
-  const [tempData, setTempData] = useState([]);
 
   function handleJSONUpdate(index, element, newValue) {
     switch (element.length) {

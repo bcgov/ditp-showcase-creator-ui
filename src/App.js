@@ -6,9 +6,7 @@ import { CharacterPage } from "./react-modules/pages/CharacterPage";
 import { OnboardingPage } from "./react-modules/pages/OnboardingPage";
 import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
 import { DEFAULT_JSON } from "./DEFAULT_JSON";
-
-// import { Credentials } from "./react-modules/credentials/Credentials";
-
+import { Footer } from "./react-modules/Footer";
 import { CredentialsScreen } from "./react-modules/credentials/CredentialsScreen";
 
 function App() {
@@ -17,18 +15,12 @@ function App() {
   });
 
   const [darkMode, setDarkMode] = useState(true);
-
   const [selectedCharacter, setSelectedCharacter] = useState(0);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
   const [currentPage, setCurrentPage] = useState("character");
 
   const changePage = (page) => {
     setCurrentPage(page);
   };
-
-  const [formData, setFormData] = useState([]);
-  const [tempData, setTempData] = useState([]);
 
   function handleJSONUpdate(index, element, newValue) {
     switch (element.length) {
@@ -76,7 +68,11 @@ function App() {
 
   return (
     <>
-      <div className={`dark:bg-gray-500 bg-white ${darkMode ? "dark" : ""}`}>
+      <div
+        className={`dark:bg-gray-500 bg-white min-h-screen ${
+          darkMode ? "dark" : ""
+        }`}
+      >
         <NavBar
           darkMode={darkMode}
           setDarkMode={setDarkMode}
@@ -95,10 +91,9 @@ function App() {
         )}
         {currentPage === "credential" && (
           <CredentialsScreen
-            tempData={tempData}
-            setTempData={setTempData}
-            formData={formData}
-            setFormData={setFormData}
+            showcaseJSON={showcaseJSON}
+            setShowcaseJSON={setShowcaseJSON}
+            selectedCharacter={selectedCharacter}
           />
         )}
         {currentPage === "setup" && (
@@ -118,9 +113,11 @@ function App() {
           />
         )}
 
-        <pre className="p-10 m-5 border text-xs rounded dark:text-neutral-200 whitespace-pre-wrap break-words">
+        <Footer />
+
+        {/* <pre className="p-10 m-5 border text-xs rounded dark:text-neutral-200 whitespace-pre-wrap break-words">
           {JSON.stringify(showcaseJSON, null, 2)}
-        </pre>
+        </pre> */}
       </div>
     </>
   );

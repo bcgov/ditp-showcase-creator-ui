@@ -10,7 +10,6 @@ function CredentialAttribute({
   credType,
   handleChange,
   selectedCredential,
-  tempData,
   removeAttribute,
 }) {
   const [selectedOption, setSelectedOption] = useState(null);

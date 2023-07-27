@@ -21,7 +21,7 @@ function CredentialsEdit({
       <hr className="mb-6"></hr>
 
       <div className="my-6">
-        <label className="text-lg" htmlFor="name">
+        <label className="text-md font-bold" htmlFor="name">
           Credential Name
         </label>
         <input
@@ -40,7 +40,7 @@ function CredentialsEdit({
       </div>
 
       <div className="my-6">
-        <label className="text-lg" htmlFor="issuer_name">
+        <label className="text-md font-bold" htmlFor="issuer_name">
           Issuer Name
         </label>
         <input
@@ -59,7 +59,7 @@ function CredentialsEdit({
       </div>
 
       <div className="my-6">
-        <label className="text-lg"> Add Attributes</label>
+        <label className="text-md font-bold"> Add Attributes</label>
         <CredentialAttributesList
           tempData={tempData}
           selectedCredential={selectedCredential}

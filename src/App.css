@@ -27,6 +27,10 @@ input[type="text"] {
   color: white;
 }
 
+body > #root > div {
+  height: 100%;
+}
+
 input {
   margin: 0;
 }

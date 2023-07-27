@@ -148,10 +148,12 @@ function CredentialsScreen({
 
   return (
     <>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen mt-20">
         <div className="container mx-auto px-4 py-8 flex-grow">
           <div className="flex gap-12 h-full">
             <div className="w-1/2 rounded left-col">
+              
+              
               <div className="flex justify-between">
                 <div>
                   <h3 className="text-4xl font-bold text-slate-50">
@@ -163,6 +165,7 @@ function CredentialsScreen({
                   </p>
                 </div>
               </div>
+
               <div className="mt-8">
                 <div className="flex justify-between mb-4">
                   <h3 className="text-xl font-bold">Credentials Added:</h3>

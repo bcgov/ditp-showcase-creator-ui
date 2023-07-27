@@ -6,9 +6,7 @@ import { CharacterPage } from "./react-modules/pages/CharacterPage";
 import { OnboardingPage } from "./react-modules/pages/OnboardingPage";
 import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
 import { DEFAULT_JSON } from "./DEFAULT_JSON";
-
-// import { Credentials } from "./react-modules/credentials/Credentials";
-
+import { Footer } from "./react-modules/Footer";
 import { CredentialsScreen } from "./react-modules/credentials/CredentialsScreen";
 
 function App() {
@@ -17,18 +15,12 @@ function App() {
   });
 
   const [darkMode, setDarkMode] = useState(true);
-
   const [selectedCharacter, setSelectedCharacter] = useState(0);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
   const [currentPage, setCurrentPage] = useState("character");
 
   const changePage = (page) => {
     setCurrentPage(page);
   };
-
-  const [formData, setFormData] = useState([]);
-  const [tempData, setTempData] = useState([]);
 
   function handleJSONUpdate(index, element, newValue) {
     switch (element.length) {
@@ -76,7 +68,11 @@ function App() {
 
   return (
     <>
-      <div className={`dark:bg-gray-500 bg-white ${darkMode ? "dark" : ""}`}>
+      <div
+        className={`dark:bg-gray-500 bg-white min-h-screen ${
+          darkMode ? "dark" : ""
+        }`}
+      >
         <NavBar
           darkMode={darkMode}
           setDarkMode={setDarkMode}
@@ -95,19 +91,33 @@ function App() {
         )}
         {currentPage === "credential" && (
           <CredentialsScreen
-            tempData={tempData}
-            setTempData={setTempData}
-            formData={formData}
-            setFormData={setFormData}
-            setSelectedIndex={setSelectedIndex}
+            showcaseJSON={showcaseJSON}
+            setShowcaseJSON={setShowcaseJSON}
+            selectedCharacter={selectedCharacter}
           />
         )}
-        {currentPage === "setup" && <OnboardingPage showcaseJSON={showcaseJSON} selectedCharacter={selectedCharacter} setShowcaseJSON={setShowcaseJSON} handleJSONUpdate={handleJSONUpdate}/>}
-        {currentPage === "scenario" && <ScenarioPage showcaseJSON={showcaseJSON} selectedCharacter={selectedCharacter} setShowcaseJSON={setShowcaseJSON} handleJSONUpdate={handleJSONUpdate}/>}
+        {currentPage === "setup" && (
+          <OnboardingPage
+            showcaseJSON={showcaseJSON}
+            selectedCharacter={selectedCharacter}
+            setShowcaseJSON={setShowcaseJSON}
+            handleJSONUpdate={handleJSONUpdate}
+          />
+        )}
+        {currentPage === "scenario" && (
+          <ScenarioPage
+            showcaseJSON={showcaseJSON}
+            selectedCharacter={selectedCharacter}
+            setShowcaseJSON={setShowcaseJSON}
+            handleJSONUpdate={handleJSONUpdate}
+          />
+        )}
 
-        <p className="p-10 m-5 border rounded dark:text-neutral-200">
-          {JSON.stringify(showcaseJSON, null, "\t")}
-        </p>
+        <Footer />
+
+        {/* <pre className="p-10 m-5 border text-xs rounded dark:text-neutral-200 whitespace-pre-wrap break-words">
+          {JSON.stringify(showcaseJSON, null, 2)}
+        </pre> */}
       </div>
     </>
   );

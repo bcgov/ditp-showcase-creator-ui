@@ -1,8 +1,7 @@
-import { useEffect } from "react";
+import React from "react";
 import { useImmer } from "use-immer";
 import { LocalFileUpload } from "./LocalFileUpload";
 
-import { FileUploadFull } from "./../FileUpload";
 function BasicStepEdit({
   selectedCharacter,
   setSelectedStep,
@@ -11,93 +10,89 @@ function BasicStepEdit({
   setShowcaseJSON,
   handleJSONUpdate,
 }) {
-  // Seperately update a mini version of the json, containing only the fields for this page
   const [localJSON, setLocalJSON] = useImmer(
     showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     setLocalJSON(
       showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
     );
   }, [selectedStep]);
 
-  // Function similar to handleJSONUpdate in App.js
   function handleLocalUpdate(element, newValue) {
-    setLocalJSON((json) => {
-      json[element] = newValue;
+    setLocalJSON((draft) => {
+      draft[element] = newValue;
     });
   }
 
-  function cancelSubmit(e){
+  function cancelSubmit(e) {
     e.preventDefault();
     setSelectedStep(null);
-    
   }
 
-  // Function to handle saving/form submission
   function handleSubmit(e) {
-    try{
+    try {
       e.preventDefault();
       setShowcaseJSON((json) => {
         json.personas[selectedCharacter].onboarding[selectedStep] = localJSON;
       });
       setSelectedStep(null);
-    }catch(e){
+    } catch (e) {
       console.log(e);
     }
-    
   }
 
   return (
-    <div className="flex flex-col p-5">
+    <div className="flex flex-col">
       <p>Onboarding</p>
-      <p className="text-4xl font-bold">Edit a Basic Step</p>
-      <hr />
+      <h3 className="text-4xl font-bold">Edit a Basic Step</h3>
+      <hr className=""></hr>
 
       <form onSubmit={(e) => handleSubmit(e)}>
-        {/* TITLE */}
-        <div className="p-1">
+        <div className="my-6">
           <label
-            className="text-neutral-500 dark:text-neutral-200"
+            className="text-md font-bold"
             htmlFor={`${selectedStep}_title`}
           >
             {"Page Title"}
           </label>
           <br />
           <input
-            className="p-1 w-full field-background"
+            className="field-background mt-3"
             id={`${selectedStep}_title`}
             type="text"
+            placeholder="Page Title"
             value={localJSON.title}
             onChange={(e) => handleLocalUpdate("title", e.target.value)}
           />
         </div>
 
-        {/* TEXT */}
-        <div className="p-1">
+        <div className="my-6">
           <label
-            className="text-neutral-500 dark:text-neutral-200"
+            className="text-md mt-3 font-bold"
             htmlFor={`${selectedStep}_text`}
           >
             {"Page Description"}
           </label>
           <textarea
-            className="p-1 w-full h-full resize-none field-background"
+            className="field-background p-2 w-full rounded resize-none mt-3"
             rows="8"
             id={`${selectedStep}_text`}
-            type="text"
+            placeholder="Page Description"
             value={localJSON.text}
             onChange={(e) => handleLocalUpdate("text", e.target.value)}
           />
         </div>
 
-        <LocalFileUpload
-        text={"Icon"}
-        element={"image"}
-        handleLocalUpdate={handleLocalUpdate}
-        localJSON={localJSON}
-        />
+        <div className="my-6 ">
+          <LocalFileUpload
+            text={"Icon"}
+            element={"image"}
+            handleLocalUpdate={handleLocalUpdate}
+            localJSON={localJSON}
+          />
+        </div>
 
         <div className="flex flex-cols mx-5 my-3 justify-end space-x-4">
           <button

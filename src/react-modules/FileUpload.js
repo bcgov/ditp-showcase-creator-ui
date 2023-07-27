@@ -3,12 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./../FileUpload.css";
 
-function FileUploadFull({
-  text,
-  personaIndex,
-  element,
-  handleJSONUpdate,
-}) {
+function FileUploadFull({ text, personaIndex, element, handleJSONUpdate }) {
   const [preview, setPreview] = useState();
 
   // To-Do: Impliment a feature to show the preview directly from the JSON data
@@ -44,8 +39,10 @@ function FileUploadFull({
   };
 
   return (
-    <div className="flex p-1 items-center flex-col justify-center w-full">
-      <p className="font-bold pb-1 w-full text-start text-white">{text}</p>
+    <div className="flex items-center flex-col justify-center">
+      <p className="text-md w-full text-start font-bold text-white mb-3">
+        {text}
+      </p>
 
       {preview == null ? null : (
         <div className="relative w-full">
@@ -60,7 +57,7 @@ function FileUploadFull({
 
       <label
         htmlFor={`${element}`}
-        className="p-3 flex border-2 flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer dark:hover:bg-zinc-800 upload_outside hover:bg-zinc-100 dark:hover:bg-zinc-600"
+        className="p-3 flex field-background flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer dark:hover:bg-zinc-800 upload_outside hover:bg-zinc-100 dark:hover:bg-zinc-600"
       >
         <div className="flex flex-col items-center h-full justify-center border rounded-lg upload_center border-dashed p-2">
           {preview == null ? null : (
@@ -131,31 +128,31 @@ function FileUploadBar({
   return (
     <div className="flex flex-col">
       <form id={`form_${element}`}>
-      <label
-        className="font-bold w-full text-start text-white border-dashed"
-        htmlFor={`${element}`}
-      >
-        {text}
-      </label>
-      <div>
-        <input
-          className="border border-dashed dark:hover:bg-zinc-800 rounded-lg upload_center p-1 text-sm cursor-pointer dark:text-zinc-400"
-          id={`${element}`}
-          type="file"
-          onChange={(e) => handleChange(e.target.files[0])}
-        />
-        {!showDelete ? null : (
-          <button
-            className="bg-red-500 rounded p-1 m-2 text-black text-sm hover:bg-red-400"
-            onClick={(e) => handleChange(null)}
-          >
-            <FontAwesomeIcon icon={faTrash} />
-          </button>
-        )}
-      </div>
+        <label
+          className="font-bold w-full text-start text-white border-dashed"
+          htmlFor={`${element}`}
+        >
+          {text}
+        </label>
+        <div>
+          <input
+            className="border border-dashed dark:hover:bg-zinc-800 rounded-lg upload_center p-1 text-sm cursor-pointer dark:text-zinc-400"
+            id={`${element}`}
+            type="file"
+            onChange={(e) => handleChange(e.target.files[0])}
+          />
+          {!showDelete ? null : (
+            <button
+              className="bg-red-500 rounded p-1 m-2 text-black text-sm hover:bg-red-400"
+              onClick={(e) => handleChange(null)}
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );
 }
 
-export {  FileUploadFull, FileUploadBar  };
+export { FileUploadFull, FileUploadBar };

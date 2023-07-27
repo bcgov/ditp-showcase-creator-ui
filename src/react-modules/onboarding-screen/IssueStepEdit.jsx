@@ -22,7 +22,6 @@ function IssueStepEdit({
     showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
   );
 
-
   useEffect(() => {
     setLocalJSON(
       showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
@@ -44,11 +43,11 @@ function IssueStepEdit({
     console.log(credential);
     setLocalJSON((json) => {
       const index = json.credentials.indexOf(credential);
-      if(index !== -1){
-        json.credentials.splice(index,1);
+      if (index !== -1) {
+        json.credentials.splice(index, 1);
       }
-  });
-    console.log(localJSON)
+    });
+    console.log(localJSON);
   }
 
   function cancelSubmit(e) {
@@ -96,23 +95,23 @@ function IssueStepEdit({
   }
 
   return (
-    <div className="flex flex-col p-5">
+    <div className="flex flex-col">
       <p>Onboarding</p>
-      <p className="text-4xl font-bold">Edit an Issue Credential Step</p>
-      <hr />
+      <h3 className="text-4xl font-bold">Edit an Issue a Credential Step</h3>
+      <hr className=""></hr>
 
       <form onSubmit={(e) => handleSubmit(e)}>
         {/* TITLE */}
-        <div className="p-1">
+        <div className="my-6">
           <label
-            className="text-neutral-500 dark:text-neutral-200"
+            className="text-md font-bold"
             htmlFor={`${selectedStep}_title`}
           >
             {"Page Title"}
           </label>
           <br />
           <input
-            className="p-1 w-full field-background"
+            className="field-background mt-2"
             id={`${selectedStep}_title`}
             type="text"
             value={localJSON.title}
@@ -121,54 +120,61 @@ function IssueStepEdit({
         </div>
 
         {/* TEXT */}
-        <div className="p-1">
-          <label
-            className="text-neutral-500 dark:text-neutral-200"
-            htmlFor={`${selectedStep}_text`}
-          >
+        <div className="my-6">
+          <label className="text-md font-bold" htmlFor={`${selectedStep}_text`}>
             {"Page Description"}
           </label>
           <textarea
-            className="p-1 w-full h-full resize-none field-background"
+            className="field-background p-2 w-full rounded resize-none mt-3"
             rows="8"
             id={`${selectedStep}_text`}
+            placeholder="Page Description"
             type="text"
             value={localJSON.text}
             onChange={(e) => handleLocalUpdate("text", e.target.value)}
           />
         </div>
 
-        <LocalFileUpload
-        text={"Icon"}
-        element={"image"}
-        handleLocalUpdate={handleLocalUpdate}
-        localJSON={localJSON}
-        />
+        <div className="my-6">
+          <LocalFileUpload
+            text={"Icon"}
+            element={"image"}
+            handleLocalUpdate={handleLocalUpdate}
+            localJSON={localJSON}
+          />
+        </div>
 
-        <p className="text-2xl pt-10 font-bold">Add your Credential</p>
+        <p className="text-2xl pt-4 font-bold">Add your Credential</p>
         <hr />
 
         {/* SEARCHING FOR A CREDENTIAL*/}
-        <p className="pt-10">Search for a credential:</p>
-        <div className="flex flex-row justify-center items-center mt-3">
-          <input
-            className="w-full p-1 field-background rounded"
-            placeholder="ex. Student Card"
-            type="text"
-            onChange={(e) => searchCredential(e)}
+        <div className="">
+          <div className="mt-6">
+            <p className="text-md font-bold">Search for a Credential:</p>
+            <div className="flex flex-row justify-center items-center my-4">
+              <div className="relative w-full">
+                <input
+                  className="field-background rounded pl-2 pr-10 mb-2 w-full"
+                  placeholder="ex. Student Card"
+                  type="text"
+                  onChange={(e) => searchCredential(e)}
+                />
+                <span className="absolute right-4 top-1/4">
+                  <FontAwesomeIcon icon={faSearch} />
+                </span>
+              </div>
+            </div>
+          </div>
+          {/* RESULTS */}
+          <DisplaySearchResults
+            selectedCharacter={selectedCharacter}
+            showcaseJSON={showcaseJSON}
+            localJSON={localJSON}
+            searchResults={searchResults}
+            addCredential={addCredential}
           />
-          <span className="pb-4 px-2 text-xl">
-            <FontAwesomeIcon icon={faSearch} />
-          </span>
         </div>
-        {/* RESULTS */}
-        <DisplaySearchResults
-          selectedCharacter={selectedCharacter}
-          showcaseJSON={showcaseJSON}
-          localJSON={localJSON}
-          searchResults={searchResults}
-          addCredential={addCredential}
-        />
+
         <DisplayAddedCredentials
           selectedCharacter={selectedCharacter}
           showcaseJSON={showcaseJSON}

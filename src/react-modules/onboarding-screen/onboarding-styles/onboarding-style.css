@@ -29,3 +29,8 @@
 .added-credential-attributes-container {
   border: 2px solid white;
 }
+
+.onboarding-step:hover {
+  cursor: pointer;
+  background-color: #343434;
+}

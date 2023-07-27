@@ -101,28 +101,28 @@ function CharacterScreen({
                   characterImages={characterImages}
                 />
               )}
-              {
-                /* Save or cancel button */
-                editMode ? (
-                  <div className="flex flex-cols mx-5 my-3 justify-end space-x-4">
-                    <button
-                      className="p-1 w-20 hover:underline uppercase"
-                      onClick={() => setEditMode(false)}
-                    >
-                      Cancel
-                    </button>
-
-                    <button
-                      className="p-1 w-20 button-dark rounded hover:bg-neutral-600"
-                      onClick={saveJSON}
-                    >
-                      SAVE
-                    </button>
-                  </div>
-                ) : null
-              }
             </div>
           </div>
+          {
+            /* Save or cancel button */
+            editMode ? (
+              <div className="flex container mx-auto w-full my-8 justify-end">
+                <button
+                  className="p-2 mr-4 rounded"
+                  onClick={() => setEditMode(false)}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  className="p-1 w-20 button-dark rounded hover:bg-neutral-600"
+                  onClick={saveJSON}
+                >
+                  SAVE
+                </button>
+              </div>
+            ) : null
+          }
         </div>
       </div>
     </>

@@ -93,7 +93,6 @@ function BasicStepEdit({
             localJSON={localJSON}
           />
         </div>
-
         <div className="flex flex-cols mx-5 my-3 justify-end space-x-4">
           <button
             className="p-1 w-20 hover:underline uppercase"

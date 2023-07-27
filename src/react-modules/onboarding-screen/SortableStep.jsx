@@ -60,20 +60,11 @@ export const SortableStep = ({
           {
             // SCREEN IMAGE HERE
             <p className="text-2xl p-2 mx-2 rounded highlight-text">
-              {showcaseJSON.personas[selectedCharacter].onboarding[
-                stepIndex - 1
-              ] &&
-              showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1]
-                .image ? (
-                <img
-                  width="100px"
-                  src={
-                    showcaseJSON.personas[selectedCharacter].onboarding[
-                      stepIndex - 1
-                    ].image
-                  }
-                />
-              ) : (
+
+              {
+                showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1] &&
+                showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1].image 
+                ? <img width="100px" src={showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1].image}/> :
                 <FontAwesomeIcon icon={faDisplay} />
               )}
             </p>

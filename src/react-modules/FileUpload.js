@@ -40,7 +40,7 @@ function FileUploadFull({ text, personaIndex, element, handleJSONUpdate }) {
 
   return (
     <div className="flex items-center flex-col justify-center">
-      <p className="text-lg w-full text-start font-bold text-white mb-3">
+      <p className="text-md w-full text-start font-bold text-white mb-3">
         {text}
       </p>
 

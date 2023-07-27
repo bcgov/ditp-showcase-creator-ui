@@ -21,7 +21,7 @@ function DisplayAddedCredentials({
         </div>
       ) : (
         <div className="">
-          <p className="text-lg font-bold mt-2">Credential Added:</p>
+          <p className="text-md font-bold mt-2">Credential Added:</p>
 
           {localJSON.credentials.map((credential, index) => (
             <>

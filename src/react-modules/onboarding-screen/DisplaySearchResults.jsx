@@ -10,7 +10,7 @@ function DisplaySearchResults({
   const MAX_SEARCH_CREDENTIALS = 8;
 
   return (
-    <div>
+    <div className="mb-6">
       {searchResults.map((result, index) =>
         // If there are more than MAX_SEARCH_CREDENTIALS credentials showing, force the user to search.
         index < MAX_SEARCH_CREDENTIALS ? (

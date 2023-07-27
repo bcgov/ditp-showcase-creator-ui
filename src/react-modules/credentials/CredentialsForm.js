@@ -23,7 +23,7 @@ function CredentialsForm({
       <hr className="mb-6"></hr>
 
       <div className="my-6">
-        <label className="text-lg font-bold" htmlFor="cred_name">
+        <label className="text-md font-bold" htmlFor="cred_name">
           Credential Name
         </label>
         <br />
@@ -43,7 +43,7 @@ function CredentialsForm({
       </div>
 
       <div className="my-6">
-        <label className=" text-lg font-bold" htmlFor="issuer_name">
+        <label className=" text-md font-bold" htmlFor="issuer_name">
           Issuer Name
         </label>
         <br />
@@ -63,7 +63,7 @@ function CredentialsForm({
       </div>
 
       <div className="my-3">
-        <label className="font-bold text-lg"> Add Attributes</label>
+        <label className="font-bold text-md"> Add Attributes</label>
         <CredentialAttributesList
           tempData={tempData}
           selectedCredential={selectedCredential}

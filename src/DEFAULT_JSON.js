@@ -5,50 +5,50 @@ const DEFAULT_JSON = {
   body_image: "",
   description: "This is Bob's description.",
   credentials: {
-    "student_card": {
-      "issuer_name": "Test College",
-      "name": "test_card",
-      "version": "1.10",
-      "icon": "",
-      "attributes": [
+    student_card: {
+      issuer_name: "Test College",
+      name: "test_card",
+      version: "1.10",
+      icon: "",
+      attributes: [
         {
-          "name": "student_first_name",
-          "value": "Bob",
-          "type": "string"
+          name: "student_first_name",
+          value: "Bob",
+          type: "string",
         },
         {
-          "name": "student_last_name",
-          "value": "Smith"
+          name: "student_last_name",
+          value: "Smith",
         },
         {
-          "name": "expiry_date",
-          "value": "20270517",
-          "type": "dateint"
-        }
-      ]
+          name: "expiry_date",
+          value: "20270517",
+          type: "dateint",
+        },
+      ],
     },
-    "test_card_id": {
-      "issuer_name": "My Workplace",
-      "name": "test_card",
-      "version": "1.10",
-      "icon": "",
-      "attributes": [
+    test_card_id: {
+      issuer_name: "My Workplace",
+      name: "test_card",
+      version: "1.10",
+      icon: "",
+      attributes: [
         {
-          "name": "student_first_name",
-          "value": "Bob",
-          "type": "string"
+          name: "student_first_name",
+          value: "Bob",
+          type: "string",
         },
         {
-          "name": "student_last_name",
-          "value": "Smith"
+          name: "student_last_name",
+          value: "Smith",
         },
         {
-          "name": "expiry_date",
-          "value": "20270517",
-          "type": "dateint"
-        }
-      ]
-    }
+          name: "expiry_date",
+          value: "20270517",
+          type: "dateint",
+        },
+      ],
+    },
   },
   revocationInfo: [
     {
@@ -120,9 +120,7 @@ const DEFAULT_JSON = {
       title: "Accept your test card",
       text: "Your wallet now has a secure and private connection with BestBC College. You should have received an offer in BC Wallet for a Student Card.\nReview what they are sending, and choose 'Accept offer'.",
       image: "",
-      credentials: [
-        "test_card_id",
-      ],
+      credentials: ["test_card_id"],
     },
     {
       screenId: "SETUP_COMPLETED",
@@ -133,59 +131,58 @@ const DEFAULT_JSON = {
   ],
   scenarios: [
     {
-      "id": "testClothesOnline",
-      "name": "Cool Clothes Online",
-      "overview":{
-        "title": "Getting a student discount",
-        "text": "Bob (that's you in this demo!) can get a student discount on her online purchase. In this example, you will just tell Cool Clothes Online you're a student.",
-        "image": "/public/student/useCases/store/card-school.svg"
+      id: "testClothesOnline",
+      name: "Cool Clothes Online",
+      overview: {
+        title: "Getting a student discount",
+        text: "Bob (that's you in this demo!) can get a student discount on her online purchase. In this example, you will just tell Cool Clothes Online you're a student.",
+        image: "/public/student/useCases/store/card-school.svg",
       },
-      "summary":{
-        "title": "You're done!",
-        "text": "You proved that you're a student, and Cool Clothes Online gave you the discount. It only took a few seconds, you revealed minimal information, and Cool Clothes Online could easily and automatically trust what you sent.",
-        "image": "/public/student/student-accepted.svg"
+      summary: {
+        title: "You're done!",
+        text: "You proved that you're a student, and Cool Clothes Online gave you the discount. It only took a few seconds, you revealed minimal information, and Cool Clothes Online could easily and automatically trust what you sent.",
+        image: "/public/student/student-accepted.svg",
       },
-      "steps": [
+      steps: [
         {
-          "type": "CONNET_AND_VERIFY",
-          "title": "Confirm the information to send",
-          "text": "BC Wallet will now ask you to confirm what to send. Notice how it will only share if the credential has expired, not even the expiry date itself gets shared. You don't have to share anything else for it to be trustable.",
-          "requestOptions": {
-            "type": "OOB",
-            "title": "Cool Clothes Online Request",
-            "text": "Cool Clothes Online would like some of your personal information.",
-            "proofRequest":
-              {
-                "attributes": {
-                    "test_card_id":{
-                       "attributes":["student_first_name", "student_last_name"],
-                       "restrictions": ["test_card_id"]
-                    },
-                    "student_card":{
-                       "attributes":["student_first_name", "student_last_name"],
-                       "restrictions": ["student_card"]
-                    }
+          type: "CONNET_AND_VERIFY",
+          title: "Confirm the information to send",
+          text: "BC Wallet will now ask you to confirm what to send. Notice how it will only share if the credential has expired, not even the expiry date itself gets shared. You don't have to share anything else for it to be trustable.",
+          requestOptions: {
+            type: "OOB",
+            title: "Cool Clothes Online Request",
+            text: "Cool Clothes Online would like some of your personal information.",
+            proofRequest: {
+              attributes: {
+                test_card_id: {
+                  attributes: ["student_first_name", "student_last_name"],
+                  restrictions: ["test_card_id"],
                 },
-                "predicates": {
-                  "test_card_id_expiry_date":{
-                    "name": "expiry_date",
-                    "type": ">=",
-                    "value": 20230517,
-                    "restrictions": ["test_card_id"]
-                  },
-                  "student_card_expiry_date":{
-                    "name": "expiry_date",
-                    "type": ">=",
-                    "value": 20230517,
-                    "restrictions": ["student_card"]
-                  }
-                }
-              }
-          }
-        }
-      ]
+                student_card: {
+                  attributes: ["student_first_name", "student_last_name"],
+                  restrictions: ["student_card"],
+                },
+              },
+              predicates: {
+                test_card_id_expiry_date: {
+                  name: "expiry_date",
+                  type: ">=",
+                  value: 20230517,
+                  restrictions: ["test_card_id"],
+                },
+                student_card_expiry_date: {
+                  name: "expiry_date",
+                  type: ">=",
+                  value: 20230517,
+                  restrictions: ["student_card"],
+                },
+              },
+            },
+          },
+        },
+      ],
     },
-  ]
+  ],
 };
 
 export { DEFAULT_JSON };

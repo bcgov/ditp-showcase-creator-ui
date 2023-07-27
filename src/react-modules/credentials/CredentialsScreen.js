@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { CredentialsForm } from "./CredentialsForm";
 import { CredentialsEdit } from "./CredentialsEdit";
 import { CredentialsList } from "./components/CredentialsList";
-import { NoSelection } from "../credentials/NoSelection";
+import { NoSelection } from "./NoSelection";
 import { useImmer } from "use-immer";
 import "./styles/credentials.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -148,70 +148,69 @@ function CredentialsScreen({
 
   return (
     <>
-      <div className="flex gap-12 container mx-auto px-4 py-8">
-        <div className="w-1/2 rounded left-col">
-          <div className="flex justify-between">
-            <div>
-              <h3 className="text-4xl font-bold text-slate-50">
-                Add your Credentials
-              </h3>
-              <p className="text-slate-100 mt-3">
-                Fill in the details on the right to create a credential for this
-                showcase.
-              </p>
-            </div>
-          </div>
-          <div className="mt-8">
-            <div className="flex justify-between mb-4">
-              <h3 className="text-xl font-bold">Credentials Added:</h3>
-              <div className="">
-                {!createButtonClicked ? (
-                  <button
-                    data-button-id="create-button-credentials"
-                    onClick={(e) => handleCreateButtonClick(e)}
-                    className="p-2 mx-1 rounded button-light hover:bg-neutral-600 text-slate-100"
-                  >
-                    Add Credential <FontAwesomeIcon icon={faCirclePlus} />
-                  </button>
-                ) : null}
+      <div className="flex flex-col min-h-screen">
+        <div className="container mx-auto px-4 py-8 flex-grow">
+          <div className="flex gap-12 h-full">
+            <div className="w-1/2 rounded left-col">
+              <div className="flex justify-between">
+                <div>
+                  <h3 className="text-4xl font-bold text-slate-50">
+                    Add your Credentials
+                  </h3>
+                  <p className="text-slate-100 mt-3">
+                    Fill in the details on the right to create a credential for
+                    this showcase.
+                  </p>
+                </div>
+              </div>
+              <div className="mt-8">
+                <div className="flex justify-between mb-4">
+                  <h3 className="text-xl font-bold">Credentials Added:</h3>
+                  <div>
+                    {!createButtonClicked && (
+                      <button
+                        data-button-id="create-button-credentials"
+                        onClick={handleCreateButtonClick}
+                        className="p-2 mx-1 rounded button-light hover:bg-neutral-600 text-slate-100"
+                      >
+                        Add Credential <FontAwesomeIcon icon={faCirclePlus} />
+                      </button>
+                    )}
+                  </div>
+                </div>
+                <CredentialsList
+                  selectedCharacter={selectedCharacter}
+                  showcaseJSON={showcaseJSON}
+                  setComponentToMount={setComponentToMount}
+                  tempData={tempData}
+                  setTempData={setTempData}
+                  selectedCredential={selectedCredential}
+                  setSelectedCredential={setSelectedCredential}
+                  handleCredentialRemoval={handleCredentialRemoval}
+                  setCreateButtonClicked={setCreateButtonClicked}
+                />
               </div>
             </div>
-
-            <CredentialsList
-              selectedCharacter={selectedCharacter}
-              showcaseJSON={showcaseJSON}
-              setComponentToMount={setComponentToMount}
-              tempData={tempData}
-              setTempData={setTempData}
-              selectedCredential={selectedCredential}
-              setSelectedCredential={setSelectedCredential}
-              handleCredentialRemoval={handleCredentialRemoval}
-              setCreateButtonClicked={setCreateButtonClicked}
-            />
+            {/* End of col 1 */}
+            <div className="w-1/2 bg-gray-300 p-6 rounded-md right-col">
+              {renderComponent(componentToMount)}
+            </div>
+            {/* End of col 2 */}
           </div>
+          {componentToMount === "edit" || componentToMount === "create" ? (
+            <div className="flex container mx-auto w-full my-8 justify-end">
+              <button className="p-2 mr-4 rounded" onClick={handleCancel}>
+                CANCEL
+              </button>
+              <button
+                className="p-1 w-20 button-dark rounded hover:bg-neutral-600"
+                onClick={handleCredentialUpdate}
+              >
+                SAVE
+              </button>
+            </div>
+          ) : null}
         </div>
-        {/* End of col 1 */}
-        <div className="w-1/2 two-column-col bg-gray-300 p-6 rounded-md right-col">
-          {renderComponent(componentToMount)}
-        </div>
-
-        {/* End of col 2 */}
-      </div>
-      <div className="flex container mx-auto px-4 w-full justify-end ">
-        {componentToMount === "edit" || componentToMount === "create" ? (
-          <>
-            <button className="p-2 mr-4 rounded" onClick={handleCancel}>
-              CANCEL
-            </button>
-
-            <button
-              className="p-1 w-20 button-dark rounded hover:bg-neutral-600"
-              onClick={handleCredentialUpdate}
-            >
-              SAVE
-            </button>
-          </>
-        ) : null}
       </div>
     </>
   );

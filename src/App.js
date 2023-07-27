@@ -6,6 +6,7 @@ import { CharacterPage } from "./react-modules/pages/CharacterPage";
 import { OnboardingPage } from "./react-modules/pages/OnboardingPage";
 import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
 import { DEFAULT_JSON } from "./DEFAULT_JSON";
+import { Footer } from "./react-modules/Footer";
 
 // import { Credentials } from "./react-modules/credentials/Credentials";
 
@@ -76,7 +77,11 @@ function App() {
 
   return (
     <>
-      <div className={`dark:bg-gray-500 bg-white ${darkMode ? "dark" : ""}`}>
+      <div
+        className={`dark:bg-gray-500 bg-white min-h-screen ${
+          darkMode ? "dark" : ""
+        }`}
+      >
         <NavBar
           darkMode={darkMode}
           setDarkMode={setDarkMode}
@@ -117,9 +122,11 @@ function App() {
           />
         )}
 
-        <pre className="p-10 m-5 border text-xs rounded dark:text-neutral-200 whitespace-pre-wrap break-words">
+        <Footer />
+
+        {/* <pre className="p-10 m-5 border text-xs rounded dark:text-neutral-200 whitespace-pre-wrap break-words">
           {JSON.stringify(showcaseJSON, null, 2)}
-        </pre>
+        </pre> */}
       </div>
     </>
   );

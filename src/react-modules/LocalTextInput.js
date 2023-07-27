@@ -8,6 +8,7 @@ function LocalTextInput({
   handleJSONUpdate,
   showcaseJSON,
   localJSON,
+  placeholder,
 }) {
   const [value, setValue] = useState("");
 
@@ -63,19 +64,16 @@ function LocalTextInput({
   };
 
   return (
-    <div className="p-1">
-      <label
-        className="text-white font-bold"
-        htmlFor={`${personaIndex}_${element}`}
-      >
-        {label}{" "}
+    <div className="">
+      <label className="text-lg" htmlFor={`${personaIndex}_${element}`}>
+        {label}
       </label>
-      <br />
       <input
-        className="p-1 field-background rounded w-full"
+        className="field-background mt-3"
         id={`${personaIndex}_${element}`}
         type="text"
         value={value}
+        placeholder={placeholder}
         onChange={(e) => handleChange(e.target.value)}
       />
     </div>
@@ -130,15 +128,13 @@ function LocalTextAreaInput({
   };
 
   return (
-    <div className="p-1">
-      <label
-        className="text-white font-bold"
-        htmlFor={`${personaIndex}_${element}`}
-      >
+    <div className="">
+      <label className="text-lg" htmlFor={`${personaIndex}_${element}`}>
         {label}{" "}
       </label>
       <textarea
-        className="rounded p-1 w-full resize-none field-background"
+        className="rounded w-full resize-none field-background mt-3 p-2"
+        rows="8"
         id={`${personaIndex}_${element}`}
         type="text"
         value={value}

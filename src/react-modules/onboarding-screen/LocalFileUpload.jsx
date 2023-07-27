@@ -2,12 +2,7 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-function LocalFileUpload({
-  text,
-  element,
-  handleLocalUpdate,
-  localJSON
-}) {
+function LocalFileUpload({ text, element, handleLocalUpdate, localJSON }) {
   const [preview, setPreview] = useState(localJSON[`${element}`]);
 
   // To-Do: Impliment a feature to show the preview directly from the JSON data
@@ -33,7 +28,6 @@ function LocalFileUpload({
 
       const base64 = await convertBase64(newValue);
       handleLocalUpdate(element, base64);
-
     } else {
       setPreview(null);
       handleLocalUpdate(element, "");
@@ -41,8 +35,8 @@ function LocalFileUpload({
   };
 
   return (
-    <div className="flex p-1 items-center flex-col justify-center w-full">
-      <p className="font-bold pb-1 w-full text-start text-white">{text}</p>
+    <div className="flex items-center flex-col justify-center w-full">
+      <p className="w-full text-start text-white mb-2">{text}</p>
 
       {preview == null ? null : (
         <div className="relative w-full">
@@ -89,4 +83,4 @@ function LocalFileUpload({
   );
 }
 
-export {LocalFileUpload};
+export { LocalFileUpload };

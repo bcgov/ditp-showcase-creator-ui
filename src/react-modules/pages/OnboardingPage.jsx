@@ -226,10 +226,10 @@ export const OnboardingPage = ({
 
         <div
           id="editStep"
-          className="w-1/2 two-column-col  bg-gray-300 p-1 rounded-md right-col "
+          className="w-1/2 two-column-col  bg-gray-300 p-6 rounded-md right-col "
         >
           {stepState == "no-selection" ? (
-            <div className="p-5">
+            <div className="">
               <NoSelection Text={"No Step Selected"} />
             </div>
           ) : null}
@@ -237,14 +237,16 @@ export const OnboardingPage = ({
             <CreateNewStep addNewStep={addNewStep} />
           ) : null}
           {stepState == "editing-basic" ? (
-            <BasicStepEdit
-              selectedCharacter={selectedCharacter}
-              handleJSONUpdate={handleJSONUpdate}
-              setSelectedStep={setSelectedStep}
-              selectedStep={selectedStep}
-              showcaseJSON={showcaseJSON}
-              setShowcaseJSON={setShowcaseJSON}
-            />
+            <div className="">
+              <BasicStepEdit
+                selectedCharacter={selectedCharacter}
+                handleJSONUpdate={handleJSONUpdate}
+                setSelectedStep={setSelectedStep}
+                selectedStep={selectedStep}
+                showcaseJSON={showcaseJSON}
+                setShowcaseJSON={setShowcaseJSON}
+              />
+            </div>
           ) : null}
           {stepState == "editing-issue" ? (
             <IssueStepEdit

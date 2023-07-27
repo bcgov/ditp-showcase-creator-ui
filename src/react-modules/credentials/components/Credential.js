@@ -45,7 +45,7 @@ function Credential({
           </div>
         </div>
         <div
-          className="remove flex items-center justify-center w-1/5 trash-button"
+          className="remove text-xl flex items-center justify-center w-1/5 trash-button"
           onClick={(e) => {
             handleCredentialRemoval(index);
           }}

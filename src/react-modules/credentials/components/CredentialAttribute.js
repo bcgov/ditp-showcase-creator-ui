@@ -15,7 +15,7 @@ function CredentialAttribute({
 }) {
   const [selectedOption, setSelectedOption] = useState(null);
   return (
-    <div className="grid grid-cols-9 gap-2" id={index}>
+    <div className="grid grid-cols-9 gap-2 mb-2" id={index}>
       <select
         name={`type`}
         id={`type`}
@@ -38,7 +38,7 @@ function CredentialAttribute({
         placeholder="Attribute Name"
         value={attributeName || ""}
         onChange={(e) => handleChange(e, ["attributes", "name"], index)}
-        className="col-span-3 text-sm"
+        className="col-span-3 text-sm truncate"
       />
 
       <input
@@ -53,7 +53,7 @@ function CredentialAttribute({
       />
 
       <div
-        className=" flex items-center text-xl mb-5 trash-button justify-center"
+        className=" flex items-center text-lg trash-button justify-center"
         onClick={() => removeAttribute(selectedCredential, index)}
       >
         <FontAwesomeIcon icon={faTrash} />

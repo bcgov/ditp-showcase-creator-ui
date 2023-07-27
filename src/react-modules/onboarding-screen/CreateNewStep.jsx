@@ -3,13 +3,13 @@ import "./onboarding-styles/onboarding-style.css";
 function CreateNewStep({ addNewStep }) {
   return (
     <>
-      <div className="flex flex-col p-5 ">
+      <div className="flex flex-col ">
         <p>Onboarding</p>
         <p className="text-4xl font-bold">Create a New Step</p>
         <hr />
       </div>
 
-      <div className="p-5">
+      <div className="py-5">
         <button
           className="basic-step flex flex-row justify-between items-center rounded p-5 my-3 w-full text-start"
           onClick={(e) => addNewStep(false)}

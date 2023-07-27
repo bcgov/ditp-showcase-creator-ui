@@ -110,7 +110,7 @@ function CharacterScreen({
                 </button>
 
                 <button
-                  className="p-1 w-20 button-dark hover:bg-neutral-600"
+                  className="p-1 w-20 button-dark rounded hover:bg-neutral-600"
                   onClick={saveJSON}
                 >
                   SAVE

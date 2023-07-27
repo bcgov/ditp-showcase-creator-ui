@@ -21,49 +21,57 @@ function CredentialsForm({
         </div>
       </div>
       <hr className="mb-6"></hr>
-      <label className="text-md" htmlFor="cred_name">
-        Credential Name
-      </label>
-      <br />
-      <input
-        type="text"
-        id="cred_name"
-        name="cred_name"
-        placeholder="Credential Name"
-        value={
-          tempData[selectedCredential] ? tempData[selectedCredential].name : ""
-        }
-        onChange={(e) => handleChange(e, ["name"])}
-        className="mt-2"
-      />
-      <br />
-      <label htmlFor="issuer_name">Issuer Name</label>
-      <br />
-      <input
-        type="text"
-        id="issuer_name"
-        name="issuer_name"
-        placeholder="Issuer Name"
-        value={
-          tempData[selectedCredential]
-            ? tempData[selectedCredential].issuer_name
-            : ""
-        }
-        onChange={(e) => handleChange(e, ["issuer_name"])}
-        className="mt-2"
-      />
-      <br />
-      <label> Add Attributes</label>
-      <br />
-      <CredentialAttributesList
-        tempData={tempData}
-        selectedCredential={selectedCredential}
-        handleChange={handleChange}
-        addAttribute={addAttribute}
-        removeAttribute={removeAttribute}
-        showcaseJSON={showcaseJSON}
-        selectedCharacter={selectedCharacter}
-      />
+
+      <div className="my-6">
+        <label className="text-lg bold" htmlFor="cred_name">
+          Credential Name
+        </label>
+        <br />
+        <input
+          type="text"
+          id="cred_name"
+          name="cred_name"
+          placeholder="Credential Name"
+          value={
+            tempData[selectedCredential]
+              ? tempData[selectedCredential].name
+              : ""
+          }
+          onChange={(e) => handleChange(e, ["name"])}
+          className="field-background mt-3"
+        />
+      </div>
+
+      <div className="my-6">
+        <label htmlFor="issuer_name">Issuer Name</label>
+        <br />
+        <input
+          type="text"
+          id="issuer_name"
+          name="issuer_name"
+          placeholder="Issuer Name"
+          value={
+            tempData[selectedCredential]
+              ? tempData[selectedCredential].issuer_name
+              : ""
+          }
+          onChange={(e) => handleChange(e, ["issuer_name"])}
+          className="field-background mt-3"
+        />
+      </div>
+
+      <div className="my-3">
+        <label> Add Attributes</label>
+        <CredentialAttributesList
+          tempData={tempData}
+          selectedCredential={selectedCredential}
+          handleChange={handleChange}
+          addAttribute={addAttribute}
+          removeAttribute={removeAttribute}
+          showcaseJSON={showcaseJSON}
+          selectedCharacter={selectedCharacter}
+        />
+      </div>
     </>
   );
 }

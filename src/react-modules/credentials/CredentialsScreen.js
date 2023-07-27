@@ -24,18 +24,11 @@ function CredentialsScreen({
     showcaseJSON.personas[selectedCharacter].credentials
   );
 
-  useEffect(() => {
-    console.log(selectedCredential);
-  }, [selectedCredential]);
-
-  const [showJSON, setShowJSON] = useState(false);
-
   // Check if the create button has been clicked to ensure that you cant spam the button.
   const [createButtonClicked, setCreateButtonClicked] = useState(false);
 
   // Remove a credential
   function handleCredentialRemoval(credential) {
-    console.log(selectedCredential);
     if (
       Object.keys(showcaseJSON.personas[selectedCharacter].credentials)
         .length === 1
@@ -208,15 +201,15 @@ function CredentialsScreen({
       <div className="flex container mx-auto px-4 w-full justify-end ">
         {componentToMount === "edit" || componentToMount === "create" ? (
           <>
-            <button className="border p-2 mr-4 rounded" onClick={handleCancel}>
+            <button className="p-2 mr-4 rounded" onClick={handleCancel}>
               CANCEL
             </button>
 
             <button
-              className="border p-2 rounded"
+              className="p-1 w-20 button-dark rounded hover:bg-neutral-600"
               onClick={handleCredentialUpdate}
             >
-              {componentToMount === "edit" ? "DONE" : "ADD"}
+              SAVE
             </button>
           </>
         ) : null}

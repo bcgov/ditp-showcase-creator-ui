@@ -95,10 +95,9 @@ function App() {
         )}
         {currentPage === "credential" && (
           <CredentialsScreen
-            tempData={tempData}
-            setTempData={setTempData}
-            formData={formData}
-            setFormData={setFormData}
+            showcaseJSON={showcaseJSON}
+            setShowcaseJSON={setShowcaseJSON}
+            selectedCharacter={selectedCharacter}
           />
         )}
         {currentPage === "setup" && (

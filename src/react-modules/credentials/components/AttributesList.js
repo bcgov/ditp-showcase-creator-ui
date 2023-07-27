@@ -7,8 +7,8 @@ function CredentialAttributesList({
   tempData,
   selectedCredential,
   handleChange,
+  handleAttributeRemoval,
   addAttribute,
-  removeAttribute,
 }) {
   return (
     <>
@@ -36,18 +36,15 @@ function CredentialAttributesList({
         </div>
         <hr className="mb-3" />
         {tempData[selectedCredential] &&
-          tempData[selectedCredential].attributes.length !== 0 &&
           tempData[selectedCredential].attributes.map((attr, index) => (
             <CredentialAttribute
               key={index}
               index={index}
               attributeName={attr.name}
               attributeValue={attr.value}
-              credType={attr.type}
+              credType={attr.cred_type}
               handleChange={handleChange}
-              tempData={tempData}
-              selectedCredential={selectedCredential}
-              removeAttribute={removeAttribute}
+              handleAttributeRemoval={handleAttributeRemoval}
             />
           ))}
       </div>

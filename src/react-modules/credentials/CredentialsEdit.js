@@ -1,13 +1,27 @@
-import { CredentialAttributesList } from "./components/CredentialAttributesList";
+import React from "react";
+import { CredentialAttributesList } from "./components/AttributesList";
 
 function CredentialsEdit({
   selectedCredential,
   tempData,
-  setTempData,
-  addAttribute,
   handleChange,
-  removeAttribute,
+  addAttribute,
+  setTempData,
 }) {
+  const handleAttributeRemoval = (attributeIndex) => {
+    setTempData((prevData) => {
+      const newData = [...prevData];
+      const selectedCred = { ...newData[selectedCredential] }; // Create a copy of the selected credential
+      selectedCred.attributes = selectedCred.attributes.filter(
+        (_, index) => index !== attributeIndex
+      );
+      newData[selectedCredential] = selectedCred; // Update the selected credential in the new data array
+      return newData;
+    });
+  };
+
+  if (tempData.length === 0) return;
+
   return (
     <>
       <div className="flex justify-between">

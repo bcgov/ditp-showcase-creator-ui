@@ -9,16 +9,14 @@ function CredentialAttribute({
   attributeValue,
   credType,
   handleChange,
-  selectedCredential,
-  tempData,
-  removeAttribute,
+  handleAttributeRemoval,
 }) {
   const [selectedOption, setSelectedOption] = useState(null);
   return (
     <div className="grid grid-cols-9 gap-2 mb-2" id={index}>
       <select
-        name={`type`}
-        id={`type`}
+        name={`cred_type-${index}`}
+        id={`cred_type-${index}`}
         className="col-span-2 truncate"
         value={credType || ""}
         onChange={(e) => {
@@ -34,7 +32,7 @@ function CredentialAttribute({
 
       <input
         type="text"
-        name={`name`}
+        name={`name-${index}`}
         placeholder="Attribute Name"
         value={attributeName || ""}
         onChange={(e) => handleChange(e, ["attributes", "name"], index)}

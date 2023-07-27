@@ -4,9 +4,11 @@ import { useImmer } from "use-immer"; // useImmer is an alternative to useState;
 import { NavBar } from "./react-modules/NavBar";
 import { CharacterPage } from "./react-modules/pages/CharacterPage";
 import { OnboardingPage } from "./react-modules/pages/OnboardingPage";
-import { ScenarioPage2 } from "./react-modules/pages/ScenarioPage2";
+import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
 import { DEFAULT_JSON } from "./DEFAULT_JSON";
-import { TEST_JSON } from "./TEST_JSON";
+
+// import { Credentials } from "./react-modules/credentials/Credentials";
+
 import { CredentialsScreen } from "./react-modules/credentials/CredentialsScreen";
 
 function App() {
@@ -14,11 +16,10 @@ function App() {
     personas: [DEFAULT_JSON],
   });
 
-  const [formData, setFormData] = useState([]);
-
   const [darkMode, setDarkMode] = useState(true);
 
   const [selectedCharacter, setSelectedCharacter] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const [currentPage, setCurrentPage] = useState("character");
   const [componentToMount, setComponentToMount] = useState("no selection");
@@ -26,6 +27,9 @@ function App() {
   const changePage = (page) => {
     setCurrentPage(page);
   };
+
+  const [formData, setFormData] = useState([]);
+  const [tempData, setTempData] = useState([]);
 
   function handleJSONUpdate(index, element, newValue) {
     switch (element.length) {
@@ -92,21 +96,24 @@ function App() {
         )}
         {currentPage === "credential" && (
           <CredentialsScreen
-            showcaseJSON={showcaseJSON}
-            setShowcaseJSON={setShowcaseJSON}
-            selectedCharacter={selectedCharacter}
+            tempData={tempData}
+            setTempData={setTempData}
             formData={formData}
             setFormData={setFormData}
             setComponentToMount={setComponentToMount}
             componentToMount={componentToMount}
           />
         )}
-        {currentPage === "scenario" && (
-          <ScenarioPage2 formData={formData} setFormData={setFormData} />
-        )}
-
         {currentPage === "setup" && (
           <OnboardingPage
+            showcaseJSON={showcaseJSON}
+            selectedCharacter={selectedCharacter}
+            setShowcaseJSON={setShowcaseJSON}
+            handleJSONUpdate={handleJSONUpdate}
+          />
+        )}
+        {currentPage === "scenario" && (
+          <ScenarioPage
             showcaseJSON={showcaseJSON}
             selectedCharacter={selectedCharacter}
             setShowcaseJSON={setShowcaseJSON}

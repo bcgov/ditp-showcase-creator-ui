@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import "./styles/credentials.css";
 import { CredentialsForm } from "./CredentialsForm";
 import { CredentialsEdit } from "./CredentialsEdit";
 import { CredentialsList } from "./components/CredentialsList";
@@ -13,11 +14,13 @@ import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 /// current working one !!!
 
 function CredentialsScreen({
-  showcaseJSON,
-  setShowcaseJSON,
   selectedCharacter,
-  componentToMount,
-  setComponentToMount,
+  setSelectedIndex,
+  selectedIndex,
+  tempData,
+  setTempData,
+  formData,
+  setFormData
 }) {
   const [selectedCredential, setSelectedCredential] = useState(null);
   const [tempData, setTempData] = useImmer(
@@ -46,98 +49,114 @@ function CredentialsScreen({
     });
   }
 
-  // Handle all inputs
-  function handleChange(e, element, index) {
-    if (element.length === 1) {
-      setTempData((json) => {
-        json[selectedCredential][element[0]] = e.target.value;
-      });
-    } else if (element.length === 2) {
-      setTempData((json) => {
-        json[selectedCredential][element[0]][index][element[1]] =
-          e.target.value;
-      });
+    if (name === "cred_name" || name === "issuer_name") {
+      newData[index][name] = value;
+    } else {
+      newData[index].attributes[attributeIndex][attributeName] = value;
     }
-  }
-
-  // Set the real JSON
-  const handleCredentialUpdate = () => {
-    setComponentToMount(null);
-    setCreateButtonClicked(false);
-    setSelectedCredential(null);
-    setShowcaseJSON((json) => {
-      json.personas[selectedCharacter].credentials = tempData;
-    });
+    setTempData(newData);
   };
 
   // Add an attribute
-  const addAttribute = (credential) => {
+  const addAttribute = () => {
     setTempData((prevData) => {
-      prevData[credential].attributes.push({
-        name: "",
-        value: "",
-        type: "",
-      });
+      const newData = [...prevData];
+      const selectedCred = { ...newData[selectedCredential] }; // Create a copy of the selected credential
+      selectedCred.attributes = [
+        ...selectedCred.attributes,
+        { cred_type: "", name: "", value: "" },
+      ];
+      newData[selectedCredential] = selectedCred; // Update the selected credential in the new data array
+      return newData;
     });
   };
 
-  // Remove an attribute
-  const removeAttribute = (credential, index) => {
-    setTempData((prevData) => {
-      prevData[credential].attributes.splice(index, 1);
-    });
+  // Add a credential
+  const handleCredentialUpdate = () => {
+    setCreateButtonClicked(false);
+    setFormData(JSON.parse(JSON.stringify(tempData)));
+    setComponentToMount("credential");
   };
 
   // Remove the credential if cancel button is clicked
   const handleCancel = () => {
-    setSelectedCredential(null);
-    setComponentToMount(null);
-    setCreateButtonClicked(false);
-    setTempData(showcaseJSON.personas[selectedCharacter].credentials);
+    if (componentToMount === "create") {
+      setCreateButtonClicked(false);
+      setTempData((prevData) => {
+        const newData = prevData.filter(
+          (_, index) => index !== selectedCredential
+        );
+        return newData;
+      });
+      setSelectedCredential((prevVal) => (prevVal === 0 ? 0 : prevVal - 1));
+      setComponentToMount("credential");
+    } else if (componentToMount === "edit") {
+      setTempData(JSON.parse(JSON.stringify(formData)));
+      setComponentToMount("credential");
+    }
   };
 
   // Create a credential with an empty object.
   const handleCreateButtonClick = (e) => {
-    let credential_id = Date.now();
-    setTempData((temp) => {
-      temp[credential_id] = {
+    setSelectedCredential(formData.length);
+    setTempData([
+      ...tempData,
+      {
+        cred_name: "",
         issuer_name: "",
-        name: "",
-        version: "1.0",
         icon: "",
         attributes: [],
-      };
-    });
+      },
+    ]);
+    setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
     setCreateButtonClicked(true);
-    setSelectedCredential(credential_id);
-    setComponentToMount("create");
+  };
+
+  const handleImportButtonClick = (e) => {
+    setComponentToMount(e.target.getAttribute("data-button-id").split("-")[0]);
   };
 
   const renderComponent = (component) => {
     switch (component) {
+      // case "credential":
+      //   return (
+      //     <SelectionOverview
+      //       setComponentToMount={setComponentToMount}
+      //       credentialSelected={selectedIndex}
+      //       selectedCharacter={selectedCharacter}
+      //       formData={formData}
+      //       setFormData={setFormData}
+      //       selectedCredential={selectedCredential}
+      //       tempData={tempData}
+      //       setTempData={setTempData}
+      //       setSelectedCredential={setSelectedCredential}
+      //     />
+      //   );
       case "create":
         return (
           <CredentialsForm
-            handleChange={handleChange}
+            handleChange={handleChange(selectedCredential)}
             tempData={tempData}
+            setTempData={setTempData}
+            formData={formData}
+            setFormData={setFormData}
             addAttribute={addAttribute}
             selectedCredential={selectedCredential}
-            removeAttribute={removeAttribute}
-            showcaseJSON={showcaseJSON}
-            selectedCharacter={selectedCharacter}
           />
         );
       case "edit":
         return (
           <CredentialsEdit
-            selectedCredential={selectedCredential}
+            handleChange={handleChange(selectedCredential)}
+            formData={formData}
             tempData={tempData}
             setTempData={setTempData}
             addAttribute={addAttribute}
-            handleChange={handleChange}
-            removeAttribute={removeAttribute}
+            selectedCredential={selectedCredential}
           />
         );
+      case "import":
+        return "";
       default:
         return (
           <div className="">
@@ -179,15 +198,14 @@ function CredentialsScreen({
             </div>
 
             <CredentialsList
-              selectedCharacter={selectedCharacter}
-              showcaseJSON={showcaseJSON}
+              setSelectedIndex={setSelectedIndex}
               setComponentToMount={setComponentToMount}
+              formData={formData}
+              setFormData={setFormData}
+              selectedCredential={selectedCredential}
               tempData={tempData}
               setTempData={setTempData}
-              selectedCredential={selectedCredential}
               setSelectedCredential={setSelectedCredential}
-              handleCredentialRemoval={handleCredentialRemoval}
-              setCreateButtonClicked={setCreateButtonClicked}
             />
           </div>
         </div>

@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGripVertical,
   faPen,
-  faTrash,
   faDisplay,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -65,7 +64,6 @@ export const SortableStep = ({
             // SCREEN IMAGE HERE
             <p className="text-2xl p-2 mx-2 rounded highlight-text">
               {
-                selectedCharacter &&
                 showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1].image
 
                 ? <img width="100px" src={showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1].image}/> :

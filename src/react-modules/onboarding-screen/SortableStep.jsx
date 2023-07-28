@@ -66,7 +66,7 @@ export const SortableStep = ({
                 showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1].image 
                 ? <img width="100px" src={showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1].image}/> :
                 <FontAwesomeIcon icon={faDisplay} />
-              )}
+              }
             </p>
           }
 

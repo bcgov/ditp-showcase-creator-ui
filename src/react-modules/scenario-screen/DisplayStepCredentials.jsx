@@ -48,6 +48,7 @@ function DisplayStepCredentials({
 
 
             {
+              localData.requestOptions.proofRequest && localData.requestOptions.proofRequest.attributes ?
               getAllCredentials(localData.requestOptions.proofRequest.attributes, localData.requestOptions.proofRequest.predicates).map(
                 (credential, index) => (
                 
@@ -117,7 +118,7 @@ function DisplayStepCredentials({
               
            
                 
-                ))
+                )) : null
             
             
           }

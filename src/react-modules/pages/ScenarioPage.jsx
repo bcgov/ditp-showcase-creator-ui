@@ -227,7 +227,7 @@ export const ScenarioPage = ({
   return (
     
       <div className="two-column-container mx-20 my-16">
-        <div className="two-column-col md:w-3/5 pr-4">
+        <div className="two-column-col md:w-2/4 pr-4">
           <div className="flex w-full">
             <div>
               <h2 className="text-4xl font-bold text-slate-50">
@@ -371,7 +371,7 @@ export const ScenarioPage = ({
           </div>
         </div>
 
-        <div id="editStep" className="highlight-container w-2/5 rounded p-3">
+        <div id="editStep" className="highlight-container w-2/4 rounded p-3">
 
           {state == "no-selection" || state == null ? (
             <NoSelection Text={"Nothing Selected"} />

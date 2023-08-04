@@ -27,7 +27,7 @@ function DisplayAddedCredentials({
             <>
               <div className="flex flex-row">
                 <div className="w-full">
-                  <div className={` credential-border rounded p-3 mt-3`}>
+                  <div className={`credential rounded p-3 mt-3`}>
                     <div className="grid grid-cols-3 p-1">
                       <div className="col-span-2">
                         <div className="text-xs">

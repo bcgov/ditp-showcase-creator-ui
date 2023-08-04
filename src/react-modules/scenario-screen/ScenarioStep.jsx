@@ -83,7 +83,7 @@ export const ScenarioStep = ({
               </p>
             }
 
-            {step.text.length > MAX_CHARS ? (
+            {step.text && step.text.length > MAX_CHARS ? (
               <p>
                 {step.text.slice(0, MAX_CHARS)}...{" "}
                 <span className="font-bold">see more</span>
@@ -95,7 +95,7 @@ export const ScenarioStep = ({
           
 
           {
-            step.requestOptions ? (
+            step.requestOptions && step.requestOptions.proofRequest && step.requestOptions.proofRequest.attributes ? (
               <>
                     <hr />
                     <div className="flex-row flex items-center justify-around w-full">

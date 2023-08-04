@@ -194,7 +194,7 @@ export const OnboardingPage = ({
                 <DragOverlay>
                   <div className="top-1">
                     <p>
-                      {selectedStep
+                      {selectedStep && showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
                         ? showcaseJSON.personas[selectedCharacter].onboarding[
                             selectedStep
                           ].title
@@ -202,7 +202,7 @@ export const OnboardingPage = ({
                     </p>
                     <div className="highlight-container w-full flex flex-row justify-items-center items-center rounded p-3 unselected-item backdrop-blur">
                       <p className="text-sm">
-                        {selectedStep
+                        {selectedStep && showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
                           ? showcaseJSON.personas[selectedCharacter].onboarding[
                               selectedStep
                             ].text

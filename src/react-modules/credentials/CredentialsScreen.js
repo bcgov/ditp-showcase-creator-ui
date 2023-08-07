@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
-import { Overview } from "./Overview";
 
 /// current working one !!!
 
@@ -191,6 +190,7 @@ function CredentialsScreen({
                   setSelectedCredential={setSelectedCredential}
                   handleCredentialRemoval={handleCredentialRemoval}
                   setCreateButtonClicked={setCreateButtonClicked}
+                  createButtonClicked={createButtonClicked}
                 />
               </div>
             </div>

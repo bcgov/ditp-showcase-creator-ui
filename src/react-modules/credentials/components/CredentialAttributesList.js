@@ -25,7 +25,7 @@ function CredentialAttributesList({
             </span>
           </p>
           <button
-            className="  text-xs add-attr-btn  text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+            className=" text-xs add-attr-btn text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
             onClick={() => addAttribute(selectedCredential)}
           >
             <span>ADD ATTRIBUTE </span>

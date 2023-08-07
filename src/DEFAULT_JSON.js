@@ -5,50 +5,50 @@ const DEFAULT_JSON = {
   body_image: "",
   description: "This is Bob's description.",
   credentials: {
-    "test_card_id": {
-      "issuer_name": "Test College",
-      "name": "test_card",
-      "version": "1.10",
-      "icon": "",
-      "attributes": [
+    student_card: {
+      issuer_name: "Test College",
+      name: "test_card",
+      version: "1.10",
+      icon: "",
+      attributes: [
         {
-          "name": "student_first_name",
-          "value": "Bob",
-          "type": "string"
+          name: "student_first_name",
+          value: "Bob",
+          type: "string",
         },
         {
-          "name": "student_last_name",
-          "value": "Smith"
+          name: "student_last_name",
+          value: "Smith",
         },
         {
-          "name": "expiry_date",
-          "value": "20270517",
-          "type": "dateint"
-        }
-      ]
+          name: "expiry_date",
+          value: "20270517",
+          type: "dateint",
+        },
+      ],
     },
-    "test_card_id_2": {
-      "issuer_name": "My Workplace",
-      "name": "test_card",
-      "version": "1.10",
-      "icon": "",
-      "attributes": [
+    test_card_id: {
+      issuer_name: "My Workplace",
+      name: "test_card",
+      version: "1.10",
+      icon: "",
+      attributes: [
         {
-          "name": "student_first_name",
-          "value": "Bob",
-          "type": "string"
+          name: "student_first_name",
+          value: "Bob",
+          type: "string",
         },
         {
-          "name": "student_last_name",
-          "value": "Smith"
+          name: "student_last_name",
+          value: "Smith",
         },
         {
-          "name": "expiry_date",
-          "value": "20270517",
-          "type": "dateint"
-        }
-      ]
-    }
+          name: "expiry_date",
+          value: "20270517",
+          type: "dateint",
+        },
+      ],
+    },
   },
   revocationInfo: [
     {
@@ -59,30 +59,6 @@ const DEFAULT_JSON = {
         "Test College allows you to revoke your Student Card if:\n• there is a problem with your credential.\n• your device was lost or stolen and you want to secure your personal information.",
     },
   ],
-  credentials: {
-    "test_card_id": {
-      "issuer_name": "Test College",
-      "name": "test_card",
-      "version": "1.10",
-      "icon": "/public/student/icon-student.svg",
-      "attributes": [
-        {
-          "name": "student_first_name",
-          "value": "Bob",
-          "type": "string"
-        },
-        {
-          "name": "student_last_name",
-          "value": "Smith"
-        },
-        {
-          "name": "expiry_date",
-          "value": "20270517",
-          "type": "dateint"
-        }
-      ]
-    }
-  },
   progressBar: [
     {
       name: "person",
@@ -144,9 +120,7 @@ const DEFAULT_JSON = {
       title: "Accept your test card",
       text: "Your wallet now has a secure and private connection with BestBC College. You should have received an offer in BC Wallet for a Student Card.\nReview what they are sending, and choose 'Accept offer'.",
       image: "",
-      credentials: [
-        "test_card_id",
-      ],
+      credentials: ["test_card_id"],
     },
     {
       screenId: "SETUP_COMPLETED",
@@ -155,97 +129,56 @@ const DEFAULT_JSON = {
       image: "",
     },
   ],
-  useCases: [
+  scenarios: [
     {
       id: "testClothesOnline",
       name: "Cool Clothes Online",
-      screens: [
+      overview: {
+        title: "Getting a student discount",
+        text: "Bob (that's you in this demo!) can get a student discount on her online purchase. In this example, you will just tell Cool Clothes Online you're a student.",
+        image: "/public/student/useCases/store/card-school.svg",
+      },
+      summary: {
+        title: "You're done!",
+        text: "You proved that you're a student, and Cool Clothes Online gave you the discount. It only took a few seconds, you revealed minimal information, and Cool Clothes Online could easily and automatically trust what you sent.",
+        image: "/public/student/student-accepted.svg",
+      },
+      steps: [
         {
-          screenId: "START",
-          title: "Getting a student discount",
-          text: "Bob (that's you in this demo!) can get a student discount on her online purchase. In this example, you will just tell Cool Clothes Online you're a student.",
-          image: "",
-        },
-        {
-          screenId: "CONNECTION",
-          title: "Start proving you're a student",
-          text: "Imagine, as Alice, you are in the checkout process for Cool Clothes Online. They're offering you a 15% discount on your purchase if you can prove you're a student. First, scan the QR code.",
-          image: "",
-          verifier: {
-            name: "Cool Clothes Online",
-            icon: "",
-          },
-        },
-        {
-          screenId: "PROOF",
+          type: "CONNET_AND_VERIFY",
           title: "Confirm the information to send",
           text: "BC Wallet will now ask you to confirm what to send. Notice how it will only share if the credential has expired, not even the expiry date itself gets shared. You don't have to share anything else for it to be trustable.",
           requestOptions: {
+            type: "OOB",
             title: "Cool Clothes Online Request",
             text: "Cool Clothes Online would like some of your personal information.",
-            requestedCredentials: [
-              {
-                icon: "",
-                name: "test_card",
-                predicates: {
+            proofRequest: {
+              attributes: {
+                test_card_id: {
+                  attributes: ["student_first_name", "student_last_name"],
+                  restrictions: ["test_card_id"],
+                },
+                student_card: {
+                  attributes: ["student_first_name", "student_last_name"],
+                  restrictions: ["student_card"],
+                },
+              },
+              predicates: {
+                test_card_id_expiry_date: {
                   name: "expiry_date",
                   type: ">=",
                   value: 20230517,
+                  restrictions: ["test_card_id"],
+                },
+                student_card_expiry_date: {
+                  name: "expiry_date",
+                  type: ">=",
+                  value: 20230517,
+                  restrictions: ["student_card"],
                 },
               },
-            ],
+            },
           },
-        },
-        {
-          screenId: "STEP_END",
-          title: "You're done!",
-          text: "You proved that you're a student, and Cool Clothes Online gave you the discount. It only took a few seconds, you revealed minimal information, and Cool Clothes Online could easily and automatically trust what you sent.",
-          image: "",
-        },
-      ],
-    },
-    {
-      id: "studyTest",
-      name: "Test College",
-      screens: [
-        {
-          screenId: "START",
-          title: "Book a study room",
-          text: "Alice has lots of work to do, and needs a study room for some peace and quiet. In this example, we'll present some info from our Student Card, but just what's needed to book the room.",
-          image: "",
-        },
-        {
-          screenId: "CONNECTION",
-          title: "Start booking the room",
-          text: "Imagine you're on the room booking page for BestBC College, abd you've chosen a data and time. Now they just need to confirm a few details. Scan the QR code to continue.",
-          image:
-            "",
-          verifier: {
-            name: "BestBC College",
-            icon: "",
-          },
-        },
-        {
-          screenId: "PROOF",
-          title: "Confirm the information to send",
-          text: "BC Wallet will now ask you to confirm what to send for the booking. Notice how they only need your first name so they can display it on the booking screen. By providing anything from your student card, they automatically know your student card hasn't been revoked.",
-          requestOptions: {
-            title: "BestBC College Request",
-            text: "BestBC College would like some of your personal information.",
-            requestedCredentials: [
-              {
-                icon: "",
-                name: "test_card",
-                properties: ["student_first_name"],
-              },
-            ],
-          },
-        },
-        {
-          screenId: "STEP_END",
-          title: "You're done!",
-          text: "The room is booked. Just by proving your first name, Best BC College could trust you are a current student, and could let others know there's a booking without revealing too much about you.",
-          image: "",
         },
       ],
     },

@@ -51,7 +51,10 @@ function BasicStepEdit({
 
       <form onSubmit={(e) => handleSubmit(e)}>
         <div className="my-6">
-          <label className="text-lg bold" htmlFor={`${selectedStep}_title`}>
+          <label
+            className="text-md font-bold"
+            htmlFor={`${selectedStep}_title`}
+          >
             {"Page Title"}
           </label>
           <br />
@@ -66,7 +69,10 @@ function BasicStepEdit({
         </div>
 
         <div className="my-6">
-          <label className="text-lg mt-3" htmlFor={`${selectedStep}_text`}>
+          <label
+            className="text-md mt-3 font-bold"
+            htmlFor={`${selectedStep}_text`}
+          >
             {"Page Description"}
           </label>
           <textarea
@@ -79,7 +85,7 @@ function BasicStepEdit({
           />
         </div>
 
-        <div className="my-6">
+        <div className="my-6 ">
           <LocalFileUpload
             text={"Icon"}
             element={"image"}
@@ -87,7 +93,6 @@ function BasicStepEdit({
             localJSON={localJSON}
           />
         </div>
-
         <div className="flex flex-cols mx-5 my-3 justify-end space-x-4">
           <button
             className="p-1 w-20 hover:underline uppercase"

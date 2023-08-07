@@ -12,8 +12,12 @@ function CredentialsList({
   setCreateButtonClicked,
   selectedCredential,
   handleCredentialRemoval,
+  createButtonClicked,
 }) {
   function handleClick(credential) {
+    if (createButtonClicked) {
+      setTempData(showcaseJSON.personas[selectedCharacter].credentials);
+    }
     setCreateButtonClicked(false);
     setComponentToMount("edit");
     setSelectedCredential(credential);

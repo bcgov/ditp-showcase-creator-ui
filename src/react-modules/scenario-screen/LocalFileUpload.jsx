@@ -2,7 +2,12 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-function LocalFileUpload({ text, element, handleLocalUpdate, localJSON }) {
+function LocalFileUpload({
+  text,
+  element,
+  handleLocalUpdate,
+  localJSON
+}) {
   const [preview, setPreview] = useState(localJSON[`${element}`]);
 
   // To-Do: Impliment a feature to show the preview directly from the JSON data
@@ -28,6 +33,7 @@ function LocalFileUpload({ text, element, handleLocalUpdate, localJSON }) {
 
       const base64 = await convertBase64(newValue);
       handleLocalUpdate(element, base64);
+
     } else {
       setPreview(null);
       handleLocalUpdate(element, "");
@@ -36,12 +42,12 @@ function LocalFileUpload({ text, element, handleLocalUpdate, localJSON }) {
 
   return (
     <div className="flex items-center flex-col justify-center w-full">
-      <p className="w-full text-start text-white font-bold mb-2">{text}</p>
+      <p className="text-white">{text}</p>
 
       {preview == null ? null : (
         <div className="relative w-full">
           <button
-            className="bg-red-500 rounded p-1 m-2 absolute text-black right-0 top-0 text-sm hover:bg-red-400"
+            className="bg-red-500 p-1 m-2 absolute text-black right-0 top-0 text-sm hover:bg-red-400"
             onClick={(e) => handleChange(null)}
           >
             <FontAwesomeIcon icon={faTrash} />
@@ -51,7 +57,7 @@ function LocalFileUpload({ text, element, handleLocalUpdate, localJSON }) {
 
       <label
         htmlFor={`${element}`}
-        className="p-3 flex border-2 flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer dark:hover:bg-zinc-800 upload_outside hover:bg-zinc-100 dark:hover:bg-zinc-600"
+        className="p-3 flex border flex-col items-center justify-center w-3/4 h-full cursor-pointer dark:hover:bg-zinc-800 upload_outside hover:bg-zinc-100 dark:hover:bg-zinc-600"
       >
         <div className="flex flex-col items-center h-full justify-center border rounded-lg upload_center border-dashed p-2">
           {!preview ? null : (
@@ -83,4 +89,4 @@ function LocalFileUpload({ text, element, handleLocalUpdate, localJSON }) {
   );
 }
 
-export { LocalFileUpload };
+export {LocalFileUpload};

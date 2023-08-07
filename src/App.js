@@ -4,9 +4,9 @@ import { useImmer } from "use-immer"; // useImmer is an alternative to useState;
 import { NavBar } from "./react-modules/NavBar";
 import { CharacterPage } from "./react-modules/pages/CharacterPage";
 import { OnboardingPage } from "./react-modules/pages/OnboardingPage";
-import { ScenarioPage2 } from "./react-modules/pages/ScenarioPage2";
+import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
 import { DEFAULT_JSON } from "./DEFAULT_JSON";
-import { TEST_JSON } from "./TEST_JSON";
+import { Footer } from "./react-modules/Footer";
 import { CredentialsScreen } from "./react-modules/credentials/CredentialsScreen";
 
 function App() {
@@ -14,14 +14,9 @@ function App() {
     personas: [DEFAULT_JSON],
   });
 
-  const [formData, setFormData] = useState([]);
-
   const [darkMode, setDarkMode] = useState(true);
-
   const [selectedCharacter, setSelectedCharacter] = useState(0);
-
   const [currentPage, setCurrentPage] = useState("character");
-  // const [componentToMount, setComponentToMount] = useState("no selection");
 
   const changePage = (page) => {
     setCurrentPage(page);
@@ -73,7 +68,11 @@ function App() {
 
   return (
     <>
-      <div className={`dark:bg-gray-500 bg-white ${darkMode ? "dark" : ""}`}>
+      <div
+        className={`dark:bg-gray-500 bg-white min-h-screen ${
+          darkMode ? "dark" : ""
+        }`}
+      >
         <NavBar
           darkMode={darkMode}
           setDarkMode={setDarkMode}
@@ -95,14 +94,8 @@ function App() {
             showcaseJSON={showcaseJSON}
             setShowcaseJSON={setShowcaseJSON}
             selectedCharacter={selectedCharacter}
-            formData={formData}
-            setFormData={setFormData}
           />
         )}
-        {currentPage === "scenario" && (
-          <ScenarioPage2 formData={formData} setFormData={setFormData} />
-        )}
-
         {currentPage === "setup" && (
           <OnboardingPage
             showcaseJSON={showcaseJSON}
@@ -111,10 +104,20 @@ function App() {
             handleJSONUpdate={handleJSONUpdate}
           />
         )}
+        {currentPage === "scenario" && (
+          <ScenarioPage
+            showcaseJSON={showcaseJSON}
+            selectedCharacter={selectedCharacter}
+            setShowcaseJSON={setShowcaseJSON}
+            handleJSONUpdate={handleJSONUpdate}
+          />
+        )}
 
-        <pre className="p-10 m-5 border text-xs rounded dark:text-neutral-200 whitespace-pre-wrap break-words">
+        <Footer />
+
+        {/* <pre className="p-10 m-5 border text-xs rounded dark:text-neutral-200 whitespace-pre-wrap break-words">
           {JSON.stringify(showcaseJSON, null, 2)}
-        </pre>
+        </pre> */}
       </div>
     </>
   );

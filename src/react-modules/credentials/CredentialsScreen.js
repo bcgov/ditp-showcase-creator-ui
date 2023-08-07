@@ -23,8 +23,6 @@ function CredentialsScreen({
   );
   const [componentToMount, setComponentToMount] = useState("no selection");
 
-  const [componentToMount, setComponentToMount] = useState("no selection");
-
   // Check if the create button has been clicked to ensure that you cant spam the button.
   const [createButtonClicked, setCreateButtonClicked] = useState(false);
 

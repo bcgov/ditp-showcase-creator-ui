@@ -31,10 +31,10 @@ function NavBar({ darkMode, setDarkMode, showcaseJSON, setShowcaseJSON, changePa
 
       <div className="flex justify-between px-8 ">
 
-      <div className="flex justify-center items-center"><DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} /></div>
+        <div className="flex justify-center items-center"><DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} /></div>
 
         <div className="flex flex-row justify-center gap-6 px-8 shadow-md button-dark rounded-b-lg">
-         
+
           <NavBarButton
             title={"Character"}
             src={require("../assets/NavBar/character.svg").default}
@@ -66,16 +66,34 @@ function NavBar({ darkMode, setDarkMode, showcaseJSON, setShowcaseJSON, changePa
         </div>
 
 
-        <div className="flex flex-col gap-4 w-145  justify-center items-center py-4">
+        <div className="flex flex-col gap-4 w-145  justify-center items-center py-2">
 
 
-{showModal ? (
+          {showModal ? (
             <SaveModal setShowModal={setShowModal} showcaseJSON={showcaseJSON} />
           ) : null}
-          <JSONUploadButton setShowcaseJSON={setShowcaseJSON} />
-          <SaveButton setShowModal={setShowModal} />
+
+          <div className="flex w-145  justify-center items-center py-2">
+            <JSONUploadButton setShowcaseJSON={setShowcaseJSON} />
+            <a
+              href="/"
+              className="mx-4 inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-black shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
+            >
+              RESET
+            </a>
+          </div>
+
+          <SaveButton
+            setShowModal={setShowModal}
+
+          />
 
         </div>
+
+
+
+
+
 
 
       </div>

@@ -10,7 +10,7 @@ function CharacterEdit({
   localJSON,
 }) {
   return (
-    <div className="m-3">
+    <div className="m-3 text-light-text bg-light-bg-secondary dark:bg-dark-bg-secondary dark:text-dark-text">
       <div className="flex justify-between mt-3">
         <div>
           <p className="text-slate-100 text-sm">Character</p>
@@ -35,6 +35,7 @@ function CharacterEdit({
           handleJSONUpdate={handleLocalUpdate}
           showcaseJSON={showcaseJSON}
           localJSON={localJSON}
+          placeholder={"Character Role"}
         />
       </div>
       <div className="my-6">
@@ -45,6 +46,7 @@ function CharacterEdit({
           handleJSONUpdate={handleLocalUpdate}
           localJSON={localJSON}
           showcaseJSON={showcaseJSON}
+          placeholder={"Page Description"}
         />
       </div>
       <div className="grid grid-cols-2 gap-2 my-6">

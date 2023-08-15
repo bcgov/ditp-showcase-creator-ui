@@ -57,9 +57,9 @@ function FileUploadFull({ text, personaIndex, element, handleJSONUpdate }) {
 
       <label
         htmlFor={`${element}`}
-        className="p-3 flex field-background flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer dark:hover:bg-zinc-800 upload_outside hover:bg-zinc-100 dark:hover:bg-zinc-600"
+        className="p-3 flex flex-col items-center justify-center w-full h-full bg-light-bg  hover:bg-light-btn-hover dark:bg-dark-input dark:hover:bg-dark-input-hover rounded-lg cursor-pointer border dark:border-dark-border hover:bg-light-bg "
       >
-        <div className="flex flex-col items-center h-full justify-center border rounded-lg upload_center border-dashed p-2">
+        <div className="flex flex-col items-center h-full justify-center border rounded-lg border-dashed dark:border-dark-border p-2">
           {preview == null ? null : (
             <>
               <img
@@ -69,11 +69,8 @@ function FileUploadFull({ text, personaIndex, element, handleJSONUpdate }) {
             </>
           )}
 
-          <p className=" text-center text-xs text-zinc-500 dark:text-zinc-400 lowercase">
-            <span className="font-bold text-zinc-300 dark:text-zinc-200">
-              Click to upload
-            </span>{" "}
-            or drag and drop
+          <p className=" text-center text-xs lowercase">
+            <span className="font-bold ">Click to upload</span> or drag and drop
           </p>
         </div>
 

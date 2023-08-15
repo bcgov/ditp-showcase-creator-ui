@@ -21,10 +21,15 @@ h5,
 span,
 button,
 textarea,
-input[type="text"] {
+input[type="text"],
+textarea::placeholder {
   font-family: "Montserrat", sans-serif !important;
+  /* color: white; */
+}
 
-  color: white;
+textarea::placeholder {
+  font-size: 0.8rem;
+  color: #808080;
 }
 
 body > #root > div {
@@ -36,8 +41,8 @@ input {
 }
 
 .dark {
-  background: #222222 !important;
-  color: white;
+  /* background: #222222;
+  color: white; */
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -72,4 +77,8 @@ input {
   to {
     transform: rotate(360deg);
   }
+}
+
+.bg-dark {
+  color: black;
 }

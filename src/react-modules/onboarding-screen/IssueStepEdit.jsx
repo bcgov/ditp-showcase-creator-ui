@@ -111,10 +111,11 @@ function IssueStepEdit({
           </label>
           <br />
           <input
-            className="field-background mt-2"
+            className="dark:text-dark-text dark:bg-dark-input mt-2 bg-light-bg border dark:border-dark-border "
             id={`${selectedStep}_title`}
             type="text"
             value={localJSON.title}
+            placeholder="Page Title"
             onChange={(e) => handleLocalUpdate("title", e.target.value)}
           />
         </div>
@@ -125,7 +126,7 @@ function IssueStepEdit({
             {"Page Description"}
           </label>
           <textarea
-            className="field-background p-2 w-full rounded resize-none mt-3"
+            className="dark:text-dark-text dark:bg-dark-input p-2 w-full rounded resize-none mt-3 bg-light-bg border dark:border-dark-border "
             rows="8"
             id={`${selectedStep}_text`}
             placeholder="Page Description"
@@ -154,7 +155,7 @@ function IssueStepEdit({
             <div className="flex flex-row justify-center items-center my-4">
               <div className="relative w-full">
                 <input
-                  className="field-background rounded pl-2 pr-10 mb-2 w-full"
+                  className="dark:text-dark-text dark:bg-dark-input border dark:border-dark-border  rounded pl-2 pr-10 mb-2 w-full bg-light-bg"
                   placeholder="ex. Student Card"
                   type="text"
                   onChange={(e) => searchCredential(e)}
@@ -193,8 +194,8 @@ function IssueStepEdit({
 
           <input
             type="submit"
-            value="Save"
-            className="p-1 w-20 button-dark hover:bg-neutral-600"
+            value="SAVE"
+            className="p-1 w-20 hover:bg-light-btn-hover border  dark:hover:bg-dark-btn-hover hover:cursor-pointer"
           />
         </div>
       </form>

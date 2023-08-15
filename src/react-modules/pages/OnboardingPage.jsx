@@ -131,7 +131,7 @@ export const OnboardingPage = ({
     >
       <div className="flex flex-col min-h-screen">
         <div className="flex gap-12 container mx-auto px-4 py-8 mt-20">
-          <div className="w-1/2 rounded left-column">
+          <div className="w-1/2 rounded left-col text-light-text dark:text-dark-text">
             <div className="flex w-full">
               <div>
                 <h2 className="text-4xl font-bold text-slate-50">
@@ -150,6 +150,18 @@ export const OnboardingPage = ({
                 </p>
                 <div className="">
                   <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setStepState("creating-new");
+                    }}
+                    className="text-sm add-attr-btn border bg-light-bg dark:bg-dark-bg hover:bg-light-bg-secondary dark:hover:bg-dark-btn-hover font-bold py-2 px-4 rounded inline-flex items-center"
+                  >
+                    <span>ADD STEP</span>
+                    <div className="text-md ml-2">
+                      <FontAwesomeIcon icon={faCirclePlus} />
+                    </div>
+                  </button>
+                  {/* <button
                     className="button-light p-2 hover:bg-neutral-600"
                     onClick={(e) => {
                       e.preventDefault();
@@ -157,7 +169,7 @@ export const OnboardingPage = ({
                     }}
                   >
                     Add Step <FontAwesomeIcon icon={faCirclePlus} />
-                  </button>
+                  </button> */}
                 </div>
               </div>
               <SortableContext
@@ -194,7 +206,10 @@ export const OnboardingPage = ({
                 <DragOverlay>
                   <div className="top-1">
                     <p>
-                      {selectedStep && showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
+                      {selectedStep &&
+                      showcaseJSON.personas[selectedCharacter].onboarding[
+                        selectedStep
+                      ]
                         ? showcaseJSON.personas[selectedCharacter].onboarding[
                             selectedStep
                           ].title
@@ -202,7 +217,10 @@ export const OnboardingPage = ({
                     </p>
                     <div className="highlight-container w-full flex flex-row justify-items-center items-center rounded p-3 unselected-item backdrop-blur">
                       <p className="text-sm">
-                        {selectedStep && showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
+                        {selectedStep &&
+                        showcaseJSON.personas[selectedCharacter].onboarding[
+                          selectedStep
+                        ]
                           ? showcaseJSON.personas[selectedCharacter].onboarding[
                               selectedStep
                             ].text
@@ -230,7 +248,7 @@ export const OnboardingPage = ({
 
           <div
             id="editStep"
-            className="w-1/2 two-column-col  bg-gray-300 p-6 rounded-md right-col "
+            className="w-1/2 two-column-col  bg-light-bg-secondary dark:bg-dark-bg-secondary text-light-text dark:text-dark-text p-6 rounded-md right-col "
           >
             {stepState == "no-selection" ? (
               <div className="">

@@ -27,7 +27,7 @@ function CharacterInfo({
   return (
     // Regular mode / non-editable
     <>
-      <div className="flex">
+      <div className="flex ">
         <div className="m-3">
           <p>Character</p>
           <p className="text-2xl font-bold">Your Selected Character</p>

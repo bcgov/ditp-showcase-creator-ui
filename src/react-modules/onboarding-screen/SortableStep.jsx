@@ -54,19 +54,28 @@ export const SortableStep = ({
         </p>
 
         <div
-          className={`highlight-container w-full flex flex-row justify-items-center items-center rounded p-3 
+          className={` bg-light-bg dark:bg-dark-bg w-full hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover flex flex-row justify-items-center items-center rounded p-3 
         ${selectedStep == stepIndex - 1 ? "selected-item" : "unselected-item"}`}
         >
           {
             // SCREEN IMAGE HERE
             <p className="text-2xl p-2 mx-2 rounded highlight-text">
-
-              {
-                showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1] &&
-                showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1].image 
-                ? <img width="100px" src={showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1].image}/> :
+              {showcaseJSON.personas[selectedCharacter].onboarding[
+                stepIndex - 1
+              ] &&
+              showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1]
+                .image ? (
+                <img
+                  width="100px"
+                  src={
+                    showcaseJSON.personas[selectedCharacter].onboarding[
+                      stepIndex - 1
+                    ].image
+                  }
+                />
+              ) : (
                 <FontAwesomeIcon icon={faDisplay} />
-              }
+              )}
             </p>
           }
 

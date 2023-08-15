@@ -59,7 +59,7 @@ function BasicStepEdit({
           </label>
           <br />
           <input
-            className="field-background mt-3"
+            className="dark:text-dark-text dark:bg-dark-input  mt-3"
             id={`${selectedStep}_title`}
             type="text"
             placeholder="Page Title"
@@ -76,7 +76,7 @@ function BasicStepEdit({
             {"Page Description"}
           </label>
           <textarea
-            className="field-background p-2 w-full rounded resize-none mt-3"
+            className="dark:text-dark-text dark:bg-dark-input  p-2 w-full rounded resize-none mt-3"
             rows="8"
             id={`${selectedStep}_text`}
             placeholder="Page Description"

@@ -97,6 +97,9 @@ function CredentialsScreen({
 
   // Create a credential with an empty object.
   const handleCreateButtonClick = (e) => {
+    if (selectedCredential !== null) {
+      handleCancel();
+    }
     let credential_id = Date.now();
     setTempData((temp) => {
       temp[credential_id] = {
@@ -149,10 +152,10 @@ function CredentialsScreen({
 
   return (
     <>
-      <div className="flex flex-col min-h-screen mt-20">
+      <div className="flex flex-col min-h-screen mt-20 ">
         <div className="container mx-auto px-4 py-8 flex-grow">
           <div className="flex gap-12 h-full">
-            <div className="w-1/2 rounded left-col">
+            <div className="w-1/2 rounded left-col text-light-text dark:text-dark-text">
               <div className="flex justify-between">
                 <div>
                   <h3 className="text-4xl font-bold text-slate-50">
@@ -173,9 +176,12 @@ function CredentialsScreen({
                       <button
                         data-button-id="create-button-credentials"
                         onClick={handleCreateButtonClick}
-                        className="p-2 mx-1 rounded button-light hover:bg-neutral-600 text-slate-100"
+                        className="text-sm add-attr-btn border bg-light-bg dark:bg-dark-bg hover:bg-light-bg-secondary dark:hover:bg-dark-btn-hover font-bold py-2 px-4 rounded inline-flex items-center"
                       >
-                        Add Credential <FontAwesomeIcon icon={faCirclePlus} />
+                        <span>ADD CREDENTIAL</span>
+                        <div className="text-md ml-2">
+                          <FontAwesomeIcon icon={faCirclePlus} />
+                        </div>
                       </button>
                     )}
                   </div>
@@ -195,18 +201,18 @@ function CredentialsScreen({
               </div>
             </div>
             {/* End of col 1 */}
-            <div className="w-1/2 bg-gray-300 p-6 rounded-md right-col">
+            <div className="w-1/2  p-6 rounded-md right-col bg-light-bg-secondary dark:bg-dark-bg-secondary text-light-text dark:text-dark-text ">
               {renderComponent(componentToMount)}
             </div>
             {/* End of col 2 */}
           </div>
           {componentToMount === "edit" || componentToMount === "create" ? (
-            <div className="flex container mx-auto w-full my-8 justify-end">
+            <div className="flex container mx-auto w-full my-8 justify-end dark:text-dark-text">
               <button className="p-2 mr-4 rounded" onClick={handleCancel}>
                 CANCEL
               </button>
               <button
-                className="p-1 w-20 button-dark rounded hover:bg-neutral-600"
+                className="p-1 w-20 bg-light-bg-secondary hover:bg-light-btn-hover dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover rounded "
                 onClick={handleCredentialUpdate}
               >
                 SAVE

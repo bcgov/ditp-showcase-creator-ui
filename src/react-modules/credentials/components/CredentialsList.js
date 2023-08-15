@@ -17,6 +17,7 @@ function CredentialsList({
   function handleClick(credential) {
     if (createButtonClicked) {
       setTempData(showcaseJSON.personas[selectedCharacter].credentials);
+      console.log("asdfadfafda");
     }
     setCreateButtonClicked(false);
     setComponentToMount("edit");

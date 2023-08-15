@@ -20,7 +20,7 @@ function Credential({
           onClick={(e) => handleClick(index)}
         >
           <div
-            className={`credential rounded p-3 mt-3 ${
+            className={`credential  dark:hover:bg-dark-input hover:bg-light-btn-hover  rounded p-3 mt-3 ${
               selectedCredential === index
                 ? "selected-item"
                 : "credential-border"
@@ -36,7 +36,7 @@ function Credential({
                 </div>
               </div>
               <div className="flex justify-center items-center align-center">
-                <p className="credential-attributes">
+                <p className="border border-black border-solid rounded-lg text-xs py-1 px-2 flex justify-center items-center dark:border-white">
                   {" "}
                   Attributes: {attributeCount}
                 </p>

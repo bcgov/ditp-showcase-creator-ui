@@ -18,7 +18,7 @@ function CredentialAttribute({
       <select
         name={`type`}
         id={`type`}
-        className="col-span-2 truncate"
+        className="col-span-2 truncate dark:text-dark-text dark:bg-dark-input"
         value={credType || ""}
         onChange={(e) => {
           handleChange(e, ["attributes", "type"], index);
@@ -37,7 +37,7 @@ function CredentialAttribute({
         placeholder="Attribute Name"
         value={attributeName || ""}
         onChange={(e) => handleChange(e, ["attributes", "name"], index)}
-        className="col-span-3 text-sm truncate"
+        className="col-span-3 text-sm truncate dark:text-dark-text dark:bg-dark-input"
       />
 
       <input
@@ -48,7 +48,7 @@ function CredentialAttribute({
         }
         value={attributeValue || ""}
         onChange={(e) => handleChange(e, ["attributes", "value"], index)}
-        className="col-span-3 text-sm"
+        className="col-span-3 text-sm dark:text-dark-text dark:bg-dark-input"
       />
 
       <div

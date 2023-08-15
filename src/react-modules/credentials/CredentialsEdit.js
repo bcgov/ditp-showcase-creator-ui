@@ -35,7 +35,7 @@ function CredentialsEdit({
               : ""
           }
           onChange={(e) => handleChange(e, ["name"])}
-          className="field-background mt-3"
+          className="mt-3 dark:bg-dark-input"
         />
       </div>
 
@@ -54,7 +54,7 @@ function CredentialsEdit({
               : ""
           }
           onChange={(e) => handleChange(e, ["issuer_name"])}
-          className="field-background mt-3"
+          className="mt-3 dark:bg-dark-input"
         />
       </div>
 

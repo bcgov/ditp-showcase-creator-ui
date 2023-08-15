@@ -23,8 +23,7 @@ button,
 textarea,
 input[type="text"] {
   font-family: "Montserrat", sans-serif !important;
-
-  color: white;
+  /* color: white; */
 }
 
 body > #root > div {
@@ -36,8 +35,8 @@ input {
 }
 
 .dark {
-  background: #222222 !important;
-  color: white;
+  /* background: #222222;
+  color: white; */
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -72,4 +71,8 @@ input {
   to {
     transform: rotate(360deg);
   }
+}
+
+.bg-dark {
+  color: black;
 }

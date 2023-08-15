@@ -51,9 +51,9 @@ function LocalFileUpload({ text, element, handleLocalUpdate, localJSON }) {
 
       <label
         htmlFor={`${element}`}
-        className="p-3 flex border-2 flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer dark:hover:bg-zinc-800 upload_outside hover:bg-zinc-100 dark:hover:bg-zinc-600"
+        className="p-3 flex flex-col items-center justify-center w-full h-full bg-light-bg hover:bg-light-input dark:bg-dark-input rounded-lg cursor-pointer border hover:bg-light-bg dark:hover:bg-dark-input "
       >
-        <div className="flex flex-col items-center h-full justify-center border rounded-lg upload_center border-dashed p-2">
+        <div className="flex flex-col items-center h-full justify-center border rounded-lg border-dashed p-2">
           {!preview ? null : (
             <>
               <img

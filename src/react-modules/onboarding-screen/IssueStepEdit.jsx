@@ -111,10 +111,11 @@ function IssueStepEdit({
           </label>
           <br />
           <input
-            className="field-background mt-2"
+            className="dark:text-dark-text dark:bg-dark-input mt-2"
             id={`${selectedStep}_title`}
             type="text"
             value={localJSON.title}
+            placeholder="Page Title"
             onChange={(e) => handleLocalUpdate("title", e.target.value)}
           />
         </div>
@@ -125,7 +126,7 @@ function IssueStepEdit({
             {"Page Description"}
           </label>
           <textarea
-            className="field-background p-2 w-full rounded resize-none mt-3"
+            className="dark:text-dark-text dark:bg-dark-input p-2 w-full rounded resize-none mt-3"
             rows="8"
             id={`${selectedStep}_text`}
             placeholder="Page Description"
@@ -154,7 +155,7 @@ function IssueStepEdit({
             <div className="flex flex-row justify-center items-center my-4">
               <div className="relative w-full">
                 <input
-                  className="field-background rounded pl-2 pr-10 mb-2 w-full"
+                  className="dark:text-dark-text dark:bg-dark-input rounded pl-2 pr-10 mb-2 w-full"
                   placeholder="ex. Student Card"
                   type="text"
                   onChange={(e) => searchCredential(e)}

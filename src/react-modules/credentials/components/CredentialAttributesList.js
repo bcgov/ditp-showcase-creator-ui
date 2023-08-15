@@ -12,7 +12,7 @@ function CredentialAttributesList({
 }) {
   return (
     <>
-      <div className="rounded p-5 bg-neutral-900 mt-3">
+      <div className="rounded p-5 bg-light-bg dark:bg-dark-bg mt-3">
         <div className="flex justify-between mb-3">
           <p className="text-sm font-bold">
             Attributes Added:{" "}
@@ -25,7 +25,7 @@ function CredentialAttributesList({
             </span>
           </p>
           <button
-            className=" text-xs add-attr-btn text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+            className=" text-xs add-attr-btn border hover:bg-light-bg-secondary font-bold py-2 px-4 rounded inline-flex items-center"
             onClick={() => addAttribute(selectedCredential)}
           >
             <span>ADD ATTRIBUTE </span>

@@ -48,13 +48,13 @@ function CharacterScreen({
 
   return (
     <>
-      <div className="flex flex-col min-h-screen mt-20">
+      <div className="flex flex-col min-h-screen mt-20 text-light-text bg-light-bg dark:bg-dark-bg dark:text-dark-text">
         <div className="container mx-auto px-4 py-8 flex-grow">
           <div className="flex gap-12 h-full">
             <div className="w-1/2 rounded left-col">
               <div className="flex justify-between">
                 <div>
-                  <h3 className="text-4xl font-bold text-slate-50">
+                  <h3 className="text-4xl font-bold text-black dark:text-gray-800">
                     Create your Character
                   </h3>
                   <p className="text-slate-100 mt-3">
@@ -64,7 +64,7 @@ function CharacterScreen({
                 </div>
               </div>
 
-              <div className="mt-8">
+              {/* <div className="mt-8">
                 <div className="flex justify-between mb-4">
                   <h3 className="text-xl font-bold">Your Character:</h3>
                 </div>
@@ -76,11 +76,11 @@ function CharacterScreen({
                   selectedCharacter={selectedCharacter}
                   setSelectedCharacter={setSelectedCharacter}
                 />
-              </div>
+              </div> */}
             </div>
             {/* end of column 1  */}
 
-            <div className="w-1/2 two-column-col  bg-gray-300 p-3 rounded-md right-col ">
+            <div className="w-1/2 two-column-col  bg-light-bg-secondary dark:bg-dark-bg-secondary  p-3 rounded-md right-col ">
               {editMode ? (
                 // Toggling edit mode
                 <CharacterEdit
@@ -101,28 +101,28 @@ function CharacterScreen({
                   characterImages={characterImages}
                 />
               )}
-              {
-                /* Save or cancel button */
-                editMode ? (
-                  <div className="flex flex-cols mx-5 my-3 justify-end space-x-4">
-                    <button
-                      className="p-1 w-20 hover:underline uppercase"
-                      onClick={() => setEditMode(false)}
-                    >
-                      Cancel
-                    </button>
-
-                    <button
-                      className="p-1 w-20 button-dark rounded hover:bg-neutral-600"
-                      onClick={saveJSON}
-                    >
-                      SAVE
-                    </button>
-                  </div>
-                ) : null
-              }
             </div>
           </div>
+          {
+            /* Save or cancel button */
+            editMode ? (
+              <div className="flex container mx-auto w-full my-8 justify-end dark:text-dark-text">
+                <button
+                  className="p-2 mr-4 rounded"
+                  onClick={() => setEditMode(false)}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  className="p-1 w-20 bg-light-bg-secondary hover:bg-light-btn-hover dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover rounded "
+                  onClick={saveJSON}
+                >
+                  SAVE
+                </button>
+              </div>
+            ) : null
+          }
         </div>
       </div>
     </>

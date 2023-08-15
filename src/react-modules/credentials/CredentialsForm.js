@@ -38,7 +38,7 @@ function CredentialsForm({
               : ""
           }
           onChange={(e) => handleChange(e, ["name"])}
-          className="field-background mt-3"
+          className="dark:bg-dark-bg mt-3"
         />
       </div>
 
@@ -58,7 +58,7 @@ function CredentialsForm({
               : ""
           }
           onChange={(e) => handleChange(e, ["issuer_name"])}
-          className="field-background mt-3"
+          className="dark:bg-dark-bg mt-3"
         />
       </div>
 

@@ -224,14 +224,17 @@ export const OnboardingPage = ({
             </div>
             <div className="w-full pt-5 flex flex-col justify-center items-center">
               <button
-                className="button-light p-2 hover:bg-neutral-600"
                 onClick={(e) => {
                   e.preventDefault();
                   setStepState("creating-new");
                   window.scrollTo({ top: 200, behavior: "smooth" });
                 }}
+                className="text-sm add-attr-btn border bg-light-bg dark:bg-dark-bg hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover font-bold py-2 px-4 rounded inline-flex items-center"
               >
-                Add Step <FontAwesomeIcon icon={faCirclePlus} />
+                <span>ADD STEP</span>
+                <div className="text-md ml-2">
+                  <FontAwesomeIcon icon={faCirclePlus} />
+                </div>
               </button>
             </div>
           </div>

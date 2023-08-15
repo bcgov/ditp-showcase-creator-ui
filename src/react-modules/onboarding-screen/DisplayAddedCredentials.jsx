@@ -26,7 +26,7 @@ function DisplayAddedCredentials({
           {localJSON.credentials.map((credential, index) => (
             <>
               <div className="flex flex-row">
-                <div className="w-full border rounded my-3 bg-light-bg hover:bg-light-btn-hover dark:border-dark-border dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover text-light-text dark:text-dark-text">
+                <div className="w-full border rounded my-3 bg-light-bg hover:bg-light-input dark:border-dark-border dark:bg-dark-bg dark:hover:bg-dark-input text-light-text dark:text-dark-text">
                   <div className={`credential rounded px-1 py-2`}>
                     <div className="grid grid-cols-3 p-2">
                       <div className="col-span-2">

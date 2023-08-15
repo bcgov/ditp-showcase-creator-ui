@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import { useImmer } from "use-immer"; // useImmer is an alternative to useState; it is useful for dealing with nested JSON
 import { NavBar } from "./react-modules/NavBar";
 import { CharacterPage } from "./react-modules/pages/CharacterPage";
+import { CredentialPage } from "./react-modules/pages/CredentialPage";
 import { OnboardingPage } from "./react-modules/pages/OnboardingPage";
 import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
 import { DEFAULT_JSON } from "./DEFAULT_JSON";
 import { Footer } from "./react-modules/Footer";
-import { CredentialsScreen } from "./react-modules/credentials/CredentialsScreen";
 
 function App() {
   const [showcaseJSON, setShowcaseJSON] = useImmer({
@@ -91,7 +91,7 @@ function App() {
             />
           )}
           {currentPage === "credential" && (
-            <CredentialsScreen
+            <CredentialPage
               showcaseJSON={showcaseJSON}
               setShowcaseJSON={setShowcaseJSON}
               selectedCharacter={selectedCharacter}
@@ -113,9 +113,7 @@ function App() {
               handleJSONUpdate={handleJSONUpdate}
             />
           )}
-
           <Footer />
-
           {/* <pre className="p-10 m-5 border text-xs rounded dark:text-neutral-200 whitespace-pre-wrap break-words">
           {JSON.stringify(showcaseJSON, null, 2)}
         </pre> */}

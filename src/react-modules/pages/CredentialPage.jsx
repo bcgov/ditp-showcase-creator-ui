@@ -1,6 +1,16 @@
-import { CredentialsScreen } from "../credentials/CredentialsScreen"
-export const CredentialPage = () => {
+import { CredentialsScreen } from "../credentials/CredentialsScreen";
+export const CredentialPage = ({
+  showcaseJSON,
+  setShowcaseJSON,
+  selectedCharacter,
+}) => {
   return (
-    <div>CredentialPage</div>
-  )
-}
+    <div>
+      <CredentialsScreen
+        showcaseJSON={showcaseJSON}
+        setShowcaseJSON={setShowcaseJSON}
+        selectedCharacter={selectedCharacter}
+      />
+    </div>
+  );
+};

@@ -7,6 +7,7 @@ import { CredentialPage } from "./react-modules/pages/CredentialPage";
 import { OnboardingPage } from "./react-modules/pages/OnboardingPage";
 import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
 import { DEFAULT_JSON } from "./DEFAULT_JSON";
+import { JSONPreview } from "./react-modules/JSONPreview";
 import { Footer } from "./react-modules/Footer";
 
 function App() {
@@ -113,10 +114,8 @@ function App() {
               handleJSONUpdate={handleJSONUpdate}
             />
           )}
+          {/* <JSONPreview showcaseJSON={showcaseJSON} /> */}
           <Footer />
-          {/* <pre className="p-10 m-5 border text-xs rounded dark:text-neutral-200 whitespace-pre-wrap break-words">
-          {JSON.stringify(showcaseJSON, null, 2)}
-        </pre> */}
         </div>
       </div>
     </>

@@ -67,10 +67,12 @@ function ProofStepEdit({
   function addCredential(event, credential) {
     event.preventDefault();
     setSearchResults([]);
-    if(!localData.requestOptions.proofRequest.attributes[credential]){
+    if(localData.requestOptions.proofRequest && !localData.requestOptions.proofRequest.attributes[credential]){
       setLocalData(json =>{
         json.requestOptions.proofRequest.attributes[credential] = [showcaseJSON.personas[selectedCharacter].credentials[credential].attributes[0].name]
       })
+    }else{
+      console.log(localData.requestOptions)
     }
     
   }

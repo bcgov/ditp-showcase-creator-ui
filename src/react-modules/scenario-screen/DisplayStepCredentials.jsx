@@ -40,7 +40,7 @@ function DisplayStepCredentials({
     && showcaseJSON.personas[selectedCharacter].onboarding[selectedStep].credentials  
     && showcaseJSON.personas[selectedCharacter].onboarding[selectedStep].credentials.length > 10 ?  (
         <div className="m-5 p-5 w-full h-60">
-          <NoSelection key={"blahblahblah"} Text={"No Credentials Added"} />
+          <NoSelection key={"unique_key"} Text={"No Credentials Added"} />
         </div>
       ) : (
         <div className="m-5">
@@ -53,7 +53,8 @@ function DisplayStepCredentials({
                 (credential, index) => (
 
 
-                
+                // This line prevents the showcase from crashing, in the event the credential was deleted earlier.
+                // To-do: add code that removes the credential from the scenario JSON when it is deleted from the credetial screen.
                 showcaseJSON.personas[selectedCharacter].credentials[credential] ? 
 
 

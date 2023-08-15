@@ -120,7 +120,7 @@ function TextAreaInput({
         {label}:{" "}
       </label>
       <textarea
-        className="p-1 w-full resize-none"
+        className="p-1 w-full resize-none bg-light-bg"
         id={`${personaIndex}_${element}`}
         type="text"
         value={value}

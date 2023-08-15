@@ -88,8 +88,17 @@ const EditProofRequest = (
     const AddAttribute = (e) =>{
         e.preventDefault()
         setLocalData(json => {
-            json.attributes[showcaseJSON.credentialName].attributes.push(showcaseJSON.showcaseJSON.personas[showcaseJSON.selectedCharacter].credentials[showcaseJSON.credentialName].attributes[0].name)
+          
+            // json.attributes[showcaseJSON.credentialName].attributes.push(
+            //   showcaseJSON.showcaseJSON.personas[showcaseJSON.selectedCharacter].credentials[showcaseJSON.credentialName].attributes[0].name
+            //   )
+            json.attributes[showcaseJSON.credentialName] = {
+                attributes: [showcaseJSON.showcaseJSON.personas[showcaseJSON.selectedCharacter].credentials[showcaseJSON.credentialName].attributes[0].name],
+                restrictions: [showcaseJSON.showcaseJSON.personas[showcaseJSON.selectedCharacter].credentials[showcaseJSON.credentialName].name],
+        }
         })
+        console.log("HERE")
+        console.log(localData)
     }
 
     const RemoveAttribute = (e, type, index) => {

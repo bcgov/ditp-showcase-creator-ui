@@ -83,26 +83,14 @@ function CharacterScreen({
 
             {/* <div className="w-1/2 two-column-col  bg-light-bg-secondary dark:bg-dark-bg-secondary  p-3 rounded-md right-col "> */}
             <div className="w-3/5 two-column-col  bg-light-bg-secondary dark:bg-dark-bg-secondary  p-3 rounded-md right-col ">
-              {editMode ? (
-                // Toggling edit mode
-                <CharacterEdit
-                  selectedCharacter={selectedCharacter}
-                  handleLocalUpdate={handleLocalUpdate}
-                  handleJSONUpdate={handleJSONUpdate} // Updated this line
-                  showcaseJSON={showcaseJSON} // Updated this line
-                  localJSON={localJSON} // Added this line
-                  setCharacterImages={setCharacterImages}
-                />
-              ) : (
-                <CharacterInfo
-                  setShowcaseJSON={setShowcaseJSON}
-                  showcaseJSON={showcaseJSON}
-                  setSelectedCharacter={setSelectedCharacter}
-                  selectedCharacter={selectedCharacter}
-                  setEditMode={setEditMode}
-                  characterImages={characterImages}
-                />
-              )}
+              <CharacterEdit
+                selectedCharacter={selectedCharacter}
+                handleLocalUpdate={handleLocalUpdate}
+                handleJSONUpdate={handleJSONUpdate} // Updated this line
+                showcaseJSON={showcaseJSON} // Updated this line
+                localJSON={localJSON} // Added this line
+                setCharacterImages={setCharacterImages}
+              />
             </div>
           </div>
           {

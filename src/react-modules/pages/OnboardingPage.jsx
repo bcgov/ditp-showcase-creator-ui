@@ -131,7 +131,6 @@ export const OnboardingPage = ({
     >
       <div className="flex flex-col min-h-screen">
         <div className="flex gap-12 container mx-auto px-4 py-8 mt-20">
-          {/* <div className="w-1/2 rounded left-col text-light-text dark:text-dark-text"> */}
           <div className="w-2/5 rounded left-col text-light-text dark:text-dark-text">
             <div className="flex w-full">
               <div>
@@ -155,22 +154,13 @@ export const OnboardingPage = ({
                       e.preventDefault();
                       setStepState("creating-new");
                     }}
-                    className="text-sm add-attr-btn border bg-light-bg dark:bg-dark-bg hover:bg-light-bg-secondary dark:hover:bg-dark-btn-hover font-bold py-2 px-4 rounded inline-flex items-center"
+                    className="text-sm add-attr-btn border bg-light-bg dark:bg-dark-bg hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover font-bold py-2 px-4 rounded inline-flex items-center"
                   >
                     <span>ADD STEP</span>
                     <div className="text-md ml-2">
                       <FontAwesomeIcon icon={faCirclePlus} />
                     </div>
                   </button>
-                  {/* <button
-                    className="button-light p-2 hover:bg-neutral-600"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setStepState("creating-new");
-                    }}
-                  >
-                    Add Step <FontAwesomeIcon icon={faCirclePlus} />
-                  </button> */}
                 </div>
               </div>
               <SortableContext

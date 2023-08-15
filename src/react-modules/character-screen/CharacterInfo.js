@@ -35,7 +35,7 @@ function CharacterInfo({
 
         <div className="ml-auto">
           <button
-            className="p-1  w-20 m-1 button-dark hover:bg-neutral-600"
+            className="p-1  w-20 m-1 button-dark hover:bg-neutral-600 hover:underline"
             onClick={() => setEditMode(true)}
           >
             Edit

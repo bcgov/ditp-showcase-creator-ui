@@ -177,7 +177,7 @@ function CredentialsScreen({
                       <button
                         data-button-id="create-button-credentials"
                         onClick={handleCreateButtonClick}
-                        className="text-sm add-attr-btn border bg-light-bg dark:bg-dark-bg hover:bg-light-bg-secondary dark:hover:bg-dark-btn-hover font-bold py-2 px-4 rounded inline-flex items-center"
+                        className="text-sm add-attr-btn border bg-light-bg dark:bg-dark-bg hover:bg-light-btn-hover dark:hover:bg-dark-input font-bold py-2 px-4 rounded inline-flex items-center"
                       >
                         <span>ADD CREDENTIAL</span>
                         <div className="text-md ml-2">
@@ -217,7 +217,7 @@ function CredentialsScreen({
                 CANCEL
               </button>
               <button
-                className="p-1 w-20 bg-light-bg-secondary  hover:bg-light-btn-hover dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover rounded "
+                className="p-1 w-20 bg-light-bg-secondary hover:bg-light-btn-hover dark:hover:bg-dark-input border dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover rounded "
                 onClick={handleCredentialUpdate}
               >
                 SAVE

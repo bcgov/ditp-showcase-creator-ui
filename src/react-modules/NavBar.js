@@ -82,7 +82,7 @@ function NavBar({
             <JSONUploadButton setShowcaseJSON={setShowcaseJSON} />
             <a
               href="/"
-              className="mx-4 inline-flex items-center gap-x-1.5 rounded-md border hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover px-2.5 py-1.5 text-sm font-semibold text-black shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
+              className="mx-4 inline-flex items-center gap-x-1.5 rounded-md border bg-light-bg dark:bg-dark-bg hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover px-2.5 py-1.5 text-sm font-semibold text-black shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
             >
               RESET
             </a>

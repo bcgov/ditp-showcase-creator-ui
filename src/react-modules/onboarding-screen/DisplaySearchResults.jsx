@@ -19,7 +19,7 @@ function DisplaySearchResults({
             className="basic-step dropdown-border w-full flex flex-row  text-sm mb-2 rounded"
             onClick={(e) => addCredential(e, result)}
           >
-            <div className="grid grid-cols-3 w-full py-2 bg-light-bg hover:bg-light-input dark:bg-dark-bg dark:hover:bg-dark-input text-light-text dark:text-dark-text">
+            <div className="grid grid-cols-3 w-full py-2 bg-light-bg hover:bg-light-btn-hover dark:bg-dark-bg dark:hover:bg-dark-btn-hover text-light-text dark:text-dark-text">
               <div className="col-span-1">
                 <p className="mb-1 font-bold">Name:</p>
                 <p>

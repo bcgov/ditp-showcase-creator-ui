@@ -36,7 +36,7 @@ function JSONUploadButton({ setShowcaseJSON }) {
 
   return (
     <>
-      <div className="border rounded bg-light-btn hover:bg-light-btn-hover dark:bg-dark-btn dark:text-dark-text dark:hover:bg-dark-btn-hover">
+      <div className="border rounded hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover">
         <input
           type="file"
           accept=".json"

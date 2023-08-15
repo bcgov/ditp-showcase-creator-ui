@@ -104,7 +104,7 @@ function BasicStepEdit({
           <input
             type="submit"
             value="SAVE"
-            className="p-1 w-20 button-dark hover:bg-neutral-600 hover:cursor-pointer"
+            className="p-1 w-20 hover:bg-light-btn-hover border dark:hover:bg-dark-btn-hover hover:cursor-pointer"
           />
         </div>
       </form>

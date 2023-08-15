@@ -72,7 +72,7 @@ function LocalTextInput({
         {label}
       </label>
       <input
-        className="field-background mt-3"
+        className=" mt-3 dark:text-dark-text dark:bg-dark-input bg-light-bg border dark:border-dark-border"
         id={`${personaIndex}_${element}`}
         type="text"
         value={value}
@@ -90,6 +90,7 @@ function LocalTextAreaInput({
   handleJSONUpdate,
   showcaseJSON,
   localJSON,
+  placeholder,
 }) {
   const [value, setValue] = useState("");
 
@@ -139,12 +140,13 @@ function LocalTextAreaInput({
         {label}{" "}
       </label>
       <textarea
-        className="rounded w-full resize-none field-background mt-3 p-2"
+        className="rounded w-full dark:text-dark-text dark:bg-dark-input bg-light-bg resize-none mt-3 p-2 border dark:border-dark-border"
         rows="8"
         id={`${personaIndex}_${element}`}
         type="text"
         value={value}
         onChange={(e) => handleChange(e.target.value)}
+        placeholder={placeholder}
       />
     </div>
   );

@@ -12,6 +12,7 @@ function CredentialsForm({
 }) {
   return (
     <>
+      {/* Title and Header */}
       <div className="flex justify-between mt-3">
         <div>
           <p className="text-slate-100 text-sm">Credentials</p>
@@ -22,6 +23,7 @@ function CredentialsForm({
       </div>
       <hr className="mb-6"></hr>
 
+      {/* Credential Name Input */}
       <div className="my-6">
         <label className="text-md font-bold" htmlFor="cred_name">
           Credential Name
@@ -38,12 +40,13 @@ function CredentialsForm({
               : ""
           }
           onChange={(e) => handleChange(e, ["name"])}
-          className="field-background mt-3"
+          className="dark:bg-dark-input mt-3 border dark:border-dark-border"
         />
       </div>
 
+      {/* Issuer Name Input */}
       <div className="my-6">
-        <label className=" text-md font-bold" htmlFor="issuer_name">
+        <label className="text-md font-bold" htmlFor="issuer_name">
           Issuer Name
         </label>
         <br />
@@ -58,10 +61,11 @@ function CredentialsForm({
               : ""
           }
           onChange={(e) => handleChange(e, ["issuer_name"])}
-          className="field-background mt-3"
+          className="dark:bg-dark-input mt-3 border dark:border-dark-border"
         />
       </div>
 
+      {/* Add Attributes Section */}
       <div className="my-3">
         <label className="font-bold text-md"> Add Attributes</label>
         <CredentialAttributesList

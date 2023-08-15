@@ -1,9 +1,9 @@
 .basic-step {
-  background-color: #303030;
+  /* background-color: #303030; */
 }
 
 .basic-step:hover {
-  background-color: #3f3f3f;
+  /* background-color: #3f3f3f; */
   cursor: pointer;
 }
 

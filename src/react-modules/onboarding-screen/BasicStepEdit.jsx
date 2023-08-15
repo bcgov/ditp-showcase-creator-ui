@@ -59,7 +59,7 @@ function BasicStepEdit({
           </label>
           <br />
           <input
-            className="field-background mt-3"
+            className="dark:text-dark-text dark:bg-dark-input bg-light-bg mt-3 border dark:border-dark-border "
             id={`${selectedStep}_title`}
             type="text"
             placeholder="Page Title"
@@ -76,7 +76,7 @@ function BasicStepEdit({
             {"Page Description"}
           </label>
           <textarea
-            className="field-background p-2 w-full rounded resize-none mt-3"
+            className="dark:text-dark-text dark:bg-dark-input bg-light-bg p-2 w-full rounded resize-none mt-3 border dark:border-dark-border "
             rows="8"
             id={`${selectedStep}_text`}
             placeholder="Page Description"
@@ -103,8 +103,8 @@ function BasicStepEdit({
 
           <input
             type="submit"
-            value="Save"
-            className="p-1 w-20 button-dark hover:bg-neutral-600"
+            value="SAVE"
+            className="p-1 w-20 hover:bg-light-btn-hover border dark:hover:bg-dark-btn-hover hover:cursor-pointer"
           />
         </div>
       </form>

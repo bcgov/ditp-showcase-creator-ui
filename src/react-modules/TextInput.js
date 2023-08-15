@@ -51,15 +51,12 @@ function TextInput({
 
   return (
     <div className="p-1">
-      <label
-        className="text-neutral-500 dark:text-neutral-200"
-        htmlFor={`${personaIndex}_${element}`}
-      >
+      <label className="" htmlFor={`${personaIndex}_${element}`}>
         {label}{" "}
       </label>
       <br />
       <input
-        className="p-1 w-full field-background"
+        className="p-1 w-full bg-light-bg"
         id={`${personaIndex}_${element}`}
         type="text"
         value={value}
@@ -119,11 +116,16 @@ function TextAreaInput({
 
   return (
     <div className="">
-    <label className="text-neutral-500 dark:text-neutral-200" htmlFor={`${personaIndex}_${element}`}>{label}: </label>
-      <textarea className="p-1 w-full resize-none field-background" id={`${personaIndex}_${element}`} type="text" 
-      value={value}
-      onChange={(e) => handleChange(e.target.value)} />
-
+      <label className="" htmlFor={`${personaIndex}_${element}`}>
+        {label}:{" "}
+      </label>
+      <textarea
+        className="p-1 w-full resize-none bg-light-bg"
+        id={`${personaIndex}_${element}`}
+        type="text"
+        value={value}
+        onChange={(e) => handleChange(e.target.value)}
+      />
     </div>
   );
 }

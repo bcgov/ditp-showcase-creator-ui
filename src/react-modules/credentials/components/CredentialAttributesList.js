@@ -12,7 +12,8 @@ function CredentialAttributesList({
 }) {
   return (
     <>
-      <div className="rounded p-5 bg-neutral-900 mt-3">
+      <div className="rounded p-5 bg-light-bg dark:bg-dark-bg mt-3">
+        {/* Attribute count and "Add Attribute" button */}
         <div className="flex justify-between mb-3">
           <p className="text-sm font-bold">
             Attributes Added:{" "}
@@ -24,8 +25,10 @@ function CredentialAttributesList({
                 : "0"}
             </span>
           </p>
+
+          {/* Button to add a new attribute */}
           <button
-            className=" text-xs add-attr-btn text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+            className="text-xs add-attr-btn border hover:bg-light-btn-hover dark:hover:bg-dark-input font-bold py-2 px-4 rounded inline-flex items-center"
             onClick={() => addAttribute(selectedCredential)}
           >
             <span>ADD ATTRIBUTE </span>
@@ -33,8 +36,11 @@ function CredentialAttributesList({
               <FontAwesomeIcon icon={faCirclePlus} />
             </span>
           </button>
+          
         </div>
         <hr className="mb-3" />
+
+        {/* Mapping through attributes and rendering CredentialAttribute components */}
         {tempData[selectedCredential] &&
           tempData[selectedCredential].attributes.length !== 0 &&
           tempData[selectedCredential].attributes.map((attr, index) => (

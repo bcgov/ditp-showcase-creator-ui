@@ -27,7 +27,7 @@ function CharacterInfo({
   return (
     // Regular mode / non-editable
     <>
-      <div className="flex">
+      <div className="flex ">
         <div className="m-3">
           <p>Character</p>
           <p className="text-2xl font-bold">Your Selected Character</p>
@@ -35,7 +35,7 @@ function CharacterInfo({
 
         <div className="ml-auto">
           <button
-            className="p-1  w-20 m-1 button-dark hover:bg-neutral-600"
+            className="p-1  w-20 m-1 button-dark hover:bg-neutral-600 hover:underline"
             onClick={() => setEditMode(true)}
           >
             Edit
@@ -56,7 +56,7 @@ function CharacterInfo({
         </div>
       </div>
 
-      <div className="highlight-text p-3 m-3 rounded">
+      <div className="p-3 m-3 bg-light-bg dark:bg-dark-bg rounded">
         <p>
           <span className="font-bold">Name:</span>{" "}
           {showcaseJSON["personas"][selectedCharacter].name}
@@ -72,7 +72,7 @@ function CharacterInfo({
       <div className="grid grid-cols-2">
         <div className="p-2 m-2">
           <p>Headshot Image</p>
-          <div className="highlight-text p-6 m-1 flex justify-center items-center">
+          <div className=" p-6 m-1 flex justify-center items-center bg-light-bg dark:bg-dark-bg ">
             {!showcaseJSON.personas[selectedCharacter].headshot_image ? (
               <FontAwesomeIcon icon={faUser} />
             ) : (
@@ -86,7 +86,7 @@ function CharacterInfo({
 
         <div className="p-2 m-2">
           <p>Full-Body Image</p>
-          <div className="highlight-text p-6 m-1 flex justify-center items-center">
+          <div className="p-6 m-1 flex justify-center items-center bg-light-bg dark:bg-dark-bg ">
             {!showcaseJSON.personas[selectedCharacter].body_image ? (
               <FontAwesomeIcon icon={faUser} />
             ) : (

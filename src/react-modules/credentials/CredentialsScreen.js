@@ -155,7 +155,8 @@ function CredentialsScreen({
       <div className="flex flex-col min-h-screen mt-20 ">
         <div className="container mx-auto px-4 py-8 flex-grow">
           <div className="flex gap-12 h-full">
-            <div className="w-1/2 rounded left-col text-light-text dark:text-dark-text">
+            {/* <div className="w-1/2 rounded left-col text-light-text dark:text-dark-text"> */}
+            <div className="w-2/5 rounded left-col text-light-text dark:text-dark-text">
               <div className="flex justify-between">
                 <div>
                   <h3 className="text-4xl font-bold text-slate-50">
@@ -201,7 +202,8 @@ function CredentialsScreen({
               </div>
             </div>
             {/* End of col 1 */}
-            <div className="w-1/2  p-6 rounded-md right-col bg-light-bg-secondary dark:bg-dark-bg-secondary text-light-text dark:text-dark-text ">
+            {/* <div className="w-1/2  p-6 rounded-md right-col bg-light-bg-secondary dark:bg-dark-bg-secondary text-light-text dark:text-dark-text "> */}
+            <div className="w-3/5  p-6 rounded-md right-col bg-light-bg-secondary dark:bg-dark-bg-secondary text-light-text dark:text-dark-text ">
               {renderComponent(componentToMount)}
             </div>
             {/* End of col 2 */}

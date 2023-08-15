@@ -51,7 +51,8 @@ function CharacterScreen({
       <div className="flex flex-col min-h-screen mt-20 text-light-text bg-light-bg dark:bg-dark-bg dark:text-dark-text">
         <div className="container mx-auto px-4 py-8 flex-grow">
           <div className="flex gap-12 h-full">
-            <div className="w-1/2 rounded left-col">
+            {/* <div className="w-1/2 rounded left-col"> */}
+            <div className="w-2/5 rounded left-col">
               <div className="flex justify-between">
                 <div>
                   <h3 className="text-4xl font-bold text-black dark:text-gray-800">
@@ -80,7 +81,8 @@ function CharacterScreen({
             </div>
             {/* end of column 1  */}
 
-            <div className="w-1/2 two-column-col  bg-light-bg-secondary dark:bg-dark-bg-secondary  p-3 rounded-md right-col ">
+            {/* <div className="w-1/2 two-column-col  bg-light-bg-secondary dark:bg-dark-bg-secondary  p-3 rounded-md right-col "> */}
+            <div className="w-3/5 two-column-col  bg-light-bg-secondary dark:bg-dark-bg-secondary  p-3 rounded-md right-col ">
               {editMode ? (
                 // Toggling edit mode
                 <CharacterEdit

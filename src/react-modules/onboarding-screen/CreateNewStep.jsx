@@ -11,7 +11,7 @@ function CreateNewStep({ addNewStep }) {
 
       <div className="py-5 ">
         <button
-          className="basic-step flex flex-row justify-between items-center rounded p-5 my-3 w-full text-start bg-light-bg hover:bg-light-btn-hover dark:bg-dark-bg hover:dark:bg-dark-btn-hover"
+          className="basic-step flex flex-row justify-between items-center rounded p-5 my-3 w-full text-start bg-light-input hover:bg-light-bg dark:bg-dark-bg hover:dark:bg-dark-input"
           onClick={(e) => addNewStep(false)}
         >
           <p className="text-xl font-bold w-1/4">Basic</p>
@@ -27,7 +27,7 @@ function CreateNewStep({ addNewStep }) {
         </button>
 
         <button
-          className="basic-step rounded flex flex-row justify-between items-center p-5 my-3 w-full text-start bg-light-bg hover:bg-light-btn-hover dark:bg-dark-bg hover:dark:bg-dark-btn-hover"
+          className="basic-step flex flex-row justify-between items-center rounded p-5 my-3 w-full text-start bg-light-input hover:bg-light-bg dark:bg-dark-bg hover:dark:bg-dark-input"
           onClick={(e) => addNewStep(true)}
         >
           <p className="text-xl font-bold w-1/4">Issue Credential</p>

@@ -210,11 +210,14 @@ function CredentialsScreen({
           </div>
           {componentToMount === "edit" || componentToMount === "create" ? (
             <div className="flex container mx-auto w-full my-8 justify-end dark:text-dark-text">
-              <button className="p-2 mr-4 rounded" onClick={handleCancel}>
+              <button
+                className="p-2 mr-4 rounded hover:underline"
+                onClick={handleCancel}
+              >
                 CANCEL
               </button>
               <button
-                className="p-1 w-20 bg-light-bg-secondary hover:bg-light-btn-hover dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover rounded "
+                className="p-1 w-20 bg-light-bg-secondary  hover:bg-light-btn-hover dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover rounded "
                 onClick={handleCredentialUpdate}
               >
                 SAVE

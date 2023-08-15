@@ -110,10 +110,10 @@ function CharacterScreen({
             editMode ? (
               <div className="flex container mx-auto w-full my-8 justify-end dark:text-dark-text">
                 <button
-                  className="p-2 mr-4 rounded"
+                  className="p-2 mr-4 rounded hover:underline"
                   onClick={() => setEditMode(false)}
                 >
-                  Cancel
+                  CANCEL
                 </button>
 
                 <button

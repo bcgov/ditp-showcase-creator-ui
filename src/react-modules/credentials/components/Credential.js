@@ -10,7 +10,12 @@ function Credential({
   handleClick,
   selectedCredential,
   handleCredentialRemoval,
+  showcaseJSON,
 }) {
+  // Check if there's only one credential
+  const isSingleCredential =
+    Object.keys(showcaseJSON.personas[0].credentials).length === 1;
+
   return (
     <>
       <div className="flex flex-row">
@@ -51,9 +56,10 @@ function Credential({
         </div>
         {/* Div for the remove button */}
         <div
-          className="remove text-xl flex items-center justify-center w-1/5 trash-button"
+          className={`remove text-xl flex items-center justify-center w-1/5 ${
+            isSingleCredential ? "hidden" : "trash-button"
+          }`}
           onClick={(e) => {
-            // Call the handleCredentialRemoval function when clicked
             handleCredentialRemoval(index);
           }}
         >

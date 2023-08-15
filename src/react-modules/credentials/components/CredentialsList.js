@@ -14,10 +14,8 @@ function CredentialsList({
   handleCredentialRemoval,
   createButtonClicked,
 }) {
-
   // This function handles the selection of a credential
   function handleClick(credential) {
-
     // If the create button is clicked, reset back to the previous data.
     if (createButtonClicked) {
       setTempData(showcaseJSON.personas[selectedCharacter].credentials);
@@ -31,7 +29,6 @@ function CredentialsList({
 
     // Set the credential that was clicked.
     setSelectedCredential(credential);
-
   }
 
   return (
@@ -53,6 +50,7 @@ function CredentialsList({
               setTempData={setTempData}
               selectedCredential={selectedCredential}
               handleCredentialRemoval={handleCredentialRemoval}
+              showcaseJSON={showcaseJSON}
             />
           );
         })}

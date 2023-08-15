@@ -97,8 +97,6 @@ const EditProofRequest = (
                 restrictions: [showcaseJSON.showcaseJSON.personas[showcaseJSON.selectedCharacter].credentials[showcaseJSON.credentialName].name],
         }
         })
-        console.log("HERE")
-        console.log(localData)
     }
 
     const RemoveAttribute = (e, type, index) => {

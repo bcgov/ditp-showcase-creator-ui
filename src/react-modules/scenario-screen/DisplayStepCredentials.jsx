@@ -54,7 +54,7 @@ function DisplayStepCredentials({
 
 
                 // This line prevents the showcase from crashing, in the event the credential was deleted earlier.
-                // To-do: add code that removes the credential from the scenario JSON when it is deleted from the credetial screen.
+                // Note that this should be handled anyway. On deleting a credential, if that credential was used, the proofRequest is reset to blank/empty.
                 showcaseJSON.personas[selectedCharacter].credentials[credential] ? 
 
 

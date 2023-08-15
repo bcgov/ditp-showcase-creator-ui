@@ -14,19 +14,30 @@ function CredentialsList({
   handleCredentialRemoval,
   createButtonClicked,
 }) {
+
+  // This function handles the selection of a credential
   function handleClick(credential) {
+
+    // If the create button is clicked, reset back to the previous data.
     if (createButtonClicked) {
       setTempData(showcaseJSON.personas[selectedCharacter].credentials);
-      console.log("asdfadfafda");
     }
+
+    // Reset create button state.
     setCreateButtonClicked(false);
+
+    // Set componentToMount to edit.
     setComponentToMount("edit");
+
+    // Set the credential that was clicked.
     setSelectedCredential(credential);
+
   }
 
   return (
     <>
-      <div className="">
+      <div>
+        {/* Map through credentials and render Credential components */}
         {Object.entries(
           showcaseJSON.personas[selectedCharacter].credentials
         ).map((credential, index) => {

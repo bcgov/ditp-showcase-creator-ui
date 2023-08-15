@@ -10,6 +10,7 @@ function CredentialsEdit({
 }) {
   return (
     <>
+      {/* Header section */}
       <div className="flex justify-between">
         <div>
           <p className="text-slate-100 text-sm">Credentials</p>
@@ -20,6 +21,7 @@ function CredentialsEdit({
       </div>
       <hr className="mb-6"></hr>
 
+      {/* Credential Name input field */}
       <div className="my-6">
         <label className="text-md font-bold" htmlFor="name">
           Credential Name
@@ -39,6 +41,7 @@ function CredentialsEdit({
         />
       </div>
 
+      {/* Issuer Name input field */}
       <div className="my-6">
         <label className="text-md font-bold" htmlFor="issuer_name">
           Issuer Name
@@ -58,8 +61,10 @@ function CredentialsEdit({
         />
       </div>
 
+      {/* Section to add attributes using CredentialAttributesList */}
       <div className="my-6">
         <label className="text-md font-bold"> Add Attributes</label>
+        {/* Use CredentialAttributesList component to manage attributes */}
         <CredentialAttributesList
           tempData={tempData}
           selectedCredential={selectedCredential}

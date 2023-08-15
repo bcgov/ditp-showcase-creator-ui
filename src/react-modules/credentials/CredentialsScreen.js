@@ -17,60 +17,74 @@ function CredentialsScreen({
   setShowcaseJSON,
   selectedCharacter,
 }) {
-  const [selectedCredential, setSelectedCredential] = useState(null);
+  const [selectedCredential, setSelectedCredential] = useState(null); // State variable to keep track of the current credential selected.
   const [tempData, setTempData] = useImmer(
     showcaseJSON.personas[selectedCharacter].credentials
-  );
-  const [componentToMount, setComponentToMount] = useState("no selection");
+  ); // State variable that uses useImmer to easily update the Showcase JSON.
+  const [componentToMount, setComponentToMount] = useState("no selection"); // State variable to determine what needs to be rendered in the right column.
+  const [createButtonClicked, setCreateButtonClicked] = useState(false); // State variable to determine if the create button has been clicked. This is to ensure it can't be spammed.
 
-  // Check if the create button has been clicked to ensure that you cant spam the button.
-  const [createButtonClicked, setCreateButtonClicked] = useState(false);
-
-  // Remove a credential
+  // This function handles the removal of a credential
   function handleCredentialRemoval(credential) {
+    // If there's only one credential for this showcase, exit.
     if (
       Object.keys(showcaseJSON.personas[selectedCharacter].credentials)
         .length === 1
     ) {
       return;
     }
+
+    // Clear the active component, reset "Create" button status, and deselect the credential
     setComponentToMount(null);
     setCreateButtonClicked(false);
     setSelectedCredential(null);
+
+    // Remove the selected credential from the Showcase JSON
     setShowcaseJSON((json) => {
       delete json.personas[selectedCharacter].credentials[credential];
     });
+
+    // Remove the credential from the tempData array
     setTempData((json) => {
       delete json[credential];
     });
-  }
+  } // End of handleCredentialRemoval()
 
-  // Handle all inputs
+  // This function handles all input boxes and updates both the tempData and the Showcase JSON accordingly.
   function handleChange(e, element, index) {
+    // If the data coming in is only one level deep in the JSON, set the tempData to the value
     if (element.length === 1) {
       setTempData((json) => {
         json[selectedCredential][element[0]] = e.target.value;
       });
-    } else if (element.length === 2) {
+    }
+    // Else if the data coming is two levels deep in the JSON, set the tempData to the value (this is used to correctly insert values into the "attributes" array)
+    else if (element.length === 2) {
       setTempData((json) => {
         json[selectedCredential][element[0]][index][element[1]] =
           e.target.value;
       });
     }
-  }
+  } // End of handleChange()
 
-  // Set the real JSON
+  // This function handles the transfer of data from the tempData to the Showcase JSON.
+  // This is where the save and cancel functionality is also done.
+  // The initial values are saved into "tempData" until the "add" button is clicked.
   const handleCredentialUpdate = () => {
+    // Reset the following state variables
     setComponentToMount(null);
     setCreateButtonClicked(false);
     setSelectedCredential(null);
+
+    // Set the credentials object in the ShowcaseJSON to whats in tempData
     setShowcaseJSON((json) => {
       json.personas[selectedCharacter].credentials = tempData;
     });
-  };
+  }; // end of handleCredentialUpdate()
 
-  // Add an attribute
+  // This function handles adding an attribute.
   const addAttribute = (credential) => {
+    // Push an empty object containing the following values into the attributes array inside of tempData.
     setTempData((prevData) => {
       prevData[credential].attributes.push({
         name: "",
@@ -78,29 +92,38 @@ function CredentialsScreen({
         type: "",
       });
     });
-  };
+  }; // End of addAttribute()
 
-  // Remove an attribute
+  // This function handles removing an attribute
   const removeAttribute = (credential, index) => {
+    // Splice the attribute at the current index.
     setTempData((prevData) => {
       prevData[credential].attributes.splice(index, 1);
     });
-  };
+  }; // End of removeAttribute()
 
-  // Remove the credential if cancel button is clicked
+  // This function handles the cancel button
   const handleCancel = () => {
+    // Reset the following state variables
     setSelectedCredential(null);
     setComponentToMount(null);
     setCreateButtonClicked(false);
-    setTempData(showcaseJSON.personas[selectedCharacter].credentials);
-  };
 
-  // Create a credential with an empty object.
+    // Reset tempData to the original Showcase JSON (no changes made)
+    setTempData(showcaseJSON.personas[selectedCharacter].credentials);
+  }; // End of handleCancel()
+
+  // This function handles the creation of a new credential.
   const handleCreateButtonClick = (e) => {
+    // If there's a credential selected, call handleCancel() to prevent overwriting of data.
     if (selectedCredential !== null) {
       handleCancel();
     }
+
+    // Used to give each credential a unique ID.
     let credential_id = Date.now();
+
+    // Push a new object into tempData, the key is credential_id and the value is the object below.
     setTempData((temp) => {
       temp[credential_id] = {
         issuer_name: "",
@@ -110,11 +133,14 @@ function CredentialsScreen({
         attributes: [],
       };
     });
+
+    // Handle state updates.
     setCreateButtonClicked(true);
     setSelectedCredential(credential_id);
     setComponentToMount("create");
-  };
+  }; // End of handleCreateButtonClick()
 
+  // This function handles which component should be rendered in the right column.
   const renderComponent = (component) => {
     switch (component) {
       case "create":
@@ -142,7 +168,6 @@ function CredentialsScreen({
         );
       default:
         return (
-          // <Overview showcaseJSON={showcaseJSON}></Overview>
           <div className="">
             <NoSelection Text={"You have no credential selected."} />
           </div>
@@ -156,6 +181,7 @@ function CredentialsScreen({
         <div className="container mx-auto px-4 py-8 flex-grow">
           <div className="flex gap-12 h-full">
             {/* <div className="w-1/2 rounded left-col text-light-text dark:text-dark-text"> */}
+            
             <div className="w-2/5 rounded left-col text-light-text dark:text-dark-text">
               <div className="flex justify-between">
                 <div>
@@ -168,7 +194,6 @@ function CredentialsScreen({
                   </p>
                 </div>
               </div>
-
               <div className="mt-8">
                 <div className="flex justify-between mb-4">
                   <h3 className="text-xl font-bold">Credentials Added:</h3>
@@ -187,6 +212,8 @@ function CredentialsScreen({
                     )}
                   </div>
                 </div>
+
+                {/* List of credentials  */}
                 <CredentialsList
                   selectedCharacter={selectedCharacter}
                   showcaseJSON={showcaseJSON}
@@ -199,6 +226,7 @@ function CredentialsScreen({
                   setCreateButtonClicked={setCreateButtonClicked}
                   createButtonClicked={createButtonClicked}
                 />
+
               </div>
             </div>
             {/* End of col 1 */}
@@ -208,6 +236,8 @@ function CredentialsScreen({
             </div>
             {/* End of col 2 */}
           </div>
+
+          {/* Cancel and Save  */}
           {componentToMount === "edit" || componentToMount === "create" ? (
             <div className="flex container mx-auto w-full my-8 justify-end dark:text-dark-text">
               <button
@@ -224,6 +254,8 @@ function CredentialsScreen({
               </button>
             </div>
           ) : null}
+
+
         </div>
       </div>
     </>

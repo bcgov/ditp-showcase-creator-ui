@@ -48,7 +48,54 @@ function CredentialsScreen({
     setTempData((json) => {
       delete json[credential];
     });
-  } // End of handleCredentialRemoval()
+
+    // Find all instances of this credential being used in a scenario and remove them.
+    for (let scenarioID = 0; scenarioID < showcaseJSON.personas[selectedCharacter].scenarios.length; scenarioID++){
+      for(let stepID = 0; stepID < showcaseJSON.personas[selectedCharacter].scenarios[scenarioID].steps.length; stepID++){
+
+        // If a step in a scenario has request options...
+        if(showcaseJSON.personas[selectedCharacter].scenarios[scenarioID].steps[stepID].requestOptions){
+
+
+          // Handling attributes
+          for (let attributeList in showcaseJSON.personas[selectedCharacter].scenarios[scenarioID].steps[stepID].requestOptions.proofRequest.attributes){
+            
+              let restriction = showcaseJSON.personas[selectedCharacter].scenarios[scenarioID].steps[stepID].requestOptions.proofRequest.attributes[attributeList].restrictions[0]
+               if(restriction === credential){
+                setShowcaseJSON(json =>{
+                  json.personas[selectedCharacter].scenarios[scenarioID].steps[stepID].requestOptions.proofRequest = {
+                    "attributes": {
+                    },
+                    "predicates": {
+                    },
+                  }
+                });
+               }
+                
+            
+          }
+
+          // Handling predicates
+          for (let predicateList in showcaseJSON.personas[selectedCharacter].scenarios[scenarioID].steps[stepID].requestOptions.proofRequest.predicates){
+            
+            let restriction = showcaseJSON.personas[selectedCharacter].scenarios[scenarioID].steps[stepID].requestOptions.proofRequest.predicates[predicateList].restrictions[0]
+             if(restriction === credential){
+              setShowcaseJSON(json =>{
+                json.personas[selectedCharacter].scenarios[scenarioID].steps[stepID].requestOptions.proofRequest = {
+                  "attributes": {
+                  },
+                  "predicates": {
+                  },
+                }
+              });
+             }
+              
+          
+        }
+        }
+      }
+    }
+  }
 
   // This function handles all input boxes and updates both the tempData and the Showcase JSON accordingly.
   function handleChange(e, element, index) {

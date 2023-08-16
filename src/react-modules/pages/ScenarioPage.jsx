@@ -65,19 +65,12 @@ export const ScenarioPage = ({
           "type": "OOB",
           "title": "",
           "text": "",
-          "requestedCredentials": [
-            {
-              "icon": "",
-              "attributes": {
-                  "all":{
-                     "names":[],
-                     "restrictions": []
-                  }
-              },
-              "predicates": {
-              }
-            }
-          ]
+          "proofRequest": {
+            "attributes": {
+            },
+            "predicates": {
+            },
+          },
         }});
       });
       setState("proof-step-edit");

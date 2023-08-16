@@ -88,7 +88,17 @@ const EditProofRequest = (
     const AddAttribute = (e) =>{
         e.preventDefault()
         setLocalData(json => {
-            json.attributes[showcaseJSON.credentialName].attributes.push(showcaseJSON.showcaseJSON.personas[showcaseJSON.selectedCharacter].credentials[showcaseJSON.credentialName].attributes[0].name)
+          if(json.attributes[showcaseJSON.credentialName]){  // If the credential is not blank/empty
+            json.attributes[showcaseJSON.credentialName].attributes.push(
+              showcaseJSON.showcaseJSON.personas[showcaseJSON.selectedCharacter].credentials[showcaseJSON.credentialName].attributes[0].name
+              )
+          }else{
+            json.attributes[showcaseJSON.credentialName] = { // if the credential IS blank/empty (adding the first attribute to this proof)
+              attributes: [showcaseJSON.showcaseJSON.personas[showcaseJSON.selectedCharacter].credentials[showcaseJSON.credentialName].attributes[0].name],
+              restrictions: [showcaseJSON.showcaseJSON.personas[showcaseJSON.selectedCharacter].credentials[showcaseJSON.credentialName].name],
+      }
+          }
+
         })
     }
 

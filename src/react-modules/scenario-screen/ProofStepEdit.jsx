@@ -166,7 +166,7 @@ function ProofStepEdit({
           <label className="text-md font-bold">{"Text"}</label>
           <textarea
             className="dark:text-dark-text dark:bg-dark-input bg-light-bg p-2 w-full rounded resize-none mt-3 border dark:border-dark-border "
-            rows="4"
+            rows="8"
             placeholder="Text"
             type="text"
             value={localData.requestOptions.text}

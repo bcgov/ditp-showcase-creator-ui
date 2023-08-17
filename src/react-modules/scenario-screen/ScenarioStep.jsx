@@ -35,7 +35,7 @@ export const ScenarioStep = ({
   };
 
   const MAX_CHARS = 110;
-  
+
   return (
     <div
       ref={setNodeRef}
@@ -47,80 +47,97 @@ export const ScenarioStep = ({
       <span className="text-2xl mt-10">
         <FontAwesomeIcon icon={faGripVertical} />
       </span>
-      <button className="w-full" onClick={(e) => {
-        e.preventDefault();
-        setSelectedStep(stepIndex);
-        setSelectedScenario(scenarioIndex);
-        setState("basic-step-edit")
-      }}>
-      <div className="px-3 flex-flex-col w-full justify-items-center">
-        <p
-          className={`text-sm ${
-            step.credentials ? "text-highlight font-bold" : ""
-          }`}
-        >
-          {step.requestOptions ? "Proof Step" : "Basic Step"}
-        </p>
-        <p className="font-bold">
-          {step.title} - ({stepIndex + 1} / {totalSteps})
-        </p>
+      <button
+        className="w-full"
+        onClick={(e) => {
+          e.preventDefault();
+          setSelectedStep(stepIndex);
+          setSelectedScenario(scenarioIndex);
+          setState("basic-step-edit");
+        }}
+      >
+        <div className="px-3 flex flex-col w-full ">
+          <p
+            className={`text-sm ${
+              step.credentials ? "text-highlight font-bold" : ""
+            }`}
+          >
+            {step.requestOptions ? "Proof Step" : "Basic Step"}
+          </p>
+          <p className="font-bold">
+            {step.title} - ({stepIndex + 1} / {totalSteps})
+          </p>
 
-        <div
-          className={`highlight-container w-full flex flex-col justify-items-center items-center rounded p-3 
-        ${selectedStep == stepIndex - 1 ? "selected-item" : "unselected-item"}`}
-        >
-          
-          <div className="highlight-container w-full flex flex-row justify-items-center items-center rounded p-3">
-            {
-              // SCREEN IMAGE HERE
-              <p className="text-2xl p-2 mx-2 rounded highlight-text">
-                {
-                  // showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1].image
+          <div
+            className={`w-full flex text-sm flex-col rounded  hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover
+        ${
+          selectedStep == stepIndex - 1
+            ? "selected-item"
+            : "border border dark:border-dark-border "
+        }`}
+          >
+            <div className="w-full flex flex-row justify-items-center items-center rounded p-3">
+              {
+                // SCREEN IMAGE HERE
+                <p className="text-2xl p-2 mx-2 rounded highlight-text">
+                  {
+                    // showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1].image
 
-                  // ? <img width="100px" src={showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1].image}/> :
-                  <FontAwesomeIcon icon={faDisplay} />
-                }
-              </p>
-            }
+                    // ? <img width="100px" src={showcaseJSON.personas[selectedCharacter].onboarding[stepIndex - 1].image}/> :
+                    <FontAwesomeIcon icon={faDisplay} />
+                  }
+                </p>
+              }
 
-            {step.text && step.text.length > MAX_CHARS ? (
-              <p>
-                {step.text.slice(0, MAX_CHARS)}...{" "}
-                <span className="font-bold">see more</span>
-              </p>
-            ) : (
-              step.text
-            )}
-          </div>
-          
+              {step.text && step.text.length > MAX_CHARS ? (
+                <p>
+                  {step.text.slice(0, MAX_CHARS)}...{" "}
+                  <span className="font-bold">see more</span>
+                </p>
+              ) : (
+                step.text
+              )}
+            </div>
 
-          {
-            step.requestOptions && step.requestOptions.proofRequest && step.requestOptions.proofRequest.attributes ? (
+            {step.requestOptions &&
+            step.requestOptions.proofRequest &&
+            step.requestOptions.proofRequest.attributes ? (
               <>
-                    <hr />
-                    <div className="flex-row flex items-center justify-around w-full">
-                      <p className="text-center">
-                        Proof Request
-                      </p>
-                      <div className="added-credential-main p-2 m-2 rounded">
-                    {
-                        Object.keys(step.requestOptions.proofRequest.attributes).map(key =>
-                          <p key={key}>{key}</p>
-                        )
-
-                      }
-                      </div>
-                      
+                <hr />
+                <div className="w-full py-2">
+                  {/* <p className="">Proof Request</p> */}
+                  <div className="">
+                    {/* {
+                      Object.keys(step.requestOptions.proofRequest.attributes)
+                        .length
+                    } */}
+                    <p className="text-sm m-1 mt-2 font-bold">
+                      Requested Credentials:
+                    </p>
+                    <div className="flex items-center align-center justify-center">
+                      {Object.keys(
+                        step.requestOptions.proofRequest.attributes
+                      ).map((key) => (
+                        // <p key={key}>{key}</p>
+                        <div>
+                          <div className="border dark:border-dark-border  rounded p-2 my-2 mx-2">
+                            {key}
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                    
-                  </>
-            ) : null
-                  
-                }
+                    {/* <p>Proof Request</p> */}
+                  </div>
+                </div>
+              </>
+            ) : null}
+          </div>
         </div>
-      </div>
       </button>
-      <button className="px-3 hover-red" onClick={e => deleteStep(e,scenarioIndex,stepIndex)}>
+      <button
+        className="px-3 hover-red"
+        onClick={(e) => deleteStep(e, scenarioIndex, stepIndex)}
+      >
         <FontAwesomeIcon icon={faTrash} />
       </button>
     </div>

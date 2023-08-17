@@ -65,7 +65,7 @@ function CharacterScreen({
                 </div>
               </div>
 
-              <div className="mt-8">
+              {/* <div className="mt-8">
                 <div className="flex justify-between mb-4">
                   <h3 className="text-xl font-bold">Your Character:</h3>
                 </div>
@@ -77,7 +77,7 @@ function CharacterScreen({
                   selectedCharacter={selectedCharacter}
                   setSelectedCharacter={setSelectedCharacter}
                 />
-              </div>
+              </div> */}
             </div>
             {/* end of column 1  */}
 

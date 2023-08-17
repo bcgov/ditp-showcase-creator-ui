@@ -10,12 +10,12 @@ function DarkModeToggle({ darkMode, setDarkMode }) {
       <div className="">
         <button onClick={toggleDarkMode} className="w-12">
           <div
-            className={` rounded-full p-1 transition-all ${
+            className={` rounded-full p-1 transition-all border-2 w-16 ${
               darkMode ? "bg-dark-bg" : "bg-light-bg"
             }`}
           >
             {darkMode ? (
-              <SunIcon className="h-6 w-6 text-yellow-300  ml-4" />
+              <SunIcon className="h-6 w-6 text-yellow-300  ml-8" />
             ) : (
               <MoonIcon className="h-6 w-6 text-gray-700" />
             )}

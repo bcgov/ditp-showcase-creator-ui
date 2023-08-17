@@ -30,20 +30,19 @@ function BasicStepEdit({
   };
 
   return (
-    <div className="flex flex-col p-5">
+    <div className="flex flex-col">
       <p>Scenario</p>
       <p className="text-4xl font-bold">Edit Basic Step</p>
       <hr />
 
       <form onSubmit={null}>
         {/* TITLE */}
-        <div className="p-1 mt-5">
-          <label className="text-neutral-500 dark:text-neutral-200">
-            <span className="p-1 text-xl font-bold">Title</span>
-          </label>
+        <div className="my-6">
+          <label className="text-md font-bold">Title</label>
           <br />
           <input
-            className="p-1 w-full field-background"
+            className="dark:bg-dark-input mt-3 border dark:border-dark-border"
+            placeholder="Title"
             type="text"
             value={localData.title}
             onChange={(e) => changeStep(e.target.value, "title")}
@@ -52,11 +51,10 @@ function BasicStepEdit({
 
         <div className=" w-full">
           <div className="p-1">
-            <label className="text-neutral-500 dark:text-neutral-200">
-              {"Page Description"}
-            </label>
+            <label className="text-md font-bold">{"Page Description"}</label>
             <textarea
-              className="p-1 w-full resize-none field-background"
+              className="dark:text-dark-text dark:bg-dark-input bg-light-bg p-2 w-full rounded resize-none mt-3 border dark:border-dark-border"
+              placeholder="Page Description"
               rows="8"
               type="text"
               value={localData.text}
@@ -65,7 +63,7 @@ function BasicStepEdit({
           </div>
         </div>
 
-        <div className="flex flex-cols mx-5 my-3 justify-end space-x-4 items-baseline">
+        <div className="flex flex-cols  my-3 justify-end space-x-4 items-baseline">
           <button
             onClick={(e) => {
               e.preventDefault();
@@ -78,9 +76,9 @@ function BasicStepEdit({
 
           <input
             type="submit"
-            value="Save"
+            value="SAVE"
             onClick={(e) => saveStep(e, localData)}
-            className="p-1 w-20 button-dark hover:bg-neutral-600"
+            className="p-1  w-20 bg-light-bg-secondary hover:bg-light-btn-hover dark:hover:bg-dark-input border dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover rounded "
           />
         </div>
       </form>

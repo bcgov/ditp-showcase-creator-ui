@@ -57,7 +57,7 @@ function DisplayStepCredentials({
                 ] ? (
                   <div key={index + "_" + Date.now()} className="flex flex-row">
                     <div className="w-full">
-                      <div className=" bg-light-bg px-2 py-4 dark:bg-dark-input dark:text-dark-text p-2 mt-5 rounded-t-lg flex flex-row justify-between">
+                      <div className="  bg-light-input px-2 py-4 dark:bg-dark-input dark:text-dark-text p-2 mt-5 rounded-t-lg flex flex-row justify-between">
                         <div className="ml-2">
                           <div>
                             <p>
@@ -81,7 +81,7 @@ function DisplayStepCredentials({
                           <FontAwesomeIcon icon={faTrash} />
                         </button>
                       </div>
-                      <div className="bg-light-input p-2 dark:bg-dark-bg dark:text-dark-text mb-5 rounded-b-lg">
+                      <div className="bg-light-bg p-2 dark:bg-dark-bg dark:text-dark-text mb-5 rounded-b-lg">
                         <div>
                           <span className="">
                             {editingCredentials.includes(index) ? (

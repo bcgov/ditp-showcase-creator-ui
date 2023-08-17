@@ -2,12 +2,7 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-function LocalFileUpload({
-  text,
-  element,
-  handleLocalUpdate,
-  localJSON
-}) {
+function LocalFileUpload({ text, element, handleLocalUpdate, localJSON }) {
   const [preview, setPreview] = useState(localJSON[`${element}`]);
 
   // To-Do: Impliment a feature to show the preview directly from the JSON data
@@ -33,7 +28,6 @@ function LocalFileUpload({
 
       const base64 = await convertBase64(newValue);
       handleLocalUpdate(element, base64);
-
     } else {
       setPreview(null);
       handleLocalUpdate(element, "");
@@ -42,7 +36,7 @@ function LocalFileUpload({
 
   return (
     <div className="flex items-center flex-col justify-center w-full">
-      <p className="text-white">{text}</p>
+      <p className="w-full text-start text-white font-bold mb-2">{text}</p>
 
       {preview == null ? null : (
         <div className="relative w-full">
@@ -57,9 +51,9 @@ function LocalFileUpload({
 
       <label
         htmlFor={`${element}`}
-        className="p-3 flex border flex-col items-center justify-center w-3/4 h-full cursor-pointer dark:hover:bg-zinc-800 upload_outside hover:bg-zinc-100 dark:hover:bg-zinc-600"
+        className="p-3 flex flex-col items-center justify-center w-full h-full bg-light-bg  hover:bg-light-btn-hover dark:bg-dark-input dark:hover:bg-dark-input-hover rounded-lg cursor-pointer border dark:border-dark-border hover:bg-light-bg"
       >
-        <div className="flex flex-col items-center h-full justify-center border rounded-lg upload_center border-dashed p-2">
+        <div className="flex flex-col items-center h-full justify-center border rounded-lg border-dashed dark:border-dark-border p-2">
           {!preview ? null : (
             <>
               <img
@@ -89,4 +83,4 @@ function LocalFileUpload({
   );
 }
 
-export {LocalFileUpload};
+export { LocalFileUpload };

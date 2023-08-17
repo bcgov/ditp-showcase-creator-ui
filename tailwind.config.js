@@ -19,7 +19,7 @@ module.exports = {
       // ------ Inputs ------ //
 
       "dark-input": "#323232",
-      "light-input": "#f1f1f1",
+      "light-input": "#d6d6d6",
       "dark-input-hover": "#454545",
 
       // ------ Buttons ------ //

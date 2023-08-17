@@ -111,7 +111,7 @@ function IssueStepEdit({
           </label>
           <br />
           <input
-            className="dark:text-dark-text dark:bg-dark-input mt-2 bg-light-bg border dark:border-dark-border "
+            className="dark:text-dark-text dark:bg-dark-input mt-2"
             id={`${selectedStep}_title`}
             type="text"
             value={localJSON.title}
@@ -126,7 +126,7 @@ function IssueStepEdit({
             {"Page Description"}
           </label>
           <textarea
-            className="dark:text-dark-text dark:bg-dark-input p-2 w-full rounded resize-none mt-3 bg-light-bg border dark:border-dark-border "
+            className="dark:text-dark-text dark:bg-dark-input p-2 w-full rounded resize-none mt-3"
             rows="8"
             id={`${selectedStep}_text`}
             placeholder="Page Description"
@@ -155,7 +155,7 @@ function IssueStepEdit({
             <div className="flex flex-row justify-center items-center my-4">
               <div className="relative w-full">
                 <input
-                  className="dark:text-dark-text dark:bg-dark-input border dark:border-dark-border  rounded pl-2 pr-10 mb-2 w-full bg-light-bg"
+                  className="dark:text-dark-text dark:bg-dark-input rounded pl-2 pr-10 mb-2 w-full"
                   placeholder="ex. Student Card"
                   type="text"
                   onChange={(e) => searchCredential(e)}
@@ -194,8 +194,8 @@ function IssueStepEdit({
 
           <input
             type="submit"
-            value="SAVE"
-            className="p-1 w-20 hover:bg-light-btn-hover border  dark:hover:bg-dark-btn-hover hover:cursor-pointer"
+            value="Save"
+            className="p-1 w-20 button-dark hover:bg-neutral-600"
           />
         </div>
       </form>

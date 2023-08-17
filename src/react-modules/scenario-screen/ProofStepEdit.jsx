@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { useImmer } from "use-immer";
-import { DisplayStepCredentials } from "./DisplayStepCredentials"
+import { DisplayStepCredentials } from "./DisplayStepCredentials";
 import { DisplaySearchResults } from "./../onboarding-screen/DisplaySearchResults";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import {
-  faSearch
-} from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 function ProofStepEdit({
   selectedScenario,
@@ -16,7 +14,7 @@ function ProofStepEdit({
   showcaseJSON,
   selectedCharacter,
   setState,
-  setShowcaseJSON
+  setShowcaseJSON,
 }) {
   const [localData, setLocalData] = useImmer(
     showcaseJSON.personas[selectedCharacter].scenarios[selectedScenario].steps[
@@ -41,9 +39,9 @@ function ProofStepEdit({
 
   const changeRequestOption = (newValue, element) => {
     setLocalData((json) => {
-        json.requestOptions[element] = newValue;
-      });
-  }
+      json.requestOptions[element] = newValue;
+    });
+  };
 
   function searchCredential(e) {
     setSearchResults([]);
@@ -67,63 +65,68 @@ function ProofStepEdit({
   function addCredential(event, credential) {
     event.preventDefault();
     setSearchResults([]);
-    if(localData.requestOptions.proofRequest && !localData.requestOptions.proofRequest.attributes[credential]){
-      setLocalData(json =>{
-        json.requestOptions.proofRequest.attributes[credential] = [showcaseJSON.personas[selectedCharacter].credentials[credential].attributes[0].name]
-      })
-    }else{
-      console.log(localData.requestOptions)
+    if (
+      localData.requestOptions.proofRequest &&
+      !localData.requestOptions.proofRequest.attributes[credential]
+    ) {
+      setLocalData((json) => {
+        json.requestOptions.proofRequest.attributes[credential] = [
+          showcaseJSON.personas[selectedCharacter].credentials[credential]
+            .attributes[0].name,
+        ];
+      });
+    } else {
+      console.log(localData.requestOptions);
     }
-    
   }
 
   // Functionality for removing a credential from a proof step
   function removeCredential(e, credential) {
     e.preventDefault();
 
-    setLocalData(json =>{
-      delete json.requestOptions.proofRequest.attributes[credential]
-    })
+    setLocalData((json) => {
+      delete json.requestOptions.proofRequest.attributes[credential];
+    });
 
-
-    for(const property in localData.requestOptions.proofRequest.predicates){
-      if(localData.requestOptions.proofRequest.predicates[property].restrictions[0] === credential){
-        setLocalData(json =>{
-          delete json.requestOptions.proofRequest.predicates[property]
-        })
+    for (const property in localData.requestOptions.proofRequest.predicates) {
+      if (
+        localData.requestOptions.proofRequest.predicates[property]
+          .restrictions[0] === credential
+      ) {
+        setLocalData((json) => {
+          delete json.requestOptions.proofRequest.predicates[property];
+        });
       }
     }
   }
 
   return (
-    <div className="flex flex-col p-5">
+    <div className="flex flex-col">
       <p>Scenario</p>
       <p className="text-4xl font-bold">Edit Proof Step</p>
       <hr />
 
       <form onSubmit={null}>
         {/* TITLE */}
-        <div className="p-1 mt-5">
-          <label className="text-neutral-500 dark:text-neutral-200">
-            <span className=" text-xl font-bold">Title</span>
-          </label>
+        <div className="my-6">
+          <label className="text-md font-bold">Title</label>
           <br />
           <input
-            className="p-1 w-full field-background"
+            className="dark:text-dark-text dark:bg-dark-input bg-light-bg mt-3 border dark:border-dark-border"
             type="text"
+            placeholder="Title"
             value={localData.title}
             onChange={(e) => changeStep(e.target.value, "title")}
           />
         </div>
 
-        <div className="">
+        <div className="my-6">
           <div className="p-1">
-            <label className="text-neutral-500 dark:text-neutral-200">
-              {"Page Description"}
-            </label>
+            <label className="text-md font-bold">{"Page Description"}</label>
             <textarea
-              className="p-1 w-full resize-none field-background"
+              className="dark:text-dark-text dark:bg-dark-input bg-light-bg p-2 w-full rounded resize-none mt-3 border dark:border-dark-border"
               rows="8"
+              placeholder="Page Description"
               type="text"
               value={localData.text}
               onChange={(e) => changeStep(e.target.value, "text")}
@@ -131,14 +134,12 @@ function ProofStepEdit({
           </div>
         </div>
 
-
-
         <p className="text-2xl mt-5 font-bold">Request Options</p>
-        <hr className="my-3"/>
+        <hr className="my-3" />
 
         {/* REQUEST TYPE OPTION */}
 
-        {/* <label className="text-neutral-500 dark:text-neutral-200">
+        {/* <label className="text-md font-bold">
             <span className="">Type</span>
           </label>
           <input
@@ -148,49 +149,61 @@ function ProofStepEdit({
             onChange={(e) => changeRequestOption(e.target.value, "type")}
           /> */}
 
-
-<label className="text-neutral-500 dark:text-neutral-200">
+        <div className="my-6">
+          <label className="text-md font-bold">
             <span className="">Title</span>
           </label>
           <input
-            className="p-1 w-full field-background"
+            className="dark:text-dark-text dark:bg-dark-input bg-light-bg mt-3 border dark:border-dark-border"
             type="text"
+            placeholder="Title"
             value={localData.requestOptions.title}
             onChange={(e) => changeRequestOption(e.target.value, "title")}
           />
-
-<label className="text-neutral-500 dark:text-neutral-200">
-              {"Text"}
-            </label>
-            <textarea
-              className="p-1 w-full resize-none field-background"
-              rows="4"
-              type="text"
-              value={localData.requestOptions.text}
-              onChange={(e) => changeRequestOption(e.target.value, "text")}
-            />
-
-            {/* SEARCHING FOR A CREDENTIAL*/}
-        <p className="pt-10">Search for a credential:</p>
-        <div className="flex flex-row justify-center items-center mt-3">
-          <input
-            className="w-full p-1 field-background rounded"
-            placeholder="ex. Student Card"
-            type="text"
-            onChange={(e) => searchCredential(e)}
-          />
-          <span className="pb-4 px-2 text-xl">
-            <FontAwesomeIcon icon={faSearch} />
-          </span>
         </div>
-        {/* RESULTS */}
-        <DisplaySearchResults
-          selectedCharacter={selectedCharacter}
-          showcaseJSON={showcaseJSON}
-          localJSON={localData}
-          searchResults={searchResults}
-          addCredential={addCredential}
-        />
+
+        <div className="my-6">
+          <label className="text-md font-bold">{"Text"}</label>
+          <textarea
+            className="dark:text-dark-text dark:bg-dark-input bg-light-bg p-2 w-full rounded resize-none mt-3 border dark:border-dark-border "
+            rows="4"
+            placeholder="Text"
+            type="text"
+            value={localData.requestOptions.text}
+            onChange={(e) => changeRequestOption(e.target.value, "text")}
+          />
+        </div>
+
+        {/* SEARCHING FOR A CREDENTIAL*/}
+
+        <div>
+          <div className="mt-6">
+            <p className="text-md font-bold">Search for a Credential:</p>
+            <div className="flex flex-row justify-center items-center my-4">
+              <div className="relative w-full">
+                <input
+                  className="dark:text-dark-text dark:bg-dark-input border dark:border-dark-border  rounded pl-2 pr-10 mb-2 w-full bg-light-bg"
+                  placeholder="ex. Student Card"
+                  type="text"
+                  onChange={(e) => searchCredential(e)}
+                />
+                <span className="absolute right-4 top-1/4">
+                  <FontAwesomeIcon icon={faSearch} />
+                </span>
+              </div>
+            </div>
+          </div>
+          {/* RESULTS */}
+
+          <DisplaySearchResults
+            selectedCharacter={selectedCharacter}
+            showcaseJSON={showcaseJSON}
+            localJSON={localData}
+            searchResults={searchResults}
+            addCredential={addCredential}
+          />
+        </div>
+
         <DisplayStepCredentials
           selectedCharacter={selectedCharacter}
           showcaseJSON={showcaseJSON}
@@ -201,7 +214,7 @@ function ProofStepEdit({
           setShowcaseJSON={setShowcaseJSON}
         />
 
-        <div className="flex flex-cols mx-5 my-3 justify-end space-x-4 items-baseline">
+        <div className="flex flex-cols my-3 justify-end space-x-4 items-baseline">
           <button
             onClick={(e) => {
               e.preventDefault();
@@ -214,9 +227,9 @@ function ProofStepEdit({
 
           <input
             type="submit"
-            value="Save"
+            value="SAVE"
             onClick={(e) => saveStep(e, localData)}
-            className="p-1 w-20 button-dark hover:bg-neutral-600"
+            className="p-1  w-20 bg-light-bg-secondary hover:bg-light-btn-hover dark:hover:bg-dark-input border dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover rounded "
           />
         </div>
       </form>

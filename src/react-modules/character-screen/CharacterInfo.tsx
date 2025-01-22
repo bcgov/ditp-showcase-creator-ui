@@ -9,7 +9,7 @@ export const CharacterInfo = ({
   selectedCharacter,
   setEditMode,
 }: {
-  setShowcaseJSON: React.Dispatch<React.SetStateAction<ShowcaseJSON>>;
+  setShowcaseJSON: (updater: (draft: ShowcaseJSON) => void) => void;
   showcaseJSON: ShowcaseJSON;
   setSelectedCharacter: React.Dispatch<React.SetStateAction<number>>;
   selectedCharacter: number;
@@ -27,7 +27,6 @@ export const CharacterInfo = ({
     }
     setShowcaseJSON((draft) => {
       draft["personas"].splice(i, 1);
-      return draft;
     });
   };
 

@@ -1,8 +1,8 @@
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Credentials, ShowcaseJSON } from "../../../types";
 
-function Credential({
+export const Credential = ({
   issuerName,
   credentialName,
   attributeCount,
@@ -11,7 +11,16 @@ function Credential({
   selectedCredential,
   handleCredentialRemoval,
   showcaseJSON,
-}) {
+}: {
+  issuerName: string;
+  credentialName: string;
+  attributeCount: number;
+  index: keyof Credentials;
+  handleClick: (index: keyof Credentials) => void;
+  selectedCredential: keyof Credentials | null;
+  handleCredentialRemoval: () => void;
+  showcaseJSON: ShowcaseJSON;
+}) => {
   // Check if there's only one credential
   const isSingleCredential =
     Object.keys(showcaseJSON.personas[0].credentials).length === 1;
@@ -59,9 +68,9 @@ function Credential({
           className={`remove text-xl flex items-center justify-center w-1/5 ${
             isSingleCredential ? "hidden" : "trash-button"
           }`}
-          onClick={(e) => {
-            handleCredentialRemoval(index);
-          }}
+          onClick={() =>
+            selectedCredential !== null && handleCredentialRemoval()
+          }
         >
           <FontAwesomeIcon icon={faTrash} /> {/* Display trash icon */}
         </div>
@@ -69,5 +78,3 @@ function Credential({
     </>
   );
 }
-
-export { Credential };

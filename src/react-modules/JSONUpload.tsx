@@ -17,8 +17,6 @@ export const JSONUploadButton = ({
       reader.readAsText(file);
       reader.onload = () => {
         const fileContent = reader.result;
-        console.log(fileContent);
-        console.log(typeof fileContent);
         try {
           if (typeof fileContent === 'string') {
             setShowcaseJSON(JSON.parse(`{"personas": ${fileContent}}`));

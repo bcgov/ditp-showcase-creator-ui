@@ -1,15 +1,21 @@
-import React from "react";
 import { CredentialAttribute } from "./CredentialAttribute";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import { CredentialElement, Credentials } from "../../../types";
 
-function CredentialAttributesList({
+export const CredentialAttributesList = ({
   tempData,
   selectedCredential,
   handleChange,
   addAttribute,
   removeAttribute,
-}) {
+}: {
+  tempData: Credentials;
+  selectedCredential: keyof Credentials | null;
+  handleChange: (element: CredentialElement, index: number | string, newValue: string) => void;
+  addAttribute: (selectedCredential: keyof Credentials) => void;
+  removeAttribute: (selectedCredential: keyof Credentials, index: number) => void;
+}) => {
   return (
     <>
       <div className="rounded p-5 bg-light-bg dark:bg-dark-bg mt-3">
@@ -19,6 +25,7 @@ function CredentialAttributesList({
             Attributes Added:{" "}
             <span className="font-bold">
               {selectedCredential &&
+              tempData[selectedCredential] &&
               tempData[selectedCredential].attributes &&
               tempData[selectedCredential].attributes.length !== 0
                 ? tempData[selectedCredential].attributes.length
@@ -29,7 +36,9 @@ function CredentialAttributesList({
           {/* Button to add a new attribute */}
           <button
             className="text-xs add-attr-btn border hover:bg-light-btn-hover dark:hover:bg-dark-input font-bold py-2 px-4 rounded inline-flex items-center"
-            onClick={() => addAttribute(selectedCredential)}
+            onClick={() =>
+              selectedCredential !== null && addAttribute(selectedCredential)
+            }
           >
             <span>ADD ATTRIBUTE </span>
             <span className="text-md ml-2">
@@ -41,7 +50,8 @@ function CredentialAttributesList({
         <hr className="mb-3" />
 
         {/* Mapping through attributes and rendering CredentialAttribute components */}
-        {tempData[selectedCredential] &&
+        {selectedCredential !== null &&
+          tempData[selectedCredential] &&
           tempData[selectedCredential].attributes.length !== 0 &&
           tempData[selectedCredential].attributes.map((attr, index) => (
             <CredentialAttribute
@@ -49,9 +59,8 @@ function CredentialAttributesList({
               index={index}
               attributeName={attr.name}
               attributeValue={attr.value}
-              credType={attr.type}
+              credType={attr.type || ""}
               handleChange={handleChange}
-              tempData={tempData}
               selectedCredential={selectedCredential}
               removeAttribute={removeAttribute}
             />
@@ -60,5 +69,3 @@ function CredentialAttributesList({
     </>
   );
 }
-
-export { CredentialAttributesList };

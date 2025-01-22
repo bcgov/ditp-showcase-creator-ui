@@ -1,10 +1,10 @@
-interface Attribute {
+export interface Attribute {
   name: string;
   value: string;
   type?: string;
 }
 
-interface Credential {
+export interface Credential {
   issuer_name: string;
   name: string;
   version: string;
@@ -12,9 +12,8 @@ interface Credential {
   attributes: Attribute[];
 }
 
-interface Credentials {
-  student_card: Credential;
-  test_card_id: Credential;
+export interface Credentials {
+  [key: string]: Credential;
 }
 
 interface RevocationInfo {
@@ -53,12 +52,10 @@ interface ProofRequestPredicates {
 
 interface ProofRequest {
   attributes: {
-    test_card_id: ProofRequestAttributes;
-    student_card: ProofRequestAttributes;
+    [key: keyof Credentials]: ProofRequestAttributes;
   };
   predicates: {
-    test_card_id_expiry_date: ProofRequestPredicates;
-    student_card_expiry_date: ProofRequestPredicates;
+    [key: string]: ProofRequestPredicates;
   };
 }
 
@@ -106,3 +103,5 @@ export interface Persona {
 export interface ShowcaseJSON {
   personas: Persona[];
 }
+
+export type CredentialElement = [Exclude<keyof Credential, 'attributes'>] | ['attributes', keyof Attribute];

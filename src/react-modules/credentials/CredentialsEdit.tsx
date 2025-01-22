@@ -1,13 +1,19 @@
+import { CredentialElement, Credentials } from "../../types";
 import { CredentialAttributesList } from "./components/CredentialAttributesList";
 
-function CredentialsEdit({
+export const CredentialsEdit = ({
   selectedCredential,
   tempData,
-  setTempData,
   addAttribute,
   handleChange,
   removeAttribute,
-}) {
+}: {
+  selectedCredential: keyof Credentials | null;
+  tempData: Credentials;
+  addAttribute: (selectedCredential: keyof Credentials) => void;
+  handleChange: (element: CredentialElement, index: number | string, newValue: string) => void;
+  removeAttribute: (selectedCredential: keyof Credentials, index: number) => void;
+}) => {
   return (
     <>
       {/* Header section */}
@@ -32,11 +38,14 @@ function CredentialsEdit({
           name="cred_name"
           placeholder="Credential Name"
           value={
-            tempData[selectedCredential]
+            selectedCredential !== null && tempData[selectedCredential]
               ? tempData[selectedCredential].name
               : ""
           }
-          onChange={(e) => handleChange(e, ["name"])}
+          onChange={(e) =>
+            selectedCredential !== null &&
+            handleChange(["name"], selectedCredential, e.target.value)
+          }
           className="mt-3 dark:bg-dark-input  border dark:border-dark-border"
         />
       </div>
@@ -52,11 +61,14 @@ function CredentialsEdit({
           name="issuer_name"
           placeholder="Issuer Name"
           value={
-            tempData[selectedCredential]
+            selectedCredential !== null && tempData[selectedCredential]
               ? tempData[selectedCredential].issuer_name
               : ""
           }
-          onChange={(e) => handleChange(e, ["issuer_name"])}
+          onChange={(e) =>
+            selectedCredential !== null &&
+            handleChange(["issuer_name"], selectedCredential, e.target.value)
+          }
           className="mt-3 dark:bg-dark-input  border dark:border-dark-border"
         />
       </div>
@@ -76,5 +88,3 @@ function CredentialsEdit({
     </>
   );
 }
-
-export { CredentialsEdit };

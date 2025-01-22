@@ -14,7 +14,7 @@ export const CharacterScreen = ({
   handleJSONUpdate,
 }: {
   showcaseJSON: ShowcaseJSON;
-  setShowcaseJSON: React.Dispatch<React.SetStateAction<ShowcaseJSON>>;
+  setShowcaseJSON: (updater: (draft: ShowcaseJSON) => void) => void;
   selectedCharacter: number;
   setSelectedCharacter: React.Dispatch<React.SetStateAction<number>>;
   handleJSONUpdate: (

@@ -1,9 +1,10 @@
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { CredentialElement } from "../../../types";
+import { Credentials } from "../../../types";
 
-function CredentialAttribute({
+export const CredentialAttribute = ({
   index,
   attributeName,
   attributeValue,
@@ -11,11 +12,19 @@ function CredentialAttribute({
   handleChange,
   selectedCredential,
   removeAttribute,
-}) {
-  const [selectedOption, setSelectedOption] = useState(null); // State variable used to determine if the input is a dateint.
+}: {
+  index: number;
+  attributeName: string;
+  attributeValue: string;
+  credType: string;
+  handleChange: (element: CredentialElement, index: number | string, newValue: string) => void;
+  selectedCredential: keyof Credentials | null;
+  removeAttribute: (selectedCredential: keyof Credentials, index: number) => void;
+}) => {
+  const [selectedOption, setSelectedOption] = useState<string | null>(null); // State variable used to determine if the input is a dateint.
 
   return (
-    <div className="grid grid-cols-9 gap-2 mb-2" id={index}>
+    <div className="grid grid-cols-9 gap-2 mb-2" id={index.toString()}>
       {/* Dropdown to select attribute type */}
       <select
         name={`type`}
@@ -24,7 +33,7 @@ function CredentialAttribute({
         value={credType || ""}
         onChange={(e) => {
           // Call the handleChange function and update local state
-          handleChange(e, ["attributes", "type"], index);
+          handleChange(["attributes", "type"], index, e.target.value);
           setSelectedOption(e.target.value);
         }}
       >
@@ -40,7 +49,7 @@ function CredentialAttribute({
         name={`name`}
         placeholder="Attribute Name"
         value={attributeName || ""}
-        onChange={(e) => handleChange(e, ["attributes", "name"], index)}
+        onChange={(e) => handleChange(["attributes", "name"], index, e.target.value)}
         className="col-span-3 text-sm truncate dark:text-dark-text dark:bg-dark-input border dark:border-dark-border"
       />
 
@@ -52,19 +61,17 @@ function CredentialAttribute({
           selectedOption === "dateint" ? "YYYY-MM-DD" : "Attribute Value"
         }
         value={attributeValue || ""}
-        onChange={(e) => handleChange(e, ["attributes", "value"], index)}
+        onChange={(e) => handleChange(["attributes", "value"], index, e.target.value)}
         className="col-span-3 text-sm dark:text-dark-text dark:bg-dark-input border dark:border-dark-border"
       />
 
       {/* Trash button to remove the attribute */}
       <div
         className=" flex items-center text-lg trash-button justify-center"
-        onClick={() => removeAttribute(selectedCredential, index)}
+        onClick={() => selectedCredential !== null && removeAttribute(selectedCredential, index)}
       >
         <FontAwesomeIcon icon={faTrash} /> {/* Display trash icon */}
       </div>
     </div>
   );
-}
-
-export { CredentialAttribute };
+};

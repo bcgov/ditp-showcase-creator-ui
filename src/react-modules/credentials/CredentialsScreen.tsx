@@ -8,8 +8,20 @@ import "./styles/credentials.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
-import { Attribute, CredentialElement, Credentials, ShowcaseJSON } from "../../types";
-import { WritableDraft } from "immer";
+import {
+  Attribute,
+  CredentialElement,
+  Credentials,
+  ShowcaseJSON,
+} from "../../types";
+import {
+  addCredentialAttribute,
+  createNewCredential,
+  removeCredentialAndReferences,
+  removeCredentialAttribute,
+  updateCredentialAttribute,
+  updateCredentialProperty,
+} from "../../lib/json-helper";
 
 export const CredentialsScreen = ({
   showcaseJSON,
@@ -30,103 +42,23 @@ export const CredentialsScreen = ({
   const [createButtonClicked, setCreateButtonClicked] =
     useState<boolean>(false); // State variable to determine if the create button has been clicked. This is to ensure it can't be spammed.
 
-  // This function handles the removal of a credential
   function handleCredentialRemoval(credential: keyof Credentials) {
-    // If there's only one credential for this showcase, exit.
-    if (
-      Object.keys(showcaseJSON.personas[selectedCharacter].credentials)
-        .length === 1
-    ) {
-      return;
-    }
-
-    // Clear the active component, reset "Create" button status, and deselect the credential
-    setComponentToMount(null);
-    setCreateButtonClicked(false);
-    setSelectedCredential(null);
-
-    // Remove the selected credential from the Showcase JSON
-    setShowcaseJSON((json: WritableDraft<ShowcaseJSON>) => {
-      delete json.personas[selectedCharacter].credentials[credential];
-    });
-
-    // Remove the credential from the tempData array
-    setTempData((draft) => {
-      delete draft[credential];
-    });
-
-    // Find all instances of this credential being used in a scenario and remove them.
-    for (
-      let scenarioID = 0;
-      scenarioID < showcaseJSON.personas[selectedCharacter].scenarios.length;
-      scenarioID++
-    ) {
-      for (
-        let stepID = 0;
-        stepID <
-        showcaseJSON.personas[selectedCharacter].scenarios[scenarioID].steps
-          .length;
-        stepID++
-      ) {
-        // If a step in a scenario has request options...
-        if (
-          showcaseJSON.personas[selectedCharacter].scenarios[scenarioID].steps[
-            stepID
-          ].requestOptions
-        ) {
-          // Handling attributes
-          for (let attributeList in showcaseJSON.personas[selectedCharacter]
-            .scenarios[scenarioID].steps[stepID].requestOptions.proofRequest
-            .attributes) {
-            let restriction =
-              showcaseJSON.personas[selectedCharacter].scenarios[scenarioID]
-                .steps[stepID].requestOptions.proofRequest.attributes[
-                attributeList
-              ].restrictions[0];
-            if (restriction === credential) {
-              setShowcaseJSON((json) => {
-                json.personas[selectedCharacter].scenarios[scenarioID].steps[
-                  stepID
-                ].requestOptions.proofRequest = {
-                  attributes: {},
-                  predicates: {},
-                };
-              });
-            }
-          }
-
-          // Handling predicates
-          for (let predicateList in showcaseJSON.personas[selectedCharacter]
-            .scenarios[scenarioID].steps[stepID].requestOptions.proofRequest
-            .predicates) {
-            let restriction =
-              showcaseJSON.personas[selectedCharacter].scenarios[scenarioID]
-                .steps[stepID].requestOptions.proofRequest.predicates[
-                predicateList
-              ].restrictions[0];
-            if (restriction === credential) {
-              setShowcaseJSON((json) => {
-                json.personas[selectedCharacter].scenarios[scenarioID].steps[
-                  stepID
-                ].requestOptions.proofRequest = {
-                  attributes: {},
-                  predicates: {},
-                };
-              });
-            }
-          }
-        }
+    setShowcaseJSON((json) => {
+      if (removeCredentialAndReferences(json, selectedCharacter, credential)) {
+        setComponentToMount(null);
+        setCreateButtonClicked(false);
+        setSelectedCredential(null);
       }
-    }
+    });
   }
 
   // This function handles all input boxes and updates both the tempData and the Showcase JSON accordingly.
   function isAttributeUpdate(
     element: CredentialElement
-  ): element is ['attributes', keyof Attribute] {
-    return element[0] === 'attributes';
+  ): element is ["attributes", keyof Attribute] {
+    return element[0] === "attributes";
   }
-  
+
   function handleChange(
     element: CredentialElement,
     index: number | string,
@@ -134,49 +66,49 @@ export const CredentialsScreen = ({
   ) {
     setTempData((draft) => {
       if (selectedCredential === null) return;
-  
+
       if (isAttributeUpdate(element)) {
-        if (typeof index === 'number' && draft[selectedCredential].attributes[index]) {
-          draft[selectedCredential].attributes[index][element[1]] = value;
+        if (typeof index === "number") {
+          updateCredentialAttribute(
+            draft,
+            selectedCredential,
+            index,
+            element[1],
+            value
+          );
         }
       } else {
-        const key = element[0];
-        draft[selectedCredential][key] = value;
+        updateCredentialProperty(draft, selectedCredential, element[0], value);
       }
     });
   }
+
   // This function handles the transfer of data from the tempData to the Showcase JSON.
   // This is where the save and cancel functionality is also done.
   // The initial values are saved into "tempData" until the "add" button is clicked.
   const handleCredentialUpdate = () => {
-    // Reset the following state variables
+    setShowcaseJSON((json) => {
+      json.personas[selectedCharacter].credentials = tempData;
+    });
+
+    // Reset state
     setComponentToMount(null);
     setCreateButtonClicked(false);
     setSelectedCredential(null);
-
-    // Set the credentials object in the ShowcaseJSON to whats in tempData
-    setShowcaseJSON((json: ShowcaseJSON) => {
-      json.personas[selectedCharacter].credentials = tempData;
-    });
   };
 
   // This function handles adding an attribute.
   const addAttribute = (credential: keyof Credentials) => {
-    // Push an empty object containing the following values into the attributes array inside of tempData.
     setTempData((draft) => {
-      draft[credential].attributes.push({
-        name: "",
-        value: "",
-        type: "",
-      });
+      addCredentialAttribute(draft, credential);
     });
   };
 
   const removeAttribute = (credential: keyof Credentials, index: number) => {
     setTempData((draft) => {
-      draft[credential].attributes.splice(index, 1);
+      removeCredentialAttribute(draft, credential, index);
     });
-  }; 
+  };
 
   // This function handles the cancel button
   const handleCancel = () => {
@@ -191,26 +123,17 @@ export const CredentialsScreen = ({
 
   // This function handles the creation of a new credential.
   const handleCreateButtonClick = () => {
-    // If there's a credential selected, call handleCancel() to prevent overwriting of data.
     if (selectedCredential !== null) {
       handleCancel();
     }
 
-    // Used to give each credential a unique ID.
-    let credential_id = Date.now().toString();
+    const credential_id = Date.now().toString();
 
-    // Push a new object into tempData, the key is credential_id and the value is the object below.
-    setTempData((temp) => {
-      temp[credential_id] = {
-        issuer_name: "",
-        name: "",
-        version: "1.0",
-        icon: "",
-        attributes: [],
-      };
+    // Use createNewCredential helper
+    setTempData((draft) => {
+      createNewCredential(draft, credential_id);
     });
 
-    // Handle state updates.
     setCreateButtonClicked(true);
     setSelectedCredential(credential_id);
     setComponentToMount("create");
@@ -329,4 +252,4 @@ export const CredentialsScreen = ({
       </div>
     </>
   );
-}
+};

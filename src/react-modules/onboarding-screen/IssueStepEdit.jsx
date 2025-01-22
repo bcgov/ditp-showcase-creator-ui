@@ -40,7 +40,6 @@ function IssueStepEdit({
   // Functionality for removing a credential from an issue step
   function removeCredential(e, credential) {
     e.preventDefault();
-    console.log(credential);
     setLocalJSON((json) => {
       const index = json.credentials.indexOf(credential);
       if (index !== -1) {

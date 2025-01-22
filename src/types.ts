@@ -50,7 +50,7 @@ interface ProofRequestPredicates {
   restrictions: string[];
 }
 
-interface ProofRequest {
+export interface ProofRequest {
   attributes: {
     [key: keyof Credentials]: ProofRequestAttributes;
   };

@@ -1,26 +1,33 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { ShowcaseJSON } from "../../types";
 
-function CharacterInfo({
+export const CharacterInfo = ({
   setShowcaseJSON,
   showcaseJSON,
   setSelectedCharacter,
   selectedCharacter,
   setEditMode,
-  characterImages,
-}) {
-  const handleRemoveCharacter = (e, i) => {
-    if (showcaseJSON.personas.length == 1) return;
+}: {
+  setShowcaseJSON: React.Dispatch<React.SetStateAction<ShowcaseJSON>>;
+  showcaseJSON: ShowcaseJSON;
+  setSelectedCharacter: React.Dispatch<React.SetStateAction<number>>;
+  selectedCharacter: number;
+  setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const handleRemoveCharacter = (e: React.MouseEvent<HTMLButtonElement>, i: number) => {
+    if (showcaseJSON.personas.length === 1) return;
     // Prevent out of bounds selected character
     if (
-      (selectedCharacter == i ||
-        showcaseJSON.personas.length - 1 == selectedCharacter) &&
-      selectedCharacter != 0
+      (selectedCharacter === i ||
+        showcaseJSON.personas.length - 1 === selectedCharacter) &&
+      selectedCharacter !== 0
     ) {
       setSelectedCharacter(selectedCharacter - 1);
     }
-    setShowcaseJSON((json) => {
-      json["personas"].splice(i, 1);
+    setShowcaseJSON((draft) => {
+      draft["personas"].splice(i, 1);
+      return draft;
     });
   };
 
@@ -78,6 +85,7 @@ function CharacterInfo({
             ) : (
               <img
                 width="100px"
+                alt="headshot"
                 src={`${showcaseJSON.personas[selectedCharacter].headshot_image}`}
               />
             )}
@@ -92,6 +100,7 @@ function CharacterInfo({
             ) : (
               <img
                 width="100px"
+                alt="body"
                 src={`${showcaseJSON.personas[selectedCharacter].body_image}`}
               />
             )}
@@ -101,5 +110,3 @@ function CharacterInfo({
     </>
   );
 }
-
-export { CharacterInfo };

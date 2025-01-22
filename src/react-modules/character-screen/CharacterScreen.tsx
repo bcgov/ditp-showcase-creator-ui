@@ -1,25 +1,39 @@
-import { NewCharacterButton } from "./NewCharacterButton";
 import "./character-styles/character-screen.css";
 import { useState, useEffect } from "react";
 import { CharacterInfo } from "./CharacterInfo";
 import { CharacterEdit } from "./CharacterEdit";
 import { CharacterList } from "./CharacterList";
 import { useImmer } from "use-immer";
+import { ShowcaseJSON } from "../../types";
 
-function CharacterScreen({
+export const CharacterScreen = ({
   showcaseJSON,
   setShowcaseJSON,
   selectedCharacter,
   setSelectedCharacter,
   handleJSONUpdate,
-}) {
+}: {
+  showcaseJSON: ShowcaseJSON;
+  setShowcaseJSON: React.Dispatch<React.SetStateAction<ShowcaseJSON>>;
+  selectedCharacter: number;
+  setSelectedCharacter: React.Dispatch<React.SetStateAction<number>>;
+  handleJSONUpdate: (
+    personaIndex: number,
+    element: string[],
+    value: string | null
+  ) => void;
+}) => {
   const [editMode, setEditMode] = useState(false);
-
-  // To-do: Set the character images, so they can be previewed... ideally this would be the auto-gen URLs for them
-  const [characterImages, setCharacterImages] = useState([]);
-
   // Seperately update a mini version of the json, containing only the fields for this page
-  const [localJSON, setLocalJSON] = useImmer();
+  const [localJSON, setLocalJSON] = useImmer<{
+    name: string;
+    type: string;
+    description: string;
+  }>({
+    name: showcaseJSON.personas[selectedCharacter].name,
+    type: showcaseJSON.personas[selectedCharacter].type,
+    description: showcaseJSON.personas[selectedCharacter].description,
+  });
 
   // Change this mini version of the json, when the character changes
   useEffect(() => {
@@ -28,12 +42,13 @@ function CharacterScreen({
       type: showcaseJSON.personas[selectedCharacter].type,
       description: showcaseJSON.personas[selectedCharacter].description,
     });
-  }, [selectedCharacter]);
+  }, [selectedCharacter, showcaseJSON, setLocalJSON]);
 
   // Function similar to handleJSONUpdate in App.js
-  function handleLocalUpdate(element, newValue) {
-    setLocalJSON((json) => {
-      json[element] = newValue;
+  function handleLocalUpdate(element: string[], newValue: string) {
+    setLocalJSON((draft) => {
+      draft[element[0] as keyof typeof draft] = newValue;
+      return draft;
     });
   }
 
@@ -65,7 +80,7 @@ function CharacterScreen({
                 </div>
               </div>
 
-              {/* <div className="mt-8">
+              <div className="mt-8">
                 <div className="flex justify-between mb-4">
                   <h3 className="text-xl font-bold">Your Character:</h3>
                 </div>
@@ -73,11 +88,10 @@ function CharacterScreen({
                 <CharacterList
                   setEditMode={setEditMode}
                   showcaseJSON={showcaseJSON}
-                  localJSON={localJSON}
                   selectedCharacter={selectedCharacter}
                   setSelectedCharacter={setSelectedCharacter}
                 />
-              </div> */}
+              </div>
             </div>
             {/* end of column 1  */}
 
@@ -88,10 +102,9 @@ function CharacterScreen({
                 <CharacterEdit
                   selectedCharacter={selectedCharacter}
                   handleLocalUpdate={handleLocalUpdate}
-                  handleJSONUpdate={handleJSONUpdate} // Updated this line
-                  showcaseJSON={showcaseJSON} // Updated this line
-                  localJSON={localJSON} // Added this line
-                  setCharacterImages={setCharacterImages}
+                  handleJSONUpdate={handleJSONUpdate} 
+                  showcaseJSON={showcaseJSON} 
+                  localJSON={localJSON}
                 />
               ) : (
                 <CharacterInfo
@@ -100,7 +113,6 @@ function CharacterScreen({
                   setSelectedCharacter={setSelectedCharacter}
                   selectedCharacter={selectedCharacter}
                   setEditMode={setEditMode}
-                  characterImages={characterImages}
                 />
               )}
             </div>
@@ -130,5 +142,3 @@ function CharacterScreen({
     </>
   );
 }
-
-export { CharacterScreen };

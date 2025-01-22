@@ -1,13 +1,27 @@
-import { LocalTextInput, LocalTextAreaInput } from "./../LocalTextInput";
-import { FileUploadFull } from "./../FileUpload";
+import { LocalTextInput, LocalTextAreaInput } from "../LocalTextInput";
+import { FileUploadFull } from "../FileUpload";
+import { ShowcaseJSON } from "../../types";
 
-function CharacterEdit({
+export const CharacterEdit = ({
   selectedCharacter,
   handleJSONUpdate,
   handleLocalUpdate,
   showcaseJSON,
-  localJSON,
-}) {
+}: {
+  selectedCharacter: number;
+  handleJSONUpdate: ( 
+    personaIndex: number,
+    element: string[],
+    value: string | null
+  ) => void;
+  handleLocalUpdate: (element: string[], newValue: string) => void;
+  showcaseJSON: ShowcaseJSON;
+  localJSON: {
+    name: string;
+    type: string;
+    description: string;
+  };
+}) => {
   return (
     <div className="m-3 text-light-text bg-light-bg-secondary dark:bg-dark-bg-secondary dark:text-dark-text">
       <div className="flex justify-between mt-3">
@@ -24,7 +38,6 @@ function CharacterEdit({
           element={["name"]}
           handleJSONUpdate={handleLocalUpdate}
           showcaseJSON={showcaseJSON}
-          localJSON={localJSON}
           placeholder={"Character Name"}
         />
         <LocalTextInput
@@ -33,7 +46,6 @@ function CharacterEdit({
           element={["type"]}
           handleJSONUpdate={handleLocalUpdate}
           showcaseJSON={showcaseJSON}
-          localJSON={localJSON}
           placeholder={"Character Role"}
         />
       </div>
@@ -43,7 +55,6 @@ function CharacterEdit({
           personaIndex={selectedCharacter}
           element={["description"]}
           handleJSONUpdate={handleLocalUpdate}
-          localJSON={localJSON}
           showcaseJSON={showcaseJSON}
           placeholder={"Page Description"}
         />
@@ -54,7 +65,6 @@ function CharacterEdit({
           personaIndex={selectedCharacter}
           element={["headshot_image"]}
           handleJSONUpdate={handleJSONUpdate}
-          showcaseJSON={showcaseJSON}
         />
 
         <FileUploadFull
@@ -62,11 +72,8 @@ function CharacterEdit({
           personaIndex={selectedCharacter}
           element={["body_image"]}
           handleJSONUpdate={handleJSONUpdate}
-          showcaseJSON={showcaseJSON}
         />
       </div>
     </div>
   );
 }
-
-export { CharacterEdit };

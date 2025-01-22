@@ -1,6 +1,5 @@
-import { TextInput, TextAreaInput } from "./../TextInput";
 import { LocalTextInput, LocalTextAreaInput } from "./../LocalTextInput";
-import { FileUploadFull, FileUploadBar } from "./../FileUpload";
+import { FileUploadFull } from "./../FileUpload";
 
 function CharacterEdit({
   selectedCharacter,

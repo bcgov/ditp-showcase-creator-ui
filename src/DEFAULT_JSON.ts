@@ -1,4 +1,4 @@
-const DEFAULT_JSON = {
+export const DEFAULT_JSON = {
   name: "Bob",
   type: "Test",
   headshot_image: "",
@@ -184,5 +184,3 @@ const DEFAULT_JSON = {
     },
   ],
 };
-
-export { DEFAULT_JSON };

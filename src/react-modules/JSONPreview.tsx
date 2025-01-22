@@ -1,7 +1,7 @@
-import React from "react";
 import { useState } from "react";
+import { ShowcaseJSON } from "../types";
 
-const JSONPreview = ({ showcaseJSON }) => {
+export const JSONPreview = ({ showcaseJSON }: { showcaseJSON: ShowcaseJSON }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleAccordion = () => {
@@ -26,5 +26,3 @@ const JSONPreview = ({ showcaseJSON }) => {
     </div>
   );
 };
-
-export { JSONPreview };

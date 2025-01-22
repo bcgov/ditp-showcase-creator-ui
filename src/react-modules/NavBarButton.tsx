@@ -1,4 +1,16 @@
-export const NavBarButton = ({ src, title, page, changePage, currentPage }) => {
+export const NavBarButton = ({
+  src,
+  title,
+  page,
+  changePage,
+  currentPage,
+}: {
+  src: string;
+  title: string;
+  page: string;
+  changePage: (page: string) => void;
+  currentPage: string;
+}) => {
   return (
     <li
       className={`flex flex-col  items-center justify-between p-3 ${

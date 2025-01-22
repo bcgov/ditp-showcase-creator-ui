@@ -1,37 +1,45 @@
 import { useState, useRef } from "react";
 import { ErrorModal } from "./ErrorModal";
-// import { BookmarkSquareIcon } from "@heroicons/react/20/solid";
+import { ShowcaseJSON } from "../types";
 
-function JSONUploadButton({ setShowcaseJSON }) {
-  // Error handling
+export const JSONUploadButton = ({
+  setShowcaseJSON,
+}: {
+  setShowcaseJSON: React.Dispatch<React.SetStateAction<ShowcaseJSON>>;
+}) => {
   const [showModal, setShowModal] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const fileInputRef = useRef(null);
-
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (file && file.type === "application/json") {
       const reader = new FileReader();
       reader.readAsText(file);
       reader.onload = () => {
         const fileContent = reader.result;
         console.log(fileContent);
+        console.log(typeof fileContent);
         try {
-          setShowcaseJSON(JSON.parse(`{"personas": ${fileContent}}`));
+          if (typeof fileContent === 'string') {
+            setShowcaseJSON(JSON.parse(`{"personas": ${fileContent}}`));
+          }
         } catch (e) {
+          console.error(e);
           console.log("JSON is not formatted properly!");
           setShowModal(true);
         }
       };
 
-      fileInputRef.current.value = "";
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     } else {
       console.log("Invalid file format. Please select a JSON file.");
     }
   };
 
   const handleClick = () => {
-    fileInputRef.current.click();
+    fileInputRef.current?.click();
   };
 
   return (
@@ -48,7 +56,6 @@ function JSONUploadButton({ setShowcaseJSON }) {
           className="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-black shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
           onClick={handleClick}
         >
-          {/* <BookmarkSquareIcon className="-ml-0.5 h-5 w-5" aria-hidden="true" /> */}
           LOAD
         </button>
       </div>
@@ -64,5 +71,3 @@ function JSONUploadButton({ setShowcaseJSON }) {
     </>
   );
 }
-
-export { JSONUploadButton };

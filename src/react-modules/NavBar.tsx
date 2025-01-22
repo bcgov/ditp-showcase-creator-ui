@@ -4,15 +4,23 @@ import { SaveModal } from "./SaveModal";
 import { JSONUploadButton } from "./JSONUpload";
 import { useState } from "react";
 import { NavBarButton } from "./NavBarButton";
+import { ShowcaseJSON } from "../types";
 
-function NavBar({
+export const NavBar = ({
   darkMode,
   setDarkMode,
   showcaseJSON,
   setShowcaseJSON,
   changePage,
   currentPage,
-}) {
+}: {
+  darkMode: boolean;
+  setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+  showcaseJSON: ShowcaseJSON;
+  setShowcaseJSON: React.Dispatch<React.SetStateAction<ShowcaseJSON>>;
+  changePage: (page: string) => void;
+  currentPage: string;
+}) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -94,5 +102,3 @@ function NavBar({
     </>
   );
 }
-
-export { NavBar };

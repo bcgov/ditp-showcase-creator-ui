@@ -1,10 +1,7 @@
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-import { Credential } from "./credentials/components/Credential";
-
-const Layouts = () => {
+export const Layouts = () => {
   return (
     <>
       <div className="flex m-20 gap-5">
@@ -76,27 +73,3 @@ const Layouts = () => {
     </>
   );
 };
-
-export { Layouts };
-
-// <div className="credential-container flex flex-row items-center justify-center">
-//   <div className="w-80">
-//     <div className="credential rounded col-span-6">
-//       <div className="cred-info col-span-2 truncate">
-//         <p className="cred-issuer-name truncate">
-//           Government of British Columbia
-//         </p>
-//         <p className="cred-credential-name">Person Card</p>
-//         <div className="cred-attributes">
-//           <p>Attributes: 0</p>
-//         </div>
-//       </div>
-//     </div>
-//     {/* End of one credential */}
-//   </div>
-//   <div className="cred-actions px-5">
-//     <p>
-//       <FontAwesomeIcon icon={faTrash} />
-//     </p>
-//   </div>
-// </div>;

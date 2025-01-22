@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useImmer } from "use-immer"; // useImmer is an alternative to useState; it is useful for dealing with nested JSON
 import { NavBar } from "./react-modules/NavBar";
 import { CharacterPage } from "./react-modules/pages/CharacterPage";
@@ -114,7 +114,9 @@ function App() {
               handleJSONUpdate={handleJSONUpdate}
             />
           )}
-          {/* <JSONPreview showcaseJSON={showcaseJSON} /> */}
+          {process.env.NODE_ENV === "development" && (
+            <JSONPreview showcaseJSON={showcaseJSON} />
+          )}
           <Footer />
         </div>
       </div>

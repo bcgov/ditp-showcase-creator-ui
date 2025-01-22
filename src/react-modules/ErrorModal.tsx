@@ -1,13 +1,10 @@
-import { useState } from "react";
-import { SaveButton } from "./SaveButton";
-import { saveAs } from "file-saver"; // for saving JSON
-/**
- * This module allows saving of the project via a pop up window.
- *
- */
-export function ErrorModal({ errorText, setShowModal }) {
-  const [filename, setFilename] = useState("");
-
+export function ErrorModal({
+  errorText,
+  setShowModal,
+}: {
+  errorText: string;
+  setShowModal: (showModal: boolean) => void;
+}) {
   return (
     <>
       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none backdrop-blur">

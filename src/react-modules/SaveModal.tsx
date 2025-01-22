@@ -1,13 +1,15 @@
-import React, { useState } from "react";
-import { SaveButton } from "./SaveButton";
-import { saveAs } from "file-saver"; // for saving JSON
+import { useState } from "react";
+import { saveAs } from "file-saver";
+import { ShowcaseJSON } from "../types";
 
-export function SaveModal({ setShowModal, showcaseJSON }) {
+export const SaveModal = ({
+  setShowModal,
+  showcaseJSON,
+}: {
+  setShowModal: (showModal: boolean) => void;
+  showcaseJSON: ShowcaseJSON;
+}) => {
   const [filename, setFilename] = useState("");
-
-  function handleFilenameChange(e) {
-    setFilename(e.target.value);
-  }
 
   function saveJSON() {
     let cDate = new Date();
@@ -16,7 +18,7 @@ export function SaveModal({ setShowModal, showcaseJSON }) {
     });
     saveAs(
       blob,
-      `${filename}_(${cDate.getMonth()}-${cDate.getDate()}-${cDate.getYear()}).json`
+      `${filename}_(${cDate.getMonth()}-${cDate.getDate()}-${cDate.getFullYear()}).json`
     );
 
     setShowModal(false);
@@ -69,7 +71,7 @@ export function SaveModal({ setShowModal, showcaseJSON }) {
               {/* SAVE BUTTON */}
               <button
                 onClick={saveJSON}
-                className="p-1 w-20 bg-light-bg-secondary hover:bg-light-btn-hover dark:hover:bg-dark-input border dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover rounded "
+                className="p-1 w-20 bg-light-bg-secondary hover:bg-light-btn-hover border dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover rounded "
               >
                 Save
               </button>

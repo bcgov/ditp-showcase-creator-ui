@@ -1,6 +1,6 @@
 
 import { WritableDraft } from "immer";
-import { Attribute, Credentials, ProofRequest, ShowcaseJSON } from "../types";
+import { Attribute, Credentials, OnboardingStep, ProofRequest, ShowcaseJSON } from "../types";
 
 /**
  * Retrieves a nested value from an object using an array of keys as a path
@@ -167,4 +167,88 @@ export const removeCredentialAttribute = (
   index: number
 ): void => {
   draft[credentialId].attributes.splice(index, 1);
+};
+
+
+type OnboardingStepValue = string | string[] | undefined;
+
+/**
+ * Updates a property in an OnboardingStep
+ * @param draft - The OnboardingStep draft to modify
+ * @param key - The key to update
+ * @param value - The new value
+ */
+export const updateOnboardingStep = (
+  draft: WritableDraft<OnboardingStep>,
+  key: keyof OnboardingStep,
+  value: OnboardingStepValue
+): void => {
+  if (key === 'credentials' && typeof value === 'string') {
+    // Handle credentials array specially
+    if (!draft.credentials) {
+      draft.credentials = [];
+    }
+    draft.credentials.push(value);
+  } else {
+    (draft[key] as OnboardingStepValue) = value;
+  }
+};
+
+/**
+ * Type guard to check if a key in OnboardingStep expects an array value
+ */
+export const isArrayProperty = (key: keyof OnboardingStep): boolean => {
+  return key === 'credentials';
+};
+
+/**
+ * Updates a single value property in an OnboardingStep
+ */
+export const updateOnboardingStepSingleValue = (
+  draft: WritableDraft<OnboardingStep>,
+  key: keyof Omit<OnboardingStep, 'credentials'>,
+  value: string
+): void => {
+  draft[key] = value;
+};
+
+/**
+ * Updates the credentials array in an OnboardingStep
+ */
+export const updateOnboardingStepCredentials = (
+  draft: WritableDraft<OnboardingStep>,
+  credentials: string[]
+): void => {
+  draft.credentials = credentials;
+};
+
+/**
+ * Removes a credential from an onboarding step
+ * @param draft - The OnboardingStep draft to modify
+ * @param credential - The credential to remove
+ */
+export const removeOnboardingStepCredential = (
+  draft: WritableDraft<OnboardingStep>,
+  credential: string
+): void => {
+  if (draft.credentials) {
+    const index = draft.credentials.indexOf(credential);
+    if (index !== -1) {
+      draft.credentials.splice(index, 1);
+    }
+  }
+};
+
+/**
+ * Adds a credential to an onboarding step
+ * @param draft - The OnboardingStep draft to modify
+ * @param credential - The credential to add
+ */
+export const addOnboardingStepCredential = (
+  draft: WritableDraft<OnboardingStep>,
+  credential: string
+): void => {
+  if (draft.credentials) {
+    draft.credentials.push(credential);
+  }
 };

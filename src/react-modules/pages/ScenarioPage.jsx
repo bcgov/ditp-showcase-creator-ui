@@ -284,7 +284,11 @@ export const ScenarioPage = ({
                     <div className=" rounded p-3   flex flex-row">
                       <div className="highlight-text rounded p-1 mr-3">
                         {myScreen.overview.image ? (
-                          <img width="100px" src={myScreen.overview.image} />
+                          <img
+                            width="100px"
+                            src={myScreen.overview.image}
+                            alt="scenario-overview-image"
+                          />
                         ) : (
                           <FontAwesomeIcon icon={faDisplay} />
                         )}
@@ -355,7 +359,11 @@ export const ScenarioPage = ({
                     <div className="rounded p-3  flex flex-row">
                       <div className="highlight-text rounded p-1 mr-3">
                         {myScreen.overview.image ? (
-                          <img width="100px" src={myScreen.summary.image} />
+                          <img
+                            width="100px"
+                            src={myScreen.summary.image}
+                            alt="scenario-summary-image"
+                          />
                         ) : (
                           <FontAwesomeIcon icon={faDisplay} />
                         )}

@@ -1,12 +1,16 @@
-import { useState, useEffect } from "react";
+import { ShowcaseJSON } from "../../types";
 
-function DisplaySearchResults({
+export const DisplaySearchResults = ({
   selectedCharacter,
   showcaseJSON,
-  localJSON,
   searchResults,
   addCredential,
-}) {
+}: {
+  selectedCharacter: number;
+  showcaseJSON: ShowcaseJSON;
+  searchResults: any[];
+  addCredential: (result: any) => void;
+}) => {
   const MAX_SEARCH_CREDENTIALS = 8;
 
   return (
@@ -17,7 +21,10 @@ function DisplaySearchResults({
           <button
             key={`${result}_${index}`}
             className="basic-step dropdown-border w-full flex flex-row  text-sm mb-2 rounded"
-            onClick={(e) => addCredential(e, result)}
+            onClick={(e) => {
+              e.preventDefault();
+              addCredential(result)
+            }}
           >
             <div className="grid grid-cols-3 w-full py-2 bg-light-bg hover:bg-light-btn-hover dark:bg-dark-bg dark:hover:bg-dark-btn-hover text-light-text dark:text-dark-text">
               <div className="col-span-1">
@@ -54,5 +61,3 @@ function DisplaySearchResults({
     </div>
   );
 }
-
-export { DisplaySearchResults };

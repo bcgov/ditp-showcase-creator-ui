@@ -2,11 +2,17 @@ import { useEffect, useState } from "react";
 import { useImmer } from "use-immer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { NoSelection } from ".././credentials/NoSelection";
-import { FileUploadFull } from "./../FileUpload";
 import { LocalFileUpload } from "./LocalFileUpload";
 import { DisplaySearchResults } from "./DisplaySearchResults";
 import { DisplayAddedCredentials } from "./DisplayAddedCredentials";
+import { Credential, OnboardingStep, ShowcaseJSON } from "../../types";
+import {
+  addOnboardingStepCredential,
+  isArrayProperty,
+  removeOnboardingStepCredential,
+  updateOnboardingStepCredentials,
+  updateOnboardingStepSingleValue,
+} from "../../lib/json-helper";
 
 function IssueStepEdit({
   selectedCharacter,
@@ -14,11 +20,17 @@ function IssueStepEdit({
   selectedStep,
   showcaseJSON,
   setShowcaseJSON,
-  handleJSONUpdate,
   setStepState,
+}: {
+  selectedCharacter: number;
+  setSelectedStep: (step: number | null) => void;
+  selectedStep: number;
+  showcaseJSON: ShowcaseJSON;
+  setShowcaseJSON: (updater: (draft: ShowcaseJSON) => void) => void;
+  setStepState: (state: string) => void;
 }) {
   // Seperately update a mini version of the json, containing only the fields for this page
-  const [localJSON, setLocalJSON] = useImmer(
+  const [localJSON, setLocalJSON] = useImmer<OnboardingStep>(
     showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
   );
 
@@ -26,46 +38,52 @@ function IssueStepEdit({
     setLocalJSON(
       showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
     );
-  }, [selectedStep]);
+  }, [selectedStep, showcaseJSON.personas, selectedCharacter, setLocalJSON]);
 
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState<string[]>([]);
 
-  // Function similar to handleJSONUpdate in App.js
-  function handleLocalUpdate(element, newValue) {
-    setLocalJSON((json) => {
-      json[element] = newValue;
+  function handleLocalUpdate(key: keyof OnboardingStep, value: string) {
+    setLocalJSON((draft) => {
+      if (isArrayProperty(key)) {
+        if (key === "credentials") {
+          updateOnboardingStepCredentials(draft, [
+            ...(draft.credentials || []),
+            value,
+          ]);
+        }
+      } else {
+        updateOnboardingStepSingleValue(
+          draft,
+          key as keyof Omit<OnboardingStep, "credentials">,
+          value
+        );
+      }
     });
   }
 
   // Functionality for removing a credential from an issue step
-  function removeCredential(e, credential) {
-    e.preventDefault();
-    setLocalJSON((json) => {
-      const index = json.credentials.indexOf(credential);
-      if (index !== -1) {
-        json.credentials.splice(index, 1);
-      }
+  function removeCredential(credential: string) {
+    setLocalJSON(draft => {
+      removeOnboardingStepCredential(draft, credential);
     });
-    console.log(localJSON);
   }
 
-  function cancelSubmit(e) {
+  function cancelSubmit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     setStepState("no-selection");
     setSelectedStep(null);
   }
 
   // Add a new credential to the selected step
-  function addCredential(event, credential) {
+  function addCredential(credential: keyof Credential) {
     setSearchResults([]);
-    setLocalJSON((json) => {
-      json.credentials.push(credential);
+    setLocalJSON(draft => {
+      addOnboardingStepCredential(draft, credential);
     });
-    console.log(localJSON);
   }
 
   // Find credential in the search box, by either name or issuer
-  function searchCredential(e) {
+  function searchCredential(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchResults([]);
 
     if (!e.target.value) return;
@@ -84,7 +102,7 @@ function IssueStepEdit({
   }
 
   // Function to handle saving/form submission
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStepState("no-selection");
     setShowcaseJSON((json) => {
@@ -99,7 +117,7 @@ function IssueStepEdit({
       <h3 className="text-4xl font-bold">Edit an Issue a Credential Step</h3>
       <hr className=""></hr>
 
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleSubmit(e)}>
         {/* TITLE */}
         <div className="my-6">
           <label
@@ -126,10 +144,9 @@ function IssueStepEdit({
           </label>
           <textarea
             className="dark:text-dark-text dark:bg-dark-input p-2 w-full rounded resize-none mt-3"
-            rows="8"
+            rows={8}
             id={`${selectedStep}_text`}
             placeholder="Page Description"
-            type="text"
             value={localJSON.text}
             onChange={(e) => handleLocalUpdate("text", e.target.value)}
           />
@@ -139,7 +156,7 @@ function IssueStepEdit({
           <LocalFileUpload
             text={"Icon"}
             element={"image"}
-            handleLocalUpdate={handleLocalUpdate}
+            handleLocalUpdate={(key, value) => handleLocalUpdate(key, value)}
             localJSON={localJSON}
           />
         </div>
@@ -169,7 +186,6 @@ function IssueStepEdit({
           <DisplaySearchResults
             selectedCharacter={selectedCharacter}
             showcaseJSON={showcaseJSON}
-            localJSON={localJSON}
             searchResults={searchResults}
             addCredential={addCredential}
           />

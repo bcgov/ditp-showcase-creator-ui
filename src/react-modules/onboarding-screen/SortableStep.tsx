@@ -3,9 +3,9 @@ import { CSS } from "@dnd-kit/utilities";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGripVertical,
-  faPen,
   faDisplay,
 } from "@fortawesome/free-solid-svg-icons";
+import { OnboardingStep, ShowcaseJSON } from "../../types";
 
 export const SortableStep = ({
   selectedStep,
@@ -15,6 +15,14 @@ export const SortableStep = ({
   stepIndex,
   totalSteps,
   showcaseJSON,
+}: {
+  selectedStep: number | null;
+  setSelectedStep: (step: number | null) => void;
+  selectedCharacter: number;
+  myScreen: OnboardingStep;
+  stepIndex: number;
+  totalSteps: number;
+  showcaseJSON: ShowcaseJSON;
 }) => {
   //Attribute we need to apply to the element we want to make sortable
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -55,7 +63,7 @@ export const SortableStep = ({
 
         <div
           className={` bg-light-bg dark:bg-dark-bg w-full hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover flex flex-row justify-items-center items-center rounded p-3 
-        ${selectedStep == stepIndex - 1 ? "selected-item" : "unselected-item"}`}
+        ${selectedStep === stepIndex - 1 ? "selected-item" : "unselected-item"}`}
         >
           {
             // SCREEN IMAGE HERE

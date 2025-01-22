@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { DndContext, closestCenter, DragOverlay } from "@dnd-kit/core";
+import { DndContext, closestCenter, DragOverlay, DragEndEvent, DragStartEvent } from "@dnd-kit/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
   faCirclePlus,
-  faPen,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -18,27 +17,37 @@ import { SortableStep } from "../onboarding-screen/SortableStep";
 import { BasicStepEdit } from "../onboarding-screen/BasicStepEdit";
 import { IssueStepEdit } from "../onboarding-screen/IssueStepEdit";
 import { CreateNewStep } from "../onboarding-screen/CreateNewStep";
-import { NoSelection } from ".././credentials/NoSelection";
+import { NoSelection } from "../credentials/NoSelection";
+import { OnboardingStep, ShowcaseJSON } from "../../types";
 
 export const OnboardingPage = ({
   showcaseJSON,
   selectedCharacter,
   setShowcaseJSON,
   handleJSONUpdate,
+}: {
+  showcaseJSON: ShowcaseJSON;
+  selectedCharacter: number;
+  setShowcaseJSON: (updater: (draft: ShowcaseJSON) => void) => void;
+  handleJSONUpdate: (
+    personaIndex: number,
+    element: string[],
+    value: string | null
+  ) => void;
 }) => {
   // Storing the onboarding data into local state.
-  const [myScreens, setMyScreens] = useState(
+  const [myScreens, setMyScreens] = useState<OnboardingStep[]>(
     showcaseJSON.personas[selectedCharacter].onboarding
   );
 
   // Handling state; what step is editable
-  const [selectedStep, setSelectedStep] = useState(null);
+  const [selectedStep, setSelectedStep] = useState<number | null>(null);
 
   // Handling state; what screen is shown, if not editing
   const [stepState, setStepState] = useState("no-selection");
 
   // Add new step
-  const addNewStep = (isIssue) => {
+  const addNewStep = (isIssue: boolean) => {
     if (isIssue) {
       setShowcaseJSON((json) => {
         json.personas[selectedCharacter].onboarding.push({
@@ -73,17 +82,17 @@ export const OnboardingPage = ({
     } else {
       setStepState("editing-basic");
     }
-  }, [selectedStep]);
+  }, [selectedStep, showcaseJSON.personas, selectedCharacter]);
 
   // When the JSON changes, re-collect the onboarding data.
   // This is primarily used for when a step is deleted.
   useEffect(() => {
     setMyScreens(showcaseJSON.personas[selectedCharacter].onboarding);
-  }, [showcaseJSON.personas[selectedCharacter].onboarding]);
+  }, [showcaseJSON.personas, selectedCharacter]);
 
   // Handles a step being removed.
-  const handleRemoveStep = (e, i) => {
-    if (selectedStep == i) setSelectedStep(null);
+  const handleRemoveStep = (i: number) => {
+    if (selectedStep === i) setSelectedStep(null);
 
     setShowcaseJSON((json) => {
       json.personas[selectedCharacter].onboarding.splice(i, 1);
@@ -91,7 +100,7 @@ export const OnboardingPage = ({
   };
 
   // Handles how draggable componants are re-arranged
-  const handleDragEnd = (event) => {
+  const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
     setMyScreens((myScreens) => {
@@ -99,12 +108,13 @@ export const OnboardingPage = ({
         (myScreen) => myScreen.screenId === active.id
       );
       const newIndex = myScreens.findIndex(
-        (myScreen) => myScreen.screenId === over.id
+        (myScreen) => myScreen.screenId === over?.id
       );
       setSelectedStep(newIndex);
 
-      setShowcaseJSON((json) => {
-        json.personas[selectedCharacter].onboarding = arrayMove(
+      // Cannot update a component (`App`) while rendering a different component (`OnboardingPage`). To locate the bad setState() call inside `OnboardingPage`, follow the stack trace as described in https://react.dev/link/setstate-in-render
+      setShowcaseJSON((draft) => {
+        draft.personas[selectedCharacter].onboarding = arrayMove(
           myScreens,
           oldIndex,
           newIndex
@@ -115,7 +125,7 @@ export const OnboardingPage = ({
     });
   };
 
-  const handleDragStart = (event) => {
+  const handleDragStart = (event: DragStartEvent) => {
     const index = myScreens.findIndex(
       (myScreen) => myScreen.screenId === event.active.id
     );
@@ -164,7 +174,7 @@ export const OnboardingPage = ({
                 </div>
               </div>
               <SortableContext
-                items={myScreens}
+                items={myScreens.map((screen) => screen.screenId)}
                 strategy={verticalListSortingStrategy}
               >
                 {myScreens.map((myScreen, index) => (
@@ -185,7 +195,7 @@ export const OnboardingPage = ({
                         className="px-3 hover-red"
                         onClick={(e) => {
                           e.preventDefault();
-                          handleRemoveStep(e, index);
+                          handleRemoveStep(index);
                         }}
                       >
                         <FontAwesomeIcon icon={faTrash} />
@@ -245,19 +255,18 @@ export const OnboardingPage = ({
             // className="w-1/2 two-column-col  bg-light-bg-secondary dark:bg-dark-bg-secondary text-light-text dark:text-dark-text p-6 rounded-md right-col "
             className="w-3/5 two-column-col  bg-light-bg-secondary dark:bg-dark-bg-secondary text-light-text dark:text-dark-text p-6 rounded-md right-col "
           >
-            {stepState == "no-selection" ? (
+            {stepState === "no-selection" ? (
               <div className="">
                 <NoSelection Text={"No Step Selected"} />
               </div>
             ) : null}
-            {stepState == "creating-new" ? (
+            {stepState === "creating-new" ? (
               <CreateNewStep addNewStep={addNewStep} />
             ) : null}
-            {stepState == "editing-basic" ? (
+            {stepState === "editing-basic" && selectedStep !== null ? (
               <div className="">
                 <BasicStepEdit
                   selectedCharacter={selectedCharacter}
-                  handleJSONUpdate={handleJSONUpdate}
                   setSelectedStep={setSelectedStep}
                   selectedStep={selectedStep}
                   showcaseJSON={showcaseJSON}
@@ -265,10 +274,9 @@ export const OnboardingPage = ({
                 />
               </div>
             ) : null}
-            {stepState == "editing-issue" ? (
+            {stepState === "editing-issue" && selectedStep !== null ? (
               <IssueStepEdit
                 selectedCharacter={selectedCharacter}
-                handleJSONUpdate={handleJSONUpdate}
                 setSelectedStep={setSelectedStep}
                 selectedStep={selectedStep}
                 showcaseJSON={showcaseJSON}

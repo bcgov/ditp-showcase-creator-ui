@@ -30,7 +30,7 @@ interface ProgressBarItem {
   iconDark: string;
 }
 
-interface OnboardingScreen {
+export interface OnboardingStep {
   screenId: string;
   title: string;
   text: string;
@@ -96,7 +96,7 @@ export interface Persona {
   credentials: Credentials;
   revocationInfo: RevocationInfo[];
   progressBar: ProgressBarItem[];
-  onboarding: OnboardingScreen[];
+  onboarding: OnboardingStep[];
   scenarios: Scenario[];
 }
 

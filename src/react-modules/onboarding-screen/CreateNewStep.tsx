@@ -1,6 +1,10 @@
 import "./onboarding-styles/onboarding-style.css";
 
-function CreateNewStep({ addNewStep }) {
+export const CreateNewStep = ({
+  addNewStep,
+}: {
+  addNewStep: (isBasic: boolean) => void;
+}) => {
   return (
     <>
       <div className="flex flex-col ">
@@ -46,5 +50,3 @@ function CreateNewStep({ addNewStep }) {
     </>
   );
 }
-
-export { CreateNewStep };

@@ -1,16 +1,23 @@
 import React from "react";
 import { useImmer } from "use-immer";
 import { LocalFileUpload } from "./LocalFileUpload";
+import {  OnboardingStep, ShowcaseJSON } from "../../types";
+import { isArrayProperty, updateOnboardingStepCredentials, updateOnboardingStepSingleValue } from "../../lib/json-helper";
 
-function BasicStepEdit({
+export const BasicStepEdit = ({
   selectedCharacter,
   setSelectedStep,
   selectedStep,
   showcaseJSON,
   setShowcaseJSON,
-  handleJSONUpdate,
-}) {
-  const [localJSON, setLocalJSON] = useImmer(
+}: {
+  selectedCharacter: number;
+  setSelectedStep: (step: number | null) => void;
+  selectedStep: number;
+  showcaseJSON: ShowcaseJSON;
+  setShowcaseJSON: (updater: (draft: ShowcaseJSON) => void) => void;
+}) => {
+  const [localJSON, setLocalJSON] = useImmer<OnboardingStep>(
     showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
   );
 
@@ -18,24 +25,39 @@ function BasicStepEdit({
     setLocalJSON(
       showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
     );
-  }, [selectedStep]);
+  }, [selectedStep, showcaseJSON.personas, selectedCharacter, setLocalJSON]);
 
-  function handleLocalUpdate(element, newValue) {
+  function handleLocalUpdate(key: keyof OnboardingStep, value: string) {
     setLocalJSON((draft) => {
-      draft[element] = newValue;
+      if (isArrayProperty(key)) {
+        if (key === "credentials") {
+          updateOnboardingStepCredentials(draft, [
+            ...(draft.credentials || []),
+            value,
+          ]);
+        }
+      } else {
+        updateOnboardingStepSingleValue(
+          draft,
+          key as keyof Omit<OnboardingStep, "credentials">,
+          value
+        );
+      }
     });
   }
 
-  function cancelSubmit(e) {
+  function cancelSubmit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     setSelectedStep(null);
   }
 
-  function handleSubmit(e) {
+  function handleSubmit() {
     try {
-      e.preventDefault();
-      setShowcaseJSON((json) => {
-        json.personas[selectedCharacter].onboarding[selectedStep] = localJSON;
+      setShowcaseJSON((draft) => {
+        if (selectedStep !== null) {
+          draft.personas[selectedCharacter].onboarding[selectedStep] =
+            localJSON;
+        }
       });
       setSelectedStep(null);
     } catch (e) {
@@ -49,7 +71,10 @@ function BasicStepEdit({
       <h3 className="text-4xl font-bold">Edit a Basic Step</h3>
       <hr className=""></hr>
 
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        handleSubmit();
+      }}>
         <div className="my-6">
           <label
             className="text-md font-bold"
@@ -77,7 +102,7 @@ function BasicStepEdit({
           </label>
           <textarea
             className="dark:text-dark-text dark:bg-dark-input bg-light-bg p-2 w-full rounded resize-none mt-3 border dark:border-dark-border "
-            rows="8"
+            rows={8}
             id={`${selectedStep}_text`}
             placeholder="Page Description"
             value={localJSON.text}
@@ -111,5 +136,3 @@ function BasicStepEdit({
     </div>
   );
 }
-
-export { BasicStepEdit };

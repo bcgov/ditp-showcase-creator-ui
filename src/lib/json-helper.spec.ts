@@ -6,9 +6,15 @@ import {
   updateCredentialProperty,
   addCredentialAttribute,
   removeCredentialAttribute,
-  getNestedValue
+  getNestedValue,
+  updateOnboardingStep,
+  isArrayProperty,
+  updateOnboardingStepSingleValue,
+  updateOnboardingStepCredentials,
+  removeOnboardingStepCredential,
+  addOnboardingStepCredential
 } from './json-helper';
-import { ShowcaseJSON, Credentials, ProofRequest } from '../types';
+import { ShowcaseJSON, Credentials, ProofRequest, OnboardingStep } from '../types';
 import { createDraft, WritableDraft } from 'immer';
 
 describe('json-helpers', () => {
@@ -373,4 +379,168 @@ describe('json-helpers', () => {
       expect(mockDraft.cred1.attributes).toHaveLength(1);
     });
   });
+});
+
+describe('Onboarding Step Helpers', () => {
+ describe('updateOnboardingStep', () => {
+   let mockDraft: OnboardingStep;
+
+   beforeEach(() => {
+     mockDraft = ({
+       screenId: 'screen1',
+       title: 'Test Title',
+       text: 'Test Text',
+       image: 'test.jpg',
+       credentials: ['cred1', 'cred2']
+     });
+   });
+
+   it('should update a string property', () => {
+     updateOnboardingStep(mockDraft, 'title', 'New Title');
+     expect(mockDraft.title).toBe('New Title');
+   });
+
+   it('should update credentials array when value is string', () => {
+     updateOnboardingStep(mockDraft, 'credentials', 'cred3');
+     expect(mockDraft.credentials).toEqual(['cred1', 'cred2', 'cred3']);
+   });
+
+   it('should initialize credentials array if undefined', () => {
+     const emptyDraft = ({
+       screenId: 'screen1',
+       title: 'Test',
+       text: 'Test',
+       credentials: []
+     });
+     
+     updateOnboardingStep(emptyDraft, 'credentials', 'cred1');
+     expect(emptyDraft.credentials).toEqual(['cred1']);
+   });
+
+   it('should handle optional properties', () => {
+     updateOnboardingStep(mockDraft, 'image', undefined);
+     expect(mockDraft.image).toBeUndefined();
+   });
+ });
+
+ describe('isArrayProperty', () => {
+   it('should return true for credentials property', () => {
+     expect(isArrayProperty('credentials')).toBe(true);
+   });
+
+   it('should return false for non-array properties', () => {
+     expect(isArrayProperty('title')).toBe(false);
+     expect(isArrayProperty('text')).toBe(false);
+     expect(isArrayProperty('screenId')).toBe(false);
+     expect(isArrayProperty('image')).toBe(false);
+   });
+ });
+
+ describe('updateOnboardingStepSingleValue', () => {
+   let mockDraft: OnboardingStep;
+
+   beforeEach(() => {
+     mockDraft = ({
+       screenId: 'screen1',
+       title: 'Test Title',
+       text: 'Test Text',
+       image: 'test.jpg',
+       credentials: []
+     });
+   });
+
+   it('should update string properties', () => {
+     updateOnboardingStepSingleValue(mockDraft, 'title', 'New Title');
+     expect(mockDraft.title).toBe('New Title');
+
+     updateOnboardingStepSingleValue(mockDraft, 'text', 'New Text');
+     expect(mockDraft.text).toBe('New Text');
+   });
+
+   it('should update optional properties', () => {
+     updateOnboardingStepSingleValue(mockDraft, 'image', 'new.jpg');
+     expect(mockDraft.image).toBe('new.jpg');
+   });
+ });
+
+ describe('updateOnboardingStepCredentials', () => {
+   let mockDraft: OnboardingStep;
+
+   beforeEach(() => {
+     mockDraft = ({
+       screenId: 'screen1',
+       title: 'Test',
+       text: 'Test',
+       credentials: ['cred1', 'cred2']
+     });
+   });
+
+   it('should update credentials array', () => {
+     updateOnboardingStepCredentials(mockDraft, ['cred3', 'cred4']);
+     expect(mockDraft.credentials).toEqual(['cred3', 'cred4']);
+   });
+
+   it('should handle empty array', () => {
+     updateOnboardingStepCredentials(mockDraft, []);
+     expect(mockDraft.credentials).toEqual([]);
+   });
+ });
+
+ describe('removeOnboardingStepCredential', () => {
+   let mockDraft: OnboardingStep;
+
+   beforeEach(() => {
+     mockDraft = ({
+       screenId: 'screen1',
+       title: 'Test',
+       text: 'Test',
+       credentials: ['cred1', 'cred2', 'cred3']
+     });
+   });
+
+   it('should remove an existing credential', () => {
+     removeOnboardingStepCredential(mockDraft, 'cred2');
+     expect(mockDraft.credentials).toEqual(['cred1', 'cred3']);
+   });
+
+   it('should handle non-existent credential', () => {
+     removeOnboardingStepCredential(mockDraft, 'non-existent');
+     expect(mockDraft.credentials).toEqual(['cred1', 'cred2', 'cred3']);
+   });
+ });
+
+ describe('addOnboardingStepCredential', () => {
+   let mockDraft: OnboardingStep;
+
+   beforeEach(() => {
+     mockDraft = ({
+       screenId: 'screen1',
+       title: 'Test',
+       text: 'Test',
+       credentials: ['cred1', 'cred2']
+     });
+   });
+
+   it('should add a new credential to existing array', () => {
+     addOnboardingStepCredential(mockDraft, 'cred3');
+     expect(mockDraft.credentials).toEqual(['cred1', 'cred2', 'cred3']);
+   });
+
+   it('should handle undefined credentials array', () => {
+     const emptyDraft = ({
+       screenId: 'screen1',
+       title: 'Test',
+       text: 'Test',
+       credentials: []
+     });
+     
+     addOnboardingStepCredential(emptyDraft, 'cred1');
+     expect(emptyDraft.credentials).toBeUndefined();
+   });
+
+   it('should handle duplicate credentials', () => {
+     addOnboardingStepCredential(mockDraft, 'cred1');
+     expect(mockDraft.credentials).toEqual(['cred1', 'cred2', 'cred1']);
+   });
+ });
 });

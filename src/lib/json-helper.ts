@@ -1,6 +1,6 @@
 
 import { WritableDraft } from "immer";
-import { Attribute, Credentials, OnboardingStep, ProofRequest, ShowcaseJSON } from "../types";
+import { Attribute, Credentials, ElementPath, OnboardingStep, ProofRequest, ShowcaseJSON } from "../types";
 
 /**
  * Retrieves a nested value from an object using an array of keys as a path
@@ -69,7 +69,7 @@ export const cleanProofRequestReferences = (
 ): void => {
   // Clean attributes
   Object.entries(proofRequest.attributes).forEach(([key, value]) => {
-    if (value.restrictions[0] === credential) {
+    if (value.restrictions && value.restrictions[0] === credential) {
       delete proofRequest.attributes[key];
     }
   });
@@ -251,4 +251,49 @@ export const addOnboardingStepCredential = (
   if (draft.credentials) {
     draft.credentials.push(credential);
   }
+};
+
+
+/**
+ * Updates a property in an object based on the element path
+ */
+export const updateProperty = <T extends UpdateableObject>(
+  draft: WritableDraft<T>,
+  path: ElementPath,
+  value: string
+): void => {
+  if (typeof path === 'string') {
+    (draft as any)[path] = value;
+  } else {
+    const [section, field] = path;
+    if (!draft[section]) {
+      (draft as any)[section] = {};
+    }
+    (draft[section] as any)[field] = value;
+  }
+};
+
+/**
+ * Type guard to check if a path is an array path
+ */
+export const isArrayPath = (path: ElementPath): path is [string, string] => {
+  return Array.isArray(path);
+};
+
+type UpdateableObject = {
+  [key: string]: any;
+  [key: number]: any;
+};
+/**
+ * Gets a value from an object based on the element path
+ */
+export const getPropertyValue = <T extends UpdateableObject>(
+  obj: T,
+  path: ElementPath
+): string | undefined => {
+  if (typeof path === 'string') {
+    return obj[path];
+  }
+  const [section, field] = path;
+  return obj[section]?.[field];
 };

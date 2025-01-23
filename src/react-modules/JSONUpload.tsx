@@ -5,7 +5,7 @@ import { ShowcaseJSON } from "../types";
 export const JSONUploadButton = ({
   setShowcaseJSON,
 }: {
-  setShowcaseJSON: React.Dispatch<React.SetStateAction<ShowcaseJSON>>;
+  setShowcaseJSON: (updater: (draft: ShowcaseJSON) => void) => void;
 }) => {
   const [showModal, setShowModal] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);

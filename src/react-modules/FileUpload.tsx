@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./../FileUpload.css";
+import { Persona } from "../types";
 
 export const FileUploadFull = ({
   text,
@@ -11,10 +12,10 @@ export const FileUploadFull = ({
 }: {
   text: string;
   personaIndex: number;
-  element: string[];
+  element: (keyof Persona)[];
   handleJSONUpdate: (
     personaIndex: number,
-    element: string[],
+    element: (keyof Persona)[],
     value: string | null
   ) => void;
 }) => {

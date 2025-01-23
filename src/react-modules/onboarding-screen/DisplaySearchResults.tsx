@@ -1,6 +1,6 @@
 import { ShowcaseJSON } from "../../types";
 
-export const DisplaySearchResults = ({
+export function DisplaySearchResults<T>({
   selectedCharacter,
   showcaseJSON,
   searchResults,
@@ -8,9 +8,9 @@ export const DisplaySearchResults = ({
 }: {
   selectedCharacter: number;
   showcaseJSON: ShowcaseJSON;
-  searchResults: any[];
-  addCredential: (result: any) => void;
-}) => {
+  searchResults: string[];
+  addCredential: (credential: T) => void;
+}) {
   const MAX_SEARCH_CREDENTIALS = 8;
 
   return (
@@ -23,7 +23,7 @@ export const DisplaySearchResults = ({
             className="basic-step dropdown-border w-full flex flex-row  text-sm mb-2 rounded"
             onClick={(e) => {
               e.preventDefault();
-              addCredential(result)
+              addCredential(result as T)
             }}
           >
             <div className="grid grid-cols-3 w-full py-2 bg-light-bg hover:bg-light-btn-hover dark:bg-dark-bg dark:hover:bg-dark-btn-hover text-light-text dark:text-dark-text">

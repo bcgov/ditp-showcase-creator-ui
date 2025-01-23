@@ -18,7 +18,9 @@ import { BasicStepEdit } from "../onboarding-screen/BasicStepEdit";
 import { IssueStepEdit } from "../onboarding-screen/IssueStepEdit";
 import { CreateNewStep } from "../onboarding-screen/CreateNewStep";
 import { NoSelection } from "../credentials/NoSelection";
-import { OnboardingStep, ShowcaseJSON } from "../../types";
+import { OnboardingStep, Persona, ShowcaseJSON } from "../../types";
+
+export type OnboardingStepState = "editing-basic" | "editing-issue" | "no-selection" | "creating-new";
 
 export const OnboardingPage = ({
   showcaseJSON,
@@ -31,7 +33,7 @@ export const OnboardingPage = ({
   setShowcaseJSON: (updater: (draft: ShowcaseJSON) => void) => void;
   handleJSONUpdate: (
     personaIndex: number,
-    element: string[],
+    element: (keyof Persona)[],
     value: string | null
   ) => void;
 }) => {
@@ -44,7 +46,7 @@ export const OnboardingPage = ({
   const [selectedStep, setSelectedStep] = useState<number | null>(null);
 
   // Handling state; what screen is shown, if not editing
-  const [stepState, setStepState] = useState("no-selection");
+  const [stepState, setStepState] = useState<OnboardingStepState>("no-selection");
 
   // Add new step
   const addNewStep = (isIssue: boolean) => {
@@ -83,6 +85,10 @@ export const OnboardingPage = ({
       setStepState("editing-basic");
     }
   }, [selectedStep, showcaseJSON.personas, selectedCharacter]);
+
+  const handleStepState = (state: OnboardingStepState) => {
+    setStepState(state);
+  };
 
   // When the JSON changes, re-collect the onboarding data.
   // This is primarily used for when a step is deleted.
@@ -275,13 +281,13 @@ export const OnboardingPage = ({
               </div>
             ) : null}
             {stepState === "editing-issue" && selectedStep !== null ? (
-              <IssueStepEdit
+              <IssueStepEdit<OnboardingStepState>
                 selectedCharacter={selectedCharacter}
                 setSelectedStep={setSelectedStep}
                 selectedStep={selectedStep}
                 showcaseJSON={showcaseJSON}
                 setShowcaseJSON={setShowcaseJSON}
-                setStepState={setStepState}
+                setStepState={handleStepState}
               />
             ) : null}
           </div>

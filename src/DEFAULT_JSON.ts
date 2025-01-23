@@ -145,6 +145,7 @@ export const DEFAULT_JSON = {
       },
       steps: [
         {
+          screenId: "testClothesOnlineStep1",
           type: "CONNET_AND_VERIFY",
           title: "Confirm the information to send",
           text: "BC Wallet will now ask you to confirm what to send. Notice how it will only share if the credential has expired, not even the expiry date itself gets shared. You don't have to share anything else for it to be trustable.",

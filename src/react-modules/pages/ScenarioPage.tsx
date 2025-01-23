@@ -1,5 +1,6 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import { useState, useEffect } from "react";
-import { DndContext, closestCenter, DragOverlay } from "@dnd-kit/core";
+import { DndContext, closestCenter } from "@dnd-kit/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -11,43 +12,59 @@ import {
 
 import {
   SortableContext,
-  arrayMove,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
 import { ScenarioStep } from "../scenario-screen/ScenarioStep";
-import { BasicStepEdit } from "../scenario-screen/BasicStepEdit";
+import BasicStepEdit from "../scenario-screen/BasicStepEdit";
 import { ProofStepEdit } from "../scenario-screen/ProofStepEdit";
 import { ChooseStepType } from "../scenario-screen/ChooseStepType";
 import { IssueStepEdit } from "../onboarding-screen/IssueStepEdit";
 import { ScenarioEdit } from "../scenario-screen/ScenarioEdit";
 import { NoSelection } from ".././credentials/NoSelection";
+import { Scenario, ScenarioStep as ScenarioStepType, ShowcaseJSON } from "../../types";
+
+type ScenarioStepState = "none-selected" | "adding-step" | "basic-step-edit" | "proof-step-edit" | "editing-scenario" | "editing-issue" | null;
 
 export const ScenarioPage = ({
   showcaseJSON,
   selectedCharacter,
   setShowcaseJSON,
-  handleJSONUpdate,
+}: {
+  showcaseJSON: ShowcaseJSON;
+  selectedCharacter: number;
+  setShowcaseJSON: (updater: (draft: ShowcaseJSON) => void) => void;
 }) => {
   // Storing the onboarding data into local state.
-  const [myScreens, setMyScreens] = useState(
+  const [myScreens, setMyScreens] = useState<Scenario[]>(
     showcaseJSON.personas[selectedCharacter].scenarios
   );
 
   // Handling state; what screen is shown, if not editing
-  const [state, setState] = useState("no-selection");
+  const [state, setState] = useState<ScenarioStepState>(null);
+  const [selectedScenario, setSelectedScenario] = useState<number | null>(null);
+  const [selectedStep, setSelectedStep] = useState<number | null>(null);
 
   // Add new step
-  const addNewStep = (e, type, scenarioIndex) => {
-    e.preventDefault();
-
+  const addNewStep = (type: string) => {
+    if (selectedScenario === null) return;
     if (type === "basic") {
       setShowcaseJSON((json) => {
         json.personas[selectedCharacter].scenarios[selectedScenario].steps.push(
           {
+            screenId: Date.now().toString(),
             type: "BASIC",
             title: "",
             text: "",
+            requestOptions: {
+              type: "BASIC",
+              title: "",
+              text: "",
+              proofRequest: {
+                attributes: {},
+                predicates: {},
+              },
+            },
           }
         );
       });
@@ -57,6 +74,7 @@ export const ScenarioPage = ({
       setShowcaseJSON((json) => {
         json.personas[selectedCharacter].scenarios[selectedScenario].steps.push(
           {
+            screenId: Date.now().toString(),
             type: "CONNET_AND_VERIFY",
             title: "Confirm the information to send",
             text: "",
@@ -98,72 +116,62 @@ export const ScenarioPage = ({
   // This is primarily used for when a step is deleted.
   useEffect(() => {
     setMyScreens(showcaseJSON.personas[selectedCharacter].scenarios);
-  }, [showcaseJSON.personas[selectedCharacter].scenarios]);
+  }, [showcaseJSON.personas, setMyScreens, selectedCharacter]);
 
   // Handles a step being removed.
-  const handleRemoveStep = (e, i) => {
-    if (selectedStep == i) setSelectedStep(null);
+  // const handleRemoveStep = (e, i) => {
+  //   if (selectedStep == i) setSelectedStep(null);
 
-    setShowcaseJSON((json) => {
-      json.personas[selectedCharacter].onboarding.splice(i, 1);
-    });
-  };
+  //   setShowcaseJSON((json) => {
+  //     json.personas[selectedCharacter].onboarding.splice(i, 1);
+  //   });
+  // };
 
   // Handles how draggable componants are re-arranged
-  const handleDragEnd = (event) => {
-    const { active, over } = event;
+  // const handleDragEnd = (event) => {
+  //   const { active, over } = event;
 
-    setMyScreens((myScreens) => {
-      const oldIndex = myScreens.findIndex(
-        (myScreen) => myScreen.screenId === active.id
-      );
-      const newIndex = myScreens.findIndex(
-        (myScreen) => myScreen.screenId === over.id
-      );
-      setSelectedStep(newIndex);
+  //   setMyScreens((myScreens) => {
+  //     const oldIndex = myScreens.findIndex(
+  //       (myScreen) => myScreen.screenId === active.id
+  //     );
+  //     const newIndex = myScreens.findIndex(
+  //       (myScreen) => myScreen.screenId === over.id
+  //     );
+  //     setSelectedStep(newIndex);
 
-      setShowcaseJSON((json) => {
-        json.personas[selectedCharacter].onboarding = arrayMove(
-          myScreens,
-          oldIndex,
-          newIndex
-        );
-      });
+  //     setShowcaseJSON((json) => {
+  //       json.personas[selectedCharacter].onboarding = arrayMove(
+  //         myScreens,
+  //         oldIndex,
+  //         newIndex
+  //       );
+  //     });
 
-      return arrayMove(myScreens, oldIndex, newIndex);
-    });
-  };
+  //     return arrayMove(myScreens, oldIndex, newIndex);
+  //   });
+  // };
 
-  const handleDragStart = (event) => {
-    const index = myScreens.findIndex(
-      (myScreen) => myScreen.screenId === event.active.id
-    );
-    setSelectedStep(index);
-  };
+  // const handleDragStart = (event) => {
+  //   const index = myScreens.findIndex(
+  //     (myScreen) => myScreen.screenId === event.active.id
+  //   );
+  //   setSelectedStep(index);
+  // };
 
-  //.
-  const [selectedScenario, setSelectedScenario] = useState(null);
-
-  //. Handling step state; what step is editable
-  const [selectedStep, setSelectedStep] = useState(null);
-
-  //.
-  const deleteScenario = (e, i) => {
-    e.preventDefault();
-    setSelectedStep("no-selection");
+  const deleteScenario = (i: number) => {
+    setSelectedStep(null);
 
     setShowcaseJSON((json) => {
       json.personas[selectedCharacter].scenarios.splice(i, 1);
     });
   };
 
-  //.
-  const addScenario = (e) => {
-    e.preventDefault();
-    let id = Date.now();
+  const addScenario = () => {
+    let id = Date.now().toString();
     setShowcaseJSON((json) => {
       json.personas[selectedCharacter].scenarios.push({
-        id: `${Date.now()}`,
+        id: id,
         name: "",
         overview: {
           title: "",
@@ -185,9 +193,12 @@ export const ScenarioPage = ({
     setState("editing-scenario");
   };
 
-  //.
-  const saveScenario = (e, newScenario) => {
-    e.preventDefault();
+  const setStepState = (state: ScenarioStepState) => {
+    setState(state);
+  };
+
+  const saveScenario = (newScenario: Scenario) => {
+    if (selectedScenario === null) return;
     setShowcaseJSON((json) => {
       json.personas[selectedCharacter].scenarios[selectedScenario] =
         newScenario;
@@ -195,10 +206,8 @@ export const ScenarioPage = ({
     setState("none-selected");
   };
 
-  //.
-  const deleteStep = (e, scenarioIndex, stepIndex) => {
-    e.preventDefault();
-    setSelectedStep("no-selection");
+  const deleteStep = (scenarioIndex: number, stepIndex: number) => {
+    setSelectedStep(null);
 
     setShowcaseJSON((json) => {
       json.personas[selectedCharacter].scenarios[scenarioIndex].steps.splice(
@@ -208,9 +217,8 @@ export const ScenarioPage = ({
     });
   };
 
-  //.
-  const saveStep = (e, newStep) => {
-    e.preventDefault();
+  const saveStep = (newStep: ScenarioStepType) => {
+    if (selectedScenario === null || selectedStep === null) return;
     setShowcaseJSON((json) => {
       json.personas[selectedCharacter].scenarios[selectedScenario].steps[
         selectedStep
@@ -244,7 +252,8 @@ export const ScenarioPage = ({
                 <button
                   className="text-sm add-attr-btn border bg-light-bg dark:bg-dark-bg hover:bg-light-btn-hover dark:hover:bg-dark-input font-bold py-2 px-4 rounded inline-flex items-center"
                   onClick={(e) => {
-                    addScenario(e);
+                    e.preventDefault();
+                    addScenario();
                   }}
                 >
                   <span>ADD SCENARIO </span>
@@ -254,7 +263,7 @@ export const ScenarioPage = ({
                 </button>
               </div>
             </div>
-            {myScreens.map((myScreen, scenarioIndex) => (
+            {myScreens.map((myScreen: Scenario, scenarioIndex: number) => (
               <div
                 key={scenarioIndex + "_" + Date.now()}
                 className=" button-dark rounded my-5 border dark:border-dark-border "
@@ -310,23 +319,21 @@ export const ScenarioPage = ({
                   // onDragEnd={handleDragEnd}
                 >
                   <SortableContext
-                    items={myScreen.steps}
+                    items={myScreen.steps.map((step) => step.screenId)}
                     strategy={verticalListSortingStrategy}
                   >
                     {myScreen.steps.map((step, index) => (
                       <ScenarioStep
                         key={index + "_" + Date.now()}
-                        selectedCharacter={selectedCharacter}
                         step={step}
                         setSelectedStep={setSelectedStep}
                         setSelectedScenario={setSelectedScenario}
                         scenarioIndex={scenarioIndex}
                         setState={setState}
                         stepIndex={index}
-                        scenarioIndex={scenarioIndex}
                         totalSteps={myScreen.steps.length}
-                        showcaseJSON={showcaseJSON}
-                        deleteStep={deleteStep}
+                        deleteStep={deleteStep} 
+                        selectedStep={selectedStep}
                       />
                     ))}
                   </SortableContext>
@@ -381,7 +388,10 @@ export const ScenarioPage = ({
                 <button
                   // className="mt-10 button-red font-bold rounded p-1 pl-3 m-2"
                   className="text-sm add-attr-btn button-red  text-dark-text m-4 hover:bg-light-btn-hover  font-bold py-2 px-4 rounded inline-flex items-center"
-                  onClick={(e, index) => deleteScenario(e, index + 1)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    deleteScenario(scenarioIndex);
+                  }}
                 >
                   DELETE SCENARIO
                   <span className="px-2">
@@ -397,11 +407,11 @@ export const ScenarioPage = ({
           id="editStep"
           className="w-3/5 two-column-col  bg-light-bg-secondary dark:bg-dark-bg-secondary text-light-text dark:text-dark-text p-6 rounded-md right-col"
         >
-          {state == "no-selection" || state == null ? (
+          {state === "none-selected" || state == null ? (
             <NoSelection Text={"Nothing Selected"} />
           ) : null}
 
-          {state == "editing-scenario" ? (
+          {state === "editing-scenario" && selectedScenario !== null ? (
             <ScenarioEdit
               selectedScenario={selectedScenario}
               saveScenario={saveScenario}
@@ -411,10 +421,12 @@ export const ScenarioPage = ({
             />
           ) : null}
 
-          {state == "basic-step-edit" &&
+          {state === "basic-step-edit" &&
+          selectedStep !== null &&
+          selectedScenario !== null &&
           showcaseJSON.personas[selectedCharacter].scenarios[selectedScenario]
             .steps[selectedStep].type === "BASIC" ? (
-            <BasicStepEdit
+            <BasicStepEdit<ScenarioStepState>
               selectedScenario={selectedScenario}
               selectedStep={selectedStep}
               saveStep={saveStep}
@@ -424,7 +436,9 @@ export const ScenarioPage = ({
             />
           ) : null}
 
-          {state == "basic-step-edit" &&
+          {state === "proof-step-edit" &&
+          selectedStep !== null &&
+          selectedScenario !== null &&
           showcaseJSON.personas[selectedCharacter].scenarios[selectedScenario]
             .steps[selectedStep].type === "CONNET_AND_VERIFY" ? (
             <ProofStepEdit
@@ -437,18 +451,17 @@ export const ScenarioPage = ({
               setShowcaseJSON={setShowcaseJSON}
             />
           ) : null}
-          {state == "editing-issue" ? (
-            <IssueStepEdit
+          {state ===  "editing-issue" && selectedStep !== null ? (
+            <IssueStepEdit<ScenarioStepState>
               selectedCharacter={selectedCharacter}
-              handleJSONUpdate={handleJSONUpdate}
               setSelectedStep={setSelectedStep}
               selectedStep={selectedStep}
               showcaseJSON={showcaseJSON}
               setShowcaseJSON={setShowcaseJSON}
-              setState={setState}
+              setStepState={setStepState}
             />
           ) : null}
-          {state == "adding-step" ? (
+          {state === "adding-step" ? (
             <ChooseStepType addNewStep={addNewStep} />
           ) : null}
         </div>

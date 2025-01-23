@@ -1,13 +1,32 @@
-import { useState, useEffect } from "react";
+/* eslint-disable jsx-a11y/alt-text */
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { ElementPath, ScenarioOverview } from "../../types";
+import { OnboardingStep } from "../../types";
+import { getPropertyValue } from "../../lib/json-helper";
 
-function LocalFileUpload({ text, element, handleLocalUpdate, localJSON }) {
-  const [preview, setPreview] = useState(localJSON[`${element}`]);
+interface LocalFileUploadProps {
+  text: string;
+  element: ElementPath;
+  handleLocalUpdate: (element: ElementPath, value: string) => void;
+  localJSON: OnboardingStep | ScenarioOverview;
+}
+
+export const LocalFileUpload = ({
+  text,
+  element,
+  handleLocalUpdate,
+  localJSON,
+}: LocalFileUploadProps) => {
+
+  const [preview, setPreview] = useState(() => 
+    getPropertyValue(localJSON, element)
+  );
 
   // To-Do: Impliment a feature to show the preview directly from the JSON data
 
-  const convertBase64 = (file) => {
+  const convertBase64 = (file: File) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
@@ -20,16 +39,17 @@ function LocalFileUpload({ text, element, handleLocalUpdate, localJSON }) {
     });
   };
 
-  const handleChange = async (newValue) => {
-    let objectUrl = null;
+  const handleChange = async (newValue: File | null) => {
+    if (newValue == null) return;
+    let objectUrl = undefined;
     if (newValue) {
       objectUrl = URL.createObjectURL(newValue);
       setPreview(objectUrl);
 
       const base64 = await convertBase64(newValue);
-      handleLocalUpdate(element, base64);
+      handleLocalUpdate(element, base64 as string);
     } else {
-      setPreview(null);
+      setPreview(undefined);
       handleLocalUpdate(element, "");
     }
   };
@@ -38,7 +58,7 @@ function LocalFileUpload({ text, element, handleLocalUpdate, localJSON }) {
     <div className="flex items-center flex-col justify-center w-full">
       <p className="w-full text-start text-white font-bold mb-2">{text}</p>
 
-      {preview == null ? null : (
+        {preview === undefined ? null : (
         <div className="relative w-full">
           <button
             className="bg-red-500 p-1 m-2 absolute text-black right-0 top-0 text-sm hover:bg-red-400"
@@ -51,7 +71,7 @@ function LocalFileUpload({ text, element, handleLocalUpdate, localJSON }) {
 
       <label
         htmlFor={`${element}`}
-        className="p-3 flex flex-col items-center justify-center w-full h-full bg-light-bg  hover:bg-light-btn-hover dark:bg-dark-input dark:hover:bg-dark-input-hover rounded-lg cursor-pointer border dark:border-dark-border hover:bg-light-bg"
+        className="p-3 flex flex-col items-center justify-center w-full h-full bg-light-bg dark:bg-dark-input dark:hover:bg-dark-input-hover rounded-lg cursor-pointer border dark:border-dark-border hover:bg-light-bg"
       >
         <div className="flex flex-col items-center h-full justify-center border rounded-lg border-dashed dark:border-dark-border p-2">
           {!preview ? null : (
@@ -76,11 +96,9 @@ function LocalFileUpload({ text, element, handleLocalUpdate, localJSON }) {
           id={`${element}`}
           type="file"
           className="hidden"
-          onChange={(e) => handleChange(e.target.files[0])}
+          onChange={(e) => handleChange(e.target.files?.[0] || null)}
         />
       </label>
     </div>
   );
-}
-
-export { LocalFileUpload };
+};

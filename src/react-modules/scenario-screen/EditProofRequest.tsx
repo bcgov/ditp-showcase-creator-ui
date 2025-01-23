@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./scenario-styles/scenario-styles.css";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import { ProofRequest, ShowcaseJSON } from "../../types";
 
-const EditProofRequest = (
+export const EditProofRequest = ({
   showcaseJSON,
   proofRequest,
   credentialName,
@@ -13,19 +14,27 @@ const EditProofRequest = (
   selectedScenario,
   selectedStep,
   setEditingCredentials,
+  editingCredentials,
   editingIndex
-) => {
-  const [localData, setLocalData] = useImmer(
-    showcaseJSON.showcaseJSON.personas[showcaseJSON.selectedCharacter]
-      .scenarios[showcaseJSON.selectedScenario].steps[showcaseJSON.selectedStep]
-      .requestOptions.proofRequest
-  );
+}: {
+  showcaseJSON: ShowcaseJSON;
+  proofRequest: ProofRequest;
+  credentialName: string;
+  selectedCharacter: number;
+  setShowcaseJSON: (updater: (draft: ShowcaseJSON) => void) => void;
+  selectedScenario: number;
+  selectedStep: number;
+  setEditingCredentials: (editingCredentials: number[]) => void;
+  editingCredentials: number[];
+  editingIndex: number;
+}) => {
 
-  const OnAttributeChange = (e, type, index, newValue) => {
-    e.preventDefault();
+  const [localData, setLocalData] = useImmer<ProofRequest>(proofRequest);
+
+  const onAttributeChange = (type: string, index: number, newValue: string) => {
     if (type === "attributes") {
       setLocalData((json) => {
-        json.attributes[showcaseJSON.credentialName].attributes[index] =
+        json.attributes[credentialName].attributes[index] =
           newValue;
       });
     } else if (type === "predicates") {
@@ -37,18 +46,16 @@ const EditProofRequest = (
     }
   };
 
-  const OnConditionValueChange = (e, index, newValue) => {
-    e.preventDefault();
+  const onConditionValueChange = (index: number, newValue: string) => {
     let keysArray = Object.keys(localData.predicates);
     let key = keysArray[index];
 
     setLocalData((json) => {
-      json.predicates[key].value = newValue;
+      json.predicates[key].value = Number(newValue);
     });
   };
 
-  const OnConditionTypeChange = (e, type, index, newValue) => {
-    e.preventDefault();
+  const onConditionTypeChange = (type: string, index: number, newValue: string) => {
     if (type === "predicates" && newValue !== "none") {
       // Switching predicate to predicate check
       let keysArray = Object.keys(localData.predicates);
@@ -67,14 +74,14 @@ const EditProofRequest = (
       });
 
       setLocalData((json) => {
-        json.attributes[showcaseJSON.credentialName].attributes.push(attribute);
+        json.attributes[credentialName].attributes.push(attribute);
       });
     } else if (type === "attributes" && newValue !== "none") {
       // Switching basic to predicate check
       let attribute =
-        localData.attributes[showcaseJSON.credentialName].attributes[index];
+        localData.attributes[credentialName].attributes[index];
       setLocalData((json) => {
-        json.attributes[showcaseJSON.credentialName].attributes.splice(
+        json.attributes[credentialName].attributes.splice(
           index,
           1
         );
@@ -84,44 +91,41 @@ const EditProofRequest = (
         json.predicates[Date.now()] = {
           name: attribute,
           type: newValue,
-          value: "",
-          restrictions: [showcaseJSON.credentialName],
+          value: 0,
+          restrictions: [credentialName],
         };
       });
     }
   };
 
-  const AddAttribute = (e) => {
-    e.preventDefault();
+  const addAttribute = () => {
     setLocalData((json) => {
-      if (json.attributes[showcaseJSON.credentialName]) {
+      if (json.attributes[credentialName]) {
         // If the credential is not blank/empty
-        json.attributes[showcaseJSON.credentialName].attributes.push(
-          showcaseJSON.showcaseJSON.personas[showcaseJSON.selectedCharacter]
-            .credentials[showcaseJSON.credentialName].attributes[0].name
+        json.attributes[credentialName].attributes.push(
+          showcaseJSON.personas[selectedCharacter]
+            .credentials[credentialName].attributes[0].name
         );
       } else {
-        json.attributes[showcaseJSON.credentialName] = {
+        json.attributes[credentialName] = {
           // if the credential IS blank/empty (adding the first attribute to this proof)
           attributes: [
-            showcaseJSON.showcaseJSON.personas[showcaseJSON.selectedCharacter]
-              .credentials[showcaseJSON.credentialName].attributes[0].name,
+            showcaseJSON.personas[selectedCharacter]
+              .credentials[credentialName].attributes[0].name,
           ],
           restrictions: [
-            showcaseJSON.showcaseJSON.personas[showcaseJSON.selectedCharacter]
-              .credentials[showcaseJSON.credentialName].name,
+            showcaseJSON.personas[selectedCharacter]
+              .credentials[credentialName].name,
           ],
         };
       }
     });
   };
 
-  const RemoveAttribute = (e, type, index) => {
-    e.preventDefault();
-
+  const removeAttribute = (type: string, index: number) => {
     if (type === "attributes")
       setLocalData((json) => {
-        json.attributes[showcaseJSON.credentialName].attributes.splice(
+        json.attributes[credentialName].attributes.splice(
           index,
           1
         );
@@ -135,22 +139,14 @@ const EditProofRequest = (
     }
   };
 
-  const SaveProofRequest = (e) => {
-    e.preventDefault();
+  const saveProofRequest = () => {
+    setEditingCredentials([...editingCredentials, editingIndex]);
 
-    // close the proof request edit window
-    showcaseJSON.setEditingCredentials((prev) => {
-      // let temp = prev.splice(showcaseJSON.editingIndex,1)
-      // console.log(temp)
-      // return temp
-      return [];
-    });
-
-    showcaseJSON.setShowcaseJSON((json) => {
-      json.personas[showcaseJSON.selectedCharacter].scenarios[
-        showcaseJSON.selectedScenario
-      ].steps[showcaseJSON.selectedStep].requestOptions.proofRequest =
-        localData;
+    setShowcaseJSON((json) => {
+        json.personas[selectedCharacter].scenarios[
+          selectedScenario
+        ].steps[selectedStep].requestOptions.proofRequest =
+          localData;
     });
   };
 
@@ -161,9 +157,9 @@ const EditProofRequest = (
         // SETTING ATTRIBUTE
         localData &&
         localData.attributes &&
-        localData.attributes[showcaseJSON.credentialName] &&
-        localData.attributes[showcaseJSON.credentialName].attributes
-          ? localData.attributes[showcaseJSON.credentialName].attributes.map(
+        localData.attributes[credentialName] &&
+        localData.attributes[credentialName].attributes
+          ? localData.attributes[credentialName].attributes.map(
               (attribute, index) => (
                 <div
                   className="flex flex-row gap-2 my-4 mx-4"
@@ -179,23 +175,23 @@ const EditProofRequest = (
                     <br />
                     <select
                       className="col-span-2 truncate dark:text-dark-text dark:bg-dark-input border dark:border-dark-border"
-                      id={showcaseJSON.credentialName + "_attributes"}
-                      name={showcaseJSON.credentialName + "_attributes"}
+                      id={credentialName + "_attributes"}
+                      name={credentialName + "_attributes"}
                       value={attribute}
-                      onChange={(e) =>
-                        OnAttributeChange(
-                          e,
+                      onChange={(e) =>{
+                        e.preventDefault()
+                        onAttributeChange(
                           "attributes",
                           index,
                           e.target.value
                         )
-                      }
+                      }}
                     >
                       {showcaseJSON
-                        ? showcaseJSON.showcaseJSON.personas[
-                            showcaseJSON.selectedCharacter
+                        ? showcaseJSON.personas[
+                            selectedCharacter
                           ].credentials[
-                            showcaseJSON.credentialName
+                            credentialName
                           ].attributes.map((attribute) => (
                             <option
                               key={attribute.name + "_" + Date.now()}
@@ -213,7 +209,7 @@ const EditProofRequest = (
                   <div className="">
                     <label
                       className="text-sm font-bold"
-                      htmlFor={showcaseJSON.credentialName + "_attributeValue"}
+                      htmlFor={credentialName + "_attributeValue"}
                     >
                       Attribute Value
                     </label>
@@ -221,15 +217,15 @@ const EditProofRequest = (
                       disabled
                       className="col-span-3 text-sm truncate dark:text-dark-text dark:bg-dark-input border dark:border-dark-border"
                       type="text"
-                      id={showcaseJSON.credentialName + "_attributeValue"}
-                      name={showcaseJSON.credentialName + "_attributeValue"}
+                      id={credentialName + "_attributeValue"}
+                      name={credentialName + "_attributeValue"}
                       value={
-                        showcaseJSON.showcaseJSON.personas[
-                          showcaseJSON.selectedCharacter
-                        ].credentials[showcaseJSON.credentialName].attributes[
-                          showcaseJSON.showcaseJSON.personas[
-                            showcaseJSON.selectedCharacter
-                          ].credentials[showcaseJSON.credentialName].attributes
+                        showcaseJSON.personas[
+                          selectedCharacter
+                        ].credentials[credentialName].attributes[
+                          showcaseJSON.personas[
+                            selectedCharacter
+                          ].credentials[credentialName].attributes
                             .map((e) => e.name)
                             .indexOf(attribute)
                         ].value
@@ -241,24 +237,24 @@ const EditProofRequest = (
                   <div className="">
                     <label
                       className="text-sm font-bold"
-                      htmlFor={showcaseJSON.credentialName + "_conditionType"}
+                      htmlFor={credentialName + "_conditionType"}
                     >
                       Condition
                     </label>
                     <br />
                     <select
                       className="col-span-2 truncate dark:text-dark-text dark:bg-dark-input border dark:border-dark-border"
-                      id={showcaseJSON.credentialName + "_conditionType"}
-                      name={showcaseJSON.credentialName + "_conditionType"}
+                      id={credentialName + "_conditionType"}
+                      name={credentialName + "_conditionType"}
                       value="none"
-                      onChange={(e) =>
-                        OnConditionTypeChange(
-                          e,
+                      onChange={(e) =>{
+                        e.preventDefault()
+                        onConditionTypeChange(
                           "attributes",
                           index,
                           e.target.value
                         )
-                      }
+                      }}
                     >
                       <option value="none">None</option>
                       <option value=">=">{`>=`}</option>
@@ -270,7 +266,7 @@ const EditProofRequest = (
                   <div className="">
                     <label
                       className="text-sm font-bold"
-                      htmlFor={showcaseJSON.credentialName + "_attributeValue"}
+                      htmlFor={credentialName + "_attributeValue"}
                     >
                       Condition Value
                     </label>
@@ -278,13 +274,16 @@ const EditProofRequest = (
                       disabled
                       className="col-span-3 text-sm truncate dark:text-dark-text dark:bg-dark-input border dark:border-dark-border"
                       type="text"
-                      id={showcaseJSON.credentialName + "_conditionValue"}
-                      name={showcaseJSON.credentialName + "_conditionValue"}
+                      id={credentialName + "_conditionValue"}
+                      name={credentialName + "_conditionValue"}
                     />
                   </div>
                   <button
                     className=" flex items-center text-md trash-button justify-center mt-5"
-                    onClick={(e) => RemoveAttribute(e, "attributes", index)}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      removeAttribute("attributes", index)
+                    }}
                   >
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
@@ -297,7 +296,7 @@ const EditProofRequest = (
       {/* <div className="">
                     <label
                       className="text-sm font-bold"
-                      htmlFor={showcaseJSON.credentialName + "_attributeValue"}
+                      htmlFor={credentialName + "_attributeValue"}
                     >
                       Condition Value
                     </label>
@@ -305,13 +304,13 @@ const EditProofRequest = (
                       className="col-span-3 text-sm truncate dark:text-dark-text dark:bg-dark-input border dark:border-dark-border"
                       disabled
                       type="text"
-                      id={showcaseJSON.credentialName + "_conditionValue"}
-                      name={showcaseJSON.credentialName + "_conditionValue"}
+                      id={credentialName + "_conditionValue"}
+                      name={credentialName + "_conditionValue"}
                     />
                   </div>
                   <button
                     className=" flex items-center text-md trash-button justify-center mt-5"
-                    onClick={(e) => RemoveAttribute(e, "predicates", index)}
+                    onClick={(e) => removeAttribute(e, "predicates", index)}
                   >
                     <FontAwesomeIcon icon={faTrash} />{" "}
                   </button>
@@ -325,7 +324,7 @@ const EditProofRequest = (
       {
         // SETTING ATTRIBUTE
         Object.entries(localData.predicates).map(([key, value], index) =>
-          value.restrictions[0] === showcaseJSON.credentialName ? (
+          value.restrictions[0] === credentialName ? (
             <div className="flex flex-row gap-2 my-4 mx-4" key={key}>
               <div className="">
                 <label
@@ -336,18 +335,19 @@ const EditProofRequest = (
                 </label>
                 <br />
                 <select
-                  id={showcaseJSON.credentialName + "_attributes"}
+                  id={credentialName + "_attributes"}
                   className="col-span-2 truncate dark:text-dark-text dark:bg-dark-input border dark:border-dark-border"
-                  name={showcaseJSON.credentialName + "_attributes"}
+                  name={credentialName + "_attributes"}
                   value={value.name}
-                  onChange={(e) =>
-                    OnAttributeChange(e, "predicates", index, e.target.value)
-                  }
+                  onChange={(e) =>{
+                    e.preventDefault()
+                    onAttributeChange("predicates", index, e.target.value)
+                  }}
                 >
                   {showcaseJSON
-                    ? showcaseJSON.showcaseJSON.personas[
-                        showcaseJSON.selectedCharacter
-                      ].credentials[showcaseJSON.credentialName].attributes.map(
+                    ? showcaseJSON.personas[
+                        selectedCharacter
+                      ].credentials[credentialName].attributes.map(
                         (attribute) => (
                           <option
                             key={attribute.name + "_" + Date.now()}
@@ -366,7 +366,7 @@ const EditProofRequest = (
               <div className="">
                 <label
                   className="text-sm"
-                  htmlFor={showcaseJSON.credentialName + "_attributeValue"}
+                  htmlFor={credentialName + "_attributeValue"}
                 >
                   Attribute Value
                 </label>
@@ -374,15 +374,15 @@ const EditProofRequest = (
                   disabled
                   type="text"
                   className="col-span-3 text-sm truncate dark:text-dark-text dark:bg-dark-input border dark:border-dark-border"
-                  id={showcaseJSON.credentialName + "_attributeValue"}
-                  name={showcaseJSON.credentialName + "_attributeValue"}
+                  id={credentialName + "_attributeValue"}
+                  name={credentialName + "_attributeValue"}
                   value={
-                    showcaseJSON.showcaseJSON.personas[
-                      showcaseJSON.selectedCharacter
-                    ].credentials[showcaseJSON.credentialName].attributes[
-                      showcaseJSON.showcaseJSON.personas[
-                        showcaseJSON.selectedCharacter
-                      ].credentials[showcaseJSON.credentialName].attributes
+                    showcaseJSON.personas[
+                      selectedCharacter
+                    ].credentials[credentialName].attributes[
+                      showcaseJSON.personas[
+                        selectedCharacter
+                      ].credentials[credentialName].attributes
                         .map((e) => e.name)
                         .indexOf(value.name)
                     ].value
@@ -395,24 +395,24 @@ const EditProofRequest = (
               <div className="">
                 <label
                   className="text-sm"
-                  htmlFor={showcaseJSON.credentialName + "_conditionType"}
+                  htmlFor={credentialName + "_conditionType"}
                 >
                   Condition
                 </label>
                 <br />
                 <select
                   className="col-span-2 truncate dark:text-dark-text dark:bg-dark-input border dark:border-dark-border"
-                  id={showcaseJSON.credentialName + "_conditionType"}
-                  name={showcaseJSON.credentialName + "_conditionType"}
+                  id={credentialName + "_conditionType"}
+                  name={credentialName + "_conditionType"}
                   value={value.type}
-                  onChange={(e) =>
-                    OnConditionTypeChange(
-                      e,
+                  onChange={(e) =>{
+                    e.preventDefault()
+                    onConditionTypeChange(
                       "predicates",
                       index,
                       e.target.value
                     )
-                  }
+                  }}
                 >
                   <option value="none">None</option>
                   <option value=">=">{`>=`}</option>
@@ -426,24 +426,28 @@ const EditProofRequest = (
               <div className="">
                 <label
                   className="text-sm"
-                  htmlFor={showcaseJSON.credentialName + "_attributeValue"}
+                  htmlFor={credentialName + "_attributeValue"}
                 >
                   Condition Value
                 </label>
                 <input
                   type="text"
                   className="col-span-3 text-sm truncate dark:text-dark-text dark:bg-dark-input border dark:border-dark-border"
-                  id={showcaseJSON.credentialName + "_conditionValue"}
-                  name={showcaseJSON.credentialName + "_conditionValue"}
+                  id={credentialName + "_conditionValue"}
+                  name={credentialName + "_conditionValue"}
                   value={value.value}
-                  onChange={(e) =>
-                    OnConditionValueChange(e, index, e.target.value)
-                  }
+                  onChange={(e) =>{
+                    e.preventDefault()
+                    onConditionValueChange(index, e.target.value)
+                  }}
                 />
               </div>
               <div
                 className="flex items-center text-md trash-button justify-center mt-5"
-                onClick={(e) => RemoveAttribute(e, "predicates", index)}
+                onClick={(e) => {
+                  e.preventDefault()
+                  removeAttribute("predicates", index)
+                }}
               >
                 <FontAwesomeIcon icon={faTrash} /> {/* Display trash icon */}
               </div>
@@ -454,7 +458,10 @@ const EditProofRequest = (
       <div className="w-full text-center my-4">
         <button
           className="text-xs add-attr-btn border hover:bg-light-btn-hover dark:hover:bg-dark-input font-bold py-2 px-4 rounded inline-flex items-center"
-          onClick={(e) => AddAttribute(e)}
+          onClick={(e) => {
+            e.preventDefault()
+            addAttribute()
+          }}
         >
           <span>ADD ATTRIBUTE </span>
           <span className="text-md ml-2">
@@ -464,7 +471,10 @@ const EditProofRequest = (
 
         <button
           className="text-xs mt-4 mb-4 mx-4 add-attr-btn border hover:bg-light-btn-hover dark:hover:bg-dark-input font-bold py-2 px-4 rounded inline-flex items-center"
-          onClick={(e) => SaveProofRequest(e)}
+          onClick={(e) => {
+            e.preventDefault()
+            saveProofRequest()
+          }}
         >
           SAVE
         </button>
@@ -472,5 +482,3 @@ const EditProofRequest = (
     </>
   );
 };
-
-export { EditProofRequest };

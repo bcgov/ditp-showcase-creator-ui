@@ -1,4 +1,4 @@
-import { ShowcaseJSON } from '../../types';
+import { ShowcaseJSON, Persona } from '../../types';
 import {CharacterScreen} from '../character-screen/CharacterScreen'
 
 export const CharacterPage = ({
@@ -14,7 +14,7 @@ export const CharacterPage = ({
   setSelectedCharacter: React.Dispatch<React.SetStateAction<number>>
   handleJSONUpdate: (
     personaIndex: number,
-    element: string[],
+    element: (keyof Persona)[],
     value: string | null
   ) => void;
 }) => {

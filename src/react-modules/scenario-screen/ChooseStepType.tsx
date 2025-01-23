@@ -1,4 +1,8 @@
-function ChooseStepType({ addNewStep }) {
+export const ChooseStepType = ({
+  addNewStep,
+}: {
+  addNewStep: (type: string) => void;
+}) => {
   return (
     <>
       <div className="flex flex-col">
@@ -10,7 +14,10 @@ function ChooseStepType({ addNewStep }) {
       <div className="py-5">
         <button
           className="basic-step flex flex-row justify-between items-center rounded p-5 my-3 w-full text-start bg-light-bg dark:bg-dark-bg hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover"
-          onClick={(e) => addNewStep(e, "basic")}
+          onClick={(e) => {
+            e.preventDefault();
+            addNewStep("basic");
+          }}
         >
           <p className="text-xl font-bold w-1/4">Basic</p>
           <div className="w-1/4">
@@ -25,7 +32,10 @@ function ChooseStepType({ addNewStep }) {
 
         <button
           className="basic-step flex flex-row justify-between items-center rounded p-5 my-3 w-full text-start bg-light-bg dark:bg-dark-bg hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover"
-          onClick={(e) => addNewStep(e, "proof")}
+          onClick={(e) => {
+            e.preventDefault();
+            addNewStep("proof");
+          }}
         >
           <p className="text-xl font-bold w-2/4">Connect & Verify</p>
           {/* <div className="w-1/4">
@@ -41,6 +51,4 @@ function ChooseStepType({ addNewStep }) {
       </div>
     </>
   );
-}
-
-export { ChooseStepType };
+};

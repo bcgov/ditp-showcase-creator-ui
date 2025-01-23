@@ -119,6 +119,7 @@ describe('json-helpers', () => {
           },
           scenarios: [{
             steps: [{
+              screenId: 'screen1',
               requestOptions: {
                 proofRequest: {
                   attributes: {

@@ -6,50 +6,59 @@ import { DisplaySearchResults } from "./../onboarding-screen/DisplaySearchResult
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { RequestOptions, ScenarioStep, ScenarioStepState, ShowcaseJSON } from "../../types";
 
-function ProofStepEdit({
+export const ProofStepEdit = ({
   selectedScenario,
   selectedStep,
   saveStep,
   showcaseJSON,
   selectedCharacter,
-  setState,
+  setState, 
   setShowcaseJSON,
-}) {
-  const [localData, setLocalData] = useImmer(
+}: {
+  selectedScenario: number;
+  selectedStep: number;
+  saveStep: (localData: ScenarioStep) => void;
+  showcaseJSON: ShowcaseJSON;
+  selectedCharacter: number;
+  setState: (state: ScenarioStepState) => void;
+  setShowcaseJSON: (updater: (draft: ShowcaseJSON) => void) => void;
+}) => {
+  const [localData, setLocalData] = useImmer<ScenarioStep>(
     showcaseJSON.personas[selectedCharacter].scenarios[selectedScenario].steps[
       selectedStep
     ]
   );
 
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState<string[]>([]);
 
   useEffect(() => {
     setLocalData(
       showcaseJSON.personas[selectedCharacter].scenarios[selectedScenario]
         .steps[selectedStep]
     );
-  }, [selectedStep, selectedScenario]);
+  }, [selectedStep, selectedScenario, showcaseJSON, selectedCharacter, setLocalData]);
 
-  const changeStep = (newValue, element) => {
-    setLocalData((json) => {
-      json[element] = newValue;
+  const changeStep = (newValue: string, element: keyof Omit<ScenarioStep, 'requestOptions'>) => {
+    setLocalData((draft) => {
+      draft[element] = newValue;
     });
   };
 
-  const changeRequestOption = (newValue, element) => {
-    setLocalData((json) => {
-      json.requestOptions[element] = newValue;
+  const changeRequestOption = (newValue: string, element: keyof Omit<RequestOptions, 'proofRequest'>) => {
+    setLocalData((draft) => {
+      draft.requestOptions[element] = newValue;
     });
   };
 
-  function searchCredential(e) {
+  function searchCredential(value: string) {
     setSearchResults([]);
 
-    if (!e.target.value) return;
+    if (!value) return;
 
     let credentials = showcaseJSON.personas[selectedCharacter].credentials;
-    let search = e.target.value.toUpperCase();
+    let search = value.toUpperCase();
 
     for (const credential in credentials) {
       if (
@@ -62,18 +71,19 @@ function ProofStepEdit({
   }
 
   // Add a new credential to the selected step
-  function addCredential(event, credential) {
-    event.preventDefault();
+  function addCredential(credential: string) {
     setSearchResults([]);
     if (
       localData.requestOptions.proofRequest &&
       !localData.requestOptions.proofRequest.attributes[credential]
     ) {
-      setLocalData((json) => {
-        json.requestOptions.proofRequest.attributes[credential] = [
-          showcaseJSON.personas[selectedCharacter].credentials[credential]
-            .attributes[0].name,
-        ];
+      setLocalData((draft) => {
+        draft.requestOptions.proofRequest.attributes[credential] = {
+          attributes: [
+            showcaseJSON.personas[selectedCharacter].credentials[credential]
+              .attributes[0].name,
+          ],
+        };
       });
     } else {
       console.log(localData.requestOptions);
@@ -81,11 +91,10 @@ function ProofStepEdit({
   }
 
   // Functionality for removing a credential from a proof step
-  function removeCredential(e, credential) {
-    e.preventDefault();
-
-    setLocalData((json) => {
-      delete json.requestOptions.proofRequest.attributes[credential];
+  function removeCredential(credential: string) {
+    setSearchResults([]);
+    setLocalData((draft) => {
+      delete draft.requestOptions.proofRequest.attributes[credential];
     });
 
     for (const property in localData.requestOptions.proofRequest.predicates) {
@@ -93,8 +102,8 @@ function ProofStepEdit({
         localData.requestOptions.proofRequest.predicates[property]
           .restrictions[0] === credential
       ) {
-        setLocalData((json) => {
-          delete json.requestOptions.proofRequest.predicates[property];
+        setLocalData((draft) => {
+          delete draft.requestOptions.proofRequest.predicates[property];
         });
       }
     }
@@ -106,7 +115,7 @@ function ProofStepEdit({
       <p className="text-4xl font-bold">Edit Proof Step</p>
       <hr />
 
-      <form onSubmit={null}>
+      <form>
         {/* TITLE */}
         <div className="my-6">
           <label className="text-md font-bold">Title</label>
@@ -125,9 +134,8 @@ function ProofStepEdit({
             <label className="text-md font-bold">{"Page Description"}</label>
             <textarea
               className="dark:text-dark-text dark:bg-dark-input bg-light-bg p-2 w-full rounded resize-none mt-3 border dark:border-dark-border"
-              rows="8"
+              rows={8}
               placeholder="Page Description"
-              type="text"
               value={localData.text}
               onChange={(e) => changeStep(e.target.value, "text")}
             />
@@ -157,7 +165,7 @@ function ProofStepEdit({
             className="dark:text-dark-text dark:bg-dark-input bg-light-bg mt-3 border dark:border-dark-border"
             type="text"
             placeholder="Title"
-            value={localData.requestOptions.title}
+            value={localData.requestOptions?.title}
             onChange={(e) => changeRequestOption(e.target.value, "title")}
           />
         </div>
@@ -166,10 +174,9 @@ function ProofStepEdit({
           <label className="text-md font-bold">{"Text"}</label>
           <textarea
             className="dark:text-dark-text dark:bg-dark-input bg-light-bg p-2 w-full rounded resize-none mt-3 border dark:border-dark-border "
-            rows="4"
+            rows={4}
             placeholder="Text"
-            type="text"
-            value={localData.requestOptions.text}
+            value={localData.requestOptions?.text}
             onChange={(e) => changeRequestOption(e.target.value, "text")}
           />
         </div>
@@ -185,7 +192,10 @@ function ProofStepEdit({
                   className="dark:text-dark-text dark:bg-dark-input border dark:border-dark-border  rounded pl-2 pr-10 mb-2 w-full bg-light-bg"
                   placeholder="ex. Student Card"
                   type="text"
-                  onChange={(e) => searchCredential(e)}
+                  onChange={(e) => {
+                    e.preventDefault()
+                    searchCredential(e.target.value)
+                  }}
                 />
                 <span className="absolute right-4 top-1/4">
                   <FontAwesomeIcon icon={faSearch} />
@@ -198,7 +208,6 @@ function ProofStepEdit({
           <DisplaySearchResults
             selectedCharacter={selectedCharacter}
             showcaseJSON={showcaseJSON}
-            localJSON={localData}
             searchResults={searchResults}
             addCredential={addCredential}
           />
@@ -228,13 +237,14 @@ function ProofStepEdit({
           <input
             type="submit"
             value="SAVE"
-            onClick={(e) => saveStep(e, localData)}
-            className="p-1  w-20 bg-light-bg-secondary hover:bg-light-btn-hover dark:hover:bg-dark-input border dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover rounded "
+            onClick={(e) =>{
+              e.preventDefault();
+              saveStep(localData);
+            }}
+            className="p-1  w-20 bg-light-bg-secondary hover:bg-light-btn-hover border dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover rounded "
           />
         </div>
       </form>
     </div>
   );
 }
-
-export { ProofStepEdit };

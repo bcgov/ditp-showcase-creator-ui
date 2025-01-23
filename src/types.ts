@@ -38,12 +38,12 @@ export interface OnboardingStep {
   credentials?: string[];
 }
 
-interface ProofRequestAttributes {
+export interface ProofRequestAttributes {
   attributes: string[];
-  restrictions: string[];
+  restrictions?: string[];
 }
 
-interface ProofRequestPredicates {
+export interface ProofRequestPredicates {
   name: string;
   type: string;
   value: number;
@@ -52,34 +52,35 @@ interface ProofRequestPredicates {
 
 export interface ProofRequest {
   attributes: {
-    [key: keyof Credentials]: ProofRequestAttributes;
+    [key: string]: ProofRequestAttributes;
   };
   predicates: {
     [key: string]: ProofRequestPredicates;
   };
 }
 
-interface RequestOptions {
+export interface RequestOptions {
   type: string;
   title: string;
   text: string;
   proofRequest: ProofRequest;
 }
 
-interface ScenarioStep {
+export interface ScenarioStep {
+  screenId: string;
   type: string;
   title: string;
   text: string;
   requestOptions: RequestOptions;
 }
 
-interface ScenarioOverview {
+export interface ScenarioOverview {
   title: string;
   text: string;
   image: string;
 }
 
-interface Scenario {
+export interface Scenario {
   id: string;
   name: string;
   overview: ScenarioOverview;
@@ -105,3 +106,6 @@ export interface ShowcaseJSON {
 }
 
 export type CredentialElement = [Exclude<keyof Credential, 'attributes'>] | ['attributes', keyof Attribute];
+export type ScenarioStepState = "none-selected" | "adding-step" | "basic-step-edit" | "proof-step-edit" | "editing-scenario" | "editing-issue" | null;
+
+export type ElementPath = string | [string, string];

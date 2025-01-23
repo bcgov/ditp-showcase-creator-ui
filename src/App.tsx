@@ -9,62 +9,39 @@ import { ScenarioPage } from "./react-modules/pages/ScenarioPage";
 import { DEFAULT_JSON } from "./DEFAULT_JSON";
 import { JSONPreview } from "./react-modules/JSONPreview";
 import { Footer } from "./react-modules/Footer";
+import { Persona, ShowcaseJSON } from "./types";
+
+export function updateJSONWithImmer(
+  setShowcaseJSON: (fn: (draft: ShowcaseJSON) => void) => void,
+  index: number,
+  path: (keyof Persona)[],
+  newValue: string | null
+): void {
+  setShowcaseJSON((draft) => {
+    let current: any = draft.personas[index];
+    for (let i = 0; i < path.length - 1; i++) {
+      current = current[path[i]];
+    }
+    current[path[path.length - 1]] = newValue;
+  });
+}
 
 function App() {
-  const [showcaseJSON, setShowcaseJSON] = useImmer({
-    personas: [DEFAULT_JSON],
+  const [showcaseJSON, setShowcaseJSON] = useImmer<ShowcaseJSON>({
+    personas: [
+      DEFAULT_JSON],
   });
 
   const [darkMode, setDarkMode] = useState(false);
   const [selectedCharacter, setSelectedCharacter] = useState(0);
   const [currentPage, setCurrentPage] = useState("character");
 
-  const changePage = (page) => {
+  const changePage = (page: string) => {
     setCurrentPage(page);
   };
 
-  function handleJSONUpdate(index, element, newValue) {
-    switch (element.length) {
-      case 6:
-        setShowcaseJSON((json) => {
-          json["personas"][index][element[0]][element[1]][element[2]][
-            element[3]
-          ][element[4]][element[5]] = newValue;
-        });
-        break;
-      case 5:
-        setShowcaseJSON((json) => {
-          json["personas"][index][element[0]][element[1]][element[2]][
-            element[3]
-          ][element[4]] = newValue;
-        });
-        break;
-      case 4:
-        setShowcaseJSON((json) => {
-          json["personas"][index][element[0]][element[1]][element[2]][
-            element[3]
-          ] = newValue;
-        });
-        break;
-      case 3:
-        setShowcaseJSON((json) => {
-          json["personas"][index][element[0]][element[1]][element[2]] =
-            newValue;
-        });
-        break;
-      case 2:
-        setShowcaseJSON((json) => {
-          json["personas"][index][element[0]][element[1]] = newValue;
-        });
-        break;
-      case 1:
-        setShowcaseJSON((json) => {
-          json["personas"][index][element[0]] = newValue;
-        });
-        break;
-      default:
-        return;
-    }
+  function handleJSONUpdate(index: number, element: (keyof Persona)[], newValue: string | null) {
+    updateJSONWithImmer(setShowcaseJSON, index, element, newValue);
   }
 
   return (
@@ -81,6 +58,7 @@ function App() {
             showcaseJSON={showcaseJSON}
             changePage={changePage}
             currentPage={currentPage}
+            setShowcaseJSON={setShowcaseJSON}
           />
           {currentPage === "character" && (
             <CharacterPage
@@ -111,7 +89,6 @@ function App() {
               showcaseJSON={showcaseJSON}
               selectedCharacter={selectedCharacter}
               setShowcaseJSON={setShowcaseJSON}
-              handleJSONUpdate={handleJSONUpdate}
             />
           )}
           {process.env.NODE_ENV === "development" && (

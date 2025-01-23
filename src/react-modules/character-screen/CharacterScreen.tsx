@@ -4,7 +4,7 @@ import { CharacterInfo } from "./CharacterInfo";
 import { CharacterEdit } from "./CharacterEdit";
 import { CharacterList } from "./CharacterList";
 import { useImmer } from "use-immer";
-import { ShowcaseJSON } from "../../types";
+import { Persona, ShowcaseJSON } from "../../types";
 
 export const CharacterScreen = ({
   showcaseJSON,
@@ -19,7 +19,7 @@ export const CharacterScreen = ({
   setSelectedCharacter: React.Dispatch<React.SetStateAction<number>>;
   handleJSONUpdate: (
     personaIndex: number,
-    element: string[],
+    element: (keyof Persona)[],
     value: string | null
   ) => void;
 }) => {
@@ -48,7 +48,6 @@ export const CharacterScreen = ({
   function handleLocalUpdate(element: string[], newValue: string) {
     setLocalJSON((draft) => {
       draft[element[0] as keyof typeof draft] = newValue;
-      return draft;
     });
   }
 

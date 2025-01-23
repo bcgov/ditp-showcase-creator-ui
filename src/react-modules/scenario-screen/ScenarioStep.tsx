@@ -3,24 +3,31 @@ import { CSS } from "@dnd-kit/utilities";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGripVertical,
-  faPen,
   faTrash,
   faDisplay,
-  faBuilding,
 } from "@fortawesome/free-solid-svg-icons";
+import { ScenarioStep as ScenarioStepType, ScenarioStepState } from "../../types";
 
 export const ScenarioStep = ({
   selectedStep,
   setSelectedStep,
   setSelectedScenario,
-  selectedCharacter,
   step,
   stepIndex,
   scenarioIndex,
   totalSteps,
-  showcaseJSON,
   deleteStep,
   setState,
+}: {
+  selectedStep: number | null;
+  setSelectedStep: (step: number | null) => void;
+  setSelectedScenario: (scenario: number | null) => void;
+  step: ScenarioStepType;
+  stepIndex: number;
+  scenarioIndex: number;
+  totalSteps: number;
+  deleteStep: (scenarioIndex: number, stepIndex: number) => void;
+  setState: (state: ScenarioStepState) => void;
 }) => {
   //Attribute we need to apply to the element we want to make sortable
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -59,7 +66,7 @@ export const ScenarioStep = ({
         <div className="px-3 flex flex-col w-full ">
           <p
             className={`text-sm ${
-              step.credentials ? "text-highlight font-bold" : ""
+              step.requestOptions ? "text-highlight font-bold" : ""
             }`}
           >
             {step.requestOptions ? "Proof Step" : "Basic Step"}
@@ -71,9 +78,9 @@ export const ScenarioStep = ({
           <div
             className={`w-full flex text-sm flex-col rounded  hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover
         ${
-          selectedStep == stepIndex - 1
+          selectedStep === stepIndex - 1
             ? "selected-item"
-            : "border border dark:border-dark-border "
+            : "border border-light-border dark:border-dark-border "
         }`}
           >
             <div className="w-full flex flex-row justify-items-center items-center rounded p-3">
@@ -118,8 +125,7 @@ export const ScenarioStep = ({
                       {Object.keys(
                         step.requestOptions.proofRequest.attributes
                       ).map((key) => (
-                        // <p key={key}>{key}</p>
-                        <div>
+                        <div key={key}>
                           <div className="border dark:border-dark-border  rounded p-2 my-2 mx-2">
                             {key}
                           </div>
@@ -136,7 +142,10 @@ export const ScenarioStep = ({
       </button>
       <button
         className="px-3 hover-red"
-        onClick={(e) => deleteStep(e, scenarioIndex, stepIndex)}
+        onClick={(e) => {
+          e.preventDefault();
+          deleteStep(scenarioIndex, stepIndex);
+        }}
       >
         <FontAwesomeIcon icon={faTrash} />
       </button>

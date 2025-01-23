@@ -1,34 +1,43 @@
-import { useEffect } from "react";
 import { useImmer } from "use-immer";
 import { LocalFileUpload } from "./LocalFileUpload";
+import { ElementPath, Scenario } from "../../types";
+import { ShowcaseJSON } from "../../types";
+import { ScenarioStepState } from "../../types";
+import { updateProperty } from "../../lib/json-helper";
+import { useEffect } from "react";
 
-function ScenarioEdit({
+interface ScenarioEditProps {
+  selectedScenario: number;
+  saveScenario: (newScenario: Scenario) => void;
+  showcaseJSON: ShowcaseJSON;
+  selectedCharacter: number;
+  setState: (state: ScenarioStepState) => void;
+}
+
+export const ScenarioEdit = ({
   selectedScenario,
   saveScenario,
   showcaseJSON,
   selectedCharacter,
   setState,
-}) {
-  const [localData, setLocalData] = useImmer(
+}: ScenarioEditProps) => {
+  const [localData, setLocalData] = useImmer<Scenario>(
     showcaseJSON.personas[selectedCharacter].scenarios[selectedScenario]
   );
 
-  const changeScenario = (newValue, element, secondElement) => {
-    if (!secondElement) {
-      setLocalData((json) => {
-        json[element] = newValue;
-      });
-    } else {
-      setLocalData((json) => {
-        json[element][secondElement] = newValue;
-      });
-    }
+  useEffect(() => {
+    setLocalData(showcaseJSON.personas[selectedCharacter].scenarios[selectedScenario]);
+  }, [selectedScenario, showcaseJSON.personas, selectedCharacter, setLocalData]);
+
+  const handleChange = (path: ElementPath, value: string) => {
+    setLocalData(draft => {
+      updateProperty(draft, path, value);
+    });
   };
 
-  const handleLocalUpdate = (element, newValue) => {
-    setLocalData((json) => {
-      json[element[0]][element[1]] = newValue;
-    });
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    saveScenario(localData);
   };
 
   return (
@@ -37,9 +46,9 @@ function ScenarioEdit({
       <p className="text-4xl font-bold">Edit Scenario</p>
       <hr />
 
-      <form onSubmit={null}>
-        {/* TITLE */}
-        <p className=" text-2xl font-bold mt-6">Overview</p>
+      <form onSubmit={handleSubmit}>
+        {/* Overview Section */}
+        <p className="text-2xl font-bold mt-6">Overview</p>
         <div className="my-6">
           <label className="text-sm font-bold">Scenario Name</label>
           <br />
@@ -48,7 +57,7 @@ function ScenarioEdit({
             type="text"
             placeholder="Scenario Name"
             value={localData.name}
-            onChange={(e) => changeScenario(e.target.value, "name")}
+            onChange={(e) => handleChange("name", e.target.value)}
           />
         </div>
 
@@ -60,95 +69,84 @@ function ScenarioEdit({
             type="text"
             placeholder="Page Title"
             value={localData.overview.title}
-            onChange={(e) =>
-              changeScenario(e.target.value, "overview", "title")
-            }
+            onChange={(e) => handleChange(["overview", "title"], e.target.value)}
           />
         </div>
 
         <div className="my-6">
-          <label className="text-sm font-bold">{"Page Description"}</label>
+          <label className="text-sm font-bold">Page Description</label>
           <textarea
             className="dark:text-dark-text border dark:border-dark-border dark:bg-dark-input p-2 w-full rounded resize-none mt-3"
-            rows="8"
+            rows={8}
             placeholder="Page Description"
-            type="text"
             value={localData.overview.text}
-            onChange={(e) => changeScenario(e.target.value, "overview", "text")}
+            onChange={(e) => handleChange(["overview", "text"], e.target.value)}
           />
         </div>
 
         <div className="my-6">
           <LocalFileUpload
-            text={"Image"}
+            text="Image"
             element={["overview", "image"]}
-            handleLocalUpdate={handleLocalUpdate}
+            handleLocalUpdate={handleChange}
             localJSON={localData.overview}
           />
         </div>
 
         <hr />
 
+        {/* Summary Section */}
         <div className="my-5">
           <p className="text-2xl font-bold mt-6">Summary</p>
-
           <div className="my-6">
-            <label className="text-md font-bold">
-              <span className="">Page Title</span>
-            </label>
+            <label className="text-md font-bold">Page Title</label>
             <br />
             <input
               className="dark:text-dark-text dark:bg-dark-input mt-2"
               type="text"
               placeholder="Page Title"
               value={localData.summary.title}
-              onChange={(e) =>
-                changeScenario(e.target.value, "summary", "title")
-              }
+              onChange={(e) => handleChange(["summary", "title"], e.target.value)}
             />
           </div>
         </div>
 
         <div className="my-6">
-          <label className="text-sm font-bold">{"Page Description"}</label>
+          <label className="text-sm font-bold">Page Description</label>
           <textarea
             className="dark:text-dark-text border dark:border-dark-border dark:bg-dark-input p-2 w-full rounded resize-none mt-3"
-            rows="8"
+            rows={8}
             placeholder="Page Description"
-            type="text"
             value={localData.summary.text}
-            onChange={(e) => changeScenario(e.target.value, "summary", "text")}
+            onChange={(e) => handleChange(["summary", "text"], e.target.value)}
           />
         </div>
 
         <LocalFileUpload
-          text={"Image"}
+          text="Image"
           element={["summary", "image"]}
-          handleLocalUpdate={handleLocalUpdate}
-          localJSON={localData.overview}
+          handleLocalUpdate={handleChange}
+          localJSON={localData.summary}
         />
 
+        {/* Action Buttons */}
         <div className="flex flex-cols mt-10 justify-end space-x-4 items-baseline">
           <button
-            onClick={(e) => {
-              e.preventDefault();
-              setState("none-selected");
-            }}
-            className=" w-20 hover:underline uppercase"
+            type="button"
+            onClick={() => setState("none-selected")}
+            className="w-20 hover:underline uppercase"
           >
             Cancel
           </button>
 
-          <input
+          <button
             type="submit"
-            value="SAVE"
-            onClick={(e) => saveScenario(e, localData)}
-            className="p-1  w-20 bg-light-bg-secondary hover:bg-light-btn-hover dark:hover:bg-dark-input border dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover rounded "
-          />
+            className="p-1 w-20 bg-light-bg-secondary hover:bg-light-btn-hover border dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover rounded"
+          >
+            SAVE
+          </button>
         </div>
       </form>
     </div>
   );
-}
-
-export { ScenarioEdit };
+};

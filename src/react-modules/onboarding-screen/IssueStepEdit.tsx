@@ -14,7 +14,7 @@ import {
   updateOnboardingStepSingleValue,
 } from "../../lib/json-helper";
 
-function IssueStepEdit({
+function IssueStepEdit<T>({
   selectedCharacter,
   setSelectedStep,
   selectedStep,
@@ -27,7 +27,7 @@ function IssueStepEdit({
   selectedStep: number;
   showcaseJSON: ShowcaseJSON;
   setShowcaseJSON: (updater: (draft: ShowcaseJSON) => void) => void;
-  setStepState: (state: string) => void;
+  setStepState: (state: T) => void;
 }) {
   // Seperately update a mini version of the json, containing only the fields for this page
   const [localJSON, setLocalJSON] = useImmer<OnboardingStep>(
@@ -70,7 +70,7 @@ function IssueStepEdit({
 
   function cancelSubmit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    setStepState("no-selection");
+    setStepState("no-selection" as T);
     setSelectedStep(null);
   }
 
@@ -104,7 +104,7 @@ function IssueStepEdit({
   // Function to handle saving/form submission
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setStepState("no-selection");
+    setStepState("no-selection" as T);
     setShowcaseJSON((json) => {
       json.personas[selectedCharacter].onboarding[selectedStep] = localJSON;
     });
@@ -156,7 +156,7 @@ function IssueStepEdit({
           <LocalFileUpload
             text={"Icon"}
             element={"image"}
-            handleLocalUpdate={(key, value) => handleLocalUpdate(key, value)}
+            handleLocalUpdate={handleLocalUpdate}
             localJSON={localJSON}
           />
         </div>

@@ -1,6 +1,6 @@
 import { LocalTextInput, LocalTextAreaInput } from "../LocalTextInput";
 import { FileUploadFull } from "../FileUpload";
-import { ShowcaseJSON } from "../../types";
+import { Persona, ShowcaseJSON } from "../../types";
 
 export const CharacterEdit = ({
   selectedCharacter,
@@ -11,7 +11,7 @@ export const CharacterEdit = ({
   selectedCharacter: number;
   handleJSONUpdate: ( 
     personaIndex: number,
-    element: string[],
+    element: (keyof Persona)[],
     value: string | null
   ) => void;
   handleLocalUpdate: (element: string[], newValue: string) => void;

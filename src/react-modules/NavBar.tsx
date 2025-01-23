@@ -17,7 +17,7 @@ export const NavBar = ({
   darkMode: boolean;
   setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
   showcaseJSON: ShowcaseJSON;
-  setShowcaseJSON: React.Dispatch<React.SetStateAction<ShowcaseJSON>>;
+  setShowcaseJSON: (updater: (draft: ShowcaseJSON) => void) => void;
   changePage: (page: string) => void;
   currentPage: string;
 }) => {

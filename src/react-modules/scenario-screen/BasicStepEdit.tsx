@@ -1,16 +1,23 @@
 import { useEffect } from "react";
 import { useImmer } from "use-immer";
-import { LocalFileUpload } from "./../onboarding-screen/LocalFileUpload";
+import { ScenarioStep, ShowcaseJSON } from "../../types";
 
-function BasicStepEdit({
+function BasicStepEdit<T>({
   selectedScenario,
   selectedStep,
   saveStep,
   showcaseJSON,
   selectedCharacter,
   setState,
+}: {
+  selectedScenario: number;
+  selectedStep: number;
+  saveStep: (newStep: ScenarioStep) => void;
+  showcaseJSON: ShowcaseJSON;
+  selectedCharacter: number;
+  setState: (state: T) => void;
 }) {
-  const [localData, setLocalData] = useImmer(
+  const [localData, setLocalData] = useImmer<ScenarioStep>(
     showcaseJSON.personas[selectedCharacter].scenarios[selectedScenario].steps[
       selectedStep
     ]
@@ -21,11 +28,11 @@ function BasicStepEdit({
       showcaseJSON.personas[selectedCharacter].scenarios[selectedScenario]
         .steps[selectedStep]
     );
-  }, [selectedStep, selectedScenario]);
+  }, [selectedStep, selectedScenario, selectedCharacter, showcaseJSON, setLocalData]);
 
-  const changeStep = (newValue, element) => {
-    setLocalData((json) => {
-      json[element] = newValue;
+  const changeStep = (newValue: string, element: keyof Omit<ScenarioStep, 'requestOptions'>) => {
+    setLocalData((draft) => {
+      draft[element] = newValue;
     });
   };
 
@@ -35,7 +42,7 @@ function BasicStepEdit({
       <p className="text-4xl font-bold">Edit Basic Step</p>
       <hr />
 
-      <form onSubmit={null}>
+      <form>
         {/* TITLE */}
         <div className="my-6">
           <label className="text-md font-bold">Title</label>
@@ -55,8 +62,7 @@ function BasicStepEdit({
             <textarea
               className="dark:text-dark-text dark:bg-dark-input bg-light-bg p-2 w-full rounded resize-none mt-3 border dark:border-dark-border"
               placeholder="Page Description"
-              rows="8"
-              type="text"
+              rows={8}
               value={localData.text}
               onChange={(e) => changeStep(e.target.value, "text")}
             />
@@ -67,7 +73,7 @@ function BasicStepEdit({
           <button
             onClick={(e) => {
               e.preventDefault();
-              setState("none-selected");
+              setState("none-selected" as T);
             }}
             className="p-1 w-20 hover:underline uppercase"
           >
@@ -77,8 +83,11 @@ function BasicStepEdit({
           <input
             type="submit"
             value="SAVE"
-            onClick={(e) => saveStep(e, localData)}
-            className="p-1  w-20 bg-light-bg-secondary hover:bg-light-btn-hover dark:hover:bg-dark-input border dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover rounded "
+            onClick={(e) => {
+              e.preventDefault();
+              saveStep(localData);
+            }}
+            className="p-1  w-20 bg-light-bg-secondary hover:bg-light-btn-hover border dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover rounded"
           />
         </div>
       </form>
@@ -86,4 +95,4 @@ function BasicStepEdit({
   );
 }
 
-export { BasicStepEdit };
+export default BasicStepEdit;

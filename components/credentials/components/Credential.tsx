@@ -1,6 +1,5 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { Credentials, ShowcaseJSON } from "../../../types";
+import { Credentials, ShowcaseJSON } from "@/types";
+import { Trash2 } from "lucide-react";
 
 export const Credential = ({
   issuerName,
@@ -38,8 +37,8 @@ export const Credential = ({
           <div
             className={`credential  dark:hover:bg-dark-input hover:bg-light-btn-hover hover:cursor-pointer rounded p-3 mt-3 ${
               selectedCredential === index
-                ? "selected-item"
-                : "credential-border"
+                ? "border-2 border-primary"
+                : "border-2 border-transparent"
             }`}
           >
             {/* Grid for the credential details */}
@@ -72,7 +71,7 @@ export const Credential = ({
             selectedCredential !== null && handleCredentialRemoval()
           }
         >
-          <FontAwesomeIcon icon={faTrash} /> {/* Display trash icon */}
+          <Trash2 className="cursor-pointer"/>
         </div>
       </div>
     </>

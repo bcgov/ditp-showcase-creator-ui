@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { NoSelection } from ".././credentials/NoSelection";
+import { NoSelection } from "../credentials/no-selection";
 import { EditProofRequest } from "./EditProofRequest";
 import { ProofRequestAttributes, ProofRequestPredicates, ScenarioStep, ShowcaseJSON } from "../../types";
 
@@ -52,7 +52,7 @@ export const DisplayStepCredentials = ({
     <>
       {hasCredentials ? (
         <div className="m-5 p-5 w-full h-60">
-          <NoSelection key="unique_key" Text="No Credentials Added" />
+          <NoSelection text="No Credentials Added" />
         </div>
       ) : (
         <div className="">

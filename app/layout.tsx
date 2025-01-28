@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
-
-import "./globals.css";
 import { NavBar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { JSONPreview } from "@/components/json-preview";
+import "./globals.css";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",

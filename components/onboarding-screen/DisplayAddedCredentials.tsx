@@ -1,9 +1,6 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { NoSelection } from "../credentials/NoSelection";
+import { NoSelection } from "../credentials/no-selection";
 import { OnboardingStep, ShowcaseJSON } from "../../types";
-
+import { Trash2 } from "lucide-react";
 export const DisplayAddedCredentials = ({
   selectedCharacter,
   showcaseJSON,
@@ -21,7 +18,7 @@ export const DisplayAddedCredentials = ({
     <>
       {localJSON.credentials && localJSON.credentials.length > 10 ? (
         <div className="m-5 p-5 w-full h-60">
-          <NoSelection key={"blahblahblah"} Text={"No Credentials Added"} />
+          <NoSelection text={"No Credentials Added"} />
         </div>
       ) : (
         <div className="">
@@ -71,7 +68,7 @@ export const DisplayAddedCredentials = ({
                   removeCredential(credential);
                 }}
               >
-                <FontAwesomeIcon icon={faTrash} />
+                <Trash2 className="cursor-pointer"/>
               </div>
             </div>
           ))}

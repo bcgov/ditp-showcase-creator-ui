@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { DndContext, closestCenter, DragOverlay, DragEndEvent, DragStartEvent } from "@dnd-kit/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,19 +20,13 @@ import { BasicStepEdit } from "../onboarding-screen/BasicStepEdit";
 import { IssueStepEdit } from "../onboarding-screen/IssueStepEdit";
 import { CreateNewStep } from "../onboarding-screen/CreateNewStep";
 import { NoSelection } from "../credentials/NoSelection";
-import { OnboardingStep, ShowcaseJSON } from "../../types";
+import { OnboardingStep } from "@/types";
+import { useShowcase } from "@/hooks/use-showcase";
 
 export type OnboardingStepState = "editing-basic" | "editing-issue" | "no-selection" | "creating-new";
 
-export const OnboardingPage = ({
-  showcaseJSON,
-  selectedCharacter,
-  setShowcaseJSON,
-}: {
-  showcaseJSON: ShowcaseJSON;
-  selectedCharacter: number;
-  setShowcaseJSON: (updater: (draft: ShowcaseJSON) => void) => void;
-}) => {
+export const OnboardingPage = () => {
+  const { showcaseJSON, selectedCharacter, setShowcaseJSON } = useShowcase();
   // Storing the onboarding data into local state.
   const [myScreens, setMyScreens] = useState<OnboardingStep[]>(
     showcaseJSON.personas[selectedCharacter].onboarding
@@ -67,18 +63,18 @@ export const OnboardingPage = ({
     setSelectedStep(showcaseJSON.personas[selectedCharacter].onboarding.length);
   };
 
-  // useEffect(() => {
-  //   if (selectedStep == null) {
-  //     setStepState("no-selection");
-  //   } else if (
-  //     showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
-  //       .credentials
-  //   ) {
-  //     setStepState("editing-issue");
-  //   } else {
-  //     setStepState("editing-basic");
-  //   }
-  // }, [selectedStep, showcaseJSON.personas, selectedCharacter]);
+  useEffect(() => {
+    if (selectedStep == null) {
+      setStepState("no-selection");
+    } else if (
+      showcaseJSON.personas[selectedCharacter].onboarding[selectedStep]
+        .credentials
+    ) {
+      setStepState("editing-issue");
+    } else {
+      setStepState("editing-basic");
+    }
+  }, [selectedStep, showcaseJSON.personas, selectedCharacter]);
 
   const handleStepState = (state: OnboardingStepState) => {
     setStepState(state);

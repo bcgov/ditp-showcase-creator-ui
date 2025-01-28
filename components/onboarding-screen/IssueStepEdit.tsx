@@ -1,18 +1,20 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { useImmer } from "use-immer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { LocalFileUpload } from "./LocalFileUpload";
-import { DisplaySearchResults } from "./DisplaySearchResults";
-import { DisplayAddedCredentials } from "./DisplayAddedCredentials";
-import { Credential, OnboardingStep, ShowcaseJSON } from "../../types";
+import { LocalFileUpload } from "@/components/onboarding-screen/LocalFileUpload";
+import { DisplaySearchResults } from "@/components/onboarding-screen/DisplaySearchResults";
+import { DisplayAddedCredentials } from "@/components/onboarding-screen/DisplayAddedCredentials";
+import { Credential, OnboardingStep, ShowcaseJSON } from "@/types";
 import {
   addOnboardingStepCredential,
   isArrayProperty,
   removeOnboardingStepCredential,
   updateOnboardingStepCredentials,
   updateOnboardingStepSingleValue,
-} from "../../lib/json-helper";
+} from "@/lib/json-helper";
 
 function IssueStepEdit<T>({
   selectedCharacter,

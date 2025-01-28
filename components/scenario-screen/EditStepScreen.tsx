@@ -5,7 +5,7 @@ import { useState } from "react";
 import BasicStepEdit from "@/components/scenario-screen/BasicStepEdit";
 import { ProofStepEdit } from "@/components/scenario-screen/ProofStepEdit";
 import { ChooseStepType } from "@/components/scenario-screen/ChooseStepType";
-import { IssueStepEdit } from "@/components/onboarding-screen/IssueStepEdit";
+import { IssueStepEdit } from "@/components/onboarding-screen/issue-step-edit";
 import { ScenarioEdit } from "@/components/scenario-screen/ScenarioEdit";
 import { NoSelection } from "@/components/credentials/no-selection";
 import { Scenario, ScenarioStep as ScenarioStepType } from "../../types";

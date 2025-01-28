@@ -37,8 +37,8 @@ export const NavBar = () => {
         />
       </div>
 
-      <div className="flex flex-col gap-4 w-145  justify-center items-center py-2">
-        <div className="flex w-145  justify-center items-center py-2 ">
+      <div className="flex flex-col gap-4 w-145 justify-center items-center py-2">
+        <div className="flex w-145 justify-center items-center py-2 ">
           <JSONUploadButton />
           <Link
             href="/"

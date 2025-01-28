@@ -82,7 +82,7 @@ export const CredentialsForm = () => {
   if (mode === "view" && existingCredential) {
     return (
       <div className="space-y-6">
-        <div className="flex justify-between mt-3">
+        <div className="flex justify-between">
           <div>
             <p className="text-foreground text-sm">Credentials</p>
             <h3 className="text-2xl font-bold text-foreground">

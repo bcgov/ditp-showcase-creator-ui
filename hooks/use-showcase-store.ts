@@ -43,7 +43,6 @@ export const useShowcaseStore = create<State & Actions>()(
     currentPage: "character",
     editMode: false,
 
-    // Actions
     setShowcaseJSON: (json) =>
       set((state) => {
         state.showcaseJSON = json;

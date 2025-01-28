@@ -1,5 +1,5 @@
-import { OnboardingScreen } from "@/components/onboarding-screen/OnboardingScreen";
-import { OnboardingSteps } from "@/components/onboarding-screen/OnboardingSteps";
+import { OnboardingScreen } from "@/components/onboarding-screen/onboarding-screen";
+import { OnboardingSteps } from "@/components/onboarding-screen/onboarding-steps";
 
 export default function Onboarding() {
   return (
@@ -8,7 +8,7 @@ export default function Onboarding() {
         <div className="w-2/5 rounded left-col text-light-text dark:text-dark-text">
           <div className="flex w-full">
             <div>
-              <h2 className="text-4xl font-bold text-slate-50">
+              <h2 className="text-4xl font-bold text-foreground">
                 Add your Steps
               </h2>
               <p className="w-full mt-3">

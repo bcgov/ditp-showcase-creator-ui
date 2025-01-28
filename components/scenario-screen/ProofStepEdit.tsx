@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useImmer } from "use-immer";
 import { DisplayStepCredentials } from "./DisplayStepCredentials";
-import { DisplaySearchResults } from "./../onboarding-screen/DisplaySearchResults";
+import { DisplaySearchResults } from "../onboarding-screen/display-search-results";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 

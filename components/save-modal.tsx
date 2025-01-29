@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { saveAs } from "file-saver";
-import { useShowcase } from "@/hooks/use-showcase";
+import { useShowcaseStore } from "@/hooks/use-showcase-store";
 
 export const SaveModal = ({
   setShowModal,
@@ -10,7 +10,7 @@ export const SaveModal = ({
   setShowModal: (showModal: boolean) => void;
 }) => {
   const [ filename, setFilename ] = useState("");
-  const { showcaseJSON } = useShowcase();
+  const { showcaseJSON } = useShowcaseStore();
 
   function saveJSON() {
     const cDate = new Date();

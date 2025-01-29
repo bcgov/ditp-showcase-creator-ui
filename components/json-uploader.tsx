@@ -2,11 +2,11 @@
 
 import { useState, useRef } from "react";
 import { ErrorModal } from "./error-modal";
-import { useShowcase } from "@/hooks/use-showcase";
+import { useShowcaseStore } from "@/hooks/use-showcase-store";
 
 export const JSONUploadButton = () => {
   const [showModal, setShowModal] = useState(false);
-  const { setShowcaseJSON } = useShowcase();
+  const { setShowcaseJSON } = useShowcaseStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {

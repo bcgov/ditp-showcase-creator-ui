@@ -85,9 +85,9 @@ export const LocalFileUpload = ({
 
           <p className=" text-center text-xs text-zinc-500 dark:text-zinc-400 lowercase">
             <span className="font-bold text-zinc-300 dark:text-zinc-200">
-              {t('file_upload_click_to_upload_label')}
+              {t('file_upload.click_to_upload_label')}
             </span>{" "}
-            {t('file_upload_drag_to_upload_label')}
+            {t('file_upload.drag_to_upload_label')}
           </p>
         </div>
 

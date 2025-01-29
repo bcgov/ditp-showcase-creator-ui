@@ -25,7 +25,7 @@ export const CredentialAttributesList = ({
         {/* Attribute count and "Add Attribute" button */}
         <div className="flex justify-between mb-3">
           <p className="text-sm font-bold">
-            {`${t('credentials_attributes_attributes_added')} `}
+            {`${t('credentials.attributes_attributes_added')} `}
             <span className="font-bold">
               {selectedCredential &&
               tempData[selectedCredential] &&
@@ -43,7 +43,7 @@ export const CredentialAttributesList = ({
               selectedCredential !== null && addAttribute(selectedCredential)
             }
           >
-            <span>{t('credentials_attributes_add_attribute_label')}</span>
+            <span>{t('credentials.attributes_add_attribute_label')}</span>
             <span className="text-md ml-2">
               <FontAwesomeIcon icon={faCirclePlus} />
             </span>

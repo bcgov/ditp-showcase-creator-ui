@@ -232,10 +232,10 @@ export const ScenarioPage = () => {
           <div className="flex w-full">
             <div>
               <h2 className="text-4xl font-bold text-slate-50">
-                {t('scenario_header_title')}
+                {t('scenario.header_title')}
               </h2>
               <p className="w-full mt-3">
-                {t('scenario_header_subtitle')}
+                {t('scenario.header_subtitle')}
               </p>
             </div>
           </div>
@@ -243,7 +243,7 @@ export const ScenarioPage = () => {
           <div className="mt-8">
             <div className="flex justify-between mb-4">
               <p className=" text-xl font-bold">
-                {t('scenario_scenarios_added_label', { scenarioCount: myScreens.length })}
+                {t('scenario.scenarios_added_label', { scenarioCount: myScreens.length })}
               </p>
               <div className="text-right">
                 <button
@@ -253,7 +253,7 @@ export const ScenarioPage = () => {
                     addScenario();
                   }}
                 >
-                  <span>{t('scenario_add_scenario_label')}</span>
+                  <span>{t('scenario.add_scenario_label')}</span>
                   <div className="text-md ml-2">
                     <FontAwesomeIcon icon={faCirclePlus} />
                   </div>
@@ -285,7 +285,7 @@ export const ScenarioPage = () => {
 
                 {/* Scenario Overview */}
                 <div className="">
-                  <p className="font-bold text-lg ml-5 mb-3">{t('scenario_overview_label')}</p>
+                  <p className="font-bold text-lg ml-5 mb-3">{t('scenario.overview_label')}</p>
                   <div className="mx-5 border dark:border-dark-border rounded">
                     <div className=" rounded p-3   flex flex-row">
                       <div className="highlight-text rounded p-1 mr-3">
@@ -350,7 +350,7 @@ export const ScenarioPage = () => {
                       setSelectedScenario(scenarioIndex);
                     }}
                   >
-                    <span>{t('scenario_add_step_label')}</span>
+                    <span>{t('scenario.add_step_label')}</span>
                     <div className="text-md ml-2">
                       <FontAwesomeIcon icon={faCirclePlus} />
                     </div>
@@ -359,7 +359,7 @@ export const ScenarioPage = () => {
 
                 {/* Scenario Summary */}
                 <div className="">
-                  <p className="font-bold text-lg ml-5 mb-3">{t('scenario_summary_label')}</p>
+                  <p className="font-bold text-lg ml-5 mb-3">{t('scenario.summary_label')}</p>
                   <div className="mx-5 border dark:border-dark-border rounded">
                     <div className="rounded p-3  flex flex-row">
                       <div className="highlight-text rounded p-1 mr-3">
@@ -392,7 +392,7 @@ export const ScenarioPage = () => {
                     deleteScenario(scenarioIndex);
                   }}
                 >
-                  {t('scenario_delete_scenario_label')}
+                  {t('scenario.delete_scenario_label')}
                   <span className="px-2">
                     <FontAwesomeIcon icon={faTrash} />
                   </span>
@@ -407,7 +407,7 @@ export const ScenarioPage = () => {
           className="w-3/5 two-column-col  bg-light-bg-secondary dark:bg-dark-bg-secondary text-light-text dark:text-dark-text p-6 rounded-md right-col"
         >
           {state === "none-selected" || state == null ? (
-            <NoSelection Text={t('scenario_no_scenario_selected_message')} />
+            <NoSelection Text={t('scenario.no_scenario_selected_message')} />
           ) : null}
 
           {state === "editing-scenario" && selectedScenario !== null ? (

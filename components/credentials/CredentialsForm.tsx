@@ -22,9 +22,9 @@ export const CredentialsForm = ({
       {/* Title and Header */}
       <div className="flex justify-between mt-3">
         <div>
-          <p className="text-slate-100 text-sm">{t('credentials_add_header_subtitle')}</p>
+          <p className="text-slate-100 text-sm">{t('credentials.add_header_subtitle')}</p>
           <h3 className="text-4xl font-bold text-slate-50">
-              {t('credentials_add_header_title')}
+              {t('credentials.add_header_title')}
           </h3>
         </div>
       </div>
@@ -33,14 +33,14 @@ export const CredentialsForm = ({
       {/* Credential Name Input */}
       <div className="my-6">
         <label className="text-md font-bold" htmlFor="cred_name">
-            {t('credentials_add_credential_name_label')}
+            {t('credentials.add_credential_name_label')}
         </label>
         <br />
         <input
           type="text"
           id="cred_name"
           name="cred_name"
-          placeholder={t('credentials_add_credential_name_placeholder')}
+          placeholder={t('credentials.add_credential_name_placeholder')}
           value={
             selectedCredential !== null &&
             tempData[selectedCredential]
@@ -55,14 +55,14 @@ export const CredentialsForm = ({
       {/* Issuer Name Input */}
       <div className="my-6">
         <label className="text-md font-bold" htmlFor="issuer_name">
-            {t('credentials_add_issuer_name_label')}
+            {t('credentials.add_issuer_name_label')}
         </label>
         <br />
         <input
           type="text"
           id="issuer_name"
           name="issuer_name"
-          placeholder={t('credentials_add_issuer_name_placeholder')}
+          placeholder={t('credentials.add_issuer_name_placeholder')}
           value={
             selectedCredential !== null &&
             tempData[selectedCredential]
@@ -76,7 +76,7 @@ export const CredentialsForm = ({
 
       {/* Add Attributes Section */}
       <div className="my-3">
-        <label className="font-bold text-md">{t('credentials_add_add_attributes_label')}</label>
+        <label className="font-bold text-md">{t('credentials.add_add_attributes_label')}</label>
         <CredentialAttributesList
           tempData={tempData}
           selectedCredential={selectedCredential}

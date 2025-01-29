@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./scenario-styles/scenario-styles.css";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
-import { ProofRequest, ShowcaseJSON } from "../../types";
+import { ProofRequest, ShowcaseJSON } from "@/types";
 
 export const EditProofRequest = ({
   showcaseJSON,

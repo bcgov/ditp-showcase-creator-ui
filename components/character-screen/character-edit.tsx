@@ -48,9 +48,9 @@ export const CharacterEdit = () => {
       >
         <div className="flex justify-between mt-3">
           <div>
-            <p className="text-foreground text-sm">{t('character_edit_header_subtitle')}</p>
+            <p className="text-foreground text-sm">{t('character.edit_header_subtitle')}</p>
             <h3 className="text-2xl font-bold text-foreground">
-              {t('character_edit_header_title')}
+              {t('character.edit_header_title')}
             </h3>
           </div>
         </div>
@@ -58,41 +58,41 @@ export const CharacterEdit = () => {
 
         <div className="grid grid-cols-2 gap-2 my-6">
           <FormTextInput
-            label={t('character_edit_name_label')}
+            label={t('character.edit_name_label')}
             name="name"
             register={form.register}
             error={form.formState.errors.name?.message}
-            placeholder={t('character_edit_name_placeholder')}
+            placeholder={t('character.edit_name_placeholder')}
           />
 
           <FormTextInput
-            label={t('character_edit_role_label')}
+            label={t('character.edit_role_label')}
             name="type"
             register={form.register}
             error={form.formState.errors.type?.message}
-            placeholder={t('character_edit_role_placeholder')}
+            placeholder={t('character.edit_role_placeholder')}
           />
         </div>
 
         <div className="my-6">
           <FormTextArea
-            label={t('character_edit_description_label')}
+            label={t('character.edit_description_label')}
             name="description"
             register={form.register}
             error={form.formState.errors.description?.message}
-            placeholder={t('character_edit_description_placeholder')}
+            placeholder={t('character.edit_description_placeholder')}
           />
         </div>
 
         <div className="grid grid-cols-2 gap-2 my-6">
           <FileUploadFull
-            text={t('character_edit_headshot_image_label')}
+            text={t('character.edit_headshot_image_label')}
             element={"headshot_image"}
             handleJSONUpdate={updateCharacterImage}
           />
 
           <FileUploadFull
-            text={t('character_edit_full_body_image_label')}
+            text={t('character.edit_full_body_image_label')}
             element={"body_image"}
             handleJSONUpdate={updateCharacterImage}
           />
@@ -104,13 +104,13 @@ export const CharacterEdit = () => {
             onClick={handleCancel}
             variant="outline"
           >
-            {t('action_cancel_camel_label')}
+            {t('action.cancel_camel_label')}
           </Button>
           <Button
             type="submit"
             disabled={!form.formState.isValid || !form.formState.isDirty}
           >
-            {t('action_save_camel_label')}
+            {t('action.save_camel_label')}
           </Button>
         </div>
       </form>

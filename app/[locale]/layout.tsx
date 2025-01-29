@@ -8,8 +8,8 @@ import { NavBar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { JSONPreview } from "@/components/json-preview";
 import i18nConfig from "@/i18n.config";
-import TranslationsProvider from "@/providers/TranslationsProvider";
-import initTranslations from "@/app/i18n";
+import InternationalizationProvider from "@/providers/InternationalizationProvider";
+import {PageParams} from "@/types";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,17 +32,14 @@ export function generateStaticParams() {
   return i18nConfig.locales.map(locale => ({ locale }));
 }
 
-const i18nNamespaces = ['common', 'credentials'] // TODO move // TODO enum
-
 export default async function RootLayout({
   children,
   params,
 }: Readonly<{
   children: ReactNode;
-  params: Promise<{ locale: string }>; // TODO type
+  params: PageParams;
 }>) {
   const { locale } = await params
-  const { resources } = await initTranslations({ locale, namespaces: i18nNamespaces })
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -55,18 +52,14 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <TranslationsProvider
-              resources={resources}
-              locale={locale}
-              namespaces={i18nNamespaces}
-          >
+          <InternationalizationProvider locale={locale}>
             <div className="min-h-screen bg-light-bg dark:bg-dark-bg text-light-text">
-              <NavBar />
+              <NavBar locale={locale}/>
               {children}
               {process.env.NODE_ENV === "development" && <JSONPreview />}
-              <Footer />
+              <Footer locale={locale}/>
             </div>
-          </TranslationsProvider>
+          </InternationalizationProvider>
         </ThemeProvider>
       </body>
     </html>

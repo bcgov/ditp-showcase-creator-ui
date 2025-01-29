@@ -81,8 +81,8 @@ export const FileUploadFull = ({
           )}
 
           <p className=" text-center text-xs lowercase">
-            <span className="font-bold ">{t('file_upload_click_to_upload_label')}</span>{" "}
-            {t('file_upload_drag_to_upload_label')}
+            <span className="font-bold ">{t('file_upload.click_to_upload_label')}</span>{" "}
+            {t('file_upload.drag_to_upload_label')}
           </p>
         </div>
 

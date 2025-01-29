@@ -25,15 +25,15 @@ export const CharacterInfo = () => {
     <>
       <div className="flex ">
         <div className="m-3">
-          <p className="text-foreground text-sm">{t('character_info_header_subtitle')}</p>
+          <p className="text-foreground text-sm">{t('character.info_header_subtitle')}</p>
           <h3 className="text-2xl font-bold text-foreground">
-            {t('character_info_header_title')}
+            {t('character.info_header_title')}
           </h3>
         </div>
 
         <div className="ml-auto">
           <Button variant="outline" onClick={() => setEditMode(true)}>
-            {t('action_edit_camel_label')}
+            {t('action.edit_camel_label')}
           </Button>
           {
             // Conditionally render the remove button. There must always be one character.
@@ -45,7 +45,7 @@ export const CharacterInfo = () => {
                  handleRemoveCharacter(selectedCharacter)
                 }}
               >
-                {t('action_delete_camel_label')}
+                {t('action.delete_camel_label')}
               </button>
             ) : null
           }
@@ -54,20 +54,20 @@ export const CharacterInfo = () => {
 
       <div className="p-3 m-3 bg-light-bg dark:bg-dark-bg rounded">
         <p>
-          <span className="font-bold">{t('character_info_name_label')}</span>{" "}
+          <span className="font-bold">{t('character.info_name_label')}</span>{" "}
           {showcaseJSON["personas"][selectedCharacter].name}
         </p>
         <p>
-          <span className="font-bold">{t('character_info_role_label')}</span>{" "}
+          <span className="font-bold">{t('character.info_role_label')}</span>{" "}
           {showcaseJSON["personas"][selectedCharacter].type}
         </p>
-        <p className="font-bold mt-6">{t('character_info_description_label')}</p>
+        <p className="font-bold mt-6">{t('character.info_description_label')}</p>
         <p>{showcaseJSON["personas"][selectedCharacter].description}</p>
       </div>
 
       <div className="grid grid-cols-2">
         <div className="p-2 m-2">
-          <p>{t('character_info_headshot_image_label')}</p>
+          <p>{t('character.info_headshot_image_label')}</p>
           <div className=" p-6 m-1 flex justify-center items-center bg-light-bg dark:bg-dark-bg ">
             {!showcaseJSON.personas[selectedCharacter].headshot_image ? (
               <FontAwesomeIcon icon={faUser} />
@@ -83,7 +83,7 @@ export const CharacterInfo = () => {
         </div>
 
         <div className="p-2 m-2">
-          <p>{t('character_info_full_body_image_label')}</p>
+          <p>{t('character.info_full_body_image_label')}</p>
           <div className="p-6 m-1 flex justify-center items-center bg-light-bg dark:bg-dark-bg">
             {!showcaseJSON.personas[selectedCharacter].body_image ? (
               <FontAwesomeIcon icon={faUser} />

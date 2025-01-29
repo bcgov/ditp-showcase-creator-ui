@@ -57,7 +57,7 @@ export const SortableStep = ({
             myScreen.credentials ? "text-highlight font-bold" : ""
           }`}
         >
-          {myScreen.credentials ? t('onboarding_step_issue_step_label') : t('onboarding_step_basic_step_label')}
+          {myScreen.credentials ? t('onboarding.step_issue_step_label') : t('onboarding.step_basic_step_label')}
         </p>
         <p className="font-bold">
           {myScreen.title} - ({stepIndex} / {totalSteps})
@@ -92,7 +92,7 @@ export const SortableStep = ({
           {myScreen.text.length > MAX_CHARS ? (
             <p>
               {myScreen.text.slice(0, MAX_CHARS)}...{" "}
-              <span className="font-bold">{t('action_see_more_label')}</span>
+              <span className="font-bold">{t('action.see_more_label')}</span>
             </p>
           ) : (
             myScreen.text

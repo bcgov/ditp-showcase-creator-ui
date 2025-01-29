@@ -1,10 +1,11 @@
 import { CharacterForm } from "@/components/character-screen/character-form";
 import { CharacterList } from "@/components/character-screen/character-list";
-import initTranslations from "@/app/i18n";
+import initInternationalization from "@/app/i18n";
+import {PageParams} from '@/types';
 
-async function HomePage({ params }: { params: Promise<{ locale: string }>}) { // TODO create type
+async function HomePage({ params }: { params: PageParams }) {
   const { locale } = await params
-  const { t } = await initTranslations({ locale, namespaces: ['common'] }) // TODO i do not want this here
+  const { t } = await initInternationalization({ locale })
 
   return (
       <div className="min-h-screen bg-light-bg dark:bg-dark-bg text-light-text">
@@ -15,17 +16,17 @@ async function HomePage({ params }: { params: Promise<{ locale: string }>}) { //
                 <div className="flex justify-between">
                   <div>
                     <h3 className="text-4xl font-bold text-foreground">
-                      {t('character_header_title')}
+                      {t('character.header_title')}
                     </h3>
                     <p className="text-foreground mt-3">
-                      {t('character_header_subtitle')}
+                      {t('character.header_subtitle')}
                     </p>
                   </div>
                 </div>
 
                 <div className="mt-8">
                   <div className="flex justify-between mb-4">
-                    <h3 className="text-xl font-bold">{t('character_your_character_label')}</h3>
+                    <h3 className="text-xl font-bold">{t('character.your_character_label')}</h3>
                   </div>
 
                   <CharacterList />

@@ -71,7 +71,7 @@ export const ScenarioStep = ({
               step.requestOptions ? "text-highlight font-bold" : ""
             }`}
           >
-            {step.requestOptions ? t('scenario_step_proof_step_label') : t('scenario_step_basic_step_label')}
+            {step.requestOptions ? t('scenario.step_proof_step_label') : t('scenario.step_basic_step_label')}
           </p>
           <p className="font-bold">
             {step.title} - ({stepIndex + 1} / {totalSteps})
@@ -101,7 +101,7 @@ export const ScenarioStep = ({
               {step.text && step.text.length > MAX_CHARS ? (
                 <p>
                   {step.text.slice(0, MAX_CHARS)}...{" "}
-                  <span className="font-bold">{t('action_see_more_label')}</span>
+                  <span className="font-bold">{t('action.see_more_label')}</span>
                 </p>
               ) : (
                 step.text
@@ -121,7 +121,7 @@ export const ScenarioStep = ({
                         .length
                     } */}
                     <p className="text-sm m-1 mt-2 font-bold">
-                      {t('scenario_requested_credentials_label')}
+                      {t('scenario.requested_credentials_label')}
                     </p>
                     <div className="flex items-center align-center justify-center">
                       {Object.keys(

@@ -48,7 +48,7 @@ export const CredentialAttribute = ({
       <input
         type="text"
         name={`name`}
-        placeholder={t('credentials_attribute_name_placeholder')}
+        placeholder={t('credentials.attribute_name_placeholder')}
         value={attributeName || ""}
         onChange={(e) => handleChange(["attributes", "name"], index, e.target.value)}
         className="col-span-3 text-sm truncate dark:text-dark-text dark:bg-dark-input border dark:border-dark-border"
@@ -59,7 +59,7 @@ export const CredentialAttribute = ({
         type="text"
         name={`value`}
         placeholder={
-          selectedOption === "dateint" ? "YYYY-MM-DD" : t('credentials_attribute_value_placeholder')
+          selectedOption === "dateint" ? "YYYY-MM-DD" : t('credentials.attribute_value_placeholder')
         }
         value={attributeValue || ""}
         onChange={(e) => handleChange(["attributes", "value"], index, e.target.value)}

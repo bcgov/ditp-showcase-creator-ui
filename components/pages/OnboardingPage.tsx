@@ -147,10 +147,10 @@ export const OnboardingPage = ({
             <div className="flex w-full">
               <div>
                 <h2 className="text-4xl font-bold text-slate-50">
-                  {t('onboarding_header_title')}
+                  {t('onboarding.header_title')}
                 </h2>
                 <p className="w-full mt-3">
-                  {t('onboarding_header_subtitle')}
+                  {t('onboarding.header_subtitle')}
                 </p>
               </div>
             </div>
@@ -158,7 +158,7 @@ export const OnboardingPage = ({
             <div className="mt-8">
               <div className="flex justify-between mb-4">
                 <p className="font-bold text-xl">
-                  {t('onboarding_steps_added_label', { stepCount: myScreens.length })}
+                  {t('onboarding.steps_added_label', { stepCount: myScreens.length })}
                 </p>
                 <div className="">
                   <button
@@ -168,7 +168,7 @@ export const OnboardingPage = ({
                     }}
                     className="text-sm add-attr-btn border bg-light-bg dark:bg-dark-bg hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover font-bold py-2 px-4 rounded inline-flex items-center"
                   >
-                    <span>{t('onboarding_add_step_label')}</span>
+                    <span>{t('onboarding.add_step_label')}</span>
                     <div className="text-md ml-2">
                       <FontAwesomeIcon icon={faCirclePlus} />
                     </div>
@@ -243,7 +243,7 @@ export const OnboardingPage = ({
                 }}
                 className="text-sm add-attr-btn border bg-light-bg dark:bg-dark-bg hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover font-bold py-2 px-4 rounded inline-flex items-center"
               >
-                <span>{t('onboarding_add_step_label')}</span>
+                <span>{t('onboarding.add_step_label')}</span>
                 <div className="text-md ml-2">
                   <FontAwesomeIcon icon={faCirclePlus} />
                 </div>
@@ -259,7 +259,7 @@ export const OnboardingPage = ({
           >
             {stepState === "no-selection" ? (
               <div className="">
-                <NoSelection Text={t('onboarding_no_step_selected_message')} />
+                <NoSelection Text={t('onboarding.no_step_selected_message')} />
               </div>
             ) : null}
             {stepState === "creating-new" ? (

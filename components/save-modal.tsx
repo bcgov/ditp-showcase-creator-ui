@@ -3,14 +3,17 @@
 import { useState } from "react";
 import { saveAs } from "file-saver";
 import { useShowcase } from "@/hooks/use-showcase";
+import { useTranslation } from "react-i18next";
 
 export const SaveModal = ({
   setShowModal,
 }: {
   setShowModal: (showModal: boolean) => void;
 }) => {
+  const { t } = useTranslation()
   const [ filename, setFilename ] = useState("");
   const { showcaseJSON } = useShowcase();
+
 
   function saveJSON() {
     const cDate = new Date();
@@ -33,20 +36,17 @@ export const SaveModal = ({
             {/*header*/}
             <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 dark:border-gray-600 rounded-t">
               <h3 className="text-3xl font-semibold text-gray-900 dark:text-gray-100">
-                Save Showcase
+                {t('showcase.header_title')}
               </h3>
             </div>
 
             {/*body*/}
             <div className="relative p-6 flex-auto">
               <p className="text-gray-800 dark:text-gray-200 text-lg leading-relaxed">
-                Enter the name for this showcase below. <br />
+                {t('showcase.title')}<br />
               </p>
-              <p className="italic text-gray-500 dark:text-gray-400">
-                Today&apos;s date will be appended to the filename for versioning.
-              </p>
-              <p className="italic text-gray-500 dark:text-gray-400 mb-4">
-                ex. MyShowcase_v3_(mm-dd-yyyy)
+              <p className="italic text-gray-500 dark:text-gray-400 mb-4" style={{whiteSpace: 'pre-wrap'}}>
+                {t('showcase.subtitle')}
               </p>
               <input
                 className="border p-1 w-full text-dark-text dark:text-light-text"
@@ -66,7 +66,7 @@ export const SaveModal = ({
                 type="button"
                 onClick={() => setShowModal(false)}
               >
-                Cancel
+                {t('action.cancel_camel_label')}
               </button>
 
               {/* SAVE BUTTON */}
@@ -74,7 +74,7 @@ export const SaveModal = ({
                 onClick={saveJSON}
                 className="p-1 w-20 bg-light-bg-secondary hover:bg-light-btn-hover border dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover rounded "
               >
-                Save
+                {t('action.save_camel_label')}
               </button>
             </div>
           </div>

@@ -3,8 +3,9 @@ import { SaveButton } from "./save-button";
 import { JSONUploadButton } from "./json-uploader";
 import { NavBarButton } from "./navbar-button";
 import Link from "next/link";
+import {i18nInstance2} from '@/app/i18n';
 
-export const NavBar = () => {
+export const NavBar = async () => {
   return (
     <div className="flex justify-between px-8 dark:text-dark-text">
       <div className="flex justify-center items-center">
@@ -41,7 +42,7 @@ export const NavBar = () => {
             href="/"
             className="mx-4 inline-flex items-center gap-x-1.5 rounded-md border bg-light-bg dark:bg-dark-b dark:hover:bg-dark-btn-hover px-2.5 py-1.5 text-sm font-semibold text-black shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
           >
-            RESET
+            {i18nInstance2.t('action_reset_label')}
           </Link>
         </div>
 

@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { Credentials, ShowcaseJSON } from "../../../types";
+import { Credentials, ShowcaseJSON } from "@/types";
+import { useTranslation } from "react-i18next";
 
 export const Credential = ({
   issuerName,
@@ -21,6 +22,7 @@ export const Credential = ({
   handleCredentialRemoval: () => void;
   showcaseJSON: ShowcaseJSON;
 }) => {
+  const { t } = useTranslation()
   // Check if there's only one credential
   const isSingleCredential =
     Object.keys(showcaseJSON.personas[0].credentials).length === 1;
@@ -56,8 +58,7 @@ export const Credential = ({
               {/* Right column with attribute count */}
               <div className="flex justify-center items-center align-center">
                 <p className="border border-black border-solid rounded-lg text-xs py-1 px-2 flex justify-center items-center dark:border-white">
-                  {" "}
-                  Attributes: {attributeCount}
+                  {t('credentials_item_attribute_count_label', { attributeCount })}
                 </p>
               </div>
             </div>

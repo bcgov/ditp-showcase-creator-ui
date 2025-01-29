@@ -5,7 +5,8 @@ import {
   faGripVertical,
   faDisplay,
 } from "@fortawesome/free-solid-svg-icons";
-import { OnboardingStep, ShowcaseJSON } from "../../types";
+import { OnboardingStep, ShowcaseJSON } from "@/types";
+import { useTranslation } from "react-i18next";
 
 export const SortableStep = ({
   selectedStep,
@@ -24,6 +25,7 @@ export const SortableStep = ({
   totalSteps: number;
   showcaseJSON: ShowcaseJSON;
 }) => {
+  const { t } = useTranslation()
   //Attribute we need to apply to the element we want to make sortable
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({
@@ -55,7 +57,7 @@ export const SortableStep = ({
             myScreen.credentials ? "text-highlight font-bold" : ""
           }`}
         >
-          {myScreen.credentials ? "Issue Step" : "Basic Step"}
+          {myScreen.credentials ? t('onboarding_step_issue_step_label') : t('onboarding_step_basic_step_label')}
         </p>
         <p className="font-bold">
           {myScreen.title} - ({stepIndex} / {totalSteps})
@@ -90,7 +92,7 @@ export const SortableStep = ({
           {myScreen.text.length > MAX_CHARS ? (
             <p>
               {myScreen.text.slice(0, MAX_CHARS)}...{" "}
-              <span className="font-bold">see more</span>
+              <span className="font-bold">{t('action_see_more_label')}</span>
             </p>
           ) : (
             myScreen.text

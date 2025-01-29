@@ -18,7 +18,8 @@ import { BasicStepEdit } from "../onboarding-screen/BasicStepEdit";
 import { IssueStepEdit } from "../onboarding-screen/IssueStepEdit";
 import { CreateNewStep } from "../onboarding-screen/CreateNewStep";
 import { NoSelection } from "../credentials/NoSelection";
-import { OnboardingStep, ShowcaseJSON } from "../../types";
+import { OnboardingStep, ShowcaseJSON } from "@/types";
+import { useTranslation } from "react-i18next";
 
 export type OnboardingStepState = "editing-basic" | "editing-issue" | "no-selection" | "creating-new";
 
@@ -31,6 +32,7 @@ export const OnboardingPage = ({
   selectedCharacter: number;
   setShowcaseJSON: (updater: (draft: ShowcaseJSON) => void) => void;
 }) => {
+  const { t } = useTranslation()
   // Storing the onboarding data into local state.
   const [myScreens, setMyScreens] = useState<OnboardingStep[]>(
     showcaseJSON.personas[selectedCharacter].onboarding
@@ -145,10 +147,10 @@ export const OnboardingPage = ({
             <div className="flex w-full">
               <div>
                 <h2 className="text-4xl font-bold text-slate-50">
-                  Add your Steps
+                  {t('onboarding_header_title')}
                 </h2>
                 <p className="w-full mt-3">
-                  Add pages below to create the onboarding steps.
+                  {t('onboarding_header_subtitle')}
                 </p>
               </div>
             </div>
@@ -156,7 +158,7 @@ export const OnboardingPage = ({
             <div className="mt-8">
               <div className="flex justify-between mb-4">
                 <p className="font-bold text-xl">
-                  Steps Added: ({myScreens.length})
+                  {t('onboarding_steps_added_label', { stepCount: myScreens.length })}
                 </p>
                 <div className="">
                   <button
@@ -166,7 +168,7 @@ export const OnboardingPage = ({
                     }}
                     className="text-sm add-attr-btn border bg-light-bg dark:bg-dark-bg hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover font-bold py-2 px-4 rounded inline-flex items-center"
                   >
-                    <span>ADD STEP</span>
+                    <span>{t('onboarding_add_step_label')}</span>
                     <div className="text-md ml-2">
                       <FontAwesomeIcon icon={faCirclePlus} />
                     </div>
@@ -241,7 +243,7 @@ export const OnboardingPage = ({
                 }}
                 className="text-sm add-attr-btn border bg-light-bg dark:bg-dark-bg hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover font-bold py-2 px-4 rounded inline-flex items-center"
               >
-                <span>ADD STEP</span>
+                <span>{t('onboarding_add_step_label')}</span>
                 <div className="text-md ml-2">
                   <FontAwesomeIcon icon={faCirclePlus} />
                 </div>
@@ -257,7 +259,7 @@ export const OnboardingPage = ({
           >
             {stepState === "no-selection" ? (
               <div className="">
-                <NoSelection Text={"No Step Selected"} />
+                <NoSelection Text={t('onboarding_no_step_selected_message')} />
               </div>
             ) : null}
             {stepState === "creating-new" ? (

@@ -26,10 +26,12 @@ import { NoSelection } from ".././credentials/NoSelection";
 import { Scenario, ScenarioStep as ScenarioStepType } from "../../types";
 import { useShowcase } from "@/hooks/use-showcase";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 type ScenarioStepState = "none-selected" | "adding-step" | "basic-step-edit" | "proof-step-edit" | "editing-scenario" | "editing-issue" | null;
 
 export const ScenarioPage = () => {
+  const { t } = useTranslation()
   const { showcaseJSON, setShowcaseJSON, selectedCharacter } = useShowcase();
   // Storing the onboarding data into local state.
   const [myScreens, setMyScreens] = useState<Scenario[]>(
@@ -230,11 +232,10 @@ export const ScenarioPage = () => {
           <div className="flex w-full">
             <div>
               <h2 className="text-4xl font-bold text-slate-50">
-                Create Scenarios
+                {t('scenario_header_title')}
               </h2>
               <p className="w-full mt-3">
-                Add pages below to create your scenarios screens and connecting
-                steps.
+                {t('scenario_header_subtitle')}
               </p>
             </div>
           </div>
@@ -242,7 +243,7 @@ export const ScenarioPage = () => {
           <div className="mt-8">
             <div className="flex justify-between mb-4">
               <p className=" text-xl font-bold">
-                Scenarios Added: ({myScreens.length})
+                {t('scenario_scenarios_added_label', { scenarioCount: myScreens.length })}
               </p>
               <div className="text-right">
                 <button
@@ -252,7 +253,7 @@ export const ScenarioPage = () => {
                     addScenario();
                   }}
                 >
-                  <span>ADD SCENARIO </span>
+                  <span>{t('scenario_add_scenario_label')}</span>
                   <div className="text-md ml-2">
                     <FontAwesomeIcon icon={faCirclePlus} />
                   </div>
@@ -284,7 +285,7 @@ export const ScenarioPage = () => {
 
                 {/* Scenario Overview */}
                 <div className="">
-                  <p className="font-bold text-lg ml-5 mb-3">Overview</p>
+                  <p className="font-bold text-lg ml-5 mb-3">{t('scenario_overview_label')}</p>
                   <div className="mx-5 border dark:border-dark-border rounded">
                     <div className=" rounded p-3   flex flex-row">
                       <div className="highlight-text rounded p-1 mr-3">
@@ -329,7 +330,7 @@ export const ScenarioPage = () => {
                         setState={setState}
                         stepIndex={index}
                         totalSteps={myScreen.steps.length}
-                        deleteStep={deleteStep} 
+                        deleteStep={deleteStep}
                         selectedStep={selectedStep}
                       />
                     ))}
@@ -349,7 +350,7 @@ export const ScenarioPage = () => {
                       setSelectedScenario(scenarioIndex);
                     }}
                   >
-                    <span>ADD STEP </span>
+                    <span>{t('scenario_add_step_label')}</span>
                     <div className="text-md ml-2">
                       <FontAwesomeIcon icon={faCirclePlus} />
                     </div>
@@ -358,7 +359,7 @@ export const ScenarioPage = () => {
 
                 {/* Scenario Summary */}
                 <div className="">
-                  <p className="font-bold text-lg ml-5 mb-3">Summary</p>
+                  <p className="font-bold text-lg ml-5 mb-3">{t('scenario_summary_label')}</p>
                   <div className="mx-5 border dark:border-dark-border rounded">
                     <div className="rounded p-3  flex flex-row">
                       <div className="highlight-text rounded p-1 mr-3">
@@ -391,7 +392,7 @@ export const ScenarioPage = () => {
                     deleteScenario(scenarioIndex);
                   }}
                 >
-                  DELETE SCENARIO
+                  {t('scenario_delete_scenario_label')}
                   <span className="px-2">
                     <FontAwesomeIcon icon={faTrash} />
                   </span>
@@ -406,7 +407,7 @@ export const ScenarioPage = () => {
           className="w-3/5 two-column-col  bg-light-bg-secondary dark:bg-dark-bg-secondary text-light-text dark:text-dark-text p-6 rounded-md right-col"
         >
           {state === "none-selected" || state == null ? (
-            <NoSelection Text={"Nothing Selected"} />
+            <NoSelection Text={t('scenario_no_scenario_selected_message')} />
           ) : null}
 
           {state === "editing-scenario" && selectedScenario !== null ? (

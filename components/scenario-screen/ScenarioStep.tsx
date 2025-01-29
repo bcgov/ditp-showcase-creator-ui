@@ -7,6 +7,7 @@ import {
   faDisplay,
 } from "@fortawesome/free-solid-svg-icons";
 import { ScenarioStep as ScenarioStepType, ScenarioStepState } from "../../types";
+import { useTranslation } from "react-i18next";
 
 export const ScenarioStep = ({
   selectedStep,
@@ -29,6 +30,7 @@ export const ScenarioStep = ({
   deleteStep: (scenarioIndex: number, stepIndex: number) => void;
   setState: (state: ScenarioStepState) => void;
 }) => {
+  const { t } = useTranslation()
   //Attribute we need to apply to the element we want to make sortable
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({
@@ -69,7 +71,7 @@ export const ScenarioStep = ({
               step.requestOptions ? "text-highlight font-bold" : ""
             }`}
           >
-            {step.requestOptions ? "Proof Step" : "Basic Step"}
+            {step.requestOptions ? t('scenario_step_proof_step_label') : t('scenario_step_basic_step_label')}
           </p>
           <p className="font-bold">
             {step.title} - ({stepIndex + 1} / {totalSteps})
@@ -99,7 +101,7 @@ export const ScenarioStep = ({
               {step.text && step.text.length > MAX_CHARS ? (
                 <p>
                   {step.text.slice(0, MAX_CHARS)}...{" "}
-                  <span className="font-bold">see more</span>
+                  <span className="font-bold">{t('action_see_more_label')}</span>
                 </p>
               ) : (
                 step.text
@@ -119,7 +121,7 @@ export const ScenarioStep = ({
                         .length
                     } */}
                     <p className="text-sm m-1 mt-2 font-bold">
-                      Requested Credentials:
+                      {t('scenario_requested_credentials_label')}
                     </p>
                     <div className="flex items-center align-center justify-center">
                       {Object.keys(

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { OnboardingStep } from "../../types";
+import { OnboardingStep } from "@/types";
+import { useTranslation } from "react-i18next";
 
 function LocalFileUpload({
   text,
@@ -14,6 +15,7 @@ function LocalFileUpload({
   handleLocalUpdate: (key: keyof OnboardingStep, value: string) => void;
   localJSON: OnboardingStep;
 }) {
+  const { t } = useTranslation()
   const [preview, setPreview] = useState<OnboardingStep[typeof element] | null>(localJSON[element]);
 
   // To-Do: Impliment a feature to show the preview directly from the JSON data
@@ -75,9 +77,9 @@ function LocalFileUpload({
 
           <p className=" text-center text-xs text-zinc-500 dark:text-zinc-400 lowercase">
             <span className="font-bold text-zinc-300 dark:text-zinc-200">
-              Click to upload
+              {t('file_upload_click_to_upload_label')}
             </span>{" "}
-            or drag and drop
+            {t('file_upload_drag_to_upload_label')}
           </p>
         </div>
 

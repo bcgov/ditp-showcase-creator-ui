@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 export const FileUploadFull = ({
   text,
@@ -12,6 +13,7 @@ export const FileUploadFull = ({
   element: 'headshot_image' | 'body_image';
   handleJSONUpdate: (imageType: 'headshot_image' | 'body_image', imageData: string) => void;
 }) => {
+  const { t } = useTranslation()
   const [preview, setPreview] = useState<string | null>(null);
 
   const convertBase64 = (file: File) => {
@@ -52,7 +54,7 @@ export const FileUploadFull = ({
             className="bg-red-500 rounded p-1 m-2 absolute text-black right-0 top-0 text-sm hover:bg-red-400"
             onClick={(e) => {
               e.preventDefault();
-              handleChange(null);
+              void handleChange(null);
             }}
           >
             <FontAwesomeIcon icon={faTrash} />
@@ -79,7 +81,8 @@ export const FileUploadFull = ({
           )}
 
           <p className=" text-center text-xs lowercase">
-            <span className="font-bold ">Click to upload</span> or drag and drop
+            <span className="font-bold ">{t('file_upload_click_to_upload_label')}</span>{" "}
+            {t('file_upload_drag_to_upload_label')}
           </p>
         </div>
 

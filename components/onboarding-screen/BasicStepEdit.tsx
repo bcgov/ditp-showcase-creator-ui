@@ -1,8 +1,8 @@
 import React from "react";
 import { useImmer } from "use-immer";
 import { LocalFileUpload } from "./LocalFileUpload";
-import {  OnboardingStep, ShowcaseJSON } from "../../types";
-import { isArrayProperty, updateOnboardingStepCredentials, updateOnboardingStepSingleValue } from "../../lib/json-helper";
+import { OnboardingStep, ShowcaseJSON } from "@/types";
+import { isArrayProperty, updateOnboardingStepCredentials, updateOnboardingStepSingleValue } from "@/lib/json-helper";
 
 export const BasicStepEdit = ({
   selectedCharacter,

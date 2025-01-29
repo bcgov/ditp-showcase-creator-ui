@@ -1,7 +1,8 @@
 import { CredentialAttribute } from "./CredentialAttribute";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
-import { CredentialElement, Credentials } from "../../../types";
+import { CredentialElement, Credentials } from "@/types";
+import { useTranslation } from "react-i18next";
 
 export const CredentialAttributesList = ({
   tempData,
@@ -16,13 +17,15 @@ export const CredentialAttributesList = ({
   addAttribute: (selectedCredential: keyof Credentials) => void;
   removeAttribute: (selectedCredential: keyof Credentials, index: number) => void;
 }) => {
+  const { t } = useTranslation()
+
   return (
     <>
       <div className="rounded p-5 bg-light-bg dark:bg-dark-bg mt-3">
         {/* Attribute count and "Add Attribute" button */}
         <div className="flex justify-between mb-3">
           <p className="text-sm font-bold">
-            Attributes Added:{" "}
+            {`${t('credentials_attributes_attributes_added')} `}
             <span className="font-bold">
               {selectedCredential &&
               tempData[selectedCredential] &&
@@ -40,12 +43,12 @@ export const CredentialAttributesList = ({
               selectedCredential !== null && addAttribute(selectedCredential)
             }
           >
-            <span>ADD ATTRIBUTE </span>
+            <span>{t('credentials_attributes_add_attribute_label')}</span>
             <span className="text-md ml-2">
               <FontAwesomeIcon icon={faCirclePlus} />
             </span>
           </button>
-          
+
         </div>
         <hr className="mb-3" />
 

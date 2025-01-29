@@ -24,6 +24,7 @@ import {
   updateCredentialProperty,
 } from "@/lib/json-helper";
 import { useShowcase } from "@/hooks/use-showcase";
+import { useTranslation } from "react-i18next";
 
 export const CredentialsScreen = () => {
   const { showcaseJSON, setShowcaseJSON, selectedCharacter } = useShowcase();
@@ -36,6 +37,7 @@ export const CredentialsScreen = () => {
   const [componentToMount, setComponentToMount] = useState<string | null>(null); // State variable to determine what needs to be rendered in the right column.
   const [createButtonClicked, setCreateButtonClicked] =
     useState<boolean>(false); // State variable to determine if the create button has been clicked. This is to ensure it can't be spammed.
+  const { t } = useTranslation()
 
   function handleCredentialRemoval(credential: keyof Credentials) {
     setShowcaseJSON((json) => {
@@ -160,7 +162,7 @@ export const CredentialsScreen = () => {
       default:
         return (
           <div className="">
-            <NoSelection Text={"You have no credential selected."} />
+            <NoSelection Text={t('credentials_no_credential_selected_message')} />
           </div>
         );
     }
@@ -177,17 +179,16 @@ export const CredentialsScreen = () => {
               <div className="flex justify-between">
                 <div>
                   <h3 className="text-4xl font-bold text-slate-50">
-                    Add your Credentials
+                    {t('credentials_header_title')}
                   </h3>
                   <p className="text-slate-100 mt-3">
-                    Fill in the details on the right to create a credential for
-                    this showcase.
+                    {t('credentials_header_subtitle')}
                   </p>
                 </div>
               </div>
               <div className="mt-8">
                 <div className="flex justify-between mb-4">
-                  <h3 className="text-xl font-bold">Credentials Added:</h3>
+                  <h3 className="text-xl font-bold">{t('credentials_credentials_added_label', { credentialCount: Object.entries(showcaseJSON.personas[selectedCharacter].credentials).length })}</h3>
                   <div>
                     {!createButtonClicked && (
                       <button
@@ -195,7 +196,7 @@ export const CredentialsScreen = () => {
                         onClick={handleCreateButtonClick}
                         className="text-sm add-attr-btn border bg-light-bg dark:bg-dark-bg hover:bg-light-btn-hover dark:hover:bg-dark-input font-bold py-2 px-4 rounded inline-flex items-center"
                       >
-                        <span>ADD CREDENTIAL</span>
+                        <span>{t('credentials_add_credential_label')}</span>
                         <div className="text-md ml-2">
                           <FontAwesomeIcon icon={faCirclePlus} />
                         </div>
@@ -233,13 +234,13 @@ export const CredentialsScreen = () => {
                 className="p-2 mr-4 rounded hover:underline"
                 onClick={handleCancel}
               >
-                CANCEL
+                {t('action_cancel_label')}
               </button>
               <button
                 className="p-1 w-20 bg-light-bg-secondary hover:bg-light-btn-hover border dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover rounded "
                 onClick={handleCredentialUpdate}
               >
-                SAVE
+                {t('action_save_label')}
               </button>
             </div>
           ) : null}

@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { convertBase64 } from "@/lib/utils";
+import { Trash2 } from "lucide-react";
 
 export const FileUploadFull = ({
   text,
@@ -47,7 +46,7 @@ export const FileUploadFull = ({
               handleChange(null);
             }}
           >
-            <FontAwesomeIcon icon={faTrash} />
+            <Trash2 />
           </button>
         </div>
       )}

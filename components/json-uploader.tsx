@@ -3,8 +3,10 @@
 import { useState, useRef } from "react";
 import { ErrorModal } from "./error-modal";
 import { useShowcaseStore } from "@/hooks/use-showcase-store";
+import { useTranslation } from "react-i18next";
 
 export const JSONUploadButton = () => {
+  const { t } = useTranslation()
   const [showModal, setShowModal] = useState(false);
   const { setShowcaseJSON } = useShowcaseStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -53,7 +55,7 @@ export const JSONUploadButton = () => {
           className="inline-flex items-center gap-x-1.5 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-black shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
           onClick={handleClick}
         >
-          LOAD
+          {t('action.load_label')}
         </button>
       </div>
 

@@ -20,7 +20,7 @@ export const DisplaySearchResults = ({
     <div className="mb-6">
       {visibleResults.map((result) => {
         const credential = showcaseJSON.personas[selectedCharacter].credentials[result];
-        
+
         if (!credential) return null;
 
         return (
@@ -37,12 +37,12 @@ export const DisplaySearchResults = ({
                 <p className="mb-1 font-bold">Name:</p>
                 <p>{credential.name}</p>
               </div>
-              
+
               <div className="col-span-1">
                 <p className="mb-1 font-bold">Issuer:</p>
                 <p>{credential.issuer_name}</p>
               </div>
-              
+
               <div className="col-span-1">
                 <p className="mb-1 font-bold">Attributes:</p>
                 <p>{credential.attributes.length}</p>
@@ -54,7 +54,7 @@ export const DisplaySearchResults = ({
 
       {searchResults.length > MAX_SEARCH_CREDENTIALS && (
         <p className="text-sm text-muted-foreground mt-2">
-          Showing {MAX_SEARCH_CREDENTIALS} of {searchResults.length} results. 
+          Showing {MAX_SEARCH_CREDENTIALS} of {searchResults.length} results.
           Please refine your search to see more specific results.
         </p>
       )}

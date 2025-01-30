@@ -9,8 +9,10 @@ import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { useCredentials } from "@/hooks/use-credentials";
 import { CredentialFormData, credentialSchema } from "@/schemas/credential";
 import { CredentialAttributes } from "./components/credential-attribute";
+import { useTranslation } from "react-i18next";
 
 export const CredentialsForm = () => {
+  const { t } = useTranslation()
   const {
     showcaseJSON,
     selectedCharacter,
@@ -18,7 +20,7 @@ export const CredentialsForm = () => {
     createCredential,
   } = useShowcaseStore();
   const { mode, selectedCredential, cancel, startEditing } = useCredentials();
-  
+
   const existingCredential = selectedCredential
     ? showcaseJSON.personas[selectedCharacter].credentials[selectedCredential]
     : null;
@@ -84,9 +86,9 @@ export const CredentialsForm = () => {
       <div className="space-y-6">
         <div className="flex justify-between">
           <div>
-            <p className="text-foreground text-sm">Credentials</p>
+            <p className="text-foreground text-sm">{t('credentials.section_title')}</p>
             <h3 className="text-2xl font-bold text-foreground">
-              Credential Details
+              {t('credentials.details_header_title')}
             </h3>
           </div>
           <Button
@@ -95,7 +97,7 @@ export const CredentialsForm = () => {
             className="flex items-center gap-2"
           >
             <Edit className="h-4 w-4" />
-            Edit
+            {t('action.edit_label')}
           </Button>
         </div>
         <hr />
@@ -104,13 +106,13 @@ export const CredentialsForm = () => {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <h4 className="text-sm font-medium text-muted-foreground">
-                Credential Name
+                {t('credentials.credential_name_label')}
               </h4>
               <p className="text-lg">{existingCredential.name}</p>
             </div>
             <div>
               <h4 className="text-sm font-medium text-muted-foreground">
-                Issuer
+                {t('credentials.issuer_name_label')}
               </h4>
               <p className="text-lg">{existingCredential.issuer_name}</p>
             </div>
@@ -131,9 +133,9 @@ export const CredentialsForm = () => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <div className="flex justify-between mt-3">
           <div>
-            <p className="text-foreground text-sm">Credentials</p>
+            <p className="text-foreground text-sm">{t('credentials.section_title')}</p>
             <h3 className="text-2xl font-bold text-foreground">
-              {mode === "create" ? "Add a new Credential" : "Edit Credential"}
+              {mode === "create" ? t('credentials.add_header_title') : t('credentials.edit_header_title')}
             </h3>
           </div>
         </div>
@@ -142,19 +144,19 @@ export const CredentialsForm = () => {
         <div className="space-y-6">
           <div className="grid grid-cols-2 gap-4">
             <FormTextInput
-              label="Credential Name"
+              label={t('credentials.credential_name_label')}
               name="name"
               register={form.register}
               error={form.formState.errors.name?.message}
-              placeholder="Enter credential name"
+              placeholder={t('credentials.credential_name_placeholder')}
             />
 
             <FormTextInput
-              label="Issuer Name"
+              label={t('credentials.issuer_name_label')}
               name="issuer_name"
               register={form.register}
               error={form.formState.errors.issuer_name?.message}
-              placeholder="Enter issuer name"
+              placeholder={t('credentials.issuer_name_placeholder')}
             />
           </div>
 
@@ -166,13 +168,13 @@ export const CredentialsForm = () => {
 
         <div className="flex justify-end gap-4 mt-6">
           <Button type="button" variant="outline" onClick={handleCancel}>
-            Cancel
+            {t('action.cancel_label')}
           </Button>
           <Button
             type="submit"
             disabled={mode === 'edit' ? !form.formState.isValid : !form.formState.isDirty || !form.formState.isValid}
             >
-            {mode === "create" ? "Create" : "Save"}
+            {mode === "create" ? t('action.create_label') : t('action.save_label')}
           </Button>
         </div>
       </form>

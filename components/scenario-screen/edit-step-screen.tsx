@@ -9,10 +9,12 @@ import { NoSelection } from "@/components/credentials/no-selection";
 import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { useScenarios } from "@/hooks/use-scenarios";
 import { createEmptyStep } from "@/hooks/use-scenarios";
+import { useTranslation } from "react-i18next";
 
 export const EditStepScreen = () => {
+  const { t } = useTranslation()
   const { showcaseJSON, selectedCharacter } = useShowcaseStore();
-  const { 
+  const {
     scenarios,
     selectedScenario,
     selectedStep,
@@ -61,14 +63,14 @@ export const EditStepScreen = () => {
   };
 
   const currentScenario = selectedScenario !== null ? scenarios[selectedScenario] : null;
-  const currentStep = selectedStep !== null && currentScenario 
-    ? currentScenario.steps[selectedStep] 
+  const currentStep = selectedStep !== null && currentScenario
+    ? currentScenario.steps[selectedStep]
     : null;
 
   return (
     <div className="w-3/5 two-column-col bg-light-bg-secondary dark:bg-dark-bg-secondary text-light-text dark:text-dark-text p-6 rounded-md right-col">
       {stepState === "none-selected" || stepState == null ? (
-        <NoSelection text={"Nothing Selected"} />
+        <NoSelection text={t('scenario.no_scenario_selected_message')} />
       ) : null}
 
       {stepState === "editing-scenario" && currentScenario ? (

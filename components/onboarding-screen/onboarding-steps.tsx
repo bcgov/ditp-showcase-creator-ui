@@ -6,8 +6,10 @@ import { IssueStepEdit } from "./issue-step-edit";
 import { CreateNewStep } from "./create-step";
 import { NoSelection } from "../credentials/no-selection";
 import { useOnboarding } from "@/hooks/use-onboarding";
+import { useTranslation } from "react-i18next";
 
 export const OnboardingSteps = () => {
+  const { t } = useTranslation()
   const {
     selectedStep,
     stepState,
@@ -31,7 +33,7 @@ export const OnboardingSteps = () => {
     >
       {stepState === "no-selection" && (
         <div className="">
-          <NoSelection text={"No Step Selected"} />
+          <NoSelection text={t('onboarding.no_step_selected_message')} />
         </div>
       )}
 

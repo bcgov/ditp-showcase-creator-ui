@@ -127,10 +127,10 @@ export const EditProofRequest = ({
           className="gap-2"
         >
           <Plus className="h-4 w-4" />
-          Add Attribute
+          Add Attribute2
         </Button>
 
-        <Button 
+        <Button
           type="submit"
           disabled={!form.formState.isDirty}
         >

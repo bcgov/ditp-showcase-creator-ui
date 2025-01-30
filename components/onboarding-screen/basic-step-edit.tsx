@@ -11,11 +11,13 @@ import { useOnboarding } from "@/hooks/use-onboarding";
 import { BasicStepFormData } from "@/schemas/onboarding";
 import { basicStepSchema } from "@/schemas/onboarding";
 import { LocalFileUpload } from "./local-file-upload";
+import { useTranslation } from "react-i18next";
 
 export const BasicStepEdit = () => {
-  const { 
+  const { t } = useTranslation()
+  const {
     screens,
-    selectedStep, 
+    selectedStep,
     setSelectedStep,
     updateStep,
     setStepState,
@@ -79,9 +81,9 @@ export const BasicStepEdit = () => {
       <div className="space-y-6">
         <div className="flex justify-between mt-3">
           <div>
-            <p className="text-foreground text-sm">Onboarding</p>
+            <p className="text-foreground text-sm">{t('onboarding.section_title')}</p>
             <h3 className="text-2xl font-bold text-foreground">
-              Step Details
+              {t('onboarding.details_step_header_title')}
             </h3>
           </div>
           <Button
@@ -90,7 +92,7 @@ export const BasicStepEdit = () => {
             className="flex items-center gap-2"
           >
             <Edit className="h-4 w-4" />
-            Edit
+            {t('action.edit_label')}
           </Button>
         </div>
         <hr />
@@ -98,14 +100,14 @@ export const BasicStepEdit = () => {
         <div className="space-y-6">
           <div className="space-y-2">
             <h4 className="text-sm font-medium text-muted-foreground">
-              Page Title
+              {t('onboarding.page_title_label')}
             </h4>
             <p className="text-lg">{currentStep.title}</p>
           </div>
 
           <div className="space-y-2">
             <h4 className="text-sm font-medium text-muted-foreground">
-              Page Description
+              {t('onboarding.page_description_label')}
             </h4>
             <p className="text-lg whitespace-pre-wrap">{currentStep.text}</p>
           </div>
@@ -113,12 +115,12 @@ export const BasicStepEdit = () => {
           {currentStep.image && (
             <div className="space-y-2">
               <h4 className="text-sm font-medium text-muted-foreground">
-                Icon
+                {t('onboarding.icon_label')}
               </h4>
               <div className="w-32 h-32 rounded-lg overflow-hidden border">
-                <img 
-                  src={currentStep.image} 
-                  alt="Step icon" 
+                <img
+                  src={currentStep.image}
+                  alt="Step icon"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -133,20 +135,20 @@ export const BasicStepEdit = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <div>
-          <p className="text-foreground text-sm">Onboarding</p>
+          <p className="text-foreground text-sm">{t('onboarding.section_title')}</p>
           <h3 className="text-2xl font-bold text-foreground">
-            Edit a Basic Step
+            {t('onboarding.basic_step_header_title')}
           </h3>
         </div>
         <hr />
 
         <div className="space-y-6">
           <FormTextInput
-            label="Page Title"
+            label={t('onboarding.page_title_label')}
             name="title"
             register={form.register}
             error={form.formState.errors.title?.message}
-            placeholder="Enter page title"
+            placeholder={t('onboarding.page_title_placeholder')}
           />
 
           <div className="space-y-2">
@@ -154,11 +156,11 @@ export const BasicStepEdit = () => {
               Page Description
             </label>
             <FormTextArea
-              label="Page Description"
+              label={t('onboarding.page_description_label')}
               name="text"
               register={form.register}
               error={form.formState.errors.text?.message}
-              placeholder="Enter page description"
+              placeholder={t('onboarding.page_description_placeholder')}
             />
             {form.formState.errors.text && (
               <p className="text-sm text-destructive">
@@ -169,7 +171,7 @@ export const BasicStepEdit = () => {
 
           <div className="space-y-2">
             <LocalFileUpload
-              text="Icon"
+              text={t('onboarding.icon_label')}
               element="image"
               handleLocalUpdate={(_, value) => form.setValue("image", value, {
                 shouldDirty: true,
@@ -192,13 +194,13 @@ export const BasicStepEdit = () => {
             variant="outline"
             onClick={handleCancel}
           >
-            Cancel
+            {t('action.cancel_label')}
           </Button>
           <Button
             type="submit"
             disabled={!form.formState.isDirty || !form.formState.isValid}
           >
-            Save
+            {t('action.save_label')}
           </Button>
         </div>
       </form>

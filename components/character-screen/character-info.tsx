@@ -3,8 +3,10 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { Button } from '@/components/ui/button';
+import { useTranslation } from "react-i18next";
 
 export const CharacterInfo = () => {
+  const { t } = useTranslation()
   const {
     showcaseJSON,
     selectedCharacter,
@@ -23,15 +25,15 @@ export const CharacterInfo = () => {
     <>
       <div className="flex ">
         <div className="m-3">
-          <p className="text-foreground text-sm">Character</p>
+          <p className="text-foreground text-sm">{t('character.section_title')}</p>
           <h3 className="text-2xl font-bold text-foreground">
-            Your Selected Character
+            {t('character.info_header_title')}
           </h3>
         </div>
 
         <div className="ml-auto">
           <Button variant="outline" onClick={() => setEditMode(true)}>
-            Edit
+            {t('action.edit_label')}
           </Button>
           {
             // Conditionally render the remove button. There must always be one character.
@@ -43,7 +45,7 @@ export const CharacterInfo = () => {
                  handleRemoveCharacter(selectedCharacter)
                 }}
               >
-                Delete
+                {t('action.delete_label')}
               </button>
             ) : null
           }
@@ -52,20 +54,20 @@ export const CharacterInfo = () => {
 
       <div className="p-3 m-3 bg-light-bg dark:bg-dark-bg rounded">
         <p>
-          <span className="font-bold">Name:</span>{" "}
+          <span className="font-bold">{t('character.info_name_label')}</span>{" "}
           {showcaseJSON["personas"][selectedCharacter].name}
         </p>
         <p>
-          <span className="font-bold">Role:</span>{" "}
+          <span className="font-bold">{t('character.info_role_label')}</span>{" "}
           {showcaseJSON["personas"][selectedCharacter].type}
         </p>
-        <p className="font-bold mt-6">Description:</p>
+        <p className="font-bold mt-6">{t('character.info_description_label')}</p>
         <p>{showcaseJSON["personas"][selectedCharacter].description}</p>
       </div>
 
       <div className="grid grid-cols-2">
         <div className="p-2 m-2">
-          <p>Headshot Image</p>
+          <p>{t('character.headshot_image_label')}</p>
           <div className=" p-6 m-1 flex justify-center items-center bg-light-bg dark:bg-dark-bg ">
             {!showcaseJSON.personas[selectedCharacter].headshot_image ? (
               <FontAwesomeIcon icon={faUser} />
@@ -81,7 +83,7 @@ export const CharacterInfo = () => {
         </div>
 
         <div className="p-2 m-2">
-          <p>Full-Body Image</p>
+          <p>{t('character.full_body_image_label')}</p>
           <div className="p-6 m-1 flex justify-center items-center bg-light-bg dark:bg-dark-bg">
             {!showcaseJSON.personas[selectedCharacter].body_image ? (
               <FontAwesomeIcon icon={faUser} />

@@ -3,6 +3,7 @@ import { SaveButton } from "./save-button";
 import { JSONUploadButton } from "./json-uploader";
 import { NavBarButton } from "./navbar-button";
 import Link from "next/link";
+import { LanguageSelector } from "./language-selector";
 import initInternationalization from "@/app/i18n";
 
 type Props = {
@@ -16,7 +17,9 @@ export const NavBar = async (props: Props) => {
       <div className="flex justify-center items-center">
         <DarkModeToggle />
       </div>
-
+      <div className="flex justify-center items-center">
+        <LanguageSelector />
+      </div>
       <div className="flex flex-row justify-center gap-6 px-8 shadow-md button-dark bg-light-bg-secondary dark:bg-dark-bg-secondary rounded-b-lg">
         <NavBarButton
           title={t('navigation.character_label')}
@@ -40,8 +43,8 @@ export const NavBar = async (props: Props) => {
         />
       </div>
 
-      <div className="flex flex-col gap-4 w-145  justify-center items-center py-2">
-        <div className="flex w-145  justify-center items-center py-2 ">
+      <div className="flex flex-col gap-4 w-145 justify-center items-center py-2">
+        <div className="flex w-145 justify-center items-center py-2 ">
           <JSONUploadButton />
           <Link
             href="/"

@@ -19,7 +19,7 @@ export const NavBarButton = ({
     <Link href={page}>
       <li
         className={`flex flex-col  items-center justify-between p-3 ${
-          currentPage === page ? "yellow-background" : ""
+          currentPage === page ? "bg-yellow-400" : ""
       } ${
         currentPage === page ? "text-light-text" : ""
       } rounded-b-lg bg-slate-900  hover:yellow cursor-pointer hover:text-black`}

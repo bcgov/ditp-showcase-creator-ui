@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { saveAs } from "file-saver";
-import { useShowcase } from "@/hooks/use-showcase";
+import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { useTranslation } from "react-i18next";
 
 export const SaveModal = ({
@@ -12,7 +12,7 @@ export const SaveModal = ({
 }) => {
   const { t } = useTranslation()
   const [ filename, setFilename ] = useState("");
-  const { showcaseJSON } = useShowcase();
+  const { showcaseJSON } = useShowcaseStore();
 
 
   function saveJSON() {
@@ -66,7 +66,7 @@ export const SaveModal = ({
                 type="button"
                 onClick={() => setShowModal(false)}
               >
-                {t('action.cancel_camel_label')}
+                {t('action.cancel_label')}
               </button>
 
               {/* SAVE BUTTON */}
@@ -74,7 +74,7 @@ export const SaveModal = ({
                 onClick={saveJSON}
                 className="p-1 w-20 bg-light-bg-secondary hover:bg-light-btn-hover border dark:bg-dark-bg-secondary dark:hover:bg-dark-btn-hover rounded "
               >
-                {t('action.save_camel_label')}
+                {t('action.save_label')}
               </button>
             </div>
           </div>

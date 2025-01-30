@@ -48,9 +48,9 @@ export const CharacterEdit = () => {
       >
         <div className="flex justify-between mt-3">
           <div>
-            <p className="text-foreground text-sm">{t('character.edit_header_subtitle')}</p>
+            <p className="text-foreground text-sm">{t('character.section_title')}</p>
             <h3 className="text-2xl font-bold text-foreground">
-              {t('character.edit_header_title')}
+              {t('character.info_header_title')}
             </h3>
           </div>
         </div>
@@ -86,13 +86,13 @@ export const CharacterEdit = () => {
 
         <div className="grid grid-cols-2 gap-2 my-6">
           <FileUploadFull
-            text={t('character.edit_headshot_image_label')}
+            text={t('character.headshot_image_label')}
             element={"headshot_image"}
             handleJSONUpdate={updateCharacterImage}
           />
 
           <FileUploadFull
-            text={t('character.edit_full_body_image_label')}
+            text={t('character.full_body_image_label')}
             element={"body_image"}
             handleJSONUpdate={updateCharacterImage}
           />
@@ -104,13 +104,13 @@ export const CharacterEdit = () => {
             onClick={handleCancel}
             variant="outline"
           >
-            {t('action.cancel_camel_label')}
+            {t('action.cancel_label')}
           </Button>
           <Button
             type="submit"
             disabled={!form.formState.isValid || !form.formState.isDirty}
           >
-            {t('action.save_camel_label')}
+            {t('action.save_label')}
           </Button>
         </div>
       </form>

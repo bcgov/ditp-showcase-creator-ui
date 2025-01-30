@@ -86,6 +86,7 @@ export interface ScenarioOverview {
 export interface Scenario {
   id: string;
   name: string;
+  status?: 'draft' | 'published' | 'archived';
   overview: ScenarioOverview;
   summary: ScenarioOverview;
   steps: ScenarioStep[];

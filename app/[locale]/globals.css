@@ -71,25 +71,6 @@ body {
   }
 }
 
-.yellow-background {
-  background-color: #fcba19;
-}
-
-.App-header {
-  background: #222222;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -161,4 +142,61 @@ body {
 .button-light:hover {
   background: #747474;
   border-radius: 5px;
+}
+
+.two-column-container {
+  padding: 4rem;
+  border-radius: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #222222;
+}
+
+.right-col {
+  min-height: 480px;
+  align-self: flex-start;
+}
+
+.left-col {
+  flex: 0 0 auto;
+}
+
+input,
+select {
+  padding: 0.75rem;
+  width: 100%;
+  border-radius: 0.25rem;
+}
+
+input::placeholder {
+  color: rgb(108, 108, 108);
+  font-size: 0.8rem;
+}
+
+.no-selection {
+  border: 1px dashed rgba(255, 255, 255, 0.5);
+  min-height: 480px;
+}
+
+hr {
+  width: 100%;
+  margin-top: 1rem;
+  border-color: #959595;
+}
+
+.credential-border {
+  border: 2px solid #525252;
+}
+
+.credential-credential-name {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.credential-issuer-name {
+  font-size: 0.75rem;
+}
+
+.trash-button:hover {
+  color: red;
 }

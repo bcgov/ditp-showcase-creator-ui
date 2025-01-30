@@ -25,7 +25,7 @@ export const CharacterInfo = () => {
     <>
       <div className="flex ">
         <div className="m-3">
-          <p className="text-foreground text-sm">{t('character.info_header_subtitle')}</p>
+          <p className="text-foreground text-sm">{t('character.section_title')}</p>
           <h3 className="text-2xl font-bold text-foreground">
             {t('character.info_header_title')}
           </h3>
@@ -33,7 +33,7 @@ export const CharacterInfo = () => {
 
         <div className="ml-auto">
           <Button variant="outline" onClick={() => setEditMode(true)}>
-            {t('action.edit_camel_label')}
+            {t('action.edit_label')}
           </Button>
           {
             // Conditionally render the remove button. There must always be one character.
@@ -45,7 +45,7 @@ export const CharacterInfo = () => {
                  handleRemoveCharacter(selectedCharacter)
                 }}
               >
-                {t('action.delete_camel_label')}
+                {t('action.delete_label')}
               </button>
             ) : null
           }
@@ -67,7 +67,7 @@ export const CharacterInfo = () => {
 
       <div className="grid grid-cols-2">
         <div className="p-2 m-2">
-          <p>{t('character.info_headshot_image_label')}</p>
+          <p>{t('character.headshot_image_label')}</p>
           <div className=" p-6 m-1 flex justify-center items-center bg-light-bg dark:bg-dark-bg ">
             {!showcaseJSON.personas[selectedCharacter].headshot_image ? (
               <FontAwesomeIcon icon={faUser} />
@@ -83,7 +83,7 @@ export const CharacterInfo = () => {
         </div>
 
         <div className="p-2 m-2">
-          <p>{t('character.info_full_body_image_label')}</p>
+          <p>{t('character.full_body_image_label')}</p>
           <div className="p-6 m-1 flex justify-center items-center bg-light-bg dark:bg-dark-bg">
             {!showcaseJSON.personas[selectedCharacter].body_image ? (
               <FontAwesomeIcon icon={faUser} />

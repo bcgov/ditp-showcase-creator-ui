@@ -5,7 +5,11 @@ import i18nConfig from "@/i18n.config";
 import {InitInternationalizationArgs} from "@/types";
 
 export default async function initInternationalization(args: InitInternationalizationArgs) {
-    const { locale, namespaces = ['common'], i18nInstance = createInstance(), resources} = args
+    const { locale = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('preferredLanguage='))
+        ?.split('=')[1]
+        , namespaces = ['common'], i18nInstance = createInstance(), resources} = args
 
     i18nInstance.use(initReactI18next);
 

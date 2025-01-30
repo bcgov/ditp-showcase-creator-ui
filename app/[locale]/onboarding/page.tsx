@@ -1,11 +1,11 @@
 import { OnboardingScreen } from "@/components/onboarding-screen/onboarding-screen";
 import { OnboardingSteps } from "@/components/onboarding-screen/onboarding-steps";
 import {PageParams} from '@/types';
-import initInternationalization from '@/app/i18n';
+import intlInit from '@/app/i18n';
 
 export default async function Onboarding({ params }: { params: PageParams }) {
   const { locale } = await params
-  const { t } = await initInternationalization({ locale })
+  const { t } = await intlInit({ locale })
 
   return (
     <div className="flex flex-col min-h-screen">

@@ -12,7 +12,7 @@ export const CredentialsEditor = () => {
   if (!mode) {
     return (
       <div className="">
-        <NoSelection text={t('no_credential_selected_message')} />
+        <NoSelection text={t('credentials.no_credential_selected_message')} />
       </div>
     );
   }

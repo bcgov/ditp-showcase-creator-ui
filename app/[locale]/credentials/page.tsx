@@ -1,11 +1,11 @@
 import { CredentialsDisplay } from "@/components/credentials/credentials-display";
 import { CredentialsEditor } from "@/components/credentials/credentials-editor";
 import {PageParams} from '@/types';
-import initInternationalization from '@/app/i18n';
+import intlInit from '@/app/i18n';
 
 export default async function Credentials({ params }: { params: PageParams }) {
   const { locale } = await params
-  const { t } = await initInternationalization({ locale })
+  const { t } = await intlInit({ locale })
 
   return (
      <div className="flex flex-col min-h-screen mt-20 ">

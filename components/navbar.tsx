@@ -4,14 +4,14 @@ import { JSONUploadButton } from "./json-uploader";
 import { NavBarButton } from "./navbar-button";
 import Link from "next/link";
 import { LanguageSelector } from "./language-selector";
-import initInternationalization from "@/app/i18n";
+import intlInit from "@/app/i18n";
 
 type Props = {
     locale: string
 }
 
 export const NavBar = async (props: Props) => {
-  const { t } = await initInternationalization({ locale: props.locale })
+  const { t } = await intlInit({ locale: props.locale })
   return (
     <div className="flex justify-between px-8 dark:text-dark-text">
       <div className="flex justify-center items-center">

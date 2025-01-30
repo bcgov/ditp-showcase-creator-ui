@@ -2,11 +2,11 @@ import { EditStepScreen } from "@/components/scenario-screen/edit-step-screen";
 import { ScenarioScreen } from "@/components/scenario-screen/scenario-screen";
 
 import {PageParams} from '@/types';
-import initInternationalization from '@/app/i18n';
+import intlInit from '@/app/i18n';
 
 export default async function Scenario({ params }: { params: PageParams }) {
   const { locale } = await params
-  const { t } = await initInternationalization({ locale })
+  const { t } = await intlInit({ locale })
 
   return (
     <div className="flex flex-col min-h-screen">

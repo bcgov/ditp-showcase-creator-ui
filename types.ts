@@ -118,14 +118,14 @@ export type PageParams = Promise<{ locale: string }>
 
 export type I18nNamespaces = 'common'
 
-export type InitInternationalizationArgs = {
+export type IntlInitArgs = {
   locale: string
   namespaces?: I18nNamespaces[]
   i18nInstance?: any
   resources?: Resource
 }
 
-export type InternationalizationProviderArgs = {
+export type IntlProviderArgs = {
   children: ReactNode
   locale: string
   namespaces?: I18nNamespaces[]

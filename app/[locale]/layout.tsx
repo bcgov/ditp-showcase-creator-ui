@@ -6,7 +6,7 @@ import { NavBar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { JSONPreview } from "@/components/json-preview";
 import i18nConfig from "@/i18n.config";
-import InternationalizationProvider from "@/providers/InternationalizationProvider";
+import IntlProvider from "@/providers/IntlProvider";
 import {PageParams} from "@/types";
 import "./globals.css";
 
@@ -43,14 +43,14 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <InternationalizationProvider locale={locale}>
+          <IntlProvider locale={locale}>
             <div className="min-h-screen bg-light-bg dark:bg-dark-bg text-light-text">
               <NavBar locale={locale}/>
               {children}
               {process.env.NODE_ENV === "development" && <JSONPreview />}
               <Footer locale={locale}/>
             </div>
-          </InternationalizationProvider>
+          </IntlProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -51,7 +51,7 @@ export const Credential = ({
               </div>
               <div className="flex justify-center items-center align-center">
                 <p className="border border-black border-solid rounded-lg text-xs py-1 px-2 flex justify-center items-center dark:border-white">
-                  {t('item_attribute_count_label', { attributeCount })}
+                  {t('credentials.item_attribute_count_label', { attributeCount })}
                 </p>
               </div>
             </div>

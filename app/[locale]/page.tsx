@@ -1,11 +1,11 @@
 import { CharacterForm } from "@/components/character-screen/character-form";
 import { CharacterList } from "@/components/character-screen/character-list";
-import initInternationalization from "@/app/i18n";
+import intlInit from "@/app/i18n";
 import {PageParams} from '@/types';
 
 async function HomePage({ params }: { params: PageParams }) {
   const { locale } = await params
-  const { t } = await initInternationalization({ locale })
+  const { t } = await intlInit({ locale })
 
   return (
       <div className="min-h-screen bg-light-bg dark:bg-dark-bg text-light-text">

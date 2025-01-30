@@ -1,6 +1,7 @@
 import { create } from 'zustand';
-import { Scenario, ScenarioStep } from '@/types';
+import { RequestType, Scenario, ScenarioStep, StepType } from '@/types';
 import { useShowcaseStore } from './use-showcase-store';
+import { produce } from 'immer';
 
 type ScenarioStepState = 
   | "none-selected" 
@@ -18,6 +19,8 @@ interface State {
   selectedStep: number | null;
   stepState: ScenarioStepState;
 }
+// move to shared
+const deepClone = <T>(obj: T): T => JSON.parse(JSON.stringify(obj));
 
 interface Actions {
   setScenarios: (scenarios: Scenario[]) => void;
@@ -64,9 +67,13 @@ export const useScenarios = create<State & Actions>((set, get) => ({
 
   setSelectedScenario: (index) => set({ selectedScenario: index }),
 
-  setSelectedStep: (index) => set({ selectedStep: index }),
-
-  setStepState: (stepState) => set({ stepState }),
+  setSelectedStep: (index) => {
+    set({ selectedStep: index });
+  },
+  
+  setStepState: (state) => {
+    set({ stepState: state });
+  },
 
   viewScenario: (index) => set({
     selectedScenario: index,
@@ -130,7 +137,12 @@ export const useScenarios = create<State & Actions>((set, get) => ({
       steps: [...newScenarios[scenarioIndex].steps, newStep],
     };
     
-    set({ scenarios: newScenarios });
+    set({
+      scenarios: newScenarios,
+      selectedStep: newScenarios[scenarioIndex].steps.length - 1,
+      stepState: step.type === "CONNET_AND_VERIFY" ? "proof-step-edit" : "basic-step-edit"
+    });
+    
     updateShowcaseStore(newScenarios);
   },
 
@@ -169,21 +181,28 @@ export const useScenarios = create<State & Actions>((set, get) => ({
     updateShowcaseStore(newScenarios);
   },
 
-  moveStep: (scenarioIndex, oldIndex, newIndex) => {
-    const { scenarios } = get();
-    const newScenarios = [...scenarios];
-    const steps = [...newScenarios[scenarioIndex].steps];
-    const [movedStep] = steps.splice(oldIndex, 1);
-    steps.splice(newIndex, 0, movedStep);
-    
-    newScenarios[scenarioIndex] = {
-      ...newScenarios[scenarioIndex],
-      steps,
-    };
-    
-    set({ scenarios: newScenarios });
-    updateShowcaseStore(newScenarios);
-  },
+  moveStep: (scenarioIndex, oldIndex, newIndex) =>
+    set(
+      produce((state) => {
+        const scenario = state.scenarios[scenarioIndex];
+        const newSteps = [...scenario.steps];
+        const [movedStep] = newSteps.splice(oldIndex, 1);
+        newSteps.splice(newIndex, 0, movedStep);
+        
+        state.scenarios[scenarioIndex] = {
+          ...scenario,
+          steps: newSteps,
+        };
+
+        const { selectedCharacter } = useShowcaseStore.getState();
+        useShowcaseStore.setState(
+          produce((draft) => {
+            draft.showcaseJSON.personas[selectedCharacter].scenarios = 
+              deepClone(state.scenarios);
+          })
+        );
+      })
+    ),
 
   reset: () => set({
     scenarios: [],
@@ -192,15 +211,16 @@ export const useScenarios = create<State & Actions>((set, get) => ({
     stepState: null,
   }),
 }));
+
 export const createEmptyStep = (
-  isProof: boolean = false
+  type: StepType
 ): Omit<ScenarioStep, "screenId"> => ({
-  type: isProof ? "proof" : "basic",
-  title: "",
+  type: type,
+  title: type === StepType.CONNECT_AND_VERIFY ? "Confirm the information to send" : "",
   text: "",
-  requestOptions: isProof
+  requestOptions: type === StepType.CONNECT_AND_VERIFY
     ? {
-        type: "proof_request",
+        type: RequestType.OOB,
         title: "",
         text: "",
         proofRequest: {
@@ -209,7 +229,7 @@ export const createEmptyStep = (
         },
       }
     : {
-        type: "basic",
+        type: RequestType.BASIC,
         title: "",
         text: "",
         proofRequest: {

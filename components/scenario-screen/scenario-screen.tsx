@@ -2,7 +2,10 @@
 
 import { useEffect } from "react";
 import { DndContext, closestCenter } from "@dnd-kit/core";
-import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import { Button } from "@/components/ui/button";
 import { Plus, Edit } from "lucide-react";
 import { ScenarioStep } from "./scenario-step";
@@ -12,7 +15,7 @@ import Image from "next/image";
 
 export const ScenarioScreen = () => {
   const { showcaseJSON, selectedCharacter } = useShowcaseStore();
-  const { 
+  const {
     scenarios,
     setScenarios,
     editScenario,
@@ -21,9 +24,9 @@ export const ScenarioScreen = () => {
   } = useScenarios();
 
   useEffect(() => {
-    const initialScenarios = JSON.parse(JSON.stringify(
-      showcaseJSON.personas[selectedCharacter].scenarios
-    ));
+    const initialScenarios = JSON.parse(
+      JSON.stringify(showcaseJSON.personas[selectedCharacter].scenarios)
+    );
     setScenarios(initialScenarios);
   }, [selectedCharacter, setScenarios]);
 
@@ -99,7 +102,9 @@ export const ScenarioScreen = () => {
                     </div>
                   )}
                   <div>
-                    <h5 className="font-bold mb-2">{scenario.overview.title}</h5>
+                    <h5 className="font-bold mb-2">
+                      {scenario.overview.title}
+                    </h5>
                     <p className="text-sm">{scenario.overview.text}</p>
                   </div>
                 </div>
@@ -108,9 +113,7 @@ export const ScenarioScreen = () => {
 
             {/* Steps Section */}
             <div className="p-5">
-              <DndContext
-                collisionDetection={closestCenter}
-              >
+              <DndContext collisionDetection={closestCenter}>
                 <SortableContext
                   items={scenario.steps.map((step) => step.screenId)}
                   strategy={verticalListSortingStrategy}
@@ -127,11 +130,21 @@ export const ScenarioScreen = () => {
                 </SortableContext>
               </DndContext>
 
-              <Button
+              {/* <Button
                 variant="outline"
                 onClick={() => {
                   setStepState("adding-step");
                   editScenario(index);
+                }}
+                className="mt-4 gap-2"
+              >
+                <Plus className="h-4 w-4" />
+                Add Step
+              </Button> */}
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setStepState("adding-step");
                 }}
                 className="mt-4 gap-2"
               >

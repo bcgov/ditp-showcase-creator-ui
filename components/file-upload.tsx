@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
+import { convertBase64 } from "@/lib/utils";
 
 export const FileUploadFull = ({
   text,
@@ -14,29 +15,20 @@ export const FileUploadFull = ({
 }) => {
   const [preview, setPreview] = useState<string | null>(null);
 
-  const convertBase64 = (file: File) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
-
   const handleChange = async (newValue: File | null) => {
-    let objectUrl = null;
     if (newValue) {
-      objectUrl = URL.createObjectURL(newValue);
-      setPreview(objectUrl);
-
-      const base64 = await convertBase64(newValue);
-      handleJSONUpdate(element, base64 as string);
+      try {
+        const base64 = await convertBase64(newValue);
+        if (typeof base64 === 'string') {
+          setPreview(base64);
+          handleJSONUpdate(element, base64);
+        }
+      } catch (error) {
+        console.error('Error converting file:', error);
+      }
     } else {
       setPreview(null);
+      handleJSONUpdate(element, "");
     }
   };
 

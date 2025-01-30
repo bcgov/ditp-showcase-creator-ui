@@ -1,3 +1,13 @@
+export enum StepType {
+  BASIC = "BASIC",
+  CONNECT_AND_VERIFY = "CONNET_AND_VERIFY"
+}
+
+export enum RequestType {
+  BASIC = "BASIC",
+  OOB = "OOB"
+}
+
 export interface Attribute {
   name: string;
   value: string;
@@ -60,7 +70,7 @@ export interface ProofRequest {
 }
 
 export interface RequestOptions {
-  type: string;
+  type: RequestType;
   title: string;
   text: string;
   proofRequest: ProofRequest;
@@ -68,7 +78,7 @@ export interface RequestOptions {
 
 export interface ScenarioStep {
   screenId: string;
-  type: string;
+  type: StepType.BASIC | StepType.CONNECT_AND_VERIFY;
   title: string;
   text: string;
   requestOptions: RequestOptions;

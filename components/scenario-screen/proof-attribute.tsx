@@ -1,7 +1,13 @@
 import { Attribute } from "@/types";
 import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Select } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { PREDICATE_OPTIONS } from "@/schemas/scenario";
 
@@ -29,23 +35,27 @@ export const ProofAttribute = ({
       <div className="space-y-2">
         <label className="text-sm font-medium">Attribute</label>
         <Select
-          value={attribute}
-          onValueChange={(value) => onAttributeChange(index, value)}
+          onValueChange={(value) => {
+            onAttributeChange(index, value as any);
+          }}
+          defaultValue={attribute}
         >
-          {availableAttributes.map((attr) => (
-            <Select.Option key={attr.name} value={attr.name}>
-              {attr.name}
-            </Select.Option>
-          ))}
+          <SelectTrigger>
+            <SelectValue placeholder="Select attribute" />
+          </SelectTrigger>
+          <SelectContent>
+            {availableAttributes.map((attr) => (
+              <SelectItem key={attr.name} value={attr.name}>
+                {attr.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
         </Select>
       </div>
 
       <div className="space-y-2">
         <label className="text-sm font-medium">Attribute Value</label>
-        <Input
-          value={currentValue}
-          disabled
-        />
+        <Input value={currentValue} disabled />
       </div>
 
       <div className="space-y-2">
@@ -55,9 +65,9 @@ export const ProofAttribute = ({
           onValueChange={(value) => onConditionTypeChange(index, value)}
         >
           {PREDICATE_OPTIONS.map((option) => (
-            <Select.Option key={option.value} value={option.value}>
+            <SelectItem key={option.value} value={option.value}>
               {option.label}
-            </Select.Option>
+            </SelectItem>
           ))}
         </Select>
       </div>

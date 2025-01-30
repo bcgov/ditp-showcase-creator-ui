@@ -8,13 +8,13 @@ import {
   removeCredentialAttribute,
   getNestedValue,
   updateOnboardingStep,
-  isArrayProperty,
+  checkCredentialProperties,
   updateOnboardingStepSingleValue,
   updateOnboardingStepCredentials,
   removeOnboardingStepCredential,
   addOnboardingStepCredential
 } from './json-helper';
-import { ShowcaseJSON, Credentials, ProofRequest, OnboardingStep } from '../types';
+import { ShowcaseJSON, Credentials, ProofRequest, OnboardingStep, StepType, RequestType } from '../types';
 import { createDraft, WritableDraft } from 'immer';
 
 describe('json-helpers', () => {
@@ -132,11 +132,11 @@ describe('json-helpers', () => {
                     }
                   }
                 },
-                type: '',
+                type: RequestType.BASIC,
                 title: '',
                 text: ''
               },
-              type: '',
+              type: StepType.BASIC,
               title: '',
               text: ''
             }],
@@ -424,16 +424,16 @@ describe('Onboarding Step Helpers', () => {
    });
  });
 
- describe('isArrayProperty', () => {
+ describe('checkCredentialProperties', () => {
    it('should return true for credentials property', () => {
-     expect(isArrayProperty('credentials')).toBe(true);
+     expect(checkCredentialProperties('credentials')).toBe(true);
    });
 
    it('should return false for non-array properties', () => {
-     expect(isArrayProperty('title')).toBe(false);
-     expect(isArrayProperty('text')).toBe(false);
-     expect(isArrayProperty('screenId')).toBe(false);
-     expect(isArrayProperty('image')).toBe(false);
+     expect(checkCredentialProperties('title')).toBe(false);
+     expect(checkCredentialProperties('text')).toBe(false);
+     expect(checkCredentialProperties('screenId')).toBe(false);
+     expect(checkCredentialProperties('image')).toBe(false);
    });
  });
 

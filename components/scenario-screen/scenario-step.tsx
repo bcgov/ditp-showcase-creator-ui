@@ -39,7 +39,7 @@ export const ScenarioStep = ({
   const handleSelect = () => {
     setSelectedStep(stepIndex);
     setSelectedScenario(scenarioIndex);
-    setStepState(step.requestOptions ? "proof-step-edit" : "basic-step-edit");
+    setStepState(step.type === "CONNET_AND_VERIFY" ? "proof-step-edit" : "basic-step-edit");
   };
 
   const handleDelete = (e: React.MouseEvent) => {
@@ -52,93 +52,80 @@ export const ScenarioStep = ({
     <div
       ref={setNodeRef}
       style={style}
-      {...attributes}
-      {...listeners}
-      className="p-4 flex flex-row justify-items-center items-center w-full"
+      className="p-4 flex flex-row justify-items-center items-center w-full border rounded-lg mb-4 hover:bg-accent/10 cursor-pointer"
+      onClick={handleSelect}
     >
-      <span className="text-2xl mt-10 cursor-grab">
+      <span 
+        className="text-2xl cursor-grab p-2"
+        {...attributes}
+        {...listeners}
+      >
         <GripVertical />
       </span>
 
-      <div 
-        onClick={handleSelect}
-        className="w-full cursor-pointer"
-      >
-        <div className="px-3 flex flex-col w-full">
-          <p className={cn(
-            "text-sm",
-            step.requestOptions && "text-amber-500 font-bold"
-          )}>
-            {step.requestOptions ? "Proof Step" : "Basic Step"}
-          </p>
+      <div className="flex-1 px-3">
+        <p className={cn(
+          "text-sm",
+          step.type === "CONNET_AND_VERIFY" && "text-amber-500 font-bold"
+        )}>
+          {step.type === "CONNET_AND_VERIFY" ? "Proof Step" : "Basic Step"}
+        </p>
 
-          <p className="font-bold">
-            {step.title} - ({stepIndex + 1} / {totalSteps})
-          </p>
+        <p className="font-bold">
+          {step.title} - ({stepIndex + 1} / {totalSteps})
+        </p>
 
-          <div className={cn(
-            "w-full flex text-sm flex-col rounded hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover",
-            selectedStep === stepIndex 
-              ? "border-2 border-foreground" 
-              : "border-2 border-light-bg-secondary"
-          )}>
-            <div className="w-full flex flex-row justify-items-center items-center rounded p-3">
-              <div className="text-2xl p-2 mx-2 rounded highlight-text">
-                {/* {step.image ? (
-                  <Image
-                    width={100}
-                    height={100}
-                    src={step.image}
-                    alt={step.title}
-                    className="object-cover"
-                  />
-                ) : (
-                  <FontAwesomeIcon icon={faDisplay} />
-                )} */}
-                 <Monitor />
-              </div>
-
-              <p>
-                {step.text.length > MAX_CHARS ? (
-                  <>
-                    {step.text.slice(0, MAX_CHARS)}...{" "}
-                    <span className="font-bold">see more</span>
-                  </>
-                ) : (
-                  step.text
-                )}
-              </p>
+        <div className={cn(
+          "w-full flex text-sm flex-col rounded",
+          selectedStep === stepIndex 
+            ? "border-2 border-foreground" 
+            : "border border-light-bg-secondary"
+        )}>
+          <div className="w-full flex flex-row items-center p-3">
+            <div className="text-2xl p-2 mx-2 rounded highlight-text">
+              <Monitor />
             </div>
 
-            {step.requestOptions?.proofRequest?.attributes && (
-              <>
-                <hr />
-                <div className="w-full py-2">
-                  <p className="text-sm m-1 mt-2 font-bold">
-                    Requested Credentials:
-                  </p>
-                  <div className="flex items-center justify-center flex-wrap gap-2 p-2">
-                    {Object.keys(step.requestOptions.proofRequest.attributes).map((key) => (
-                      <div
-                        key={key}
-                        className="border dark:border-dark-border rounded p-2"
-                      >
-                        {key}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </>
-            )}
+            <p>
+              {step.text.length > MAX_CHARS ? (
+                <>
+                  {step.text.slice(0, MAX_CHARS)}...{" "}
+                  <span className="font-bold">see more</span>
+                </>
+              ) : (
+                step.text
+              )}
+            </p>
           </div>
+
+          {step.requestOptions?.proofRequest?.attributes && (
+            <>
+              <hr />
+              <div className="w-full py-2">
+                <p className="text-sm m-1 mt-2 font-bold">
+                  Requested Credentials:
+                </p>
+                <div className="flex flex-wrap gap-2 p-2">
+                  {Object.keys(step.requestOptions.proofRequest.attributes).map((key) => (
+                    <div
+                      key={key}
+                      className="border dark:border-dark-border rounded p-2"
+                    >
+                      {key}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
       <button
         onClick={handleDelete}
-        className="px-3 hover:text-red-500"
+        className="p-2 hover:text-red-500"
       >
-        <Trash2 />
+        <Trash2 className="h-5 w-5" />
       </button>
     </div>
   );

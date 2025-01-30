@@ -8,8 +8,7 @@ import { Form } from "@/components/ui/form";
 import { FormTextInput, FormTextArea } from "@/components/text-input";
 import { basicStepSchema, BasicStepFormData } from "@/schemas/scenario";
 import { useScenarios } from "@/hooks/use-scenarios";
-import { ScenarioStep } from "@/types";
-
+import { RequestType, StepType } from "@/types";
 
 export const BasicStepEdit = () => {
   const {
@@ -25,25 +24,64 @@ export const BasicStepEdit = () => {
     ? currentScenario.steps[selectedStep] 
     : null;
 
-  const form = useForm<BasicStepFormData>({
-    resolver: zodResolver(basicStepSchema),
-    mode: "all",
-  });
+    const form = useForm<BasicStepFormData>({
+      resolver: zodResolver(basicStepSchema),
+      mode: "all",
+      defaultValues: {
+        type: StepType.BASIC,
+        title: "",
+        text: "",
+        requestOptions: {
+          type: RequestType.BASIC,
+          title: "",
+          text: "",
+          proofRequest: {
+            attributes: {},
+            predicates: {},
+          },
+        },
+      },
+    });
 
-  useEffect(() => {
-    if (currentStep) {
-      form.reset(currentStep as ScenarioStep);
-    }
-  }, [currentStep, form.reset]);
+    useEffect(() => {
+      if (currentStep) {
+        const formData = {
+          screenId: currentStep.screenId,
+          type: StepType.BASIC,
+          title: currentStep.title,
+          text: currentStep.text,
+          requestOptions: {
+            type: RequestType.BASIC,
+            title: currentStep.requestOptions?.title || "",
+            text: currentStep.requestOptions?.text || "",
+            proofRequest: {
+              attributes: currentStep.requestOptions?.proofRequest?.attributes || {},
+              predicates: currentStep.requestOptions?.proofRequest?.predicates || {},
+            },
+          },
+        };
+        form.reset(formData as BasicStepFormData);
+      }
+    }, [currentStep, form.reset]);
 
-  const onSubmit = (data: BasicStepFormData) => {
-    if (selectedScenario === null || selectedStep === null) return;
-
-    updateStep(selectedScenario, selectedStep, data);
-    setStepState("none-selected");
-  };
-
-  if (!currentStep) return null;
+    const onSubmit = (data: BasicStepFormData) => {
+      if (selectedScenario === null || selectedStep === null) return;
+  
+      // Transform the form data back to the expected format
+      const stepData = {
+        ...data,
+        type: data.type.toUpperCase() as StepType,
+        requestOptions: {
+          ...data.requestOptions,
+          type: data.requestOptions.type.toUpperCase() as RequestType,
+        },
+      };
+  
+      updateStep(selectedScenario, selectedStep, stepData);
+      setStepState("none-selected");
+    };
+  
+    if (!currentStep) return null;
 
   return (
     <Form {...form}>

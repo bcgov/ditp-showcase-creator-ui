@@ -22,7 +22,6 @@ export const getNestedValue = <T,>(json: T, path: string[]): unknown => {
   }, json);
 };
 
-
 /**
  * Removes a credential and all its references from scenarios
  * @param json - The ShowcaseJSON draft to modify
@@ -198,7 +197,7 @@ export const updateOnboardingStep = (
 /**
  * Type guard to check if a key in OnboardingStep expects an array value
  */
-export const isArrayProperty = (key: keyof OnboardingStep): boolean => {
+export const checkCredentialProperties = (key: keyof OnboardingStep): boolean => {
   return key === 'credentials';
 };
 

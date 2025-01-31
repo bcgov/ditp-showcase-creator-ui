@@ -1,6 +1,6 @@
 import { Credentials, ShowcaseJSON } from "@/types";
 import { Trash2 } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 export const Credential = ({
   issuerName,
@@ -21,7 +21,7 @@ export const Credential = ({
   handleCredentialRemoval: () => void;
   showcaseJSON: ShowcaseJSON;
 }) => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const isSingleCredential =
     Object.keys(showcaseJSON.personas[0].credentials).length === 1;
 

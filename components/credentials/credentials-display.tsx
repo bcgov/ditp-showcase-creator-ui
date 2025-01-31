@@ -5,10 +5,10 @@ import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { useCredentials } from "@/hooks/use-credentials";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 export const CredentialsDisplay = () => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const { showcaseJSON, selectedCharacter } = useShowcaseStore();
   const {
     isCreating,

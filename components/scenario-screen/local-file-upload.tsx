@@ -18,7 +18,7 @@ export function LocalFileUpload({
   handleLocalUpdate,
   localJSON,
 }: LocalFileUploadProps) {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const [preview, setPreview] = useState<string | null>(null);
 
   useEffect(() => {

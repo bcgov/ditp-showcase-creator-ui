@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { ScenarioStep as ScenarioStepType } from "@/types";
 import { useScenarios } from "@/hooks/use-scenarios";
 import { GripVertical, Monitor, Trash2 } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 const MAX_CHARS = 110;
 
@@ -19,7 +19,7 @@ export const ScenarioStep = ({
   scenarioIndex: number;
   totalSteps: number;
 }) => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const {
     selectedStep,
     setSelectedStep,

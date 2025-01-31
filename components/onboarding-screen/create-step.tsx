@@ -1,6 +1,6 @@
 import { useOnboarding } from "@/hooks/use-onboarding";
 import { ArrowRight } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 export const CreateNewStep = () => {
   const { createStep, setStepState } = useOnboarding();
@@ -18,7 +18,7 @@ export const CreateNewStep = () => {
     setStepState(isIssue ? "editing-issue" : "editing-basic");
   };
 
-  const { t } = useTranslation()
+  const t = useTranslations()
 
   return (
     <>

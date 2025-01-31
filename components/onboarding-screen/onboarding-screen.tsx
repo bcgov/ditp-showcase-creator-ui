@@ -12,14 +12,14 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 import { SortableStep } from "@/components/onboarding-screen/sortable-step";
 import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { useOnboarding } from "@/hooks/use-onboarding";
 import { Plus, Trash2 } from "lucide-react";
 
 export const OnboardingScreen = () => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const { showcaseJSON, selectedCharacter } = useShowcaseStore();
   const {
     screens,

@@ -2,7 +2,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { convertBase64 } from "@/lib/utils";
 import { Trash2 } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
+
 export const FileUploadFull = ({
   text,
   element,
@@ -12,7 +13,7 @@ export const FileUploadFull = ({
   element: 'headshot_image' | 'body_image';
   handleJSONUpdate: (imageType: 'headshot_image' | 'body_image', imageData: string) => void;
 }) => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const [preview, setPreview] = useState<string | null>(null);
 
   const handleChange = async (newValue: File | null) => {

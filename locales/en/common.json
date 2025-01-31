@@ -1,4 +1,8 @@
 {
+  "metadata": {
+    "title": "DITP Showcase Creator",
+    "description": "Create your own showcase for the DITP"
+  },
   "character": {
     "header_title": "Create your Character",
     "header_subtitle": "Fill in the details on the right to create your character for this showcase.",
@@ -20,10 +24,10 @@
   "credentials": {
     "header_title": "Add your Credentials",
     "header_subtitle": "Fill in the details on the right to create a credential for this showcase.",
-    "credentials_added_label": "Credentials Added: {{credentialCount}}",
+    "credentials_added_label": "Credentials Added: {credentialCount}",
     "add_credential_label": "Add Credential",
     "no_credential_selected_message": "You have no credential selected.",
-    "item_attribute_count_label": "Attributes: {{attributeCount}}",
+    "item_attribute_count_label": "Attributes: {attributeCount}",
     "section_title": "Credentials",
     "edit_header_title": "Edit a Credential",
     "add_header_title": "Add a new Credential",
@@ -39,14 +43,13 @@
     "attribute_value_label": "Value",
     "attribute_value_placeholder": "Attribute Value",
     "attribute_type_label": "Type",
-    "card_issuer_name_label": "issuer: {{issuerName}}",
-    "card_attributes_label_one": "{{count}} attribute",
-    "card_attributes_label_other": "{{count}} attributes"
+    "card_issuer_name_label": "issuer: {issuerName}",
+    "card_attributes_label": "{count, plural, =0 {No Attributes} =1 {One Attribute} other {# Attributes}}"
   },
   "onboarding": {
     "header_title": "Add your Steps",
     "header_subtitle": "Add pages below to create the onboarding steps.",
-    "steps_added_label": "Steps Added: {{stepCount}}",
+    "steps_added_label": "Steps Added: {stepCount}",
     "add_step_label": "Add Step",
     "no_step_selected_message": "No Step Selected",
     "step_basic_step_label": "Basic Step",
@@ -78,7 +81,7 @@
     "header_subtitle": "Add pages below to create your scenarios screens and connecting steps.",
     "no_scenario_selected_message": "Nothing Selected",
     "add_scenario_label": "Add Scenario",
-    "scenarios_added_label": "Scenarios Added: {{scenarioCount}}",
+    "scenarios_added_label": "Scenarios Added: {scenarioCount}",
     "delete_scenario_label": "Delete Scenario",
     "overview_label": "Overview",
     "add_step_label": "Add Step",

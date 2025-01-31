@@ -7,13 +7,13 @@ import { Form } from "@/components/ui/form";
 import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { FormTextInput, FormTextArea } from "../text-input";
 import { characterSchema } from "@/schemas/character";
-import { useTranslation } from "react-i18next"
+import { useTranslations } from 'next-intl';
 
 type CharacterFormData = z.infer<typeof characterSchema>;
 
 export const CharacterEdit = () => {
   const { updateCharacterImage, showcaseJSON, selectedCharacter, setEditMode, updateCharacterDetails } = useShowcaseStore();
-  const { t } = useTranslation()
+  const t = useTranslations()
 
   const form = useForm<CharacterFormData>({
     resolver: zodResolver(characterSchema),

@@ -1,11 +1,7 @@
-import intlInit from "@/app/i18n";
+import { useTranslations } from 'next-intl';
 
-type Props = {
-    locale: string
-}
-
-export const Footer = async (props: Props) => {
-  const { t } = await intlInit({ locale: props.locale })
+export const Footer = () => {
+  const t = useTranslations()
   return (
     <footer className="py-6 bg-light-bg-secondary dark:bg-dark-bg-secondary  dark:text-dark-text text-center relative bottom-0 left-0 w-full">
       <p>

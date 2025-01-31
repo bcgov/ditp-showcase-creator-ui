@@ -3,14 +3,14 @@
 import { useState } from "react";
 import { saveAs } from "file-saver";
 import { useShowcaseStore } from "@/hooks/use-showcase-store";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 export const SaveModal = ({
   setShowModal,
 }: {
   setShowModal: (showModal: boolean) => void;
 }) => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const [ filename, setFilename ] = useState("");
   const { showcaseJSON } = useShowcaseStore();
 

@@ -12,10 +12,10 @@ import { scenarioSchema } from "@/schemas/scenario";
 import { ScenarioFormData } from "@/schemas/scenario";
 import { Scenario } from "@/types";
 import { scenarioToFormData } from "@/lib/scenario-transformers";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 export const ScenarioEdit = () => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const {
     scenarios,
     selectedScenario,

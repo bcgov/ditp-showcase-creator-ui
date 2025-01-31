@@ -1,4 +1,8 @@
 {
+  "metadata": {
+    "title": "DITP Showcase Creator",
+    "description": "Créez votre propre vitrine pour le DITP"
+  },
   "character": {
     "header_title": "Créez votre Personnage",
     "header_subtitle": "Remplissez les détails à droite pour créer votre personnage pour cette vitrine.",
@@ -20,10 +24,10 @@
   "credentials": {
     "header_title": "Ajoutez vos Identifiants",
     "header_subtitle": "Remplissez les détails à droite pour créer un identifiant pour cette vitrine.",
-    "credentials_added_label": "Identifiants ajoutés: {{credentialCount}}",
+    "credentials_added_label": "Identifiants ajoutés: {credentialCount}",
     "add_credential_label": "Ajouter un Identidiant",
     "no_credential_selected_message": "Aucun identifiant sélectionné.",
-    "item_attribute_count_label": "Attributs: {{attributeCount}}",
+    "item_attribute_count_label": "Attributs: {attributeCount}",
     "section_title": "Identifiants",
     "edit_header_title": "Modifier un Identifiant",
     "add_header_title": "Ajouter un nouvel Identifiant",
@@ -39,14 +43,13 @@
     "attribute_value_label": "Valeur",
     "attribute_value_placeholder": "Valeur de l'Attribut",
     "attribute_type_label": "Taper",
-    "card_issuer_name_label": "L'Émetteur: {{issuerName}}",
-    "card_attributes_label_one": "{{count}} attribut",
-    "card_attributes_label_other": "{{count}} attributs"
+    "card_issuer_name_label": "L'Émetteur: {issuerName}",
+    "card_attributes_label": "{count, plural, =0 {Aucun Attribut} =1 {Un Attribut} other {# Attributs}}"
   },
   "onboarding": {
     "header_title": "Ajoutez vos Étapes",
     "header_subtitle": "Ajoutez des pages ci-dessous pour créer les étapes d'intégration.",
-    "steps_added_label": "Étapes ajoutées: {{stepCount}}",
+    "steps_added_label": "Étapes ajoutées: {stepCount}",
     "add_step_label": "Ajouter une Étape",
     "no_step_selected_message": "Aucune étape sélectionnée",
     "step_basic_step_label": "Étape Basique",
@@ -78,7 +81,7 @@
     "header_subtitle": "Ajoutez des pages ci-dessous pour créer vos écrans de scénarios et les étapes de connexion.",
     "no_scenario_selected_message": "Aucune sélection",
     "add_scenario_label": "Ajouter Un Scénario",
-    "scenarios_added_label": "Scénarios ajoutés: {{scenarioCount}}",
+    "scenarios_added_label": "Scénarios ajoutés: {scenarioCount}",
     "delete_scenario_label": "Supprimer Le Scénario",
     "overview_label": "Aperçu",
     "add_step_label": "Ajouter Une Étape",

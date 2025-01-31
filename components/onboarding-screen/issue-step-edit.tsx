@@ -13,10 +13,10 @@ import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { useOnboarding } from "@/hooks/use-onboarding";
 import { IssueStepFormData, issueStepSchema } from "@/schemas/onboarding";
 import { Search } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 export function IssueStepEdit() {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const { showcaseJSON, selectedCharacter } = useShowcaseStore();
   const { selectedStep, screens, updateStep, setSelectedStep, setStepState } =
     useOnboarding();

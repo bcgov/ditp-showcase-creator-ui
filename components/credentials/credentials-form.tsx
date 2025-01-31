@@ -9,10 +9,10 @@ import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { useCredentials } from "@/hooks/use-credentials";
 import { CredentialFormData, credentialSchema } from "@/schemas/credential";
 import { CredentialAttributes } from "./components/credential-attribute";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 export const CredentialsForm = () => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const {
     showcaseJSON,
     selectedCharacter,

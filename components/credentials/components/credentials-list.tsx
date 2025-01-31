@@ -6,7 +6,7 @@ import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { Trash2, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 interface CredentialsListProps {
   selectedCharacter: number;
@@ -17,7 +17,7 @@ export const CredentialsList = ({
   selectedCharacter,
   showcaseJSON,
 }: CredentialsListProps) => {
-  const { t } = useTranslation()
+  const t = useTranslations('credentials')
   const {
     selectedCredential,
     startEditing,
@@ -43,10 +43,10 @@ export const CredentialsList = ({
             <div className="flex-1 min-w-0">
               <h4 className="font-medium truncate">{credential.name}</h4>
               <p className="text-sm text-muted-foreground truncate">
-                {t('credentials.card_issuer_name_label', { issuerName: credential.issuer_name })}
+                {t('card_issuer_name_label', { issuerName: credential.issuer_name })}
               </p>
               <p className="text-sm text-muted-foreground mt-1">
-                {t('credentials.card_attributes_label', { count: credential.attributes.length })}
+                {t('card_attributes_label', { count: credential.attributes.length })}
               </p>
             </div>
             <div className="flex gap-1 shrink-0" onClick={e => e.stopPropagation()}>

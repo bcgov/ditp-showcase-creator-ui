@@ -1,11 +1,12 @@
 import { CredentialsDisplay } from "@/components/credentials/credentials-display";
 import { CredentialsEditor } from "@/components/credentials/credentials-editor";
 import {PageParams} from '@/types';
-import intlInit from '@/app/i18n';
+import { setRequestLocale, getTranslations } from "next-intl/server";
 
 export default async function Credentials({ params }: { params: PageParams }) {
   const { locale } = await params
-  const { t } = await intlInit({ locale })
+  setRequestLocale(locale);
+  const t = await getTranslations('credentials');
 
   return (
      <div className="flex flex-col min-h-screen mt-20 ">
@@ -15,10 +16,10 @@ export default async function Credentials({ params }: { params: PageParams }) {
             <div className="flex justify-between">
               <div>
                 <h3 className="text-4xl font-bold text-foreground">
-                  {t('credentials.header_title')}
+                  {t('header_title')}
                 </h3>
                 <p className="text-foreground mt-3">
-                  {t('credentials.header_subtitle')}
+                  {t('header_subtitle')}
                 </p>
               </div>
             </div>

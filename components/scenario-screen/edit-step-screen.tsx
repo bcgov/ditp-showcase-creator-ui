@@ -10,10 +10,10 @@ import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { useScenarios } from "@/hooks/use-scenarios";
 import { createEmptyStep } from "@/hooks/use-scenarios";
 import { StepType } from "@/types";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 export const EditStepScreen = () => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const { showcaseJSON, selectedCharacter } = useShowcaseStore();
   const {
     scenarios,

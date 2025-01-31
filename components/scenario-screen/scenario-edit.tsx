@@ -10,10 +10,10 @@ import { LocalFileUpload } from "./local-file-upload";
 import { useScenarios } from "@/hooks/use-scenarios";
 import { scenarioSchema } from "@/schemas/scenario";
 import { ScenarioFormData } from "@/schemas/scenario";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 export const ScenarioEdit = () => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const {
     scenarios,
     selectedScenario,

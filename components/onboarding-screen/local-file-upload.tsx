@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Trash2 } from "lucide-react";
 import { OnboardingStep } from "@/types";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 interface LocalFileUploadProps {
   text: string;
@@ -18,7 +18,7 @@ export function LocalFileUpload({
   handleLocalUpdate,
   localJSON,
 }: LocalFileUploadProps) {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const [preview, setPreview] = useState<string | null>(null);
 
   useEffect(() => {

@@ -3,10 +3,10 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { Button } from '@/components/ui/button';
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 export const CharacterInfo = () => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const {
     showcaseJSON,
     selectedCharacter,

@@ -13,7 +13,7 @@ type CharacterFormData = z.infer<typeof characterSchema>;
 
 export const CharacterEdit = () => {
   const { updateCharacterImage, showcaseJSON, selectedCharacter, setEditMode, updateCharacterDetails } = useShowcaseStore();
-  const { t } = useTranslation()
+  const t = useTranslations()
 
   const form = useForm<CharacterFormData>({
     resolver: zodResolver(characterSchema),

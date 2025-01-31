@@ -114,7 +114,7 @@ export type ScenarioStepState = "none-selected" | "adding-step" | "basic-step-ed
 
 export type ElementPath = string | [string, string];
 
-export type PageParams = Promise<{ locale: string }>
+export type Locale = "en" | "fr"
 
 export type I18nNamespaces = 'common'
 

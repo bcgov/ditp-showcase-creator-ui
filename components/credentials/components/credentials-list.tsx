@@ -6,7 +6,7 @@ import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { Trash2, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 interface CredentialsListProps {
   selectedCharacter: number;
@@ -17,7 +17,7 @@ export const CredentialsList = ({
   selectedCharacter,
   showcaseJSON,
 }: CredentialsListProps) => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const {
     selectedCredential,
     startEditing,

@@ -11,10 +11,10 @@ import { useOnboarding } from "@/hooks/use-onboarding";
 import { BasicStepFormData } from "@/schemas/onboarding";
 import { basicStepSchema } from "@/schemas/onboarding";
 import { LocalFileUpload } from "./local-file-upload";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 export const BasicStepEdit = () => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const {
     screens,
     selectedStep,

@@ -1,7 +1,7 @@
 import { NoSelection } from "../credentials/no-selection";
 import { Trash2 } from "lucide-react";
 import { ShowcaseJSON } from "@/types";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 interface DisplayAddedCredentialsProps {
   selectedCharacter: number;
@@ -18,7 +18,7 @@ export const DisplayAddedCredentials = ({
   localJSON,
   removeCredential,
 }: DisplayAddedCredentialsProps) => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const credentials = localJSON.credentials || [];
   const hasCredentials = credentials.length > 0;
 

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { GripVertical, Monitor } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { useOnboarding } from "@/hooks/use-onboarding";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 const MAX_CHARS = 110;
 
@@ -20,7 +20,7 @@ export const SortableStep = ({
   stepIndex: number;
   totalSteps: number;
 }) => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const { setSelectedStep, setStepState } = useOnboarding();
 
   const { attributes, listeners, setNodeRef, transform, transition } =

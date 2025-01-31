@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 export const FileUploadFull = ({
   text,
@@ -13,7 +13,7 @@ export const FileUploadFull = ({
   element: 'headshot_image' | 'body_image';
   handleJSONUpdate: (imageType: 'headshot_image' | 'body_image', imageData: string) => void;
 }) => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const [preview, setPreview] = useState<string | null>(null);
 
   const convertBase64 = (file: File) => {

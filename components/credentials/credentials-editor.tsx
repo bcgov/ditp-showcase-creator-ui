@@ -3,10 +3,10 @@
 import { CredentialsForm } from "./credentials-form";
 import { NoSelection } from "./no-selection";
 import { useCredentials } from "@/hooks/use-credentials";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 export const CredentialsEditor = () => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const { mode } = useCredentials();
 
   if (!mode) {

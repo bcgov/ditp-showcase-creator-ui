@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Trash2 } from "lucide-react";
 import { convertBase64 } from "@/lib/utils";
-import { useTranslation } from "react-i18next"
+import { useTranslations } from "next-intl";
 
 interface LocalFileUploadProps {
   text: string;

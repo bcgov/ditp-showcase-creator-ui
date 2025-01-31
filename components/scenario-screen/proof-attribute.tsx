@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { PREDICATE_OPTIONS } from "@/schemas/scenario";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 interface ProofAttributeProps {
   index: number;
@@ -31,7 +31,7 @@ export const ProofAttribute = ({
   onConditionTypeChange,
   onRemove,
 }: ProofAttributeProps) => {
-  const { t } = useTranslation();
+  const t = useTranslations();
   return (
     <div className="grid grid-cols-5 gap-4 items-end">
       <div className="space-y-2">

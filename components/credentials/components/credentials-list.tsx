@@ -17,7 +17,7 @@ export const CredentialsList = ({
   selectedCharacter,
   showcaseJSON,
 }: CredentialsListProps) => {
-  const t = useTranslations()
+  const t = useTranslations('credentials')
   const {
     selectedCredential,
     startEditing,
@@ -43,10 +43,10 @@ export const CredentialsList = ({
             <div className="flex-1 min-w-0">
               <h4 className="font-medium truncate">{credential.name}</h4>
               <p className="text-sm text-muted-foreground truncate">
-                {t('credentials.card_issuer_name_label', { issuerName: credential.issuer_name })}
+                {t('card_issuer_name_label', { issuerName: credential.issuer_name })}
               </p>
               <p className="text-sm text-muted-foreground mt-1">
-                {t('credentials.card_attributes_label', { count: credential.attributes.length })}
+                {t('card_attributes_label', { count: credential.attributes.length })}
               </p>
             </div>
             <div className="flex gap-1 shrink-0" onClick={e => e.stopPropagation()}>

@@ -1,12 +1,12 @@
 import { EditStepScreen } from "@/components/scenario-screen/edit-step-screen";
 import { ScenarioScreen } from "@/components/scenario-screen/scenario-screen";
-
-import {PageParams} from '@/types';
-import intlInit from '@/app/i18n';
+import { PageParams } from "@/types";
+  import { setRequestLocale, getTranslations } from "next-intl/server";
 
 export default async function Scenario({ params }: { params: PageParams }) {
-  const { locale } = await params
-  const { t } = await intlInit({ locale })
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("scenario");
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -15,10 +15,10 @@ export default async function Scenario({ params }: { params: PageParams }) {
           <div className="flex w-full">
             <div>
               <h2 className="text-4xl font-bold text-foreground">
-                {t('scenario.header_title')}
+                {t('header_title')}
               </h2>
               <p className="w-full mt-3">
-                {t('scenario.header_subtitle')}
+                {t('header_subtitle')}
               </p>
             </div>
           </div>

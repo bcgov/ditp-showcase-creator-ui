@@ -9,7 +9,7 @@ import {NextIntlClientProvider} from 'next-intl';
 import {getMessages, getTranslations} from 'next-intl/server';
 import {routing} from '@/i18n/routing';
 import {notFound} from 'next/navigation';
-import { Locale } from "@/types";
+import { Locale, PageParams } from "@/types";
 
 import "./globals.css";
 
@@ -19,13 +19,13 @@ const montserrat = Montserrat({
   weight: ["400", "700"],
 });
 
-export async function generateMetadata({params: {locale}}: {params: {locale: Locale}}) {
-  const t = await getTranslations({locale, namespace: 'Metadata'});
+export async function generateMetadata({params}: {params: Promise<{locale: Locale}>}) {
+  const locale = await params;
+  const t = await getTranslations({locale, namespace: 'metadata'});
  
   return {
-    // title: t('title'), 
-    title: "DITP Showcase Creator",
-    description: "Create your own showcase for the DITP",
+    title: t('title'), 
+    description: t('description'),
   };
 }
 
@@ -33,14 +33,14 @@ export function generateStaticParams() {
   return i18nConfig.locales.map(locale => ({ locale }));
 }
 
-type PageParams = PropsWithChildren<{
-  params: Promise<{ locale: Locale }>;
+type Params = PropsWithChildren<{
+  params: PageParams;
 }>
 
 export default async function RootLayout({
   children,
   params,
-}: PageParams) {
+}: Params) {
   const { locale } = await params
   // Ensure that the incoming `locale` is valid
   if (!routing.locales.includes(locale)) {

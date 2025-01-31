@@ -1,9 +1,13 @@
+import React, { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { NavBar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { JSONPreview } from "@/components/json-preview";
+import i18nConfig from "@/i18n.config";
+import IntlProvider from "@/providers/IntlProvider";
+import {PageParams} from "@/types";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -17,13 +21,21 @@ export const metadata: Metadata = {
   description: "Create your own showcase for the DITP",
 };
 
-export default function RootLayout({
+export function generateStaticParams() {
+  return i18nConfig.locales.map(locale => ({ locale }));
+}
+
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
+  params: PageParams;
 }>) {
+  const { locale } = await params
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body className={`${montserrat.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
@@ -31,12 +43,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="min-h-screen bg-light-bg dark:bg-dark-bg text-light-text">
-            <NavBar />
-            {children}
-            {process.env.NODE_ENV === "development" && <JSONPreview />}
-            <Footer />
-          </div>
+          <IntlProvider locale={locale}>
+            <div className="min-h-screen bg-light-bg dark:bg-dark-bg text-light-text">
+              <NavBar locale={locale}/>
+              {children}
+              {process.env.NODE_ENV === "development" && <JSONPreview />}
+              <Footer locale={locale}/>
+            </div>
+          </IntlProvider>
         </ThemeProvider>
       </body>
     </html>

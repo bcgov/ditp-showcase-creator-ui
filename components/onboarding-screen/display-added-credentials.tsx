@@ -1,6 +1,7 @@
 import { NoSelection } from "../credentials/no-selection";
 import { Trash2 } from "lucide-react";
 import { ShowcaseJSON } from "@/types";
+import { useTranslation } from "react-i18next";
 
 interface DisplayAddedCredentialsProps {
   selectedCharacter: number;
@@ -17,13 +18,14 @@ export const DisplayAddedCredentials = ({
   localJSON,
   removeCredential,
 }: DisplayAddedCredentialsProps) => {
+  const { t } = useTranslation()
   const credentials = localJSON.credentials || [];
   const hasCredentials = credentials.length > 0;
 
   if (!hasCredentials) {
     return (
       <div className="m-5 p-5 w-full h-60">
-        <NoSelection text={"No Credentials Added"} />
+        <NoSelection text={t('onboarding.no_credentials_added_message')} />
       </div>
     );
   }
@@ -34,7 +36,7 @@ export const DisplayAddedCredentials = ({
 
       {credentials.map((credential: string, index: number) => {
         const credentialData = showcaseJSON.personas[selectedCharacter].credentials[credential];
-        
+
         if (!credentialData) return null;
 
         return (
@@ -58,7 +60,7 @@ export const DisplayAddedCredentials = ({
                 </div>
               </div>
             </div>
-            
+
             <div
               className="remove flex items-center text-xl justify-center w-1/5 trash-button"
               onClick={(e) => {

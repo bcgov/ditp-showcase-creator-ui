@@ -1,3 +1,6 @@
+import {Resource} from "i18next";
+import {ReactNode} from "react";
+
 export enum StepType {
   BASIC = "BASIC",
   CONNECT_AND_VERIFY = "CONNET_AND_VERIFY"
@@ -120,3 +123,21 @@ export type CredentialElement = [Exclude<keyof Credential, 'attributes'>] | ['at
 export type ScenarioStepState = "none-selected" | "adding-step" | "basic-step-edit" | "proof-step-edit" | "editing-scenario" | "editing-issue" | null;
 
 export type ElementPath = string | [string, string];
+
+export type PageParams = Promise<{ locale: string }>
+
+export type I18nNamespaces = 'common'
+
+export type IntlInitArgs = {
+  locale: string
+  namespaces?: I18nNamespaces[]
+  i18nInstance?: any
+  resources?: Resource
+}
+
+export type IntlProviderArgs = {
+  children: ReactNode
+  locale: string
+  namespaces?: I18nNamespaces[]
+  resources?: Resource
+}

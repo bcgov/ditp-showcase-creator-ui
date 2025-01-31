@@ -6,6 +6,7 @@ import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { Trash2, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface CredentialsListProps {
   selectedCharacter: number;
@@ -16,10 +17,11 @@ export const CredentialsList = ({
   selectedCharacter,
   showcaseJSON,
 }: CredentialsListProps) => {
-  const { 
-    selectedCredential, 
-    startEditing, 
-    viewCredential 
+  const { t } = useTranslation()
+  const {
+    selectedCredential,
+    startEditing,
+    viewCredential
   } = useCredentials();
   const { removeCredential } = useShowcaseStore();
   const credentials = showcaseJSON.personas[selectedCharacter].credentials;
@@ -41,10 +43,10 @@ export const CredentialsList = ({
             <div className="flex-1 min-w-0">
               <h4 className="font-medium truncate">{credential.name}</h4>
               <p className="text-sm text-muted-foreground truncate">
-                Issuer: {credential.issuer_name}
+                {t('credentials.card_issuer_name_label', { issuerName: credential.issuer_name })}
               </p>
               <p className="text-sm text-muted-foreground mt-1">
-                {credential.attributes.length} attribute{credential.attributes.length !== 1 ? 's' : ''}
+                {t('credentials.card_attributes_label', { count: credential.attributes.length })}
               </p>
             </div>
             <div className="flex gap-1 shrink-0" onClick={e => e.stopPropagation()}>
@@ -68,7 +70,7 @@ export const CredentialsList = ({
           </div>
         </div>
       ))}
-      
+
       {Object.keys(credentials).length === 0 && (
         <div className="text-center p-4 text-muted-foreground">
           No credentials added yet

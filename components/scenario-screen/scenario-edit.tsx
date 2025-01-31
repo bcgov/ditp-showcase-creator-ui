@@ -12,9 +12,11 @@ import { scenarioSchema } from "@/schemas/scenario";
 import { ScenarioFormData } from "@/schemas/scenario";
 import { Scenario } from "@/types";
 import { scenarioToFormData } from "@/lib/scenario-transformers";
+import { useTranslation } from "react-i18next";
 
 export const ScenarioEdit = () => {
-  const { 
+  const { t } = useTranslation()
+  const {
     scenarios,
     selectedScenario,
     updateScenario,
@@ -60,41 +62,41 @@ export const ScenarioEdit = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <div>
-          <p className="text-foreground text-sm">Scenario</p>
-          <h3 className="text-2xl font-bold text-foreground">Edit Scenario</h3>
+          <p className="text-foreground text-sm">{t('scenario.edit_header_title')}</p>
+          <h3 className="text-2xl font-bold text-foreground">{t('scenario.edit_header_title')}</h3>
         </div>
         <hr />
 
         <div className="space-y-6">
-          <h4 className="text-xl font-bold">Overview</h4>
+          <h4 className="text-xl font-bold">{t('scenario.edit_overview_label')}</h4>
 
           <FormTextInput
-            label="Scenario Name"
+            label={t('scenario.edit_name_label')}
             name="name"
             register={form.register}
             error={form.formState.errors.name?.message}
-            placeholder="Scenario Name"
+            placeholder={t('scenario.edit_name_placeholder')}
           />
 
           <FormTextInput
-            label="Page Title"
+            label={t('scenario.edit_page_title_label')}
             name="overview.title"
             register={form.register}
             error={form.formState.errors.overview?.title?.message}
-            placeholder="Page Title"
+            placeholder={t('scenario.edit_page_title_placeholder')}
           />
 
           <FormTextArea
-            label="Page Description"
+            label={t('scenario.edit_page_description_label')}
             name="overview.text"
             register={form.register}
             error={form.formState.errors.overview?.text?.message}
-            placeholder="Page Description"
+            placeholder={t('scenario.edit_page_description_placeholder')}
           />
 
           <div className="space-y-2">
           <LocalFileUpload
-              text="Image"
+              text={t('scenario.edit_image_label')}
               element={["overview", "image"] as [string, string]}
               handleLocalUpdate={(path, value) => 
                 form.setValue(
@@ -124,27 +126,27 @@ export const ScenarioEdit = () => {
 
         {/* Summary Section */}
         <div className="space-y-6">
-          <h4 className="text-xl font-bold">Summary</h4>
+          <h4 className="text-xl font-bold">{t('scenario.edit_summary_label')}</h4>
 
           <FormTextInput
-            label="Page Title"
+            label={t('scenario.edit_page_title_label')}
             name="summary.title"
             register={form.register}
             error={form.formState.errors.summary?.title?.message}
-            placeholder="Page Title"
+            placeholder={t('scenario.edit_page_title_placeholder')}
           />
 
           <FormTextArea
-            label="Page Description"
+            label={t('scenario.edit_page_description_label')}
             name="summary.text"
             register={form.register}
             error={form.formState.errors.summary?.text?.message}
-            placeholder="Page Description"
+            placeholder={t('scenario.edit_page_description_placeholder')}
           />
 
           <div className="space-y-2">
           <LocalFileUpload
-              text="Image"
+              text={t('scenario.edit_image_label')}
               element={["summary", "image"] as [string, string]}
               handleLocalUpdate={(path, value) => 
                 form.setValue(
@@ -176,13 +178,13 @@ export const ScenarioEdit = () => {
             variant="outline"
             onClick={() => setStepState("none-selected")}
           >
-            Cancel
+            {t('action.cancel_label')}
           </Button>
           <Button
             type="submit"
             disabled={!form.formState.isDirty || !form.formState.isValid}
           >
-            Save
+            {t('action.save_label')}
           </Button>
         </div>
       </form>

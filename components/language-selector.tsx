@@ -17,37 +17,51 @@ import {
 } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import i18nConfig from '@/i18n.config';
+import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 const languages = [
-  { label: "English", value: "en" },
-  { label: "French", value: "fr" },
-  { label: "German", value: "de" },
+  { label: "English", value: i18nConfig.locales[0] },
+  { label: "French", value: i18nConfig.locales[1] },
+  { label: "German", value: i18nConfig.locales[2] },
 ];
 
 export const LanguageSelector = () => {
   const [open, setOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('en');
+  const [selectedLanguage, setSelectedLanguage] = useState(i18nConfig.locales[0]);
+  const router = useRouter();
+  const currentPathname = usePathname();
+  const { i18n } = useTranslation();
+  const currentLocale = i18n.language;
 
-  useEffect(() => {
-    // Load language from cookie on component mount
-    const savedLanguage = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('preferredLanguage='))
-      ?.split('=')[1];
-    
-    if (savedLanguage) {
-      setSelectedLanguage(savedLanguage);
+  useEffect((): void => {
+    if (currentLocale) {
+      refreshUrl(currentLocale);
+      setSelectedLanguage(currentLocale);
     }
   }, []);
 
-  const handleSelectLanguage = (value: string) => {
+  const handleSelectLanguage = (value: string): void => {
     setSelectedLanguage(value);
     // Set cookie with 1 year expiry
     const oneYear = new Date();
     oneYear.setFullYear(oneYear.getFullYear() + 1);
     document.cookie = `preferredLanguage=${value};expires=${oneYear.toUTCString()};path=/`;
+    refreshUrl(value);
     setOpen(false);
   };
+
+  const refreshUrl = (locale: string): void => {
+    if (currentLocale === i18nConfig.defaultLocale && !i18nConfig.prefixDefault) {
+      router.replace('/' + locale + currentPathname);
+    } else {
+      router.replace(
+          currentPathname.replace(`/${currentLocale}`, `/${locale}`)
+      );
+    }
+  }
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

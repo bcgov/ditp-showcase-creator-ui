@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Trash2 } from "lucide-react";
 import { OnboardingStep } from "@/types";
 import { convertBase64 } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface LocalFileUploadProps {
   text: string;
@@ -18,6 +19,7 @@ export function LocalFileUpload({
   handleLocalUpdate,
   localJSON,
 }: LocalFileUploadProps) {
+  const { t } = useTranslation()
   const [preview, setPreview] = useState<string | null>(null);
 
   useEffect(() => {
@@ -77,8 +79,8 @@ export function LocalFileUpload({
           )}
 
           <p className="text-center text-xs text-foreground/50 lowercase">
-            <span className="font-bold text-foreground/50">Click to upload</span>{" "}
-            or drag and drop
+            <span className="font-bold text-foreground/50">{t('file_upload.click_to_upload_label')}</span>{" "}
+            {t('file_upload.drag_to_upload_label')}
           </p>
         </div>
 

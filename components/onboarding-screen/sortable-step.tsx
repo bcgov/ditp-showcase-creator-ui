@@ -5,6 +5,7 @@ import Image from "next/image";
 import { GripVertical, Monitor } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { useOnboarding } from "@/hooks/use-onboarding";
+import { useTranslation } from "react-i18next";
 
 const MAX_CHARS = 110;
 
@@ -19,8 +20,9 @@ export const SortableStep = ({
   stepIndex: number;
   totalSteps: number;
 }) => {
+  const { t } = useTranslation()
   const { setSelectedStep, setStepState } = useOnboarding();
-  
+
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({
       id: myScreen.screenId,
@@ -47,8 +49,8 @@ export const SortableStep = ({
           <GripVertical />
         </span>
       </div>
-      
-      <div 
+
+      <div
         className="px-3 flex-flex-col w-full justify-items-center cursor-pointer"
         onClick={handleStepClick}
       >
@@ -56,9 +58,9 @@ export const SortableStep = ({
           "text-sm",
           myScreen.credentials && "text-amber-500 font-bold"
         )}>
-          {myScreen.credentials ? "Issue Step" : "Basic Step"}
+          {myScreen.credentials ? t('onboarding.step_issue_step_label') : t('onboarding.step_basic_step_label')}
         </p>
-        
+
         <p className="font-bold">
           {myScreen.title} - ({stepIndex} / {totalSteps})
         </p>
@@ -67,8 +69,8 @@ export const SortableStep = ({
           className={cn(
             "bg-light-bg dark:bg-dark-bg w-full hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover flex flex-row justify-items-center items-center rounded p-3",
             "border-2",
-            selectedStep === stepIndex - 1 
-              ? "border-foreground" 
+            selectedStep === stepIndex - 1
+              ? "border-foreground"
               : "border-light-bg-secondary"
           )}
         >
@@ -90,7 +92,7 @@ export const SortableStep = ({
             {myScreen.text.length > MAX_CHARS ? (
               <>
                 {myScreen.text.slice(0, MAX_CHARS)}...{" "}
-                <span className="font-bold">see more</span>
+                <span className="font-bold">{t('action.see_more_label')}</span>
               </>
             ) : (
               myScreen.text

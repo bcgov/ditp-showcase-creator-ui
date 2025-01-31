@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/table";
 import { FormTextInput } from "@/components/text-input";
 import { Attribute } from "@/types";
+import { useTranslation } from "react-i18next";
 
 const ATTRIBUTE_TYPES = [
   { value: "string", label: "String" },
@@ -34,11 +35,12 @@ interface CredentialAttributesProps {
   attributes?: Attribute[];
 }
 
-export const CredentialAttributes = ({ 
-  mode, 
+export const CredentialAttributes = ({
+  mode,
   form,
-  attributes 
+  attributes
 }: CredentialAttributesProps) => {
+  const { t } = useTranslation()
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "attributes",
@@ -49,15 +51,15 @@ export const CredentialAttributes = ({
       <div>
         <div className="flex justify-between items-center mb-4">
           <h4 className="text-sm font-medium text-muted-foreground">
-            Attributes
+            {t('credentials.attributes_label')}
           </h4>
         </div>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Value</TableHead>
-              <TableHead>Type</TableHead>
+              <TableHead>{t('credentials.attribute_name_label')}</TableHead>
+              <TableHead>{t('credentials.attribute_value_label')}</TableHead>
+              <TableHead>{t('credentials.attribute_type_label')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -77,7 +79,7 @@ export const CredentialAttributes = ({
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
-        <label className="text-md font-bold">Attributes</label>
+        <label className="text-md font-bold">{t('credentials.attributes_label')}</label>
         <Button
           type="button"
           variant="outline"
@@ -85,7 +87,7 @@ export const CredentialAttributes = ({
           onClick={() => append({ name: "", value: "", type: "string" })}
         >
           <Plus className="w-4 h-4 mr-2" />
-          Add Attribute
+          {t('credentials.attributes_add_attribute_label')}
         </Button>
       </div>
 
@@ -98,10 +100,10 @@ export const CredentialAttributes = ({
             <div className="col-span-4">
               <FormTextInput
                 name={`attributes.${index}.name`}
-                label="Name"
+                label={t('credentials.attribute_name_label')}
                 register={form.register}
                 error={form.formState.errors.attributes?.[index]?.name?.message}
-                placeholder="Attribute name"
+                placeholder={t('credentials.attribute_name_placeholder')}
               />
             </div>
             <div className="col-span-4">
@@ -109,12 +111,12 @@ export const CredentialAttributes = ({
                 name={`attributes.${index}.value`}
                 register={form.register}
                 error={form.formState.errors.attributes?.[index]?.value?.message}
-                label="Value"
-                placeholder="Attribute value"
+                label={t('credentials.attribute_value_label')}
+                placeholder={t('credentials.attribute_value_placeholder')}
               />
             </div>
             <div className="col-span-3">
-              <label className="text-sm font-medium mb-2 block">Type</label>
+              <label className="text-sm font-medium mb-2 block">{t('credentials.attribute_type_label')}</label>
               <Select
                 onValueChange={(value) => {
                   form.setValue(`attributes.${index}.type`, value as any);

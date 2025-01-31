@@ -1,5 +1,6 @@
 import { Credentials, ShowcaseJSON } from "@/types";
 import { Trash2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const Credential = ({
   issuerName,
@@ -20,6 +21,7 @@ export const Credential = ({
   handleCredentialRemoval: () => void;
   showcaseJSON: ShowcaseJSON;
 }) => {
+  const { t } = useTranslation()
   const isSingleCredential =
     Object.keys(showcaseJSON.personas[0].credentials).length === 1;
 
@@ -49,8 +51,7 @@ export const Credential = ({
               </div>
               <div className="flex justify-center items-center align-center">
                 <p className="border border-black border-solid rounded-lg text-xs py-1 px-2 flex justify-center items-center dark:border-white">
-                  {" "}
-                  Attributes: {attributeCount}
+                  {t('credentials.item_attribute_count_label', { attributeCount })}
                 </p>
               </div>
             </div>

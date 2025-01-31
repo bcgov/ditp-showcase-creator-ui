@@ -2,7 +2,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { convertBase64 } from "@/lib/utils";
 import { Trash2 } from "lucide-react";
-
+import { useTranslation } from "react-i18next";
 export const FileUploadFull = ({
   text,
   element,
@@ -12,6 +12,7 @@ export const FileUploadFull = ({
   element: 'headshot_image' | 'body_image';
   handleJSONUpdate: (imageType: 'headshot_image' | 'body_image', imageData: string) => void;
 }) => {
+  const { t } = useTranslation()
   const [preview, setPreview] = useState<string | null>(null);
 
   const handleChange = async (newValue: File | null) => {
@@ -43,7 +44,7 @@ export const FileUploadFull = ({
             className="bg-red-500 rounded p-1 m-2 absolute text-black right-0 top-0 text-sm hover:bg-red-400"
             onClick={(e) => {
               e.preventDefault();
-              handleChange(null);
+              void handleChange(null);
             }}
           >
             <Trash2 />
@@ -70,7 +71,8 @@ export const FileUploadFull = ({
           )}
 
           <p className=" text-center text-xs lowercase">
-            <span className="font-bold ">Click to upload</span> or drag and drop
+            <span className="font-bold ">{t('file_upload.click_to_upload_label')}</span>{" "}
+            {t('file_upload.drag_to_upload_label')}
           </p>
         </div>
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { useMounted } from "@/hooks/use-mounted";
-import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
+import { Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 
 export const DarkModeToggle = () => {
@@ -18,9 +18,9 @@ export const DarkModeToggle = () => {
     <button onClick={toggleDarkMode} className="w-12">
       <div className="rounded-full p-1 transition-all border-2 w-16 bg-light-bg dark:bg-dark-bg">
         {theme === "dark" ? (
-          <SunIcon className="h-6 w-6 text-yellow-300  ml-8" />
+          <Sun className="h-6 w-6 text-yellow-300  ml-8" />
         ) : (
-          <MoonIcon className="h-6 w-6 text-gray-700" />
+          <Moon className="h-6 w-6 text-gray-700" />
         )}
       </div>
     </button>

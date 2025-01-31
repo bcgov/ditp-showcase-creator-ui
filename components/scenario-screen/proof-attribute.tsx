@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { PREDICATE_OPTIONS } from "@/schemas/scenario";
+import { useTranslation } from "react-i18next";
 
 interface ProofAttributeProps {
   index: number;
@@ -30,6 +31,7 @@ export const ProofAttribute = ({
   onConditionTypeChange,
   onRemove,
 }: ProofAttributeProps) => {
+  const { t } = useTranslation();
   return (
     <div className="grid grid-cols-5 gap-4 items-end">
       <div className="space-y-2">
@@ -41,7 +43,7 @@ export const ProofAttribute = ({
           defaultValue={attribute}
         >
           <SelectTrigger>
-            <SelectValue placeholder="Select attribute" />
+            <SelectValue placeholder={t('scenario.proof_attribute_placeholder')} />
           </SelectTrigger>
           <SelectContent>
             {availableAttributes.map((attr) => (

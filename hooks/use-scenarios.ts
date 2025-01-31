@@ -216,7 +216,7 @@ export const createEmptyStep = (
   type: StepType
 ): Omit<ScenarioStep, "screenId"> => ({
   type: type,
-  title: type === StepType.CONNECT_AND_VERIFY ? "Confirm the information to send" : "",
+  title: "",
   text: "",
   requestOptions: type === StepType.CONNECT_AND_VERIFY
     ? {

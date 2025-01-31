@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next"
 
 interface LocalFileUploadProps {
   text: string;
-  element: [string, string];
-  handleLocalUpdate: (path: [string, string], value: string) => void;
+  element: string[];
+  handleLocalUpdate: (path: string[], value: string) => void;
   localJSON: {
     [key: string]: any;
   };
@@ -23,7 +23,7 @@ export function LocalFileUpload({
 
   useEffect(() => {
     const [section, field] = element;
-    setPreview(localJSON[section]?.[field] || null);
+    setPreview(localJSON[section]?.[field] ?? '');
   }, [localJSON, element]);
 
   const handleChange = async (newValue: File | null) => {

@@ -43,11 +43,11 @@ export const ScenarioEdit = () => {
       ...data,
       overview: {
         ...data.overview,
-        image: data.overview.image || '',
+        image: data.overview.image ?? '',
       },
       summary: {
         ...data.summary,
-        image: data.summary.image || '',
+        image: data.summary.image ?? '',
       },
       steps: currentScenario?.steps || [],
     };
@@ -97,7 +97,7 @@ export const ScenarioEdit = () => {
           <div className="space-y-2">
           <LocalFileUpload
               text={t('scenario.edit_image_label')}
-              element={["overview", "image"] as [string, string]}
+              element={["overview", "image"]}
               handleLocalUpdate={(path, value) => 
                 form.setValue(
                   `${path[0]}.${path[1]}` as "overview.image" | "summary.image", 

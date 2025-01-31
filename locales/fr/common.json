@@ -95,7 +95,8 @@
     "edit_page_description_label": "Description de la Page",
     "edit_page_description_placeholder": "Description de la Page",
     "edit_image_label": "Image",
-    "edit_summary_label": "Résumé"
+    "edit_summary_label": "Résumé",
+    "proof_attribute_placeholder": "Sélectionner un attribut"
   },
   "action": {
     "cancel_label": "Annuler",

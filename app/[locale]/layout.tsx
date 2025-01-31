@@ -1,12 +1,12 @@
 import React, { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 import { NavBar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { JSONPreview } from "@/components/json-preview";
 import i18nConfig from "@/i18n.config";
-import IntlProvider from "@/providers/IntlProvider";
+import IntlProvider from "@/providers/intl-provider";
 import {PageParams} from "@/types";
 import "./globals.css";
 

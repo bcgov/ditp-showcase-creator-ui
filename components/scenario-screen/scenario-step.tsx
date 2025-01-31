@@ -9,11 +9,11 @@ import { useTranslation } from "react-i18next";
 const MAX_CHARS = 110;
 
 export const ScenarioStep = ({
-                               step,
-                               stepIndex,
-                               scenarioIndex,
-                               totalSteps,
-                             }: {
+  step,
+  stepIndex,
+  scenarioIndex,
+  totalSteps,
+}: {
   step: ScenarioStepType;
   stepIndex: number;
   scenarioIndex: number;
@@ -86,17 +86,6 @@ export const ScenarioStep = ({
             )}>
               <div className="w-full flex flex-row justify-items-center items-center rounded p-3">
                 <div className="text-2xl p-2 mx-2 rounded highlight-text">
-                  {/* {step.image ? (
-                  <Image
-                    width={100}
-                    height={100}
-                    src={step.image}
-                    alt={step.title}
-                    className="object-cover"
-                  />
-                ) : (
-                  <FontAwesomeIcon icon={faDisplay} />
-                )} */}
                   <Monitor />
                 </div>
 
@@ -140,7 +129,7 @@ export const ScenarioStep = ({
               <hr />
               <div className="w-full py-2">
                 <p className="text-sm m-1 mt-2 font-bold">
-                  Requested Credentials:
+                  {t('scenario.requested_credentials_label')}
                 </p>
                 <div className="flex flex-wrap gap-2 p-2">
                   {Object.keys(step.requestOptions.proofRequest.attributes).map((key) => (

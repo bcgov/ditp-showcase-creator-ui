@@ -3,10 +3,10 @@
 import { useState, useRef } from "react";
 import { ErrorModal } from "./error-modal";
 import { useShowcaseStore } from "@/hooks/use-showcase-store";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 export const JSONUploadButton = () => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const [showModal, setShowModal] = useState(false);
   const { setShowcaseJSON } = useShowcaseStore();
   const fileInputRef = useRef<HTMLInputElement>(null);

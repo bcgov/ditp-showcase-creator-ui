@@ -1,10 +1,9 @@
-import { i18nRouter } from "next-i18n-router"
-import i18nConfig from "@/i18n.config";
-
-export function middleware(request: any) {
-    return i18nRouter(request, i18nConfig)
-}
-
+import createMiddleware from 'next-intl/middleware';
+import {routing} from '@/i18n/routing';
+ 
+export default createMiddleware(routing);
+ 
 export const config = {
-    matcher: '/((?!api|static|.*\\\\..*|_next).*)'
-}
+  // Match only internationalized pathnames
+  matcher: ['/', '/(fr|en)/:path*']
+};

@@ -9,10 +9,10 @@ import { ScenarioStep } from "./scenario-step";
 import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { useScenarios } from "@/hooks/use-scenarios";
 import Image from "next/image";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 export const ScenarioScreen = () => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const { showcaseJSON, selectedCharacter } = useShowcaseStore();
   const {
     scenarios,

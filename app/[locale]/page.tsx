@@ -1,11 +1,12 @@
 import { CharacterForm } from "@/components/character-screen/character-form";
 import { CharacterList } from "@/components/character-screen/character-list";
-import intlInit from "@/app/i18n";
-import {PageParams} from '@/types';
+import { setRequestLocale, getTranslations } from "next-intl/server";
+import { PageParams } from '@/types';
 
 async function HomePage({ params }: { params: PageParams }) {
   const { locale } = await params
-  const { t } = await intlInit({ locale })
+  setRequestLocale(locale);
+  const t = await getTranslations('character');
 
   return (
       <div className="min-h-screen bg-light-bg dark:bg-dark-bg text-light-text">
@@ -16,17 +17,17 @@ async function HomePage({ params }: { params: PageParams }) {
                 <div className="flex justify-between">
                   <div>
                     <h3 className="text-4xl font-bold text-foreground">
-                      {t('character.header_title')}
+                      {t('header_title')}
                     </h3>
                     <p className="text-foreground mt-3">
-                      {t('character.header_subtitle')}
+                      {t('header_subtitle')}
                     </p>
                   </div>
                 </div>
 
                 <div className="mt-8">
                   <div className="flex justify-between mb-4">
-                    <h3 className="text-xl font-bold">{t('character.your_character_label')}</h3>
+                    <h3 className="text-xl font-bold">{t('your_character_label')}</h3>
                   </div>
 
                   <CharacterList />

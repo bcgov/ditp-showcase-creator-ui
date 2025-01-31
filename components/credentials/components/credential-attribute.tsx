@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/table";
 import { FormTextInput } from "@/components/text-input";
 import { Attribute } from "@/types";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 const ATTRIBUTE_TYPES = [
   { value: "string", label: "String" },
@@ -40,7 +40,7 @@ export const CredentialAttributes = ({
   form,
   attributes
 }: CredentialAttributesProps) => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "attributes",

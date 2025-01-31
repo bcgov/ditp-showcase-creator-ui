@@ -1,5 +1,4 @@
-import {Resource} from "i18next";
-import {ReactNode} from "react";
+import { ReactNode} from "react";
 
 export interface Attribute {
   name: string;
@@ -114,20 +113,6 @@ export type ScenarioStepState = "none-selected" | "adding-step" | "basic-step-ed
 
 export type ElementPath = string | [string, string];
 
-export type PageParams = Promise<{ locale: string }>
+export type Locale = "en" | "fr"
 
-export type I18nNamespaces = 'common'
-
-export type IntlInitArgs = {
-  locale: string
-  namespaces?: I18nNamespaces[]
-  i18nInstance?: any
-  resources?: Resource
-}
-
-export type IntlProviderArgs = {
-  children: ReactNode
-  locale: string
-  namespaces?: I18nNamespaces[]
-  resources?: Resource
-}
+export type PageParams = Promise<{ locale: Locale }>

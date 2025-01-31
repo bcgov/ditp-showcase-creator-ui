@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useShowcaseStore } from "@/hooks/use-showcase-store";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 export const JSONPreview = () => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const { showcaseJSON } = useShowcaseStore();
   const [isOpen, setIsOpen] = useState(false);
 

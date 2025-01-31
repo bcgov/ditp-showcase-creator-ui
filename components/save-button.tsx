@@ -3,11 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { SaveModal } from "./save-modal";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 export const SaveButton = () => {
   const [showModal, setShowModal] = useState(false);
-  const { t } = useTranslation()
+  const t = useTranslations()
 
   return (
     <>

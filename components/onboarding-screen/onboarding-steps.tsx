@@ -6,10 +6,10 @@ import { IssueStepEdit } from "./issue-step-edit";
 import { CreateNewStep } from "./create-step";
 import { NoSelection } from "../credentials/no-selection";
 import { useOnboarding } from "@/hooks/use-onboarding";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from 'next-intl';
 
 export const OnboardingSteps = () => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const {
     selectedStep,
     stepState,

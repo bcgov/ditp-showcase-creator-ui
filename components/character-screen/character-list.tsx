@@ -1,10 +1,9 @@
 'use client'
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { User } from "lucide-react";
 
 export const CharacterList = () => {
   const { showcaseJSON, selectedCharacter, setEditMode, setSelectedCharacter } = useShowcaseStore();
@@ -33,7 +32,7 @@ export const CharacterList = () => {
                   src={showcaseJSON.personas[selectedCharacter].headshot_image}
                 />
               ) : (
-                <FontAwesomeIcon icon={faUser} />
+                <User />
               )}
             </div>
             <div className="p-2">

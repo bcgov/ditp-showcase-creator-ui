@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom'
 import { useShowcaseStore } from './use-showcase-store'
 import { DEFAULT_JSON } from '@/lib/fixtures'
+import { ShowcaseJSON } from '@/types'
 
 describe('useShowcaseStore', () => {
   beforeEach(() => {
@@ -28,7 +29,7 @@ describe('useShowcaseStore', () => {
         ]
       }
 
-      useShowcaseStore.getState().setShowcaseJSON(newJSON)
+      useShowcaseStore.getState().setShowcaseJSON(newJSON as ShowcaseJSON)
       expect(useShowcaseStore.getState().showcaseJSON).toEqual(newJSON)
     })
   })
@@ -92,7 +93,7 @@ describe('useShowcaseStore', () => {
             { ...DEFAULT_JSON }
           ]
         }
-        useShowcaseStore.getState().setShowcaseJSON(newJSON)
+        useShowcaseStore.getState().setShowcaseJSON(newJSON as ShowcaseJSON)
         useShowcaseStore.getState().setSelectedCharacter(1)
 
         useShowcaseStore.getState().removeCharacter(1)
@@ -109,7 +110,7 @@ describe('useShowcaseStore', () => {
             { ...DEFAULT_JSON }
           ]
         }
-        useShowcaseStore.getState().setShowcaseJSON(newJSON)
+        useShowcaseStore.getState().setShowcaseJSON(newJSON as ShowcaseJSON)
         useShowcaseStore.getState().setSelectedCharacter(0)
 
         useShowcaseStore.getState().removeCharacter(1)
@@ -183,7 +184,7 @@ describe('useShowcaseStore', () => {
           { ...DEFAULT_JSON, name: 'Second' }
         ]
       }
-      store.setShowcaseJSON(newJSON)
+      store.setShowcaseJSON(newJSON as ShowcaseJSON)
       
       store.setSelectedCharacter(1)
       store.setEditMode(true)

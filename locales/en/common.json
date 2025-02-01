@@ -98,7 +98,9 @@
     "edit_page_description_label": "Page Description",
     "edit_page_description_placeholder": "Page Description",
     "edit_image_label": "Image",
-    "edit_summary_label": "Summary"
+    "edit_summary_label": "Summary",
+    "proof_attribute_placeholder": "Select attribute",
+    "confirm_information_to_send_label": "Confirm the information to send"
   },
   "action": {
     "cancel_label": "Cancel",

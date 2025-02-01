@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Trash2 } from "lucide-react";
-import { OnboardingStep } from "@/types";
-import { useTranslation } from "react-i18next"
+import { convertBase64 } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface LocalFileUploadProps {
   text: string;
-  element: keyof OnboardingStep;
-  handleLocalUpdate: (key: keyof OnboardingStep, value: string) => void;
+  element: string[];
+  handleLocalUpdate: (path: string[], value: string) => void;
   localJSON: {
     [key: string]: any;
   };
@@ -22,21 +22,9 @@ export function LocalFileUpload({
   const [preview, setPreview] = useState<string | null>(null);
 
   useEffect(() => {
-    setPreview(localJSON[element] || null);
+    const [section, field] = element;
+    setPreview(localJSON[section]?.[field] ?? '');
   }, [localJSON, element]);
-
-  const convertBase64 = (file: File) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
 
   const handleChange = async (newValue: File | null) => {
     if (newValue) {
@@ -78,7 +66,7 @@ export function LocalFileUpload({
       )}
 
       <label
-        htmlFor={element}
+        htmlFor={element.join(".")}
         className="p-3 flex flex-col items-center justify-center w-full h-full bg-light-bg dark:bg-dark-input dark:hover:bg-dark-input-hover rounded-lg cursor-pointer border dark:border-dark-border hover:bg-light-bg"
       >
         <div className="flex flex-col items-center h-full justify-center border rounded-lg border-dashed dark:border-dark-border p-2">
@@ -97,7 +85,7 @@ export function LocalFileUpload({
         </div>
 
         <input
-          id={element}
+          id={element.join(".")}
           type="file"
           className="hidden"
           accept="image/*"

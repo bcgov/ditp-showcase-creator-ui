@@ -2,7 +2,10 @@
 
 import { useEffect } from "react";
 import { DndContext, closestCenter } from "@dnd-kit/core";
-import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import { Button } from "@/components/ui/button";
 import { Plus, Edit } from "lucide-react";
 import { ScenarioStep } from "./scenario-step";
@@ -23,9 +26,9 @@ export const ScenarioScreen = () => {
   } = useScenarios();
 
   useEffect(() => {
-    const initialScenarios = JSON.parse(JSON.stringify(
-      showcaseJSON.personas[selectedCharacter].scenarios
-    ));
+    const initialScenarios = JSON.parse(
+      JSON.stringify(showcaseJSON.personas[selectedCharacter].scenarios)
+    );
     setScenarios(initialScenarios);
   }, [selectedCharacter, setScenarios]);
 
@@ -101,7 +104,9 @@ export const ScenarioScreen = () => {
                     </div>
                   )}
                   <div>
-                    <h5 className="font-bold mb-2">{scenario.overview.title}</h5>
+                    <h5 className="font-bold mb-2">
+                      {scenario.overview.title}
+                    </h5>
                     <p className="text-sm">{scenario.overview.text}</p>
                   </div>
                 </div>
@@ -110,9 +115,7 @@ export const ScenarioScreen = () => {
 
             {/* Steps Section */}
             <div className="p-5">
-              <DndContext
-                collisionDetection={closestCenter}
-              >
+              <DndContext collisionDetection={closestCenter}>
                 <SortableContext
                   items={scenario.steps.map((step) => step.screenId)}
                   strategy={verticalListSortingStrategy}
@@ -133,7 +136,6 @@ export const ScenarioScreen = () => {
                 variant="outline"
                 onClick={() => {
                   setStepState("adding-step");
-                  editScenario(index);
                 }}
                 className="mt-4 gap-2"
               >

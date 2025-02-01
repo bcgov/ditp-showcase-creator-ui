@@ -10,6 +10,8 @@ import { LocalFileUpload } from "./local-file-upload";
 import { useScenarios } from "@/hooks/use-scenarios";
 import { scenarioSchema } from "@/schemas/scenario";
 import { ScenarioFormData } from "@/schemas/scenario";
+import { Scenario } from "@/types";
+import { scenarioToFormData } from "@/lib/scenario-transformers";
 import { useTranslations } from 'next-intl';
 
 export const ScenarioEdit = () => {
@@ -28,38 +30,31 @@ export const ScenarioEdit = () => {
     mode: "onChange",
   });
 
-  // Reset form when scenario changes
   useEffect(() => {
     if (currentScenario) {
-      form.reset({
-        id: currentScenario.id,
-        name: currentScenario.name,
-        overview: {
-          title: currentScenario.overview.title,
-          text: currentScenario.overview.text,
-          image: currentScenario.overview.image,
-        },
-        summary: {
-          title: currentScenario.summary.title,
-          text: currentScenario.summary.text,
-          image: currentScenario.summary.image,
-        },
-        steps: currentScenario.steps,
-      });
+      const formData = scenarioToFormData(currentScenario);
+      form.reset(formData);
     }
   }, [currentScenario, form.reset]);
-
   const onSubmit = (data: ScenarioFormData) => {
     if (selectedScenario === null) return;
 
-    const updatedScenario = {
+    const updatedScenario: Scenario = {
       ...data,
-      steps: currentScenario?.steps || [], // Preserve existing steps
+      overview: {
+        ...data.overview,
+        image: data.overview.image ?? '',
+      },
+      summary: {
+        ...data.summary,
+        image: data.summary.image ?? '',
+      },
+      steps: currentScenario?.steps || [],
     };
 
     updateScenario(selectedScenario, updatedScenario);
     setStepState("none-selected");
-  };
+  };  
 
   if (!currentScenario) return null;
 
@@ -72,7 +67,6 @@ export const ScenarioEdit = () => {
         </div>
         <hr />
 
-        {/* Overview Section */}
         <div className="space-y-6">
           <h4 className="text-xl font-bold">{t('scenario.edit_overview_label')}</h4>
 
@@ -101,18 +95,23 @@ export const ScenarioEdit = () => {
           />
 
           <div className="space-y-2">
-            <LocalFileUpload
+          <LocalFileUpload
               text={t('scenario.edit_image_label')}
               element={["overview", "image"]}
-              handleLocalUpdate={(_, value) =>
-                form.setValue("overview.image", value, {
-                  shouldDirty: true,
-                  shouldTouch: true,
-                  shouldValidate: true,
-                })
+              handleLocalUpdate={(path, value) => 
+                form.setValue(
+                  `${path[0]}.${path[1]}` as "overview.image" | "summary.image", 
+                  value, 
+                  {
+                    shouldDirty: true,
+                    shouldTouch: true,
+                    shouldValidate: true,
+                  }
+                )
               }
-              localJSON={{
-                image: form.watch("overview.image")
+              localJSON={{ 
+                overview: { image: form.watch("overview.image") },
+                summary: { image: form.watch("summary.image") }
               }}
             />
             {form.formState.errors.overview?.image && (
@@ -146,18 +145,23 @@ export const ScenarioEdit = () => {
           />
 
           <div className="space-y-2">
-            <LocalFileUpload
+          <LocalFileUpload
               text={t('scenario.edit_image_label')}
-              element={["summary", "image"]}
-              handleLocalUpdate={(_, value) =>
-                form.setValue("summary.image", value, {
-                  shouldDirty: true,
-                  shouldTouch: true,
-                  shouldValidate: true,
-                })
+              element={["summary", "image"] as [string, string]}
+              handleLocalUpdate={(path, value) => 
+                form.setValue(
+                  `${path[0]}.${path[1]}` as "overview.image" | "summary.image", 
+                  value, 
+                  {
+                    shouldDirty: true,
+                    shouldTouch: true,
+                    shouldValidate: true,
+                  }
+                )
               }
-              localJSON={{
-                image: form.watch("summary.image")
+              localJSON={{ 
+                overview: { image: form.watch("overview.image") },
+                summary: { image: form.watch("summary.image") }
               }}
             />
             {form.formState.errors.summary?.image && (

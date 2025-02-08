@@ -1,9 +1,10 @@
 import { Card } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { StepType } from "@/types";
 
 interface StepTypeOption {
-  type: "basic" | "proof";
+  type: StepType.BASIC | StepType.CONNECT_AND_VERIFY;
   title: string;
   subtitle: string;
   features: string[];
@@ -11,13 +12,13 @@ interface StepTypeOption {
 
 const STEP_TYPES: StepTypeOption[] = [
   {
-    type: "basic",
+    type: StepType.BASIC,
     title: "Basic",
     subtitle: "A simple step with title and description",
     features: ["Title", "Description"],
   },
   {
-    type: "proof",
+    type: StepType.CONNECT_AND_VERIFY,
     title: "Connect & Verify",
     subtitle: "A step that includes verification",
     features: ["Title", "Description", "Proof Request", "Credentials"],
@@ -27,7 +28,7 @@ const STEP_TYPES: StepTypeOption[] = [
 export const ChooseStepType = ({
   addNewStep,
 }: {
-  addNewStep: (type: string) => void;
+  addNewStep: (type: StepType) => void;
 }) => {
   return (
     <div className="space-y-6">

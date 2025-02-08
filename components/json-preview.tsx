@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useShowcaseStore } from "@/hooks/use-showcase-store";
+import { useTranslations } from 'next-intl';
 
 export const JSONPreview = () => {
+  const t = useTranslations()
   const { showcaseJSON } = useShowcaseStore();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,7 +23,7 @@ export const JSONPreview = () => {
         className="bg-gray-300 dark:bg-gray-700 p-2 rounded-md w-full text-left"
         onClick={toggleAccordion}
       >
-        Show JSON Preview
+        {t('action.show_json_preview_label')}
       </button>
       {isOpen && (
         <div className="border p-4 m-2 rounded-md dark:border-gray-600">

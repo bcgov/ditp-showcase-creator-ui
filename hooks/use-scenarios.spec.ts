@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 import { useScenarios, createEmptyStep } from './use-scenarios'
 import { useShowcaseStore } from './use-showcase-store'
-import { Scenario, ScenarioStep } from '@/types'
+import { RequestType, Scenario, ScenarioStep, StepType } from '@/types'
 
 jest.mock('./use-showcase-store', () => ({
   useShowcaseStore: {
@@ -139,7 +139,7 @@ describe('useScenarios', () => {
       const mockDate = new Date('2024-01-01').getTime()
       jest.spyOn(Date, 'now').mockImplementation(() => mockDate)
 
-      const newStep = createEmptyStep()
+      const newStep = createEmptyStep(StepType.BASIC)
       addStep(0, newStep)
       const state = useScenarios.getState()
       
@@ -154,7 +154,7 @@ describe('useScenarios', () => {
 
     it('should update existing step', () => {
       const { addStep, updateStep } = useScenarios.getState()
-      const newStep = createEmptyStep()
+      const newStep = createEmptyStep(StepType.BASIC)
       addStep(0, newStep)
       
       const updatedStep = {
@@ -170,7 +170,7 @@ describe('useScenarios', () => {
 
     it('should remove step', () => {
       const { addStep, removeStep } = useScenarios.getState()
-      const newStep = createEmptyStep()
+      const newStep = createEmptyStep(StepType.BASIC)
       addStep(0, newStep)
       
       removeStep(0, 0)
@@ -181,8 +181,8 @@ describe('useScenarios', () => {
 
     it('should move step', () => {
       const { addStep, moveStep } = useScenarios.getState()
-      const step1 = { ...createEmptyStep(), title: 'Step 1' }
-      const step2 = { ...createEmptyStep(), title: 'Step 2' }
+      const step1 = { ...createEmptyStep(StepType.BASIC), title: 'Step 1' }
+      const step2 = { ...createEmptyStep(StepType.CONNECT_AND_VERIFY), title: 'Step 2' }
       
       addStep(0, step1)
       addStep(0, step2)
@@ -197,15 +197,15 @@ describe('useScenarios', () => {
 
   describe('createEmptyStep', () => {
     it('should create basic step by default', () => {
-      const step = createEmptyStep()
-      expect(step.type).toBe('basic')
-      expect(step.requestOptions.type).toBe('basic')
+      const step = createEmptyStep(StepType.BASIC)
+      expect(step.type).toBe(StepType.BASIC)
+      expect(step.requestOptions.type).toBe(RequestType.BASIC)
     })
 
     it('should create proof step when specified', () => {
-      const step = createEmptyStep(true)
-      expect(step.type).toBe('proof')
-      expect(step.requestOptions.type).toBe('proof_request')
+      const step = createEmptyStep(StepType.CONNECT_AND_VERIFY)
+      expect(step.type).toBe(StepType.CONNECT_AND_VERIFY)
+      expect(step.requestOptions.type).toBe(RequestType.OOB)
     })
   })
 })

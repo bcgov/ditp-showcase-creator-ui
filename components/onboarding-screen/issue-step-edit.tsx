@@ -13,8 +13,10 @@ import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { useOnboarding } from "@/hooks/use-onboarding";
 import { IssueStepFormData, issueStepSchema } from "@/schemas/onboarding";
 import { Search } from "lucide-react";
+import { useTranslations } from 'next-intl';
 
 export function IssueStepEdit() {
+  const t = useTranslations()
   const { showcaseJSON, selectedCharacter } = useShowcaseStore();
   const { selectedStep, screens, updateStep, setSelectedStep, setStepState } =
     useOnboarding();
@@ -114,35 +116,35 @@ export function IssueStepEdit() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <div>
-          <p className="text-foreground text-sm">Onboarding</p>
+          <p className="text-foreground text-sm">{t('onboarding.section_title')}</p>
           <h3 className="text-2xl font-bold text-foreground">
-            Edit an Issue a Credential Step
+            {t('onboarding.issue_step_header_title')}
           </h3>
         </div>
         <hr />
 
         <div className="space-y-6">
           <FormTextInput
-            label="Page Title"
+            label={t('onboarding.page_title_label')}
             name="title"
             register={form.register}
             error={form.formState.errors.title?.message}
-            placeholder="Enter page title"
+            placeholder={t('onboarding.page_title_placeholder')}
           />
 
           <div className="space-y-2">
             <FormTextArea
-              label="Page Description"
+              label={t('onboarding.page_description_label')}
               name="text"
               register={form.register}
               error={form.formState.errors.text?.message}
-              placeholder="Enter page description"
+              placeholder={t('onboarding.page_description_placeholder')}
             />
           </div>
 
           <div className="space-y-2">
             <LocalFileUpload
-              text="Icon"
+              text={t('onboarding.icon_label')}
               element="image"
               handleLocalUpdate={(_, value) => form.setValue("image", value, {
                 shouldDirty: true,
@@ -155,17 +157,17 @@ export function IssueStepEdit() {
 
           <div className="space-y-4">
             <div>
-              <p className="text-2xl font-bold">Add your Credential</p>
+              <p className="text-2xl font-bold">{t('onboarding.add_your_credential_label')}</p>
               <hr />
             </div>
 
             <div className="mt-6">
-              <p className="text-md font-bold">Search for a Credential:</p>
+              <p className="text-md font-bold">{t('onboarding.search_credential_label')}</p>
               <div className="flex flex-row justify-center items-center my-4">
                 <div className="relative w-full">
                   <input
                     className="dark:text-dark-text dark:bg-dark-input rounded pl-2 pr-10 mb-2 w-full border"
-                    placeholder="ex. Student Card"
+                    placeholder={t('onboarding.search_credential_placeholder')}
                     type="text"
                     onChange={(e) => searchCredential(e.target.value)}
                   />
@@ -200,10 +202,10 @@ export function IssueStepEdit() {
 
         <div className="flex justify-end gap-4">
           <Button type="button" variant="outline" onClick={handleCancel}>
-            Cancel
+            {t('action.cancel_label')}
           </Button>
           <Button type="submit" disabled={!form.formState.isDirty}>
-            Save
+            {t('action.save_label')}
           </Button>
         </div>
       </form>

@@ -5,4 +5,3 @@ export const characterSchema = z.object({
   type: z.string().min(1, "Role is required"),
   description: z.string().min(1, "Description is required"),
 });
-

@@ -6,13 +6,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { FormTextInput, FormTextArea } from "@/components/text-input";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { DisplaySearchResults } from "../onboarding-screen/display-search-results";
 import { DisplayStepCredentials } from "./display-step-credentials";
 import { useScenarios } from "@/hooks/use-scenarios";
 import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { proofStepSchema, ProofStepFormData } from "@/schemas/scenario";
+import { RequestType, ScenarioStep, StepType } from "@/types";
+import { Search } from "lucide-react";
 
 export const ProofStepEdit = () => {
   const { showcaseJSON, selectedCharacter } = useShowcaseStore();
@@ -35,10 +35,20 @@ export const ProofStepEdit = () => {
     mode: "onChange",
   });
 
-  // Reset form when step changes
   useEffect(() => {
-    if (currentStep) {
-      form.reset(currentStep);
+    if (currentStep && currentStep.type === StepType.CONNECT_AND_VERIFY) {
+      const proofStep = {
+        ...currentStep,
+        requestOptions: {
+          ...currentStep.requestOptions,
+          proofRequest: {
+            attributes: currentStep.requestOptions.proofRequest.attributes || {},
+            predicates: currentStep.requestOptions.proofRequest.predicates || {},
+          },
+        },
+      } as ProofStepFormData;
+      
+      form.reset(proofStep);
     }
   }, [currentStep, form.reset]);
 
@@ -104,7 +114,20 @@ export const ProofStepEdit = () => {
   const onSubmit = (data: ProofStepFormData) => {
     if (selectedScenario === null || selectedStep === null) return;
 
-    updateStep(selectedScenario, selectedStep, data);
+    const updatedStep: ScenarioStep = {
+      ...data,
+      type: StepType.CONNECT_AND_VERIFY,
+      requestOptions: {
+        ...data.requestOptions,
+        type: RequestType.OOB,
+        proofRequest: {
+          attributes: data.requestOptions.proofRequest.attributes,
+          predicates: data.requestOptions.proofRequest.predicates || {},
+        },
+      },
+    };
+
+    updateStep(selectedScenario, selectedStep, updatedStep);
     setStepState("none-selected");
   };
 
@@ -171,7 +194,7 @@ export const ProofStepEdit = () => {
                     onChange={(e) => searchCredential(e.target.value)}
                   />
                   <span className="absolute right-4 top-1/4">
-                    <FontAwesomeIcon icon={faSearch} />
+                    <Search />
                   </span>
                 </div>
               </div>

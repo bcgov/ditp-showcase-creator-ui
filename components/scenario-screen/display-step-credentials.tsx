@@ -3,7 +3,12 @@ import { Trash2, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NoSelection } from "../credentials/no-selection";
 import { EditProofRequest } from "./edit-proof-request";
-import { ProofRequestAttributes, ProofRequestPredicates, ShowcaseJSON } from "@/types";
+import {
+  ProofRequest,
+  ProofRequestAttributes,
+  ProofRequestPredicates,
+  ShowcaseJSON,
+} from "@/types";
 import { cn } from "@/lib/utils";
 
 interface DisplayStepCredentialsProps {
@@ -11,14 +16,11 @@ interface DisplayStepCredentialsProps {
   showcaseJSON: ShowcaseJSON;
   localData: {
     requestOptions?: {
-      proofRequest?: {
-        attributes?: { [key: string]: ProofRequestAttributes };
-        predicates?: { [key: string]: ProofRequestPredicates };
-      };
+      proofRequest?: ProofRequest;
     };
   };
-  selectedStep: number;
-  selectedScenario: number;
+  selectedStep: number | null;
+  selectedScenario: number | null;
   removeCredential: (credential: string) => void;
 }
 
@@ -38,13 +40,13 @@ export const DisplayStepCredentials = ({
   ): string[] => {
     const credentials = new Set<string>();
 
-    Object.values(attributes).forEach(value => {
+    Object.values(attributes).forEach((value) => {
       if (value.restrictions?.[0]) {
         credentials.add(value.restrictions[0]);
       }
     });
 
-    Object.values(predicates).forEach(value => {
+    Object.values(predicates).forEach((value) => {
       if (value.restrictions[0]) {
         credentials.add(value.restrictions[0]);
       }
@@ -71,7 +73,8 @@ export const DisplayStepCredentials = ({
       <p className="text-md font-bold">Credential(s) Added:</p>
 
       {credentials.map((credential, index) => {
-        const credentialData = showcaseJSON.personas[selectedCharacter].credentials[credential];
+        const credentialData =
+          showcaseJSON.personas[selectedCharacter].credentials[credential];
         if (!credentialData) return null;
 
         const isEditing = editingCredentials.includes(index);
@@ -80,17 +83,17 @@ export const DisplayStepCredentials = ({
           <div key={credential} className="flex flex-col">
             <div className="w-full">
               {/* Credential Header */}
-              <div className={cn(
-                "px-4 py-3 rounded-t-lg flex items-center justify-between",
-                "bg-light-input dark:bg-dark-input"
-              )}>
+              <div
+                className={cn(
+                  "px-4 py-3 rounded-t-lg flex items-center justify-between",
+                  "bg-light-input dark:bg-dark-input"
+                )}
+              >
                 <div className="space-y-1">
                   <p className="text-sm text-muted-foreground">
                     {credentialData.issuer_name}
                   </p>
-                  <p className="font-semibold">
-                    {credentialData.name}
-                  </p>
+                  <p className="font-semibold">{credentialData.name}</p>
                 </div>
 
                 <Button
@@ -107,11 +110,16 @@ export const DisplayStepCredentials = ({
               </div>
 
               {/* Proof Request Section */}
-              <div className={cn(
-                "p-3 rounded-b-lg",
-                "bg-light-bg dark:bg-dark-bg"
-              )}>
-                {isEditing && localData.requestOptions?.proofRequest ? (
+              <div
+                className={cn(
+                  "p-3 rounded-b-lg",
+                  "bg-light-bg dark:bg-dark-bg"
+                )}
+              >
+                {isEditing &&
+                localData.requestOptions?.proofRequest &&
+                selectedStep !== null &&
+                selectedScenario !== null ? (
                   <EditProofRequest
                     showcaseJSON={showcaseJSON}
                     proofRequest={localData.requestOptions.proofRequest}

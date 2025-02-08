@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useMemo } from "react";
@@ -13,13 +12,14 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-
+import { useTranslations } from 'next-intl';
 import { SortableStep } from "@/components/onboarding-screen/sortable-step";
 import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { useOnboarding } from "@/hooks/use-onboarding";
 import { Plus, Trash2 } from "lucide-react";
 
 export const OnboardingScreen = () => {
+  const t = useTranslations()
   const { showcaseJSON, selectedCharacter } = useShowcaseStore();
   const {
     screens,
@@ -45,7 +45,7 @@ export const OnboardingScreen = () => {
 
     const oldIndex = screens.findIndex((screen) => screen.screenId === active.id);
     const newIndex = screens.findIndex((screen) => screen.screenId === over.id);
-    
+
     if (oldIndex !== newIndex) {
       moveStep(oldIndex, newIndex);
       setSelectedStep(newIndex);
@@ -63,13 +63,13 @@ export const OnboardingScreen = () => {
     <>
       <div className="mt-8">
         <div className="flex justify-between mb-4">
-          <p className="font-bold text-xl">Steps Added: ({screens.length})</p>
+          <p className="font-bold text-xl">{t('onboarding.steps_added_label', { stepCount: screens.length })}</p>
           <div className="">
             <button
               onClick={() => setStepState("creating-new")}
               className="text-sm add-attr-btn border bg-light-bg dark:bg-dark-bg hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover font-bold py-2 px-4 rounded inline-flex items-center"
             >
-              <span>ADD STEP</span>
+              <span>{t('onboarding.add_step_label')}</span>
               <div className="text-md ml-2">
                 <Plus />
               </div>
@@ -128,7 +128,7 @@ export const OnboardingScreen = () => {
           }}
           className="text-sm add-attr-btn border bg-light-bg dark:bg-dark-bg hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover font-bold py-2 px-4 rounded inline-flex items-center"
         >
-          <span>ADD STEP</span>
+          <span>{t('onboarding.add_step_label')}</span>
           <div className="text-md ml-2">
             <Plus />
           </div>

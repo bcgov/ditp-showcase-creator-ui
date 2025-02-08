@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Trash2 } from "lucide-react";
 
 export const Layouts = () => {
   return (
@@ -23,7 +22,7 @@ export const Layouts = () => {
                 </div>
               </div>
               <div className="remove col-span-1 flex items-center justify-center w-1/5">
-                <FontAwesomeIcon icon={faTrash} />
+                <Trash2 />
               </div>
             </div>
           </div>

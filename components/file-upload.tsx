@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
+import { convertBase64 } from "@/lib/utils";
+import { Trash2 } from "lucide-react";
+import { useTranslations } from 'next-intl';
 
 export const FileUploadFull = ({
   text,
@@ -12,31 +13,23 @@ export const FileUploadFull = ({
   element: 'headshot_image' | 'body_image';
   handleJSONUpdate: (imageType: 'headshot_image' | 'body_image', imageData: string) => void;
 }) => {
+  const t = useTranslations()
   const [preview, setPreview] = useState<string | null>(null);
 
-  const convertBase64 = (file: File) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
-
   const handleChange = async (newValue: File | null) => {
-    let objectUrl = null;
     if (newValue) {
-      objectUrl = URL.createObjectURL(newValue);
-      setPreview(objectUrl);
-
-      const base64 = await convertBase64(newValue);
-      handleJSONUpdate(element, base64 as string);
+      try {
+        const base64 = await convertBase64(newValue);
+        if (typeof base64 === 'string') {
+          setPreview(base64);
+          handleJSONUpdate(element, base64);
+        }
+      } catch (error) {
+        console.error('Error converting file:', error);
+      }
     } else {
       setPreview(null);
+      handleJSONUpdate(element, "");
     }
   };
 
@@ -52,10 +45,10 @@ export const FileUploadFull = ({
             className="bg-red-500 rounded p-1 m-2 absolute text-black right-0 top-0 text-sm hover:bg-red-400"
             onClick={(e) => {
               e.preventDefault();
-              handleChange(null);
+              void handleChange(null);
             }}
           >
-            <FontAwesomeIcon icon={faTrash} />
+            <Trash2 />
           </button>
         </div>
       )}
@@ -79,7 +72,8 @@ export const FileUploadFull = ({
           )}
 
           <p className=" text-center text-xs lowercase">
-            <span className="font-bold ">Click to upload</span> or drag and drop
+            <span className="font-bold ">{t('file_upload.click_to_upload_label')}</span>{" "}
+            {t('file_upload.drag_to_upload_label')}
           </p>
         </div>
 

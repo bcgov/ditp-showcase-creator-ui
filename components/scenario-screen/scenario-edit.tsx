@@ -10,9 +10,13 @@ import { LocalFileUpload } from "./local-file-upload";
 import { useScenarios } from "@/hooks/use-scenarios";
 import { scenarioSchema } from "@/schemas/scenario";
 import { ScenarioFormData } from "@/schemas/scenario";
+import { Scenario } from "@/types";
+import { scenarioToFormData } from "@/lib/scenario-transformers";
+import { useTranslations } from 'next-intl';
 
 export const ScenarioEdit = () => {
-  const { 
+  const t = useTranslations()
+  const {
     scenarios,
     selectedScenario,
     updateScenario,
@@ -26,38 +30,31 @@ export const ScenarioEdit = () => {
     mode: "onChange",
   });
 
-  // Reset form when scenario changes
   useEffect(() => {
     if (currentScenario) {
-      form.reset({
-        id: currentScenario.id,
-        name: currentScenario.name,
-        overview: {
-          title: currentScenario.overview.title,
-          text: currentScenario.overview.text,
-          image: currentScenario.overview.image,
-        },
-        summary: {
-          title: currentScenario.summary.title,
-          text: currentScenario.summary.text,
-          image: currentScenario.summary.image,
-        },
-        steps: currentScenario.steps,
-      });
+      const formData = scenarioToFormData(currentScenario);
+      form.reset(formData);
     }
   }, [currentScenario, form.reset]);
-
   const onSubmit = (data: ScenarioFormData) => {
     if (selectedScenario === null) return;
 
-    const updatedScenario = {
+    const updatedScenario: Scenario = {
       ...data,
-      steps: currentScenario?.steps || [], // Preserve existing steps
+      overview: {
+        ...data.overview,
+        image: data.overview.image ?? '',
+      },
+      summary: {
+        ...data.summary,
+        image: data.summary.image ?? '',
+      },
+      steps: currentScenario?.steps || [],
     };
 
     updateScenario(selectedScenario, updatedScenario);
     setStepState("none-selected");
-  };
+  };  
 
   if (!currentScenario) return null;
 
@@ -65,52 +62,56 @@ export const ScenarioEdit = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <div>
-          <p className="text-foreground text-sm">Scenario</p>
-          <h3 className="text-2xl font-bold text-foreground">Edit Scenario</h3>
+          <p className="text-foreground text-sm">{t('scenario.edit_header_title')}</p>
+          <h3 className="text-2xl font-bold text-foreground">{t('scenario.edit_header_title')}</h3>
         </div>
         <hr />
 
-        {/* Overview Section */}
         <div className="space-y-6">
-          <h4 className="text-xl font-bold">Overview</h4>
+          <h4 className="text-xl font-bold">{t('scenario.edit_overview_label')}</h4>
 
           <FormTextInput
-            label="Scenario Name"
+            label={t('scenario.edit_name_label')}
             name="name"
             register={form.register}
             error={form.formState.errors.name?.message}
-            placeholder="Scenario Name"
+            placeholder={t('scenario.edit_name_placeholder')}
           />
 
           <FormTextInput
-            label="Page Title"
+            label={t('scenario.edit_page_title_label')}
             name="overview.title"
             register={form.register}
             error={form.formState.errors.overview?.title?.message}
-            placeholder="Page Title"
+            placeholder={t('scenario.edit_page_title_placeholder')}
           />
 
           <FormTextArea
-            label="Page Description"
+            label={t('scenario.edit_page_description_label')}
             name="overview.text"
             register={form.register}
             error={form.formState.errors.overview?.text?.message}
-            placeholder="Page Description"
+            placeholder={t('scenario.edit_page_description_placeholder')}
           />
 
           <div className="space-y-2">
-            <LocalFileUpload
-              text="Image"
+          <LocalFileUpload
+              text={t('scenario.edit_image_label')}
               element={["overview", "image"]}
-              handleLocalUpdate={(_, value) => 
-                form.setValue("overview.image", value, {
-                  shouldDirty: true,
-                  shouldTouch: true,
-                  shouldValidate: true,
-                })
+              handleLocalUpdate={(path, value) => 
+                form.setValue(
+                  `${path[0]}.${path[1]}` as "overview.image" | "summary.image", 
+                  value, 
+                  {
+                    shouldDirty: true,
+                    shouldTouch: true,
+                    shouldValidate: true,
+                  }
+                )
               }
               localJSON={{ 
-                image: form.watch("overview.image")
+                overview: { image: form.watch("overview.image") },
+                summary: { image: form.watch("summary.image") }
               }}
             />
             {form.formState.errors.overview?.image && (
@@ -125,37 +126,42 @@ export const ScenarioEdit = () => {
 
         {/* Summary Section */}
         <div className="space-y-6">
-          <h4 className="text-xl font-bold">Summary</h4>
+          <h4 className="text-xl font-bold">{t('scenario.edit_summary_label')}</h4>
 
           <FormTextInput
-            label="Page Title"
+            label={t('scenario.edit_page_title_label')}
             name="summary.title"
             register={form.register}
             error={form.formState.errors.summary?.title?.message}
-            placeholder="Page Title"
+            placeholder={t('scenario.edit_page_title_placeholder')}
           />
 
           <FormTextArea
-            label="Page Description"
+            label={t('scenario.edit_page_description_label')}
             name="summary.text"
             register={form.register}
             error={form.formState.errors.summary?.text?.message}
-            placeholder="Page Description"
+            placeholder={t('scenario.edit_page_description_placeholder')}
           />
 
           <div className="space-y-2">
-            <LocalFileUpload
-              text="Image"
-              element={["summary", "image"]}
-              handleLocalUpdate={(_, value) => 
-                form.setValue("summary.image", value, {
-                  shouldDirty: true,
-                  shouldTouch: true,
-                  shouldValidate: true,
-                })
+          <LocalFileUpload
+              text={t('scenario.edit_image_label')}
+              element={["summary", "image"] as [string, string]}
+              handleLocalUpdate={(path, value) => 
+                form.setValue(
+                  `${path[0]}.${path[1]}` as "overview.image" | "summary.image", 
+                  value, 
+                  {
+                    shouldDirty: true,
+                    shouldTouch: true,
+                    shouldValidate: true,
+                  }
+                )
               }
               localJSON={{ 
-                image: form.watch("summary.image")
+                overview: { image: form.watch("overview.image") },
+                summary: { image: form.watch("summary.image") }
               }}
             />
             {form.formState.errors.summary?.image && (
@@ -172,13 +178,13 @@ export const ScenarioEdit = () => {
             variant="outline"
             onClick={() => setStepState("none-selected")}
           >
-            Cancel
+            {t('action.cancel_label')}
           </Button>
           <Button
             type="submit"
             disabled={!form.formState.isDirty || !form.formState.isValid}
           >
-            Save
+            {t('action.save_label')}
           </Button>
         </div>
       </form>

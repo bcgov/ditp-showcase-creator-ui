@@ -1,5 +1,6 @@
 import { useOnboarding } from "@/hooks/use-onboarding";
 import { ArrowRight } from "lucide-react";
+import { useTranslations } from 'next-intl';
 
 export const CreateNewStep = () => {
   const { createStep, setStepState } = useOnboarding();
@@ -12,16 +13,18 @@ export const CreateNewStep = () => {
       image: "",
       ...(isIssue && { credentials: [] }),
     };
-    
+
     createStep(newStep);
     setStepState(isIssue ? "editing-issue" : "editing-basic");
   };
 
+  const t = useTranslations()
+
   return (
     <>
       <div className="flex flex-col">
-        <p>Onboarding</p>
-        <p className="text-4xl font-bold">Create a New Step</p>
+        <p>{t('onboarding.section_title')}</p>
+        <p className="text-4xl font-bold">{t('onboarding.create_header_title')}</p>
         <hr />
       </div>
 
@@ -30,17 +33,17 @@ export const CreateNewStep = () => {
           className="basic-step flex flex-row justify-between items-center rounded p-5 my-3 w-full text-start bg-light-bg dark:bg-dark-bg hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover"
           onClick={() => handleAddStep(false)}
         >
-          <p className="text-xl font-bold w-1/4">Basic</p>
+          <p className="text-xl font-bold w-1/4">{t('onboarding.create_basic_step_label')}</p>
           <div className="w-1/4">
             <ul className="mx-5">
-              <li>Title</li>
-              <li>Description</li>
-              <li>Image</li>
+              <li>{t('onboarding.create_title_label')}</li>
+              <li>{t('onboarding.create_description_label')}</li>
+              <li>{t('onboarding.create_image_label')}</li>
             </ul>
           </div>
 
           <p className="text-2xl font-bold text-end">
-            Add Step <ArrowRight />
+            {t('onboarding.create_add_step_label')} <ArrowRight />
           </p>
         </button>
 
@@ -48,18 +51,18 @@ export const CreateNewStep = () => {
           className="basic-step flex flex-row justify-between items-center rounded p-5 my-3 w-full text-start bg-light-bg dark:bg-dark-bg hover:bg-light-btn-hover dark:hover:bg-dark-btn-hover"
           onClick={() => handleAddStep(true)}
         >
-          <p className="text-xl font-bold w-1/4">Issue Credential</p>
+          <p className="text-xl font-bold w-1/4">{t('onboarding.create_issue_step_label')}</p>
           <div className="w-1/4">
             <ul className="mx-5">
-              <li>Title</li>
-              <li>Description</li>
-              <li>Image</li>
-              <li>Credential(s)</li>
+              <li>{t('onboarding.create_title_label')}</li>
+              <li>{t('onboarding.create_description_label')}</li>
+              <li>{t('onboarding.create_image_label')}</li>
+              <li>{t('onboarding.create_credentials_label')}</li>
             </ul>
           </div>
 
           <p className="text-2xl font-bold text-end">
-            Add Step <ArrowRight />
+            {t('onboarding.create_add_step_label')} <ArrowRight />
           </p>
         </button>
       </div>

@@ -9,82 +9,53 @@ import { NoSelection } from "@/components/credentials/no-selection";
 import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { useScenarios } from "@/hooks/use-scenarios";
 import { createEmptyStep } from "@/hooks/use-scenarios";
+import { StepType } from "@/types";
+import { useTranslations } from 'next-intl';
 
 export const EditStepScreen = () => {
+  const t = useTranslations()
   const { showcaseJSON, selectedCharacter } = useShowcaseStore();
-  const { 
+  const {
     scenarios,
     selectedScenario,
     selectedStep,
     stepState,
     setScenarios,
-    setStepState,
     addStep,
   } = useScenarios();
 
   useEffect(() => {
     setScenarios(showcaseJSON.personas[selectedCharacter].scenarios);
-  }, [showcaseJSON.personas, selectedCharacter, setScenarios]);
-
-  const handleAddStep = (type: string) => {
-    if (selectedScenario === null) return;
-
-    const newStep = createEmptyStep(type === 'proof');
-
-    if (type === "proof") {
-      newStep.type = "CONNET_AND_VERIFY";
-      newStep.title = "Confirm the information to send";
-      newStep.requestOptions = {
-        type: "OOB",
-        title: "",
-        text: "",
-        proofRequest: {
-          attributes: {},
-          predicates: {},
-        },
-      };
-    } else {
-      newStep.type = "BASIC";
-      newStep.requestOptions = {
-        type: "BASIC",
-        title: "",
-        text: "",
-        proofRequest: {
-          attributes: {},
-          predicates: {},
-        },
-      };
-    }
-
-    addStep(selectedScenario, newStep);
-    setStepState(type === "proof" ? "proof-step-edit" : "basic-step-edit");
-  };
+  }, [selectedCharacter, showcaseJSON.personas]);
 
   const currentScenario = selectedScenario !== null ? scenarios[selectedScenario] : null;
-  const currentStep = selectedStep !== null && currentScenario 
+  const currentStep = currentScenario && selectedStep !== null 
     ? currentScenario.steps[selectedStep] 
     : null;
 
+  const handleAddStep = (type: StepType) => {
+    if (selectedScenario === null) return;
+    const newStep = createEmptyStep(type);
+    addStep(selectedScenario, newStep);
+  };
+
   return (
     <div className="w-3/5 two-column-col bg-light-bg-secondary dark:bg-dark-bg-secondary text-light-text dark:text-dark-text p-6 rounded-md right-col">
-      {stepState === "none-selected" || stepState == null ? (
-        <NoSelection text={"Nothing Selected"} />
-      ) : null}
-
-      {stepState === "editing-scenario" && currentScenario ? (
-        <ScenarioEdit />
-      ) : null}
-
-      {stepState === "basic-step-edit" && currentStep?.type === "BASIC" ? (
-        <BasicStepEdit />
-      ) : null}
-
-      {stepState === "proof-step-edit" && currentStep?.type === "CONNET_AND_VERIFY" ? (
-        <ProofStepEdit />
-      ) : null}
-
       {stepState === "adding-step" && (
         <ChooseStepType addNewStep={handleAddStep} />
+      )}
+
+      {stepState === "editing-scenario" && <ScenarioEdit />}
+
+      {stepState === "basic-step-edit" && currentStep?.type === "BASIC" && (
+        <BasicStepEdit />
+      )}
+
+      {stepState === "proof-step-edit" &&
+        currentStep?.type === "CONNET_AND_VERIFY" && <ProofStepEdit />}
+
+      {(stepState === "none-selected" || stepState === null) && (
+        <NoSelection text={t('scenario.no_scenario_selected_message')} />
       )}
     </div>
   );

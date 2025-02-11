@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Trash2 } from "lucide-react";
 import { OnboardingStep } from "@/types";
+import { convertBase64 } from "@/lib/utils";
+import { useTranslations } from 'next-intl';
 
 interface LocalFileUploadProps {
   text: string;
@@ -17,24 +19,12 @@ export function LocalFileUpload({
   handleLocalUpdate,
   localJSON,
 }: LocalFileUploadProps) {
+  const t = useTranslations()
   const [preview, setPreview] = useState<string | null>(null);
 
   useEffect(() => {
     setPreview(localJSON[element] || null);
   }, [localJSON, element]);
-
-  const convertBase64 = (file: File) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
 
   const handleChange = async (newValue: File | null) => {
     if (newValue) {
@@ -89,8 +79,8 @@ export function LocalFileUpload({
           )}
 
           <p className="text-center text-xs text-foreground/50 lowercase">
-            <span className="font-bold text-foreground/50">Click to upload</span>{" "}
-            or drag and drop
+            <span className="font-bold text-foreground/50">{t('file_upload.click_to_upload_label')}</span>{" "}
+            {t('file_upload.drag_to_upload_label')}
           </p>
         </div>
 

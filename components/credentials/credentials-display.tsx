@@ -5,10 +5,12 @@ import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { useCredentials } from "@/hooks/use-credentials";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from 'next-intl';
 
 export const CredentialsDisplay = () => {
+  const t = useTranslations()
   const { showcaseJSON, selectedCharacter } = useShowcaseStore();
-  const { 
+  const {
     isCreating,
     startCreating,
   } = useCredentials();
@@ -16,7 +18,7 @@ export const CredentialsDisplay = () => {
   return (
     <div className="mt-8">
       <div className="flex justify-between mb-4">
-        <h3 className="text-xl font-bold">Credentials Added:</h3>
+        <h3 className="text-xl font-bold">{t('credentials.credentials_added_label', { credentialCount: Object.entries(showcaseJSON.personas[selectedCharacter].credentials).length })}</h3>
         <div>
           {!isCreating && (
             <Button
@@ -25,7 +27,7 @@ export const CredentialsDisplay = () => {
               className="flex items-center gap-2"
               data-button-id="create-button-credentials"
             >
-              <span>Add Credential</span>
+              <span>{t('credentials.add_credential_label')}</span>
               <Plus className="w-4 h-4" />
             </Button>
           )}

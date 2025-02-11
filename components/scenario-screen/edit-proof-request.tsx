@@ -53,8 +53,7 @@ export const EditProofRequest = ({
     const attribute = currentAttributes[index];
 
     if (value === "none") {
-      // Removing predicate if exists
-      const predicates = form.getValues("predicates");
+      const predicates = form.getValues("predicates") || {};
       const predicateKey = Object.keys(predicates).find(
         key => predicates[key].name === attribute
       );
@@ -64,7 +63,6 @@ export const EditProofRequest = ({
         form.setValue("predicates", newPredicates);
       }
     } else {
-      // Adding or updating predicate
       const newPredicateKey = `${Date.now()}`;
       form.setValue(`predicates.${newPredicateKey}`, {
         name: attribute,
@@ -72,7 +70,6 @@ export const EditProofRequest = ({
         value: 0,
         restrictions: [credentialName],
       });
-      // Remove from attributes
       const newAttributes = currentAttributes.filter((_, i) => i !== index);
       form.setValue(`attributes.${credentialName}.attributes`, newAttributes);
     }
@@ -127,10 +124,10 @@ export const EditProofRequest = ({
           className="gap-2"
         >
           <Plus className="h-4 w-4" />
-          Add Attribute
+          Add Attribute2
         </Button>
 
-        <Button 
+        <Button
           type="submit"
           disabled={!form.formState.isDirty}
         >

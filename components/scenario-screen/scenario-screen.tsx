@@ -2,17 +2,22 @@
 
 import { useEffect } from "react";
 import { DndContext, closestCenter } from "@dnd-kit/core";
-import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import { Button } from "@/components/ui/button";
 import { Plus, Edit } from "lucide-react";
 import { ScenarioStep } from "./scenario-step";
 import { useShowcaseStore } from "@/hooks/use-showcase-store";
 import { useScenarios } from "@/hooks/use-scenarios";
 import Image from "next/image";
+import { useTranslations } from 'next-intl';
 
 export const ScenarioScreen = () => {
+  const t = useTranslations()
   const { showcaseJSON, selectedCharacter } = useShowcaseStore();
-  const { 
+  const {
     scenarios,
     setScenarios,
     editScenario,
@@ -21,9 +26,9 @@ export const ScenarioScreen = () => {
   } = useScenarios();
 
   useEffect(() => {
-    const initialScenarios = JSON.parse(JSON.stringify(
-      showcaseJSON.personas[selectedCharacter].scenarios
-    ));
+    const initialScenarios = JSON.parse(
+      JSON.stringify(showcaseJSON.personas[selectedCharacter].scenarios)
+    );
     setScenarios(initialScenarios);
   }, [selectedCharacter, setScenarios]);
 
@@ -52,11 +57,11 @@ export const ScenarioScreen = () => {
     <div className="space-y-8 p-6">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-bold">
-          Scenarios Added: ({scenarios.length})
+          {t('scenario.scenarios_added_label', { scenarioCount: scenarios.length })}
         </h2>
         <Button onClick={handleAddScenario} className="gap-2">
           <Plus className="h-4 w-4" />
-          Add Scenario
+          {t('scenario.add_scenario_label')}
         </Button>
       </div>
 
@@ -76,13 +81,13 @@ export const ScenarioScreen = () => {
                 className="gap-2"
               >
                 <Edit className="h-4 w-4" />
-                Edit
+                {t('action.edit_label')}
               </Button>
             </div>
 
             {/* Overview Section */}
             <div className="p-5">
-              <h4 className="font-bold text-lg mb-3">Overview</h4>
+              <h4 className="font-bold text-lg mb-3">{t('scenario.overview_label')}</h4>
               <div className="border dark:border-dark-border rounded p-3">
                 <div className="flex gap-4">
                   {scenario.overview.image ? (
@@ -99,7 +104,9 @@ export const ScenarioScreen = () => {
                     </div>
                   )}
                   <div>
-                    <h5 className="font-bold mb-2">{scenario.overview.title}</h5>
+                    <h5 className="font-bold mb-2">
+                      {scenario.overview.title}
+                    </h5>
                     <p className="text-sm">{scenario.overview.text}</p>
                   </div>
                 </div>
@@ -108,9 +115,7 @@ export const ScenarioScreen = () => {
 
             {/* Steps Section */}
             <div className="p-5">
-              <DndContext
-                collisionDetection={closestCenter}
-              >
+              <DndContext collisionDetection={closestCenter}>
                 <SortableContext
                   items={scenario.steps.map((step) => step.screenId)}
                   strategy={verticalListSortingStrategy}
@@ -131,18 +136,17 @@ export const ScenarioScreen = () => {
                 variant="outline"
                 onClick={() => {
                   setStepState("adding-step");
-                  editScenario(index);
                 }}
                 className="mt-4 gap-2"
               >
                 <Plus className="h-4 w-4" />
-                Add Step
+                {t('scenario.add_step_label')}
               </Button>
             </div>
 
             {/* Summary Section */}
             <div className="p-5">
-              <h4 className="font-bold text-lg mb-3">Summary</h4>
+              <h4 className="font-bold text-lg mb-3">{t('scenario.summary_label')}</h4>
               <div className="border dark:border-dark-border rounded p-3">
                 <div className="flex gap-4">
                   {scenario.summary.image ? (
@@ -171,7 +175,7 @@ export const ScenarioScreen = () => {
                 variant="destructive"
                 onClick={() => removeScenario(index)}
               >
-                Delete Scenario
+                {t('scenario.delete_scenario_label')}
               </Button>
             </div>
           </div>

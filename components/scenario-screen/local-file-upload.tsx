@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { Trash2 } from "lucide-react";
-import { OnboardingStep } from "@/types";
+import { convertBase64 } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface LocalFileUploadProps {
   text: string;
-  element: keyof OnboardingStep;
-  handleLocalUpdate: (key: keyof OnboardingStep, value: string) => void;
+  element: string[];
+  handleLocalUpdate: (path: string[], value: string) => void;
   localJSON: {
     [key: string]: any;
   };
@@ -17,24 +18,13 @@ export function LocalFileUpload({
   handleLocalUpdate,
   localJSON,
 }: LocalFileUploadProps) {
+  const t = useTranslations()
   const [preview, setPreview] = useState<string | null>(null);
 
   useEffect(() => {
-    setPreview(localJSON[element] || null);
+    const [section, field] = element;
+    setPreview(localJSON[section]?.[field] ?? '');
   }, [localJSON, element]);
-
-  const convertBase64 = (file: File) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
 
   const handleChange = async (newValue: File | null) => {
     if (newValue) {
@@ -76,7 +66,7 @@ export function LocalFileUpload({
       )}
 
       <label
-        htmlFor={element}
+        htmlFor={element.join(".")}
         className="p-3 flex flex-col items-center justify-center w-full h-full bg-light-bg dark:bg-dark-input dark:hover:bg-dark-input-hover rounded-lg cursor-pointer border dark:border-dark-border hover:bg-light-bg"
       >
         <div className="flex flex-col items-center h-full justify-center border rounded-lg border-dashed dark:border-dark-border p-2">
@@ -89,13 +79,13 @@ export function LocalFileUpload({
           )}
 
           <p className="text-center text-xs text-foreground/50 lowercase">
-            <span className="font-bold text-foreground/50">Click to upload</span>{" "}
-            or drag and drop
+            <span className="font-bold text-foreground/50">{t('file_upload.click_to_upload_label')}</span>{" "}
+            {t('file_upload.drag_to_upload_label')}
           </p>
         </div>
 
         <input
-          id={element}
+          id={element.join(".")}
           type="file"
           className="hidden"
           accept="image/*"
